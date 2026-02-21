@@ -67,6 +67,33 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private InputAction _fire;
 
+
+    /// <summary>
+    /// Acción para Melee.
+    /// </summary>
+    private InputAction _melee;
+
+    /// <summary>
+    /// Acción para Reload
+    /// </summary>
+    private InputAction _reload;
+
+    /// <summary>
+    /// Acción para Hability
+    /// </summary>
+    private InputAction _hability;
+
+    /// <summary>
+    /// Acción para Roll
+    /// </summary>
+    private InputAction _roll;
+
+    /// <summary>
+    /// Acción para Exit.
+    /// </summary>
+    private InputAction _exit;
+
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -153,6 +180,15 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public Vector2 MovementVector { get; private set; }
 
+
+    /// <summary>
+    /// Propiedad para acceder al vector de la acción look.
+    /// No estará normalizado.
+    /// </summary>
+    public Vector2 LookVector { get; private set; }
+
+
+    #region Metodos para "Fire"
     /// <summary>
     /// Método para saber si el botón de disparo (Fire) está pulsado
     /// Devolverá true en todos los frames en los que se mantenga pulsado
@@ -185,6 +221,180 @@ public class InputManager : MonoBehaviour
     {
         return _fire.WasReleasedThisFrame();
     }
+    #endregion
+    #region Metodos para "Melee"
+
+    /// <summary>
+    /// Método para saber si el botón de melee (Melee) está pulsado
+    /// Devolverá true en todos los frames en los que se mantenga pulsado
+    /// <returns>True, si el botón está pulsado</returns>
+    /// </summary>
+    public bool MeleeIsPressed()
+    {
+        return _melee.IsPressed();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de melee (Melee) se ha pulsado en este frame
+    /// <returns>Devuelve true, si el botón ha sido pulsado en este frame
+    /// y false, en otro caso
+    /// </returns>
+    /// </summary>
+    public bool MeleeWasPressedThisFrame()
+    {
+        return _melee.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de melee (Melee) ha dejado de pulsarse
+    /// durante este frame
+    /// <returns>Devuelve true, si el botón se ha dejado de pulsar en
+    /// este frame; y false, en otro caso.
+    /// </returns>
+    /// </summary>
+    public bool MeleeWasReleasedThisFrame()
+    {
+        return _melee.WasReleasedThisFrame();
+    }
+    #endregion
+    #region Metodos para "Reload"
+    /// <summary>
+    /// Método para saber si el botón de recarga (Reload) está pulsado
+    /// Devolverá true en todos los frames en los que se mantenga pulsado
+    /// <returns>True, si el botón está pulsado</returns>
+    /// </summary>
+    public bool ReloadIsPressed()
+    {
+        return _reload.IsPressed();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de recarga (Reload) se ha pulsado en este frame
+    /// <returns>Devuelve true, si el botón ha sido pulsado en este frame
+    /// y false, en otro caso
+    /// </returns>
+    /// </summary>
+    public bool ReloadWasPressedThisFrame()
+    {
+        return _reload.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de recarga (Reload) ha dejado de pulsarse
+    /// durante este frame
+    /// <returns>Devuelve true, si el botón se ha dejado de pulsar en
+    /// este frame; y false, en otro caso.
+    /// </returns>
+    /// </summary>
+    public bool ReloadWasReleasedThisFrame()
+    {
+        return _reload.WasReleasedThisFrame();
+    }
+    #endregion
+    #region Metodos para "Hability"
+    /// <summary>
+    /// Método para saber si el botón de habilidad activa (Hability) está pulsado
+    /// Devolverá true en todos los frames en los que se mantenga pulsado
+    /// <returns>True, si el botón está pulsado</returns>
+    /// </summary>
+    public bool HabilityIsPressed()
+    {
+        return _hability.IsPressed();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de habilidad activa (Hability) se ha pulsado en este frame
+    /// <returns>Devuelve true, si el botón ha sido pulsado en este frame
+    /// y false, en otro caso
+    /// </returns>
+    /// </summary>
+    public bool HabilityWasPressedThisFrame()
+    {
+        return _hability.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de habilidad activa (Hability) ha dejado de pulsarse
+    /// durante este frame
+    /// <returns>Devuelve true, si el botón se ha dejado de pulsar en
+    /// este frame; y false, en otro caso.
+    /// </returns>
+    /// </summary>
+    public bool HabilityWasReleasedThisFrame()
+    {
+        return _hability.WasReleasedThisFrame();
+    }
+    #endregion
+    #region Metodos para "Roll"
+    /// <summary>
+    /// Método para saber si el botón de roll (Roll) está pulsado
+    /// Devolverá true en todos los frames en los que se mantenga pulsado
+    /// <returns>True, si el botón está pulsado</returns>
+    /// </summary>
+    public bool RollIsPressed()
+    {
+        return _roll.IsPressed();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de roll (Roll) se ha pulsado en este frame
+    /// <returns>Devuelve true, si el botón ha sido pulsado en este frame
+    /// y false, en otro caso
+    /// </returns>
+    /// </summary>
+    public bool RollWasPressedThisFrame()
+    {
+        return _roll.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de roll (Roll) ha dejado de pulsarse
+    /// durante este frame
+    /// <returns>Devuelve true, si el botón se ha dejado de pulsar en
+    /// este frame; y false, en otro caso.
+    /// </returns>
+    /// </summary>
+    public bool RollWasReleasedThisFrame()
+    {
+        return _roll.WasReleasedThisFrame();
+    }
+    #endregion
+    #region Metodos para "Exit"
+    /// <summary>
+    /// Método para saber si el botón de pausa (Exit) está pulsado
+    /// Devolverá true en todos los frames en los que se mantenga pulsado
+    /// <returns>True, si el botón está pulsado</returns>
+    /// </summary>
+    public bool ExitIsPressed()
+    {
+        return _exit.IsPressed();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de pausa (Exit) se ha pulsado en este frame
+    /// <returns>Devuelve true, si el botón ha sido pulsado en este frame
+    /// y false, en otro caso
+    /// </returns>
+    /// </summary>
+    public bool ExitWasPressedThisFrame()
+    {
+        return _exit.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de pausa (Exit) ha dejado de pulsarse
+    /// durante este frame
+    /// <returns>Devuelve true, si el botón se ha dejado de pulsar en
+    /// este frame; y false, en otro caso.
+    /// </returns>
+    /// </summary>
+    public bool ExitWasReleasedThisFrame()
+    {
+        return _exit.WasReleasedThisFrame();
+    }
+    #endregion
+
+
 
     #endregion
 
@@ -203,16 +413,65 @@ public class InputManager : MonoBehaviour
 
         // Cacheamos la acción de movimiento
         InputAction movement = _theController.Player.Move;
-        // Para el movimiento, actualizamos el vector de movimiento usando
-        // el método OnMove
-        movement.performed += OnMove;
-        movement.canceled += OnMove;
+        // Por si alguien lo borra
+        if (movement == null) Debug.Log("Se ha borrado la acción \"Move\" y el jugador no se va a poder mover");
+        else
+        {
+            // Para el movimiento, actualizamos el vector de movimiento usando
+            // el método OnMove
+            movement.performed += OnMove;
+            movement.canceled += OnMove;
+        }
+
+        // Cacheo la acción de mirar
+        InputAction look = _theController.Player.Look;
+        // Por si la borran
+        if (look == null) Debug.Log("Se ha borrado la acción \"Look\" y el jugador no se va a poder mover el cursor");
+        else
+        {
+            look.performed += OnLook;
+            look.canceled += OnLook;
+        }
 
         // Para el disparo solo cacheamos la acción de disparo.
         // El estado lo consultaremos a través de los métodos públicos que 
         // tenemos (FireIsPressed, FireWasPressedThisFrame 
         // y FireWasReleasedThisFrame)
         _fire = _theController.Player.Fire;
+        // Por si la borran
+        if (_fire == null) Debug.Log("Se ha borrado la acción \"Fire\" y le jugador no podrá disparar");
+
+        // Para el melee hago lo mismo que el disparo.
+        // Tendrá métodos MeleeIsPressed, MeleeWasPressedTihsFrame y MeleeWasReleasedThisFrame.
+        _melee = _theController.Player.Melee;
+        // Por si la borran
+        if (_melee == null) Debug.Log("Se ha borrado la acción \"Melee\" y el jugador no podrá atacar a melee");
+
+        // Y a partir de aqui lo mismo...
+        // Para la recarga
+        // Tendrá métodos ReloadIsPressed, ReloadWasPressedTihsFrame y ReloadWasReleasedThisFrame.
+        _reload = _theController.Player.Reload;
+        // Por si la borran
+        if (_reload == null) Debug.Log("Se ha borrado la acción \"Reload\" y el jugador no podrá recargar");
+
+        // Para la habilidad activa
+        // Tendrá métodos HabilityIsPressed, HabilityWasPressedTihsFrame y HabilityWasReleasedThisFrame.
+        _hability = _theController.Player.Hability;
+        // Por si la borran
+        if (_hability == null) Debug.Log("Se ha borrado la acción \"Hability\" y el jugador no podrá usar su habilidad activa");
+
+        // Para el roll
+        // Tendrá métodos RollIsPressed, RollWasPressedTihsFrame y RollWasReleasedThisFrame.
+        _roll = _theController.Player.Roll;
+        // Por si la borran
+        if (_roll == null) Debug.Log("Se ha borrado la acción \"Roll\" y el jugador no podrá usar su roll");
+
+        // Para el exit
+        // Tendrá métodos ExitIsPressed, ExitWasPressedTihsFrame y ExitWasReleasedThisFrame.
+        _exit = _theController.Player.Exit;
+        // Por si la borran
+        if (_exit == null) Debug.Log("Se ha borrado la acción \"Exit\" y el jugador no podrá abrir el menú de pausa");
+
     }
 
     /// <summary>
@@ -223,6 +482,11 @@ public class InputManager : MonoBehaviour
     private void OnMove(InputAction.CallbackContext context)
     {
         MovementVector = context.ReadValue<Vector2>();
+    }
+
+    private void OnLook(InputAction.CallbackContext context)
+    {
+        LookVector = context.ReadValue<Vector2>();
     }
 
     #endregion
