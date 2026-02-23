@@ -1,4 +1,4 @@
-//---------------------------------------------------------
+    //---------------------------------------------------------
 // Contiene el componente de InputManager
 // Guillermo Jiménez Díaz, Pedro Pablo Gómez Martín
 // Template-P1
