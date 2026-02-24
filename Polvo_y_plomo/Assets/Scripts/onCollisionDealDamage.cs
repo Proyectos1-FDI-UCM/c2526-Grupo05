@@ -1,13 +1,19 @@
 //---------------------------------------------------------
-// Gestor de vida
-// Miguel Gómez García
+// Breve descripción del contenido del archivo
+// Responsable de la creación de este archivo
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
 using UnityEngine;
+// Añadir aquí el resto de directivas using
 
-public class HealthManager : MonoBehaviour
+
+/// <summary>
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
+/// </summary>
+public class onCollisionDealDamage : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -16,8 +22,10 @@ public class HealthManager : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+
     [SerializeField]
-    int VidaMax; //Máxima vida del GameObject
+    private float LifeTime = 0.1f;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -28,7 +36,9 @@ public class HealthManager : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    int _vida; // Vida del GameObject
+
+
+    private float TimeSpawn = 0f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -44,8 +54,44 @@ public class HealthManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _vida = VidaMax; 
+        if (!InputManager.HasInstance())
+        {
+            Debug.Log("Se ha puesto el componente \"onCollisionDealDamage\" en una escena sin InputManager. No podrá adelantarse al movimiento del jugador.");
+            Destroy(this);
+        }
+        else
+        {
+            TimeSpawn = Time.time;
+        }
     }
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        if (Time.time - TimeSpawn >= LifeTime)
+        {
+            Debug.Log("Se ha intentado eliminar un Objeto de daño");
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        HealthManager health = collision.gameObject.GetComponent<HealthManager>();
+        if (health != null)
+        {
+            health.CambiarVida();
+        }
+
+        /*EnemigoScript enemigo = collision.gameObject.GetComponent<EnemigoScript>();
+        if (enemigo != null)
+        {
+            enemigo.Stun();
+        }*/
+    }
+
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -55,36 +101,6 @@ public class HealthManager : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-    /// <summary>
-    /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
-    /// </summary>
-    public void CambiarVida(int cambio = -1)      
-    {
-        if (_vida + cambio <= VidaMax)
-        {
-            Vida = +cambio;
-            if (_vida <= 0)
-            {
-                MetodoMuerte();
-            }
-        }
-    }
-    /// <summary>
-    /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
-    /// </summary>
-    public void MetodoMuerte()
-    {
-        if (this.GetComponent<playerControlledMovement>() != null)
-        {
-            Debug.Log("El jugador ha muerto");
-        }
-        else
-        {
-            Destroy(this);
-            //Hay que hacer más adelante las animaciónes de muerte de los enemigos
-            //CargarCadaver();
-        }
-    }
 
     #endregion
 
@@ -96,4 +112,6 @@ public class HealthManager : MonoBehaviour
     // mayúscula, incluida la primera letra)
 
     #endregion
-}
+
+} // class MeleeObject 
+// namespace
