@@ -1,13 +1,19 @@
 //---------------------------------------------------------
-// Gestor de vida
-// Miguel Gómez García
+// Este script generará otro GameObject cuando detecte que los puntos de vida de este GameObject llegan a cero.
+// Juan José de Reyna Godoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
 using UnityEngine;
+// Añadir aquí el resto de directivas using
 
-public class HealthManager : MonoBehaviour
+
+/// <summary>
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
+/// </summary>
+public class GeneraCadaver : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -17,9 +23,9 @@ public class HealthManager : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
     [SerializeField]
-    int VidaMax; //Máxima vida del GameObject
+    GameObject Cadaver;
     #endregion
-
+    
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -28,23 +34,31 @@ public class HealthManager : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    int _vida; // Vida del GameObject
-    #endregion
 
+    #endregion
+    
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-
+    
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
+    
     /// <summary>
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// </summary>
     void Start()
     {
-        _vida = VidaMax; 
+        
+    }
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        
     }
     #endregion
 
@@ -55,39 +69,15 @@ public class HealthManager : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-    /// <summary>
-    /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
-    /// </summary>
-    public void CambiarVida(int cambio = -1)      
+    ///<summary>
+    ///Este método genera un GameObject dado;
+    ///</summary>
+    public void PonCadaver()
     {
-        if (_vida + cambio <= VidaMax)
-        {
-            Vida = +cambio;
-            if (_vida <= 0)
-            {
-                MetodoMuerte();
-            }
-        }
+        Instantiate(Cadaver);
     }
-    /// <summary>
-    /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
-    /// </summary>
-    public void MetodoMuerte()
-    {
-        if (this.GetComponent<playerControlledMovement>() != null)
-        {
-            Debug.Log("El jugador ha muerto");
-        }
-        else
-        {
-            Destroy(this);
-            //Hay que hacer más adelante las animaciónes de muerte de los enemigos
-            //CargarCadaver();
-        }
-    }
-
     #endregion
-
+    
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -95,5 +85,7 @@ public class HealthManager : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
-}
+    #endregion   
+
+} // class CoberturaScripy 
+// namespace
