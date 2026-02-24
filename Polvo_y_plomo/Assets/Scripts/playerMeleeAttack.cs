@@ -27,6 +27,7 @@ public class playerMeleeAttack : MonoBehaviour
     [SerializeField] float Anchohitbox;
     [SerializeField] float Largohitbox;
     [SerializeField] float Duracionhitbox;
+    [SerializeField] GameObject MeleePrefab = null;//Camilo
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -52,7 +53,16 @@ public class playerMeleeAttack : MonoBehaviour
     /// </summary>
     void Start()
     {
-        
+        if (MeleePrefab==null)//Camilo
+        {
+            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un prefab de melee. No podrá atacar con melee.");
+            Destroy(this);
+        }
+        if (!InputManager.HasInstance())//Camilo
+        {
+            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" en una escena sin InputManager. No podrá atacar con melee.");
+            Destroy(this);
+        }
     }
 
     /// <summary>
@@ -91,15 +101,25 @@ public class playerMeleeAttack : MonoBehaviour
         Vector2 posHitbox = (Vector2)posJugador + dirCursorJugador;
 
         // Se crea la hitbox y se coloca cerca del jugador, en la dirección comentada justo antes.
-        GameObject hitbox = new GameObject("hitboxMelee");
-        hitbox.transform.position = posHitbox;
 
+        //GameObject hitbox = new GameObject("hitboxMelee");
+        //hitbox.transform.position = posHitbox;
+        GameObject MeleeObj = Instantiate(MeleePrefab);//Camilo
+        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirCursorJugador.y, dirCursorJugador.x);
+        MeleeObj.transform.rotation = Quaternion.Euler(0,0,angulo);
+        MeleeObj.transform.position = posHitbox;
+
+        if (MeleeObj.GetComponent<MeleeObject>() != null)//Camilo
+        {
+            MeleeObject melee = MeleeObj.GetComponent<MeleeObject>();
+            melee.PlayerOrigin = true;
+        }
         // Se le añade el collider y se pone a trigger ya que no es un objeto que se mantenga en el tiempo (no es una colisión "real").
-        BoxCollider2D box = hitbox.AddComponent<BoxCollider2D>();
-        box.isTrigger = true;
-        box.size = new Vector2(Anchohitbox, Largohitbox);
+        //BoxCollider2D box = hitbox.AddComponent<BoxCollider2D>();
+        //box.isTrigger = true;
+        //box.size = new Vector2(Anchohitbox, Largohitbox);
 
-        Destroy(hitbox, Duracionhitbox);
+        //Destroy(hitbox, Duracionhitbox);
     }
     #endregion   
 
