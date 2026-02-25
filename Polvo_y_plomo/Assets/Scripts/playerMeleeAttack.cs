@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Archivo para la lógica y el funcionamiento del ataque melé del jugador
+// Script para detectar el input del ataque melee y guardar posición y rotación de su hitbox
 // Hecho por Jorge Ladrón de Guevara Jiménez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -7,73 +7,59 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-// Añadir aquí el resto de directivas using
 
 
-/// </summary>
-/// Clase con toda la lógica del ataque melé del jugador, que funciona mediante la detección de una tecla que, al presionarse; genera delante del
-/// jugador en la dirección en la que apunta su mira, un objeto vacío con una caja de colisión que daña y aturde (empuja hacia atrás) a los enemigos que se
-/// encuentren en cualquier parte de su área durante su tiempo de efecto. Después de este periodo, desaparece.
+/// <summary>
+/// Clase que detecta el input del ataque melee y guarda la posición y rotación de su hitbox. Después, llama a otro script que genera dicha hitbox en función de
+/// la posición y rotación guardadas por este.
 /// Tiene coste de enfriamiento.
+/// </summary>
 public class playerMeleeAttack : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
-    // Documentar cada atributo que aparece aquí.
-    // El convenio de nombres de Unity recomienda que los atributos
-    // públicos y de inspector se nombren en formato PascalCase
-    // (palabras con primera letra mayúscula, incluida la primera letra)
-    // Ejemplo: MaxHealthPoints
-    [SerializeField] float Anchohitbox;
-    [SerializeField] float Largohitbox;
-    [SerializeField] float Duracionhitbox;
-    [SerializeField] GameObject MeleePrefab = null;//Camilo
+    
+    // GameObjects asignables desde el editor que guarda el cursor del jugador
+    public GameObject Cursor = null;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
-    // Documentar cada atributo que aparece aquí.
-    // El convenio de nombres de Unity recomienda que los atributos
-    // privados se nombren en formato _camelCase (comienza con _, 
-    // primera palabra en minúsculas y el resto con la 
-    // primera letra en mayúsculas)
-    // Ejemplo: _maxHealthPoints
+
+    // Variable float que guarda el cooldown (CD) del ataque melee. Actualizada en el Update cada vez que este se realiza. Está de base a -2,5 ya que el CD
+    // es de 2,5 s; así se puede usar desde el segundo 0.
+    private float _cooldownMelee = -2.5f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-
-    // Por defecto están los típicos (Update y Start) pero:
-    // - Hay que añadir todos los que sean necesarios
-    // - Hay que borrar los que no se usen 
-
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Método Start de programación defensiva, para evitar buscar input de melee sin InputManager, MeleePrefab o Cursor.
     /// </summary>
     void Start()
     {
-        if (MeleePrefab==null)//Camilo
-        {
-            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un prefab de melee. No podrá atacar con melee.");
-            Destroy(this);
-        }
-        if (!InputManager.HasInstance())//Camilo
+        if (!InputManager.HasInstance())
         {
             Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" en una escena sin InputManager. No podrá atacar con melee.");
+            Destroy(this);
+        }
+
+        if (Cursor == null)
+        {
+            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un cursor asignado. No podrá atacar con melee.");
             Destroy(this);
         }
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    /// En el update se comprueba, a través del InputManager, que el control del ataque melee se ha presionado.
+    /// En el Update se comprueba, a través del InputManager, que el control del ataque melee se ha presionado.
     /// Esto se hace frame a frame para evitar que el jugador deje pulsada la tecla, ya que esto haría demasiado artificial la mecánica.
     /// Cuando se cumple la condición, se llama al método del ataque melee proporcionándole la posición actual del jugador, que será utilizada en dicho método.
+    /// </summary>
     void Update()
     {
-        if (InputManager.Instance.MeleeWasPressedThisFrame()) Melee(transform.position);
+        if (InputManager.Instance.MeleeWasPressedThisFrame() && Time.time - _cooldownMelee > 2.5f) CanMelee(transform.position);
     }
     #endregion
 
@@ -86,39 +72,23 @@ public class playerMeleeAttack : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
-    // Documentar cada método que aparece aquí
-    // El convenio de nombres de Unity recomienda que estos métodos
-    // se nombren en formato PascalCase (palabras con primera letra
-    // mayúscula, incluida la primera letra)
-    void Melee(Vector3 posJugador) // Método de lógica y funcionamiento esencial del ataque melee
+    /// <summary>
+    /// Método privado que calcula la dirección del cursor con respecto al jugador tomando ambas posiciones (la del jugador desde el Update), para saber dónde
+    /// generar la hitbox. Después llama al script "CanMelee" para que genere dicha hitbox en función de la información que le proporcione este script.
+    /// </summary>
+    private void CanMelee(Vector3 posJugador)
     {
-        // Se calcula la dirección del cursor con respecto al jugador tomando ambas posiciones (la del jugador desde el Update), para saber dónde generar la hitbox.
-        Vector2 posCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 posCursor = Cursor.transform.position;
         Vector2 dirCursorJugador = (posCursor - (Vector2)posJugador).normalized;
         Vector2 posHitbox = (Vector2)posJugador + dirCursorJugador;
 
-        // Se crea la hitbox y se coloca cerca del jugador, en la dirección comentada justo antes.
+        CanMelee canmelee = GetComponent<CanMelee>();
+        if (canmelee != null) canmelee.HitboxMelee(dirCursorJugador, posHitbox);
 
-        //GameObject hitbox = new GameObject("hitboxMelee");
-        //hitbox.transform.position = posHitbox;
-        GameObject MeleeObj = Instantiate(MeleePrefab);//Camilo
-        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirCursorJugador.y, dirCursorJugador.x);
-        MeleeObj.transform.rotation = Quaternion.Euler(0,0,angulo);
-        MeleeObj.transform.position = posHitbox;
-
-        if (MeleeObj.GetComponent<onCollisionDealDamage>() != null)//Camilo
-        {
-            onCollisionDealDamage melee = MeleeObj.GetComponent<onCollisionDealDamage>();
-        }
-        // Se le añade el collider y se pone a trigger ya que no es un objeto que se mantenga en el tiempo (no es una colisión "real").
-        //BoxCollider2D box = hitbox.AddComponent<BoxCollider2D>();
-        //box.isTrigger = true;
-        //box.size = new Vector2(Anchohitbox, Largohitbox);
-
-        //Destroy(hitbox, Duracionhitbox);
+        _cooldownMelee = Time.time;
     }
     #endregion   
 
