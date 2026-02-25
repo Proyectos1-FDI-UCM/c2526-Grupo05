@@ -1,6 +1,6 @@
 //---------------------------------------------------------
 // Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// REsta un PV a todo y stunnea a loas entidades que sean enemigos
+// Resta un PV a todo y stunnea a las entidades que sean enemigos
 // CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -25,7 +25,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     [SerializeField]
-    private float LifeTime = 0.1f;
+    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
 
     #endregion
 
@@ -39,7 +39,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
 
-    private float TimeSpawn = 0f;
+    private float TimeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -50,8 +50,9 @@ public class onCollisionDealDamage : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Se llama la primera vez que el componente esta activo, después del Awake.
+    /// Realiza comprobaciones necesarias para el componente.
+    /// Guarda el tiempo de spawn.
     /// </summary>
     void Start()
     {
@@ -67,7 +68,8 @@ public class onCollisionDealDamage : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Se llama cada frame
+    /// Elimina al objeto una vez que el tiempo de vida parametrizado se alcanza.
     /// </summary>
     void Update()
     {
@@ -78,6 +80,11 @@ public class onCollisionDealDamage : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
+    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
+    /// Si toca a un enemigo llama a su método Stun.
+    /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         HealthManager health = collision.gameObject.GetComponent<HealthManager>();

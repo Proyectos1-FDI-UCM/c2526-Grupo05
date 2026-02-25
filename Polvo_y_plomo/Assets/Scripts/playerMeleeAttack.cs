@@ -28,6 +28,7 @@ public class playerMeleeAttack : MonoBehaviour
     [SerializeField] float Largohitbox;
     [SerializeField] float Duracionhitbox;
     [SerializeField] GameObject MeleePrefab = null;//Camilo
+    [SerializeField] GameObject Cursor = null;//Camilo
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -53,9 +54,14 @@ public class playerMeleeAttack : MonoBehaviour
     /// </summary>
     void Start()
     {
-        if (MeleePrefab==null)//Camilo
+        if (MeleePrefab == null)//Camilo
         {
             Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un prefab de melee. No podrá atacar con melee.");
+            Destroy(this);
+        }
+        if (Cursor == null)//Camilo
+        {
+            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un prefab de cursor. No podrá atacar con melee.");
             Destroy(this);
         }
         if (!InputManager.HasInstance())//Camilo
@@ -96,14 +102,13 @@ public class playerMeleeAttack : MonoBehaviour
     void Melee(Vector3 posJugador) // Método de lógica y funcionamiento esencial del ataque melee
     {
         // Se calcula la dirección del cursor con respecto al jugador tomando ambas posiciones (la del jugador desde el Update), para saber dónde generar la hitbox.
-        Vector2 posCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector2 posCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 posCursor = (Vector2)Cursor.transform.position;
         Vector2 dirCursorJugador = (posCursor - (Vector2)posJugador).normalized;
         Vector2 posHitbox = (Vector2)posJugador + dirCursorJugador;
 
         // Se crea la hitbox y se coloca cerca del jugador, en la dirección comentada justo antes.
 
-        //GameObject hitbox = new GameObject("hitboxMelee");
-        //hitbox.transform.position = posHitbox;
         GameObject MeleeObj = Instantiate(MeleePrefab);//Camilo
         float angulo = 180f / Mathf.PI * Mathf.Atan2(dirCursorJugador.y, dirCursorJugador.x);
         MeleeObj.transform.rotation = Quaternion.Euler(0,0,angulo);
