@@ -19,8 +19,14 @@ public class playerMeleeAttack : MonoBehaviour
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
     
-    // GameObjects asignables desde el editor que guarda el cursor del jugador
+    // GameObject asignable desde el editor que guarda el cursor del jugador
     public GameObject Cursor = null;
+
+    // Documentar cada atributo que aparece aquí.
+    // El convenio de nombres de Unity recomienda que los atributos
+    // públicos y de inspector se nombren en formato PascalCase
+    // (palabras con primera letra mayúscula, incluida la primera letra)
+    // Ejemplo: MaxHealthPoints
 
     #endregion
 
@@ -86,9 +92,11 @@ public class playerMeleeAttack : MonoBehaviour
         Vector2 posHitbox = (Vector2)posJugador + dirCursorJugador;
 
         CanMelee canmelee = GetComponent<CanMelee>();
-        if (canmelee != null) canmelee.HitboxMelee(dirCursorJugador, posHitbox);
-
-        _cooldownMelee = Time.time;
+        if (canmelee != null)
+        {
+            canmelee.HitboxMelee(dirCursorJugador, posHitbox);
+            _cooldownMelee = Time.time;
+        }
     }
     #endregion   
 

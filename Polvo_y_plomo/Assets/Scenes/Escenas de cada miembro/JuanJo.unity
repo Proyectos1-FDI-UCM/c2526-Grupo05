@@ -140,6 +140,7 @@ MonoBehaviour:
   Largohitbox: 2
   Duracionhitbox: 0.1
   MeleePrefab: {fileID: 5015214724800111349, guid: 8e3abd07c76a80745873b79eeb433e2b, type: 3}
+  Cursor: {fileID: 1959517847}
 --- !u!1001 &232500325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -321,6 +322,11 @@ PrefabInstance:
 --- !u!4 &1710775636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 670167139303617689, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+  m_PrefabInstance: {fileID: 1101787831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1959517847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8633089953209525018, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
   m_PrefabInstance: {fileID: 1101787831}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1983034233
