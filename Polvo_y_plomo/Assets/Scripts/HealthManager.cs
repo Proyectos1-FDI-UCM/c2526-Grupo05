@@ -62,6 +62,7 @@ public class HealthManager : MonoBehaviour
     {
         if (_vida + cambio <= VidaMax)
         {
+            Debug.Log("uyehc");
             _vida = +cambio;
             if (_vida <= 0)
             {
@@ -80,6 +81,12 @@ public class HealthManager : MonoBehaviour
         }
         else
         {
+            if (this.GetComponent<GeneraCadaver>() != null)
+            {
+                GeneraCadaver genCad = this.GetComponent<GeneraCadaver>();
+                genCad.PonCadaver();
+            }
+            else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
             Destroy(this);
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
             //CargarCadaver();

@@ -1,7 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// REsta un PV a todo y stunnea a loas entidades que sean enemigos
-// CamiloSandovalSánchez
+// Este script generará otro GameObject cuando detecte que los puntos de vida de este GameObject llegan a cero.
+// Juan José de Reyna Godoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -14,7 +13,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class GeneraCadaver : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,12 +22,10 @@ public class onCollisionDealDamage : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
     [SerializeField]
-    private float LifeTime = 0.1f;
-
+    GameObject Cadaver;
     #endregion
-
+    
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -38,32 +35,22 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-
-    private float TimeSpawn = 0f;
     #endregion
-
+    
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-
+    
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
+    
     /// <summary>
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// </summary>
     void Start()
     {
-        if (!InputManager.HasInstance())
-        {
-            Debug.Log("Se ha puesto el componente \"onCollisionDealDamage\" en una escena sin InputManager. No podrá adelantarse al movimiento del jugador.");
-            Destroy(this);
-        }
-        else
-        {
-            TimeSpawn = Time.time;
-        }
+        
     }
 
     /// <summary>
@@ -71,28 +58,8 @@ public class onCollisionDealDamage : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.time - TimeSpawn >= LifeTime)
-        {
-            Debug.Log("Se ha intentado eliminar un Objeto de daño");
-            Destroy(this.gameObject);
-        }
+        
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        HealthManager health = collision.gameObject.GetComponent<HealthManager>();
-        if (health != null)
-        {
-            health.CambiarVida();
-        }
-
-        /*EnemigoScript enemigo = collision.gameObject.GetComponent<EnemigoScript>();
-        if (enemigo != null)
-        {
-            enemigo.Stun();
-        }*/
-    }
-
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -102,9 +69,15 @@ public class onCollisionDealDamage : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-
+    ///<summary>
+    ///Este método genera un GameObject dado;
+    ///</summary>
+    public void PonCadaver()
+    {
+        Instantiate(Cadaver);
+    }
     #endregion
-
+    
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -112,7 +85,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    #endregion   
 
-} // class MeleeObject 
+} // class CoberturaScripy 
 // namespace
