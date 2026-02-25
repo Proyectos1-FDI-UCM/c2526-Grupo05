@@ -1,7 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// Resta un PV a todo y stunnea a las entidades que sean enemigos
-// CamiloSandovalSánchez
+// Script que genera la hitbox de un ataque melee
+// Jorge Ladrón de Guevara Jiménez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -14,7 +13,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class CanMelee : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,12 +22,9 @@ public class onCollisionDealDamage : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
-    [SerializeField]
-    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
-
+    public GameObject MeleePrefab = null;
     #endregion
-
+    
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -38,68 +34,26 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-
-    private float TimeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
-
+    
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-
+    
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
+    
     /// <summary>
-    /// Se llama la primera vez que el componente esta activo, después del Awake.
-    /// Realiza comprobaciones necesarias para el componente.
-    /// Guarda el tiempo de spawn.
+    /// Start de programación defensiva en caso de que no se haya asignado ningún prefab a generar.
     /// </summary>
     void Start()
     {
-        if (!InputManager.HasInstance())
+        if (MeleePrefab == null)
         {
-            Debug.Log("Se ha puesto el componente \"onCollisionDealDamage\" en una escena sin InputManager. No podrá adelantarse al movimiento del jugador.");
+            Debug.Log("Se ha puesto el componente \"CanMelee\" sin un prefab de hitbox asignado. No podrá generar la hitbox.");
             Destroy(this);
         }
-        else
-        {
-            TimeSpawn = Time.time;
-        }
     }
-
-    /// <summary>
-    /// Se llama cada frame
-    /// Elimina al objeto una vez que el tiempo de vida parametrizado se alcanza.
-    /// </summary>
-    void Update()
-    {
-        if (Time.time - TimeSpawn >= LifeTime)
-        {
-            Debug.Log("Se ha intentado eliminar un Objeto de daño");
-            Destroy(this.gameObject);
-        }
-    }
-
-    /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
-    /// Si toca a un enemigo llama a su método Stun.
-    /// </summary>
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        HealthManager health = collision.gameObject.GetComponent<HealthManager>();
-        if (health != null)
-        {
-            health.CambiarVida();
-        }
-
-        /*EnemigoScript enemigo = collision.gameObject.GetComponent<EnemigoScript>();
-        if (enemigo != null)
-        {
-            enemigo.Stun();
-        }*/
-    }
-
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -111,6 +65,18 @@ public class onCollisionDealDamage : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
+    /// <summary>
+    /// Método público que genera un prefab de hitbox de un ataque melee, en una posición y rotación dadas, y lo destruye tras cierto tiempo.
+    /// </summary>
+    /// <param name="dirCursorJugador"></param>
+    /// <param name="posHitbox"></param>
+    public void HitboxMelee(Vector2 dirCursorJugador, Vector2 posHitbox)
+    {
+        GameObject MeleeObj = Instantiate(MeleePrefab);
+        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirCursorJugador.y, dirCursorJugador.x);
+        MeleeObj.transform.rotation = Quaternion.Euler(0, 0, angulo);
+        MeleeObj.transform.position = posHitbox;
+    }
 
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
@@ -119,7 +85,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    #endregion   
 
-} // class MeleeObject 
+} // class CanMelee 
 // namespace
