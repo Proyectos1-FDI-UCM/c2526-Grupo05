@@ -1,6 +1,7 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
+// REsta un PV a todo y stunnea a loas entidades que sean enemigos
+// CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -77,7 +78,7 @@ public class onCollisionDealDamage : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         HealthManager health = collision.gameObject.GetComponent<HealthManager>();
         if (health != null)
