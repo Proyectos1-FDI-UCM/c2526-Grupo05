@@ -13,7 +13,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class entityHurtMelee : MonoBehaviour
+public class onCollisionDealDamage : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,8 +23,11 @@ public class entityHurtMelee : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    [SerializeField]
+    private float LifeTime = 0.1f;
+
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -33,28 +36,33 @@ public class entityHurtMelee : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    bool entityIsPlayer = false;
+
+
+    private float TimeSpawn = 0f;
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
+
     /// <summary>
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// </summary>
     void Start()
     {
-        if (GetComponent<playerControlledMovement>() != null)//Verificar qué tipo de entidad tiene el collider
+        if (!InputManager.HasInstance())
         {
-            Debug.Log("Se ha puesto el componente \"entityHurtMelee\" en el jugador.");
-            entityIsPlayer = true;
+            Debug.Log("Se ha puesto el componente \"onCollisionDealDamage\" en una escena sin InputManager. No podrá adelantarse al movimiento del jugador.");
+            Destroy(this);
         }
-        else entityIsPlayer = false;
+        else
+        {
+            TimeSpawn = Time.time;
+        }
     }
 
     /// <summary>
@@ -62,29 +70,26 @@ public class entityHurtMelee : MonoBehaviour
     /// </summary>
     void Update()
     {
-
+        if (Time.time - TimeSpawn >= LifeTime)
+        {
+            Debug.Log("Se ha intentado eliminar un Objeto de daño");
+            Destroy(this.gameObject);
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        MeleeObject objetoMelee = collision.gameObject.GetComponent<MeleeObject>();
-        if (objetoMelee != null)
+        HealthManager health = collision.gameObject.GetComponent<HealthManager>();
+        if (health != null)
         {
-            Debug.Log("Colision con prefab de melee.");
-            if (entityIsPlayer && !objetoMelee.PlayerOrigin)//Melee de enemigo a jugador
-            {
-                //Restar vida jugador
-            }
-            else if (!entityIsPlayer && objetoMelee.PlayerOrigin)//Melee de jugador a entidad(enemigo/cobertura)
-            {
-                //Restar vida entidad
-                //Stun enemigo
-            }
-            else if (!entityIsPlayer && !objetoMelee.PlayerOrigin /* && !GetComponent<EnemyMeleeAttack>() [Si no tengo ese componente soy una cobertura]*/)     //Melee de enemigo a cobertura
-            {
-                //Restar vida cobertura
-            }
+            health.CambiarVida();
         }
+
+        /*EnemigoScript enemigo = collision.gameObject.GetComponent<EnemigoScript>();
+        if (enemigo != null)
+        {
+            enemigo.Stun();
+        }*/
     }
 
     #endregion
@@ -108,5 +113,5 @@ public class entityHurtMelee : MonoBehaviour
 
     #endregion
 
-} // class entityHurtMelee 
+} // class MeleeObject 
 // namespace

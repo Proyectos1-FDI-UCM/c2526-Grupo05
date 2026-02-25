@@ -109,10 +109,9 @@ public class playerMeleeAttack : MonoBehaviour
         MeleeObj.transform.rotation = Quaternion.Euler(0,0,angulo);
         MeleeObj.transform.position = posHitbox;
 
-        if (MeleeObj.GetComponent<MeleeObject>() != null)//Camilo
+        if (MeleeObj.GetComponent<onCollisionDealDamage>() != null)//Camilo
         {
-            MeleeObject melee = MeleeObj.GetComponent<MeleeObject>();
-            melee.PlayerOrigin = true;
+            onCollisionDealDamage melee = MeleeObj.GetComponent<onCollisionDealDamage>();
         }
         // Se le añade el collider y se pone a trigger ya que no es un objeto que se mantenga en el tiempo (no es una colisión "real").
         //BoxCollider2D box = hitbox.AddComponent<BoxCollider2D>();

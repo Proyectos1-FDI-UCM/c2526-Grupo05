@@ -62,6 +62,7 @@ public class HealthManager : MonoBehaviour
     {
         if (_vida + cambio <= VidaMax)
         {
+            Debug.Log("uyehc");
             _vida = +cambio;
             if (_vida <= 0)
             {
