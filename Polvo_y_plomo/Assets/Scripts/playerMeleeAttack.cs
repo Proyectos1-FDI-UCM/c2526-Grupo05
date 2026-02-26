@@ -110,7 +110,7 @@ public class playerMeleeAttack : MonoBehaviour
         Vector2 dirCursorJugador = (posCursor - (Vector2)transform.position).normalized;
         Vector2 posHitbox = (Vector2)transform.position + dirCursorJugador;
 
-       _canMelee.HitboxMelee(dirCursorJugador, posHitbox);
+        _canMelee.HitboxMelee(dirCursorJugador, posHitbox);
     }
     #endregion   
 

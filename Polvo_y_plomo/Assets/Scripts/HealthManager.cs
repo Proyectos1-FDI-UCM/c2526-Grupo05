@@ -96,7 +96,6 @@ public class HealthManager : MonoBehaviour
         if (this.GetComponent<playerControlledMovement>() != null)
         {
             //Hay que hacer más adelante para que se reinicie la escena
-            Debug.Log("El jugador ha muerto");
         }
         else
         {
