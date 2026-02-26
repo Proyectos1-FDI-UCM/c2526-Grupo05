@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// Script que gestiona el bloqueo y visibilidad del cursor
+// Samuel Asensio Torres
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -11,8 +11,10 @@ using UnityEngine.InputSystem;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Este código nos permite bloquear el cursor del ratón en el centro
+/// y su visibilidad en el juego para mejorar la experiencia del juego.
+/// 
+/// A su vez, permite controlar el estado mediante la tecla Escape
 /// </summary>
 public class CursorBloqueado : MonoBehaviour
 {
@@ -45,30 +47,17 @@ public class CursorBloqueado : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Bloquearemos el ratón en el centro de la pantalla.
-    /// Y su visibilidad será nula, es decir, invisible, es más estético esto para no molestar.
-    /// </summary>
-    void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    /// <summary>
-    /// Rompe el bloqueo y permite que el ratón pueda moverse libremente.
-    /// A su vez, se vuelve a hacer visible.
-    /// </summary>
-    void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    /// <summary>
-    /// Comienzo la partida bloqueando el cursor
+    /// Comienzo la partida bloqueando el cursor.
+    /// Comprobamos que el InputManager existe antes de empezar.
     /// </summary>
     void Start()
     {
+        if (!InputManager.HasInstance())
+        {
+            Debug.Log("CursorBloqueado: No se encontró InputManager. El script no funcionará.");
+            Destroy(this);
+        }
+
         LockCursor();
     }
 
@@ -77,7 +66,7 @@ public class CursorBloqueado : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (InputManager.Instance.ExitWasPressedThisFrame())
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
@@ -107,6 +96,26 @@ public class CursorBloqueado : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Bloquearemos el ratón en el centro de la pantalla.
+    /// Y su visibilidad será nula, es decir, invisible, es más estético esto para no molestar.
+    /// </summary>
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// Rompe el bloqueo y permite que el ratón pueda moverse libremente.
+    /// A su vez, se vuelve a hacer visible.
+    /// </summary>
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
     #endregion
 
