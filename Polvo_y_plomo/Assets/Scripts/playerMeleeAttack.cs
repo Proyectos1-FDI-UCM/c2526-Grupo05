@@ -20,7 +20,10 @@ public class playerMeleeAttack : MonoBehaviour
     #region Atributos del Inspector (serialized fields)
     
     // GameObject asignable desde el editor que guarda el cursor del jugador
-    public GameObject Cursor = null;
+    [SerializeField] GameObject Cursor = null;
+
+    // Variable float que guarda el cooldown (CD) del ataque melee. Actualizada en el Update cada vez que este se realiza.
+    [SerializeField] float CooldownMelee;
 
     // Documentar cada atributo que aparece aquí.
     // El convenio de nombres de Unity recomienda que los atributos
@@ -33,9 +36,9 @@ public class playerMeleeAttack : MonoBehaviour
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
 
-    // Variable float que guarda el cooldown (CD) del ataque melee. Actualizada en el Update cada vez que este se realiza. Está de base a -2,5 ya que el CD
-    // es de 2,5 s; así se puede usar desde el segundo 0.
-    private float _cooldownMelee = -2.5f;
+    // Variable float que guarda el último instante en el que se realizó el ataque melee.
+    private float _tiempoDesdeUltimoMelee = -99f;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -65,7 +68,11 @@ public class playerMeleeAttack : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (InputManager.Instance.MeleeWasPressedThisFrame() && Time.time - _cooldownMelee > 2.5f) CanMelee(transform.position);
+        if (InputManager.Instance.MeleeWasPressedThisFrame() && Time.time - _tiempoDesdeUltimoMelee > CooldownMelee)
+        {
+            CanMelee(transform.position);
+            _tiempoDesdeUltimoMelee = Time.time;
+        }
     }
     #endregion
 
@@ -92,11 +99,7 @@ public class playerMeleeAttack : MonoBehaviour
         Vector2 posHitbox = (Vector2)posJugador + dirCursorJugador;
 
         CanMelee canmelee = GetComponent<CanMelee>();
-        if (canmelee != null)
-        {
-            canmelee.HitboxMelee(dirCursorJugador, posHitbox);
-            _cooldownMelee = Time.time;
-        }
+        if (canmelee != null) canmelee.HitboxMelee(dirCursorJugador, posHitbox);
     }
     #endregion   
 
