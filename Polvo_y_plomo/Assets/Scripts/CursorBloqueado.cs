@@ -1,11 +1,12 @@
 //---------------------------------------------------------
-// Este script generará otro GameObject cuando detecte que los puntos de vida de este GameObject llegan a cero.
-// Juan José de Reyna Godoy
+// Breve descripción del contenido del archivo
+// Responsable de la creación de este archivo
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 // Añadir aquí el resto de directivas using
 
 
@@ -13,7 +14,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class GeneraCadaver : MonoBehaviour
+public class CursorBloqueado : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,13 +23,9 @@ public class GeneraCadaver : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-    /// <summary>
-    /// Este será el cadáver del GameObject con este componente.
-    /// </summary>
-    [SerializeField]
-    GameObject Cadaver;
+
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -39,13 +36,59 @@ public class GeneraCadaver : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
+
+    /// <summary>
+    /// Bloquearemos el ratón en el centro de la pantalla.
+    /// Y su visibilidad será nula, es decir, invisible, es más estético esto para no molestar.
+    /// </summary>
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// Rompe el bloqueo y permite que el ratón pueda moverse libremente.
+    /// A su vez, se vuelve a hacer visible.
+    /// </summary>
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    /// <summary>
+    /// Comienzo la partida bloqueando el cursor
+    /// </summary>
+    void Start()
+    {
+        LockCursor();
+    }
+
+    /// <summary>
+    /// Alternancia de estado de pulsación de la tecla escape.
+    /// </summary>
+    void Update()
+    {
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                UnlockCursor();
+            }
+            else
+            {
+                LockCursor();
+            }
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -55,15 +98,9 @@ public class GeneraCadaver : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-    ///<summary>
-    ///Este método genera un GameObject dado;
-    ///</summary>
-    public void PonCadaver()
-    {
-        Instantiate(Cadaver);
-    }
+
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -71,7 +108,7 @@ public class GeneraCadaver : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion   
+    #endregion
 
-} // class CoberturaScripy 
+} // class CursorBloqueado 
 // namespace

@@ -16,8 +16,11 @@ public class HealthManager : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+    /// <summary>
+    /// Esta será la variable de la vida con la que iniciarán los gameObject. Debe ser configurable para ajustarse a cada caso especificó y no variará una vez establecida
+    /// </summary>
     [SerializeField]
-    int VidaMax; //Máxima vida del GameObject
+    private int VidaMax = 10; //Máxima vida del GameObject
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -28,7 +31,10 @@ public class HealthManager : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    int _vida; // Vida del GameObject
+    /// <summary>
+    /// Esta será la variable de la vida que tendrán los game objects (irá variando)
+    /// </summary>
+    private int _vida;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -41,8 +47,9 @@ public class HealthManager : MonoBehaviour
     /// <summary>
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
+    /// Al iniciar el juego, la vida del gameObject tomará el valor de la vida con la que empieza.
     /// </summary>
-    void Start()
+    private void Start()
     {
         _vida = VidaMax; 
     }
@@ -57,13 +64,14 @@ public class HealthManager : MonoBehaviour
     // Ejemplo: GetPlayerController
     /// <summary>
     /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
+    /// Este metodo permitirá curarse (teniendo como tope la vida con la que empiezas) y hacer daño hasta quedarte sin vida
+    /// Si te quedas sin vida llamara al metodo para matar
     /// </summary>
     public void CambiarVida(int cambio = -1)      
     {
         if (_vida + cambio <= VidaMax)
         {
-            Debug.Log("uyehc");
-            _vida = +cambio;
+            _vida += cambio;
             if (_vida <= 0)
             {
                 MetodoMuerte();
@@ -71,12 +79,23 @@ public class HealthManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
+    /// Este metodo permitirá leer la vida que tenga el gameObject
+    /// </summary>
+    public int LlamaVida()
+    {
+        return _vida;
+    }
+    /// <summary>
+    /// Este metodo comprueba si el gameObject que le invoca es el jugador.
+    /// Dependiendo de si lo llama el gameObject del jugador destruirá reiniciará la escena
+    /// De otra manera comprueba si el gameObject tiene cadaver, si lo tiene lo genera el cadaver, de lo contrario destruye el objeto 
+    /// (Incompleto/Futuro)
     /// </summary>
     public void MetodoMuerte()
     {
         if (this.GetComponent<playerControlledMovement>() != null)
         {
+            //Hay que hacer más adelante para que se reinicie la escena
             Debug.Log("El jugador ha muerto");
         }
         else
@@ -87,7 +106,7 @@ public class HealthManager : MonoBehaviour
                 genCad.PonCadaver();
             }
             else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
-            Destroy(this);
+            Destroy(this.gameObject);
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
             //CargarCadaver();
         }

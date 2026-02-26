@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script generará otro GameObject cuando detecte que los puntos de vida de este GameObject llegan a cero.
-// Juan José de Reyna Godoy
+// Permite comprobar el estado de "estar persiguiendo" o "atacando" del componente ChasePlayer
+// Ángel Seijas de ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Script de testeo para comprobar si se esta actualizando correctamente la variable _isChasing del componente ChasePlayer.
+/// Para ello escribe con Debug.Log() el estado de persecución.
 /// </summary>
-public class GeneraCadaver : MonoBehaviour
+public class ChasingTest : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,13 +22,9 @@ public class GeneraCadaver : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-    /// <summary>
-    /// Este será el cadáver del GameObject con este componente.
-    /// </summary>
-    [SerializeField]
-    GameObject Cadaver;
+
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -38,6 +34,17 @@ public class GeneraCadaver : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Almacena el componente ChasePlayer.
+    /// Inicializado en el Start
+    /// </summary>
+    private ChasePlayer _chase;
+
+    /// <summary>
+    /// Almacena el último segundo en el que se comprobó, para evitar llenar la consola de testeos.
+    /// </summary>
+    private float _lastCheckTime = -99;
+
     #endregion
     
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -46,6 +53,33 @@ public class GeneraCadaver : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
+    
+    /// <summary>
+    /// Se llama al activarse el componente, una vez solo.
+    /// Se asegura de que exista el componente ChasePlayer en el gameObject.
+    /// </summary>
+    private void Start()
+    {
+        _chase = GetComponent<ChasePlayer>();
+        if (_chase == null)
+        {
+            Debug.Log("Se ha puesto el componente \"ChasingTest\" en un objeto sin el componente ChasePlayer. No funcionará.");
+            Destroy(this);
+        }
+    }
+
+    /// <summary>
+    /// Se llama cada frame.
+    /// Revisa si ChasePlayer esta persiguiendo o no, y lo escribe en consola, cada 1 s.
+    /// </summary>
+    private void Update()
+    {
+        if (Time.time - _lastCheckTime > 1f)
+        {
+            _lastCheckTime = Time.time;
+            Debug.Log("Persiguiendo: " + _chase.IsChasing());
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -55,13 +89,7 @@ public class GeneraCadaver : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-    ///<summary>
-    ///Este método genera un GameObject dado;
-    ///</summary>
-    public void PonCadaver()
-    {
-        Instantiate(Cadaver);
-    }
+
     #endregion
     
     // ---- MÉTODOS PRIVADOS ----
@@ -73,5 +101,5 @@ public class GeneraCadaver : MonoBehaviour
 
     #endregion   
 
-} // class CoberturaScripy 
+} // class ChasingTest 
 // namespace
