@@ -83,7 +83,7 @@ public class Pruebas : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Primero conseguimos la "instancia" del script en este objeto
-        HealthManager miSalud = GetComponent<HealthManager>();
+        HealthChanger miSalud = GetComponent<HealthChanger>();
 
         // Luego, si el componente existe, llamamos al método
         if (miSalud != null)

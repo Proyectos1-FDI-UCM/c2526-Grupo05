@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -42,6 +41,10 @@ public class GameManager : MonoBehaviour
     /// Instancia única de la clase (singleton).
     /// </summary>
     private static GameManager _instance;
+    /// <summary>
+    /// Esta es la vida del jugador
+    /// </summary>
+    private int _vidaJugador = 10;
 
     #endregion
 
@@ -151,7 +154,13 @@ public class GameManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
         System.GC.Collect();
     } // ChangeScene
-
+    /// <summary>
+    /// Este metodo actualiza la vida en el HUD
+    /// </summary>
+    public void UpdateHealthHUD(int NuevaVidaJugador)
+    {
+        _vidaJugador = NuevaVidaJugador;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

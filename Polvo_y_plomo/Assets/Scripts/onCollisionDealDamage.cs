@@ -79,7 +79,7 @@ public class onCollisionDealDamage : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HealthManager health = collision.gameObject.GetComponent<HealthManager>();
+        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
         if (health != null)
         {
             health.CambiarVida(-DamageDone);

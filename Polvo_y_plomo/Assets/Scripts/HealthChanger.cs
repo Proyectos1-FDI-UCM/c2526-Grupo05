@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-public class HealthManager : MonoBehaviour
+public class HealthChanger : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -35,6 +35,10 @@ public class HealthManager : MonoBehaviour
     /// Esta será la variable de la vida que tendrán los game objects (irá variando)
     /// </summary>
     private int _vida;
+    /// <summary>
+    /// Un booleano que determinará si somos el jugador
+    /// </summary>
+    private bool _jugador;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -48,10 +52,12 @@ public class HealthManager : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// Al iniciar el juego, la vida del gameObject tomará el valor de la vida con la que empieza.
+    /// Si existe un GameManager y eres el jugador, establece la variable como true
     /// </summary>
     private void Start()
     {
-        _vida = VidaMax; 
+        _vida = VidaMax;
+        if (GetComponent<PlayerCore>() != null && GameManager.HasInstance()) _jugador = true;
     }
     #endregion
 
@@ -66,12 +72,17 @@ public class HealthManager : MonoBehaviour
     /// Por lo general todos los ataques harán uno de daño, pero si te curas, no te puedes curar más del maximo de lo que se te permite
     /// Este metodo permitirá curarse (teniendo como tope la vida con la que empiezas) y hacer daño hasta quedarte sin vida
     /// Si te quedas sin vida llamara al metodo para matar
+    /// Si eres el jugador, actualiza tu vida en el HUD
     /// </summary>
     public void CambiarVida(int cambio = -1)      
     {
         if (_vida + cambio <= VidaMax)
         {
             _vida += cambio;
+            if (_jugador)
+            {
+                GameManager.Instance.UpdateHealthHUD(_vida);
+            }
             if (_vida <= 0)
             {
                 MetodoMuerte();
@@ -81,10 +92,7 @@ public class HealthManager : MonoBehaviour
     /// <summary>
     /// Este metodo permitirá leer la vida que tenga el gameObject
     /// </summary>
-    public int LlamaVida()
-    {
-        return _vida;
-    }
+    /// 
     /// <summary>
     /// Este metodo comprueba si el gameObject que le invoca es el jugador.
     /// Dependiendo de si lo llama el gameObject del jugador destruirá reiniciará la escena
@@ -93,21 +101,20 @@ public class HealthManager : MonoBehaviour
     /// </summary>
     public void MetodoMuerte()
     {
-        if (this.GetComponent<playerControlledMovement>() != null)
+        if (_jugador)
         {
             //Hay que hacer más adelante para que se reinicie la escena
         }
         else
         {
-            if (this.GetComponent<GeneraCadaver>() != null)
+            if (GetComponent<GeneraCadaver>() != null)
             {
-                GeneraCadaver genCad = this.GetComponent<GeneraCadaver>();
+                GeneraCadaver genCad = GetComponent<GeneraCadaver>();
                 genCad.PonCadaver();
             }
             else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
-            //CargarCadaver();
         }
     }
 
