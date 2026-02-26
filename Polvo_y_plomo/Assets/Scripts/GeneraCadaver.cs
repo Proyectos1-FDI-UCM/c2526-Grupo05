@@ -60,7 +60,7 @@ public class GeneraCadaver : MonoBehaviour
     ///</summary>
     public void PonCadaver()
     {
-        Instantiate(Cadaver);
+        Instantiate(Cadaver, transform.position, transform.rotation);
     }
     #endregion
     

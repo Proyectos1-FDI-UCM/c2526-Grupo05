@@ -1,6 +1,5 @@
 //---------------------------------------------------------
 // Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
 // CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -41,7 +40,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
 
-    private float TimeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
+    private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -58,7 +57,7 @@ public class onCollisionDealDamage : MonoBehaviour
     /// </summary>
     void Start()
     {
-        TimeSpawn = Time.time;
+        _timeSpawn = Time.time;
     }
 
     /// <summary>
@@ -67,9 +66,8 @@ public class onCollisionDealDamage : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.time - TimeSpawn >= LifeTime)
+        if (Time.time - _timeSpawn >= LifeTime)
         {
-            Debug.Log("Se ha intentado eliminar un Objeto de daño");
             Destroy(gameObject);
         }
     }

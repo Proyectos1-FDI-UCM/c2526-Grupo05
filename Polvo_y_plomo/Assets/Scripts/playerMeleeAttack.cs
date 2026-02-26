@@ -20,10 +20,12 @@ public class playerMeleeAttack : MonoBehaviour
     #region Atributos del Inspector (serialized fields)
     
     // GameObject asignable desde el editor que guarda el cursor del jugador
-    [SerializeField] GameObject Cursor = null;
+    [SerializeField] 
+    private GameObject Cursor = null;
 
     // Variable float que guarda el cooldown (CD) del ataque melee. Actualizada en el Update cada vez que este se realiza.
-    [SerializeField] float CooldownMelee;
+    [SerializeField] 
+    private float CooldownMelee = 2.5f;
 
     // Documentar cada atributo que aparece aquí.
     // El convenio de nombres de Unity recomienda que los atributos
@@ -38,6 +40,9 @@ public class playerMeleeAttack : MonoBehaviour
 
     // Variable float que guarda el último instante en el que se realizó el ataque melee.
     private float _tiempoDesdeUltimoMelee = -99f;
+
+    // Almacena el componente CanMelee que ha de tener el objeto con este script. Inicializado en Start().
+    private CanMelee _canMelee;
 
     #endregion
 
@@ -59,6 +64,13 @@ public class playerMeleeAttack : MonoBehaviour
             Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un cursor asignado. No podrá atacar con melee.");
             Destroy(this);
         }
+
+        _canMelee = GetComponent<CanMelee>();
+        if (_canMelee == null)
+        {
+            Debug.Log("Se ha puesto el componente  \"playerMeleeAttack\" en un objeto sin el componente \"CanMelee\", y no podrá atacar.");
+            Destroy(this);
+        }
     }
 
     /// <summary>
@@ -70,7 +82,7 @@ public class playerMeleeAttack : MonoBehaviour
     {
         if (InputManager.Instance.MeleeWasPressedThisFrame() && Time.time - _tiempoDesdeUltimoMelee > CooldownMelee)
         {
-            CanMelee(transform.position);
+            CanMelee();
             _tiempoDesdeUltimoMelee = Time.time;
         }
     }
@@ -92,14 +104,13 @@ public class playerMeleeAttack : MonoBehaviour
     /// Método privado que calcula la dirección del cursor con respecto al jugador tomando ambas posiciones (la del jugador desde el Update), para saber dónde
     /// generar la hitbox. Después llama al script "CanMelee" para que genere dicha hitbox en función de la información que le proporcione este script.
     /// </summary>
-    private void CanMelee(Vector3 posJugador)
+    private void CanMelee()
     {
         Vector2 posCursor = Cursor.transform.position;
-        Vector2 dirCursorJugador = (posCursor - (Vector2)posJugador).normalized;
-        Vector2 posHitbox = (Vector2)posJugador + dirCursorJugador;
+        Vector2 dirCursorJugador = (posCursor - (Vector2)transform.position).normalized;
+        Vector2 posHitbox = (Vector2)transform.position + dirCursorJugador;
 
-        CanMelee canmelee = GetComponent<CanMelee>();
-        if (canmelee != null) canmelee.HitboxMelee(dirCursorJugador, posHitbox);
+       _canMelee.HitboxMelee(dirCursorJugador, posHitbox);
     }
     #endregion   
 
