@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Este script generará otro GameObject cuando detecte que los puntos de vida de este GameObject llegan a cero.
+// Este script generará otro GameObject cuando sea llamado.
 // Juan José de Reyna Godoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -10,8 +10,9 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Cuando un GameObject muera (jugador, enemigo o cobertura), su clase HealthManager, que gestiona su vida, llame a esta, y esta genere un cadaver, es decir otro GameObject que remplaze al
+/// anterior, con menos lógica y otras caracteríticas (principalmente desactivar colisiones y otro renderizado). El HealthManager llamará a esta clase una vez la vida del objeto llegue a cero,
+/// y llamará a la función correspondiente antes de destruir el objeto anterior.
 /// </summary>
 public class GeneraCadaver : MonoBehaviour
 {
