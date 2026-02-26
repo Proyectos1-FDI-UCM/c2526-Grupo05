@@ -13,7 +13,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class Tutotial : MonoBehaviour
+public class Pruebas : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -70,15 +70,29 @@ public class Tutotial : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+    /// <summary>
+    /// Con este metodo demostraremos que funciona HealthManager
+    /// </summary>
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Primero conseguimos la "instancia" del script en este objeto
+        HealthManager miSalud = GetComponent<HealthManager>();
 
-    #endregion   
+        // Luego, si el componente existe, llamamos al método
+        if (miSalud != null)
+        {
+            miSalud.CambiarVida(-1);
+        }
+    }
 
-} // class Tutotial 
+    #endregion
+
+} // class Pruebas 
 // namespace
