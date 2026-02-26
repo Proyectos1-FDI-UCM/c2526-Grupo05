@@ -1,6 +1,6 @@
 //---------------------------------------------------------
 // Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// Resta un PV a todo y stunnea a las entidades que sean enemigos
+// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
 // CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -11,8 +11,8 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
+/// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
 /// </summary>
 public class onCollisionDealDamage : MonoBehaviour
 {
@@ -26,6 +26,8 @@ public class onCollisionDealDamage : MonoBehaviour
 
     [SerializeField]
     private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
+    [SerializeField]
+    private int DamageDone = 1;///Variable que indica el daño que hace el objeto
 
     #endregion
 
@@ -56,15 +58,7 @@ public class onCollisionDealDamage : MonoBehaviour
     /// </summary>
     void Start()
     {
-        if (!InputManager.HasInstance())
-        {
-            Debug.Log("Se ha puesto el componente \"onCollisionDealDamage\" en una escena sin InputManager. No podrá adelantarse al movimiento del jugador.");
-            Destroy(this);
-        }
-        else
-        {
-            TimeSpawn = Time.time;
-        }
+        TimeSpawn = Time.time;
     }
 
     /// <summary>
@@ -76,7 +70,7 @@ public class onCollisionDealDamage : MonoBehaviour
         if (Time.time - TimeSpawn >= LifeTime)
         {
             Debug.Log("Se ha intentado eliminar un Objeto de daño");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -85,15 +79,15 @@ public class onCollisionDealDamage : MonoBehaviour
     /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
     /// Si toca a un enemigo llama a su método Stun.
     /// </summary>
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         HealthManager health = collision.gameObject.GetComponent<HealthManager>();
         if (health != null)
         {
-            health.CambiarVida();
+            health.CambiarVida(-DamageDone);
         }
 
-        /*EnemigoScript enemigo = collision.gameObject.GetComponent<EnemigoScript>();
+        /*StunScript enemigo = collision.gameObject.GetComponent<StunScript>();
         if (enemigo != null)
         {
             enemigo.Stun();
