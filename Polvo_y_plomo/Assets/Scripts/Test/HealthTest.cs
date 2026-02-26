@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// Prueba simple para hacer daño a un objeto con HealthChanger.
+// Miguel Gómez García
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,8 +10,8 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Script para hacerse daño al chocar un objeto con el HealthChanger.
+/// Al chocar con cualquier cosa (ha de tener Rigidbody y Collider) intenta reducir la vida del propio objeto (ha de tener también el componente HealthChanger).
 /// </summary>
 public class Pruebas : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class Pruebas : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -35,29 +35,27 @@ public class Pruebas : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
-    {
-        
-    }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Con este metodo demostraremos que funciona HealthChanger
     /// </summary>
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        // Primero conseguimos la "instancia" del script en este objeto
+        HealthChanger miSalud = GetComponent<HealthChanger>();
+
+        // Luego, si el componente existe, llamamos al método
+        if (miSalud != null)
+        {
+            miSalud.CambiarVida(-1);
+        }
     }
     #endregion
 
@@ -77,20 +75,6 @@ public class Pruebas : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-    /// <summary>
-    /// Con este metodo demostraremos que funciona HealthManager
-    /// </summary>
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Primero conseguimos la "instancia" del script en este objeto
-        HealthChanger miSalud = GetComponent<HealthChanger>();
-
-        // Luego, si el componente existe, llamamos al método
-        if (miSalud != null)
-        {
-            miSalud.CambiarVida(-1);
-        }
-    }
 
     #endregion
 
