@@ -101,7 +101,7 @@ public class CursorBloqueado : MonoBehaviour
     /// Bloquearemos el ratón en el centro de la pantalla.
     /// Y su visibilidad será nula, es decir, invisible, es más estético esto para no molestar.
     /// </summary>
-    void LockCursor()
+    private void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -111,7 +111,7 @@ public class CursorBloqueado : MonoBehaviour
     /// Rompe el bloqueo y permite que el ratón pueda moverse libremente.
     /// A su vez, se vuelve a hacer visible.
     /// </summary>
-    void UnlockCursor()
+    private void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
