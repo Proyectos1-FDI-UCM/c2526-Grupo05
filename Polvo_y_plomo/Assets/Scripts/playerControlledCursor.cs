@@ -79,7 +79,7 @@ public class playerControlledCursor : MonoBehaviour
     }
 
     /// <summary>
-    /// Se llama cada frameç
+    /// Se llama cada frame.
     /// Actualiza la posición del mouse según el input del jugador,
     /// y se asegura de que no se salga de sus límites.
     /// </summary>
