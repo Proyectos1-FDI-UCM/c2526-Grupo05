@@ -57,7 +57,7 @@ public class HealthChanger : MonoBehaviour
     private void Start()
     {
         _vida = VidaMax;
-        if (GetComponent<PlayerCore>() != null && GameManager.HasInstance())
+        if (GetComponent<PlayerCore>() != null)
         {
             _jugador = true;
         }
@@ -83,7 +83,7 @@ public class HealthChanger : MonoBehaviour
         {
             _vida += cambio;
             Debug.Log(_vida);
-            if (_jugador)
+            if (_jugador && GameManager.HasInstance())
             {
                 GameManager.Instance.UpdateHealthHUD(_vida);
             }
@@ -105,11 +105,10 @@ public class HealthChanger : MonoBehaviour
     /// </summary>
     public void MetodoMuerte()
     {
-        Destroy(gameObject);
         if (_jugador)
         {
-           
-            GameManager.Instance.Respawn();
+            if (GameManager.HasInstance()) GameManager.Instance.Respawn();
+            Destroy(this);
         }
         else
         {

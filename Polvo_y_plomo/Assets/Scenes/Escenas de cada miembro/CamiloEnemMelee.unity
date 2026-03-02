@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d492bab6509dbde449a17beac0a5072c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VidaMax: 10
+  VidaMax: 3
 --- !u!1001 &654652548
 PrefabInstance:
   m_ObjectHideFlags: 0

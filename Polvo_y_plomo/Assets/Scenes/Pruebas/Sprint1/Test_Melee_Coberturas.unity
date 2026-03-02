@@ -595,6 +595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cobertura_1
       objectReference: {fileID: 0}
+    - target: {fileID: 577081867757335314, guid: 9389216f2ac39fe498b17954f640551d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5097141517390774425, guid: 9389216f2ac39fe498b17954f640551d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.12
