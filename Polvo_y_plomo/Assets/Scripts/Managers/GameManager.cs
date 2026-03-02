@@ -6,8 +6,10 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using System.Text.RegularExpressions;
 using UnityEngine;
-
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
@@ -45,6 +47,8 @@ public class GameManager : MonoBehaviour
     /// Esta es la vida del jugador
     /// </summary>
     private int _vidaJugador = 10;
+
+
 
     #endregion
 
@@ -161,6 +165,12 @@ public class GameManager : MonoBehaviour
     {
         _vidaJugador = NuevaVidaJugador;
     }
+
+    public void Respawn()
+    {
+        // Canvas slow 
+        StartCoroutine(EsperaReinicioEscena());
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -179,6 +189,13 @@ public class GameManager : MonoBehaviour
     {
         // De momento no hay que transferir ningún setup
         // a otro manager
+    }
+
+    private IEnumerator EsperaReinicioEscena()
+    {
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     #endregion
