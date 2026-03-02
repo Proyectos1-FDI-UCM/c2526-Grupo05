@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// Este componente permite a un enemigo a atacar cuando se ha acercado al jugador lo suficiente
+// CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -22,6 +22,10 @@ public class EnemyMeleeAttack : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+
+    /// <summary>
+    /// Tiempo de cooldown
+    /// </summary>
     [SerializeField]
     private float CooldownMelee = 2.5f;
     #endregion
@@ -35,12 +39,21 @@ public class EnemyMeleeAttack : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Variable para usar el componente CanMelee
+    /// </summary>
     private CanMelee _canMelee;
-
+    /// <summary>
+    /// Variable para usar el componente ChasePlayer
+    /// </summary>
     private ChasePlayer _chasePlayer;
-
+    /// <summary>
+    /// Variable para usar el componente Rigidbody2D
+    /// </summary>
     private Rigidbody2D _rb;
-
+    /// <summary>
+    /// Variable para guardar el momento de cada ataque
+    /// </summary>
     private float _tiempoDesdeUltimoMelee = -99f;
     #endregion
 
@@ -52,8 +65,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Método Start de programación defensiva, detecta los componentes CanMelee, ChasePlayer, Rigidbody2D y se comprueba que existe la instancia del jugador con PlayerCore.
     /// </summary>
     void Start()
     {
@@ -86,7 +98,8 @@ public class EnemyMeleeAttack : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// En el Update se comprueba, a través del ChasePlayer, que el enemigo está a distancia de ataque melee.
+    /// Cuando se cumple la condición y ha transcurrido el cooldown, se llama al método del ataque melee y se establece el tiempo de este último ataque melee.
     /// </summary>
     void Update()
     {
@@ -115,11 +128,15 @@ public class EnemyMeleeAttack : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Este métoddo crea una variable de direccion del ataque y una de la posición del mismo.
+    /// Posteriormente llma al método que crea el objeto melee en el componente de CanMelee.
+    /// </summary>
     private void CanMelee()
     {
         Vector2 dirMvtoEnemigo = (PlayerCore.Instance.ReadPlayerPosition() - transform.position).normalized;
         Vector2 posHitbox = (Vector2)transform.position + dirMvtoEnemigo;
-        
 
         _canMelee.HitboxMelee(dirMvtoEnemigo, posHitbox);
     }

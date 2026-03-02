@@ -1,19 +1,20 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
+// Destruye un gameobject al transcurrir untiempoe editable
 // CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using System;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
 
 /// <summary>
-/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class DestroyOverTime : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -25,9 +26,6 @@ public class onCollisionDealDamage : MonoBehaviour
 
     [SerializeField]
     private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
-    [SerializeField]
-    private int DamageDone = 1;///Variable que indica el daño que hace el objeto
-
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -39,7 +37,6 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-
     private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
 
@@ -50,22 +47,27 @@ public class onCollisionDealDamage : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-
     /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
-    /// Si toca a un enemigo llama a su método Stun.
+    /// Se llama la primera vez que el componente esta activo, después del Awake.
+    /// Realiza comprobaciones necesarias para el componente.
+    /// Guarda el tiempo de spawn.
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Start()
     {
-        PlayerCore player = collision.gameObject.GetComponent<PlayerCore>();
-        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
-        if (health != null)
-        {
-            health.CambiarVida(-DamageDone);
-        }
+        _timeSpawn = Time.time;
     }
 
+    /// <summary>
+    /// Se llama cada frame
+    /// Elimina al objeto una vez que el tiempo de vida parametrizado se alcanza.
+    /// </summary>
+    void Update()
+    {
+        if (Time.time - _timeSpawn >= LifeTime)
+        {
+            Destroy(gameObject);
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -87,5 +89,5 @@ public class onCollisionDealDamage : MonoBehaviour
 
     #endregion
 
-} // class MeleeObject 
+} // class DestroyOverTime 
 // namespace
