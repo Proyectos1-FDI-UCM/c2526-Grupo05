@@ -439,7 +439,7 @@ public class InputManager : MonoBehaviour
         // y FireWasReleasedThisFrame)
         _fire = _theController.Player.Fire;
         // Por si la borran
-        if (_fire == null) Debug.Log("Se ha borrado la acción \"Fire\" y le jugador no podrá disparar");
+        if (_fire == null) Debug.Log("Se ha borrado la acción \"Fire\" y el jugador no podrá disparar");
 
         // Para el melee hago lo mismo que el disparo.
         // Tendrá métodos MeleeIsPressed, MeleeWasPressedTihsFrame y MeleeWasReleasedThisFrame.

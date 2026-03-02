@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// CamiloSandovalSánchez
+// Desactiva el panel sobre el que está este script y activa otro asignable.
+// Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
+/// Script para desactivar el GameObject en el que esta este componente y activar otro.
+/// La idea es usarla para intercambiar paneles en el menú.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class ChangePanel : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,13 +23,14 @@ public class onCollisionDealDamage : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// El panel que será activado sustituyendo al actual.
+    /// </summary>
     [SerializeField]
-    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
-    [SerializeField]
-    private int DamageDone = 1;///Variable que indica el daño que hace el objeto
+    private GameObject ActivatePanel;
 
     #endregion
-
+    
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -39,32 +40,14 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-
-    private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
-
+    
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-
+    
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
-
-    /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
-    /// Si toca a un enemigo llama a su método Stun.
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        PlayerCore player = collision.gameObject.GetComponent<PlayerCore>();
-        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
-        if (health != null)
-        {
-            health.CambiarVida(-DamageDone);
-        }
-    }
 
     #endregion
 
@@ -76,8 +59,17 @@ public class onCollisionDealDamage : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
-    #endregion
+    /// <summary>
+    /// Método al que hay que llamar para que se cambien los paneles.
+    /// </summary>
+    public void ChangePanels()
+    {
+        ActivatePanel.SetActive(true);
+        gameObject.SetActive(false);
+    }
 
+    #endregion
+    
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -85,7 +77,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    #endregion   
 
-} // class MeleeObject 
+} // class ChangePanel 
 // namespace
