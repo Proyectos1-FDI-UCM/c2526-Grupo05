@@ -8,9 +8,36 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: b13e49dfc910045ba80034544cb5011b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Prototipo_Hito_1.unity
+    guid: 30199974954fb294889bff995dca1880
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_InputManager.unity
+    guid: 1c25d1cc237ceb8429797289e7547ae2
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_PlayerMovement.unity
+    guid: a1a39b02beeafec42a64839c067c2510
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_PlayerStalker.unity
+    guid: 2b8b82f731f348d459e89dbb0f716080
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_Mirilla.unity
+    guid: 9b0442df3154e6b42ae9d4a70859ef5b
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_Camara.unity
+    guid: 0a2297ffcd2616f46a47eeae7d11663a
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_Health.unity
+    guid: ba4bad107b3750b4ebb116fee9678554
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_Melee_Coberturas.unity
+    guid: 4db5bf540c074934fa6292b1490a9f7e
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint1/Test_CursorBloqueado.unity
+    guid: 862f892bfa2c1854c8142def10138129
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
