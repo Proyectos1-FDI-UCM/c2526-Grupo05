@@ -83,12 +83,12 @@ public class Player : MonoBehaviour
             Destroy(this);
         }
 
-        _canMelee = GetComponent<CanMelee>();
+        /*_canMelee = GetComponent<CanMelee>();
         if (_canMelee == null)
         {
             Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"Shoot\", y no disparar.");
             Destroy(this);
-        }
+        }*/
     }
     #endregion
 
@@ -112,11 +112,11 @@ public class Player : MonoBehaviour
 
     private void CompruebaInput()
     {
-        if (InputManager._instance.FireWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
+        /*if (InputManager._instance.FireWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
         {
 
             _tiempoDesdeUltimoDisparo = Time.time;
-        }
+        }*/
     }
 
     #endregion   
