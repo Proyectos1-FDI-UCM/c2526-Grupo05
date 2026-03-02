@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7150881875962965636}
   - component: {fileID: -7526779554649821636}
   - component: {fileID: 4287701618172451902}
-  m_Layer: 6
-  m_Name: MeleeObject
+  m_Layer: 3
+  m_Name: EnemyMeleeObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

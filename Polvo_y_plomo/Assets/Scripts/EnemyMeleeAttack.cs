@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// CamiloSandovalSánchez
+// Breve descripción del contenido del archivo
+// Responsable de la creación de este archivo
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class EnemyMeleeAttack : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,12 +22,8 @@ public class onCollisionDealDamage : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
     [SerializeField]
-    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
-    [SerializeField]
-    private int DamageDone = 1;///Variable que indica el daño que hace el objeto
-
+    private float CooldownMelee = 2.5f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -39,8 +35,13 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    private CanMelee _canMelee;
 
-    private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
+    private ChasePlayer _chasePlayer;
+
+    private Rigidbody2D _rb;
+
+    private float _tiempoDesdeUltimoMelee = -99f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -51,42 +52,51 @@ public class onCollisionDealDamage : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Se llama la primera vez que el componente esta activo, después del Awake.
-    /// Realiza comprobaciones necesarias para el componente.
-    /// Guarda el tiempo de spawn.
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
     /// </summary>
     void Start()
     {
-        _timeSpawn = Time.time;
+        _canMelee = GetComponent<CanMelee>();
+        if (_canMelee == null)
+        {
+            Debug.Log("Se ha puesto el componente  \"EnemyMeleeAttack\" en un objeto sin el componente \"CanMelee\", y no podrá atacar.");
+            Destroy(this);
+        }
+
+        _chasePlayer = GetComponent<ChasePlayer>();
+        if (_chasePlayer == null)
+        {
+            Debug.Log("Se ha puesto el componente  \"EnemyMeleeAttack\" en un objeto sin el componente \"ChasePlayer\", y no podrá atacar.");
+            Destroy(this);
+        }
+
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
+        {
+            Debug.Log("Se ha puesto el componente  \"EnemyMeleeAttack\" en un objeto sin el componente \"Rigidbody2D\", y no podrá atacar.");
+            Destroy(this);
+        }
+
+        if (!PlayerCore.HasInstance())
+        {
+            Debug.Log("Se ha puesto el componente \"ChasePlayer\" en una escena sin instancia de PlayerCore. No podrá perseguir al jugador");
+            Destroy(this);
+        }
     }
 
     /// <summary>
-    /// Se llama cada frame
-    /// Elimina al objeto una vez que el tiempo de vida parametrizado se alcanza.
+    /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update()
     {
-        if (Time.time - _timeSpawn >= LifeTime)
+        if (!_chasePlayer.IsChasing() && Time.time - _tiempoDesdeUltimoMelee > CooldownMelee)
         {
-            Destroy(gameObject);
+            CanMelee();
+
+            _tiempoDesdeUltimoMelee = Time.time;
         }
     }
-
-    /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
-    /// Si toca a un enemigo llama a su método Stun.
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        PlayerCore player = collision.gameObject.GetComponent<PlayerCore>();
-        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
-        if (health != null)
-        {
-            health.CambiarVida(-DamageDone);
-        }
-    }
-
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -105,8 +115,15 @@ public class onCollisionDealDamage : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+    private void CanMelee()
+    {
+        Vector2 dirMvtoEnemigo = (PlayerCore.Instance.ReadPlayerPosition() - transform.position).normalized;
+        Vector2 posHitbox = (Vector2)transform.position + dirMvtoEnemigo;
+        
 
-    #endregion
+        _canMelee.HitboxMelee(dirMvtoEnemigo, posHitbox);
+    }
+    #endregion   
 
-} // class MeleeObject 
+} // class EnemyMeleeAttack 
 // namespace

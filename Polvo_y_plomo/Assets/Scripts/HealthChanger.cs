@@ -79,6 +79,7 @@ public class HealthChanger : MonoBehaviour
         if (_vida + cambio <= VidaMax)
         {
             _vida += cambio;
+            Debug.Log(_vida);
             if (_jugador)
             {
                 GameManager.Instance.UpdateHealthHUD(_vida);
