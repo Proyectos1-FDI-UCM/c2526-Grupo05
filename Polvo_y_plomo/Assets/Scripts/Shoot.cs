@@ -22,8 +22,8 @@ public class Shoot : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
-    //[SerializeField]
-    //private BulletMove Bullet;
+    [SerializeField]
+    private GameObject Bullet;
 
     #endregion
 
