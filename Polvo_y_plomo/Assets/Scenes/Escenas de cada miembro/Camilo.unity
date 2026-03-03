@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4821254670401775029, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5550585093572592077, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -178,6 +182,14 @@ PrefabInstance:
     - target: {fileID: 6794519440049798451, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: m_Name
       value: Jugador
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794519440049798451, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633089953209525018, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -225,6 +237,11 @@ MonoBehaviour:
 --- !u!1 &173666537 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8633089953209525018, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+  m_PrefabInstance: {fileID: 173666533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &173666546 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
   m_PrefabInstance: {fileID: 173666533}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &654652548
@@ -345,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spring: 3
-  Target: {fileID: 0}
+  Target: {fileID: 173666546}
 --- !u!114 &1161718545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,7 +629,10 @@ GameObject:
   - component: {fileID: 2025648134}
   - component: {fileID: 2025648133}
   - component: {fileID: 2025648138}
-  m_Layer: 0
+  - component: {fileID: 2025648141}
+  - component: {fileID: 2025648140}
+  - component: {fileID: 2025648139}
+  m_Layer: 3
   m_Name: EnemigoPersecucionProto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +705,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 1, y: 1.85}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -737,7 +757,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4109acea4d56bd44697729bb833a6299, type: 3}
+  m_Sprite: {fileID: -7138501363732420223, guid: e6836fc0f9114674db2035e0ea97fcc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -790,6 +810,45 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2025648139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025648132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a3bc37fd63acc4da9754829f22e2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cadaver: {fileID: 3431735393579477392, guid: ce7a0d454f12f554cbf3b6db48204416, type: 3}
+--- !u!114 &2025648140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025648132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf79ecfd9d29a245bdc220f6ae40236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeleePrefab: {fileID: 5015214724800111349, guid: febc8594a582bd54488df1c76a5fa589, type: 3}
+--- !u!114 &2025648141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025648132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1380eecf6381b0848b213c509bfaf0df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CooldownMelee: 2.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

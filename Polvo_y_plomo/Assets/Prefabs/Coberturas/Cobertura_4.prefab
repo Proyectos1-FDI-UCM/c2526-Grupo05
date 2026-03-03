@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2165479692288503449}
   - component: {fileID: 3553031406840889237}
   - component: {fileID: -3706987961907792162}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cobertura_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

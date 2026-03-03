@@ -10,8 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Esta clase permite a un enemigo a atacar cuando se ha acercado al jugador lo suficiente
+/// utilizando el componente ChasePlayer. También se define un tiempo de cooldown editable 
+/// que no permitirá realizar ataques hasta que haya pasado. Por último, llama al componente
+/// canMelee para spawnear al objeto melee correspondiente.
 /// </summary>
 public class EnemyMeleeAttack : MonoBehaviour
 {
@@ -48,10 +50,6 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// </summary>
     private ChasePlayer _chasePlayer;
     /// <summary>
-    /// Variable para usar el componente Rigidbody2D
-    /// </summary>
-    private Rigidbody2D _rb;
-    /// <summary>
     /// Variable para guardar el momento de cada ataque
     /// </summary>
     private float _tiempoDesdeUltimoMelee = -99f;
@@ -80,13 +78,6 @@ public class EnemyMeleeAttack : MonoBehaviour
         if (_chasePlayer == null)
         {
             Debug.Log("Se ha puesto el componente  \"EnemyMeleeAttack\" en un objeto sin el componente \"ChasePlayer\", y no podrá atacar.");
-            Destroy(this);
-        }
-
-        _rb = GetComponent<Rigidbody2D>();
-        if (_rb == null)
-        {
-            Debug.Log("Se ha puesto el componente  \"EnemyMeleeAttack\" en un objeto sin el componente \"Rigidbody2D\", y no podrá atacar.");
             Destroy(this);
         }
 
