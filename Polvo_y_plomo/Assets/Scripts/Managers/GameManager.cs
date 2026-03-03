@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
     {
         InputManager.Instance.DesactivarInput();
         if (FadeIn != null) FadeIn.StartFade();
-        else Debug.Log("Componente FadeColor no asignado");
+        else Debug.Log("Componente FadeColor de FadeIn no asignado");
         StartCoroutine(EsperaReinicioEscena());
     }
     #endregion
@@ -216,8 +216,8 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (FadeOut != null) FadeOut.StartFade();
-        else Debug.Log("Componente FadeColor no asignado");
-            InputManager.Instance.ActivarInput();
+        else Debug.Log("Componente FadeColor de FadeOut no asignado");
+        InputManager.Instance.ActivarInput();
     }
 
     #endregion
