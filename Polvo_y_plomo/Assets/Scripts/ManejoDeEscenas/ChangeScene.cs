@@ -56,7 +56,8 @@ public class ChangeScene : MonoBehaviour
     /// </summary>
     public void ChangeToNextScene()
     {
-        GameManager.Instance.ChangeScene(nextScene);
+        if (GameManager.HasInstance()) GameManager.Instance.ChangeScene(nextScene);
+        else Debug.Log("Se ha llamado a ChangeToNextScene pero no hay GameManager. No se puede cambiar la escena");
     }
 
     #endregion

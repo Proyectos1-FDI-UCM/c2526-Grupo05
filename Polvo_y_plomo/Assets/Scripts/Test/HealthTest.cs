@@ -46,7 +46,7 @@ public class Pruebas : MonoBehaviour
     /// <summary>
     /// Con este metodo demostraremos que funciona HealthChanger
     /// </summary>
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         // Primero conseguimos la "instancia" del script en este objeto
         HealthChanger miSalud = GetComponent<HealthChanger>();
@@ -57,6 +57,7 @@ public class Pruebas : MonoBehaviour
             miSalud.CambiarVida(-1);
         }
     }
+
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
