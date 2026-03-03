@@ -57,7 +57,10 @@ public class HealthChanger : MonoBehaviour
     private void Start()
     {
         _vida = VidaMax;
-        if (GetComponent<PlayerCore>() != null && GameManager.HasInstance()) _jugador = true;
+        if (GetComponent<PlayerCore>() != null)
+        {
+            _jugador = true;
+        }
     }
     #endregion
 
@@ -80,7 +83,7 @@ public class HealthChanger : MonoBehaviour
         {
             _vida += cambio;
             Debug.Log(_vida);
-            if (_jugador)
+            if (_jugador && GameManager.HasInstance())
             {
                 GameManager.Instance.UpdateHealthHUD(_vida);
             }
@@ -104,7 +107,8 @@ public class HealthChanger : MonoBehaviour
     {
         if (_jugador)
         {
-            //Hay que hacer más adelante para que se reinicie la escena
+            if (GameManager.HasInstance()) GameManager.Instance.Respawn();
+            Destroy(this);
         }
         else
         {

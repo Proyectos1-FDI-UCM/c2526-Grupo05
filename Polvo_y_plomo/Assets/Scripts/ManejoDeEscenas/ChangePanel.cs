@@ -1,31 +1,33 @@
 //---------------------------------------------------------
-// Contiene el componente ChangeScene
-// Guillermo Jiménez Díaz
-// Template-P1
+// Desactiva el panel sobre el que está este script y activa otro asignable.
+// Ángel Seijas de Ema
+// Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
+// Añadir aquí el resto de directivas using
 
 
 /// <summary>
-/// Componente de pruebas que cambia a otra escena que se
-/// configura desde el editor. Se usa principalmente para
-/// comunicarse con el GameManager desde un botón y hacer el
-/// cambio de escena
+/// Script para desactivar el GameObject en el que esta este componente y activar otro.
+/// La idea es usarla para intercambiar paneles en el menú.
 /// </summary>
-public class ChangeScene : MonoBehaviour
+public class ChangePanel : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
-    
+    // Documentar cada atributo que aparece aquí.
+    // El convenio de nombres de Unity recomienda que los atributos
+    // públicos y de inspector se nombren en formato PascalCase
+    // (palabras con primera letra mayúscula, incluida la primera letra)
+    // Ejemplo: MaxHealthPoints
+
     /// <summary>
-    /// Índice de la escena (en el build settings)
-    /// que se cargará. 
+    /// El panel que será activado sustituyendo al actual.
     /// </summary>
     [SerializeField]
-    private int nextScene;
+    private GameObject ActivatePanel;
 
     #endregion
     
@@ -46,17 +48,24 @@ public class ChangeScene : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
+
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
     #region Métodos públicos
+    // Documentar cada método que aparece aquí con ///<summary>
+    // El convenio de nombres de Unity recomienda que estos métodos
+    // se nombren en formato PascalCase (palabras con primera letra
+    // mayúscula, incluida la primera letra)
+    // Ejemplo: GetPlayerController
 
     /// <summary>
-    /// Cambia de escena haciendo uso del GameManager
+    /// Método al que hay que llamar para que se cambien los paneles.
     /// </summary>
-    public void ChangeToNextScene()
+    public void ChangePanels()
     {
-        GameManager.Instance.ChangeScene(nextScene);
+        ActivatePanel.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     #endregion
@@ -70,5 +79,5 @@ public class ChangeScene : MonoBehaviour
 
     #endregion   
 
-} // class ChangeScene 
+} // class ChangePanel 
 // namespace
