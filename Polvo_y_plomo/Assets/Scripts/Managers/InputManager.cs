@@ -93,6 +93,17 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private InputAction _exit;
 
+    /// <summary>
+    /// Acción para Move.
+    /// Inicializada en Init()
+    /// </summary>
+    private InputAction _movement;
+
+    /// <summary>
+    /// Acción para Look.
+    /// Inicialidada en Init()
+    /// </summary>
+    private InputAction _look;
 
     #endregion
 
@@ -187,7 +198,7 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public Vector2 LookVector { get; private set; }
 
-
+    
     #region Metodos para "Fire"
     /// <summary>
     /// Método para saber si el botón de disparo (Fire) está pulsado
@@ -394,8 +405,34 @@ public class InputManager : MonoBehaviour
     }
     #endregion
 
-
-
+    /// <summary>
+    /// Método que desactiva los Inputs
+    /// </summary>
+    public void DesactivarInput()
+    {
+        _movement.Disable();
+        _look.Disable();
+        _fire.Disable();
+        _melee.Disable();
+        _reload.Disable();
+        _hability.Disable();
+        _roll.Disable();
+        _exit.Disable();
+    }
+    /// <summary>
+    /// Método que activa los Inputs
+    /// </summary>
+    public void ActivarInput()
+    {
+        _movement.Enable();
+        _look.Enable();
+        _fire.Enable();
+        _melee.Enable();
+        _reload.Enable();
+        _hability.Enable();
+        _roll.Enable();
+        _exit.Enable();
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -412,25 +449,25 @@ public class InputManager : MonoBehaviour
         _theController.Player.Enable();
 
         // Cacheamos la acción de movimiento
-        InputAction movement = _theController.Player.Move;
+        _movement = _theController.Player.Move;
         // Por si alguien lo borra
-        if (movement == null) Debug.Log("Se ha borrado la acción \"Move\" y el jugador no se va a poder mover");
+        if (_movement == null) Debug.Log("Se ha borrado la acción \"Move\" y el jugador no se va a poder mover");
         else
         {
             // Para el movimiento, actualizamos el vector de movimiento usando
             // el método OnMove
-            movement.performed += OnMove;
-            movement.canceled += OnMove;
+            _movement.performed += OnMove;
+            _movement.canceled += OnMove;
         }
 
         // Cacheo la acción de mirar
-        InputAction look = _theController.Player.Look;
+        _look = _theController.Player.Look;
         // Por si la borran
-        if (look == null) Debug.Log("Se ha borrado la acción \"Look\" y el jugador no se va a poder mover el cursor");
+        if (_look == null) Debug.Log("Se ha borrado la acción \"Look\" y el jugador no se va a poder mover el cursor");
         else
         {
-            look.performed += OnLook;
-            look.canceled += OnLook;
+            _look.performed += OnLook;
+            _look.canceled += OnLook;
         }
 
         // Para el disparo solo cacheamos la acción de disparo.

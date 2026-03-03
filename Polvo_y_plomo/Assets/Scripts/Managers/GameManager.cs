@@ -33,6 +33,21 @@ public class GameManager : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+    /// <summary>
+    /// Componente con el FadeIn configurado
+    /// </summary>
+    [SerializeField]
+    private FadeColor FadeIn;
+    /// <summary>
+    /// Componente con el FadeOut configurado
+    /// </summary>
+    [SerializeField]
+    private FadeColor FadeOut;
+    /// <summary>
+    /// Tiempo que tardara la escena en reiniciarse
+    /// </summary>
+    [SerializeField]
+    private float TiempoEsperaRespawn = 3f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -165,10 +180,14 @@ public class GameManager : MonoBehaviour
     {
         _vidaJugador = NuevaVidaJugador;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public void Respawn()
     {
-        // Canvas slow 
+        InputManager.Instance.DesactivarInput();
+        if (FadeIn != null) FadeIn.StartFade();
+        else Debug.Log("Componente FadeColor no asignado");
         StartCoroutine(EsperaReinicioEscena());
     }
     #endregion
@@ -193,9 +212,12 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EsperaReinicioEscena()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(TiempoEsperaRespawn);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (FadeOut != null) FadeOut.StartFade();
+        else Debug.Log("Componente FadeColor no asignado");
+            InputManager.Instance.ActivarInput();
     }
 
     #endregion

@@ -59,6 +59,7 @@ public class HealthChanger : MonoBehaviour
         _vida = VidaMax;
         if (GetComponent<PlayerCore>() != null)
         {
+            Debug.Log("Jugador soy");
             _jugador = true;
         }
     }
@@ -89,21 +90,27 @@ public class HealthChanger : MonoBehaviour
             }
             if (_vida <= 0)
             {
+                Debug.Log("Jugador muriendo");
                 MetodoMuerte();
             }
         }
     }
-    /// <summary>
-    /// Este metodo permitirá leer la vida que tenga el gameObject
-    /// </summary>
-    /// 
+
+    #endregion
+
+    // ---- MÉTODOS PRIVADOS ----
+    #region Métodos Privados
+    // Documentar cada método que aparece aquí
+    // El convenio de nombres de Unity recomienda que estos métodos
+    // se nombren en formato PascalCase (palabras con primera letra
+    // mayúscula, incluida la primera letra)
     /// <summary>
     /// Este metodo comprueba si el gameObject que le invoca es el jugador.
     /// Dependiendo de si lo llama el gameObject del jugador destruirá reiniciará la escena
     /// De otra manera comprueba si el gameObject tiene cadaver, si lo tiene lo genera el cadaver, de lo contrario destruye el objeto 
     /// (Incompleto/Futuro)
     /// </summary>
-    public void MetodoMuerte()
+    private void MetodoMuerte()
     {
         if (_jugador)
         {
@@ -122,15 +129,6 @@ public class HealthChanger : MonoBehaviour
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
         }
     }
-
-    #endregion
-
-    // ---- MÉTODOS PRIVADOS ----
-    #region Métodos Privados
-    // Documentar cada método que aparece aquí
-    // El convenio de nombres de Unity recomienda que estos métodos
-    // se nombren en formato PascalCase (palabras con primera letra
-    // mayúscula, incluida la primera letra)
 
     #endregion
 }
