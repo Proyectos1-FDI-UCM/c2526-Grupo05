@@ -121,6 +121,11 @@ public class Shoot : MonoBehaviour
         else { }
     }
 
+    /// <summary>
+    /// Este método se encargará de todo el proceso de recargar el arma. Se le llamrá cuando el jugador introduzca el input de
+    /// recarga, o Cuando el número de balas llegue a 0. Primero recargará una bala. Después de un tiempo, recargará la segunda.
+    /// Si durante este margen, se detecta que el arma se dispara o se rueda, se cancelará la recarga.
+    /// </summary>
     public void RecargaBala()
     {
 
