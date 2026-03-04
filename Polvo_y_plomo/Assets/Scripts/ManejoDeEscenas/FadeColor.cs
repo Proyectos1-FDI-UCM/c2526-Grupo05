@@ -86,9 +86,16 @@ public class FadeColor : MonoBehaviour
     private Color _startColor;
 
     /// <summary>
-    /// Almacena, si se ha iniciado, la corrutina del fade.
+    /// Almacena el color final del target.
+    /// Inicializado en el  Start().
     /// </summary>
-    private Coroutine _fadeCoroutine;
+    private Color _endColor;
+
+    /// <summary>
+    /// Almacena el tiempo desde que inicia el fade.
+    /// </summary>
+    private float _t;
+
 
     #endregion
 
@@ -99,9 +106,20 @@ public class FadeColor : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
+
+    /// <summary>
+    /// Se llama al activarse el componente (incluyendo al inicio de la escena, si esta activo).
+    /// Inicializa _t para empezar el fade.
+    /// </summary>
+    private void OnEnable()
+    {
+        _t = 0;
+    }
+
     /// <summary>
     /// Se llama al cargarse en escena por primera vez, si el componente está activo.
     /// Intenta sacar un componente SpriteRenderer, Image o Renderer con color del objeto target, y registra el color inicial con GetColor().
+    /// También calcula cuales han de ser los colores iniciales y finales según las transparencias indicadas.
     /// Si no hay target o no hay componente con color hay programación defensiva que evita que el componente falle.
     /// </summary>
     private void Start()
@@ -117,6 +135,8 @@ public class FadeColor : MonoBehaviour
                 Destroy(this);
             }
             _startColor = GetColor();
+            _startColor = new Color(_startColor.r, _startColor.g, _startColor.b, StartAlpha);
+            _endColor = new Color(_startColor.r, _startColor.g, _startColor.b, FinalAlpha);
         }
         else
         {
@@ -125,16 +145,17 @@ public class FadeColor : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Se llama al desactivarse el componente (necesariamente ha de ocurrir Enabled -> Disabled, si empieza desactivado, no se llama).
-    /// Se asegura de que se haya acabado la corrutina al desactivarse.
-    /// </summary>
-    private void OnDisable()
+    private void Update()
     {
-        if (_fadeCoroutine != null)
+        if (_t < FadeTime)
         {
-            StopCoroutine(_fadeCoroutine);
-            _fadeCoroutine = null;
+            _t += Time.deltaTime;
+            SetColor(Color.Lerp(_startColor, _endColor, _t / FadeTime));
+        }
+        else
+        {
+            SetColor(_endColor); // asegurarse de que acabe en el final
+            this.enabled = false;
         }
     }
     #endregion
@@ -146,16 +167,6 @@ public class FadeColor : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-
-    /// <summary>
-    /// Método público que permite iniciar el fade de transparencia.
-    /// Se asegura de que solo pueda ocurrir uno de estos a la vez.
-    /// </summary>
-    public void StartFade()
-    {
-        if (_fadeCoroutine == null) _fadeCoroutine = StartCoroutine(FadeCoroutine());
-        else Debug.Log("Se ha intentado iniciar un fade cuando otro ya estaba en proceso");
-    }
 
     #endregion
 
@@ -188,26 +199,6 @@ public class FadeColor : MonoBehaviour
         if (_sprite != null) _sprite.color = c;
         else if (_uiImage != null) _uiImage.color = c;
         else if (_rend != null && _rend.material.HasProperty("_Color")) _rend.material.color = c;
-    }
-
-    /// <summary>
-    /// Corrutina que cambia progresivamente la transparencia del objeto durante el tiempo asignado.
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator FadeCoroutine()
-    {
-        float t = 0f;
-        _startColor = new Color(_startColor.r, _startColor.g, _startColor.b, StartAlpha);
-        Color endColor = new Color(_startColor.r, _startColor.g, _startColor.b, FinalAlpha);
-
-        while (t < FadeTime)
-        {
-            t += Time.deltaTime;
-            SetColor(Color.Lerp(_startColor, endColor, t / FadeTime));
-            yield return null;
-        }
-        SetColor(endColor); // asegurarse de que acabe en el final
-        _fadeCoroutine = null;
     }
         #endregion
 
