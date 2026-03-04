@@ -63,10 +63,16 @@ public class EnemySpawnLogic : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Registra en el Awake() si hay un Animator asignado.
-    /// Determina a partir de esto si en el Start() va a iniciar una animación y esperar que acabe esta para hacer el spawn, o solo hacer que aparezca el enemigo.
+    /// Guarda el tiempo en el que aparece este objeto. Sirve para esperar a la animación en el update.
+    /// Se inicializa en el Awake().
     /// </summary>
-    private bool _hasAnimation = true;
+    private float _t;
+
+    /// <summary>
+    /// Guarda la duración del clip de animación indicado.
+    /// Inicializado en el Awake() si hay animación.
+    /// </summary>
+    private float _duracionAnimacion;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -75,10 +81,13 @@ public class EnemySpawnLogic : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen
-    
+
     /// <summary>
     /// Se llama al cargarse en la escena.
     /// Revisa cosas necesarias para el componente (que EnemyPrefab este asignado) y comprueba si existe un Animator asignado, registrandolo en _hasAnimation.
+    /// 
+    /// Luego, si no hay animación, instancia el objeto y destruye el GameObject. 
+    /// Si la hay, busca el clip indicado, fuerza que empiece, y registra su duración.
     /// </summary>
     private void Awake()
     {
@@ -88,33 +97,28 @@ public class EnemySpawnLogic : MonoBehaviour
             Destroy(this);
         }
 
-
-        _hasAnimation = SpawnAnimator != null;
-    }
-    /// <summary>
-    /// Se llama al cargarse en escena si el objeto esta activado, o la primera vez que se activa. Después del Awake().
-    /// En caso de tener Animator, busca dentro de este el clip con el nombre de StateName. Al encontrarlo inicia la animación y espera a que acabe para hacer aparecer al enemigo.
-    /// Si no lo tiene, solo hace aparecer al enemigo.
-    /// 
-    /// Al acabar, destruye el objeto que contiene el script (si tiene animación se hace al final de la corrutina).
-    /// </summary>
-    void Start()
-    {
-        if (_hasAnimation)
+        if (SpawnAnimator == null) DoSpawn();
+        else
         {
+            _t = Time.time;
             foreach (AnimationClip clip in SpawnAnimator.runtimeAnimatorController.animationClips)
             {
                 if (clip.name == StateName)
                 {
                     SpawnAnimator.Play(StateName, 0, 0f);
-                    Invoke(nameof(DoSpawn), clip.length);
+                    _duracionAnimacion = clip.length;
                 }
             }
         }
-        else
-        {
-            DoSpawn();
-        }
+    }
+
+    /// <summary>
+    /// Se llama cada frame mientras el componente esté activo.
+    /// Espera la duración de la animación y hace el spawn del enemigo, luego autodestruyendose.
+    /// </summary>
+    private void Update()
+    {
+        if (Time.time - _t > _duracionAnimacion) DoSpawn();
     }
 
     #endregion

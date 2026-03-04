@@ -63,7 +63,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private int _vidaJugador = 10;
 
-
+    /// <summary>
+    /// Guarda un tiempo concreto. Usado para esperar en el Update().
+    /// </summary>
+    private float _t;
 
     #endregion
 
@@ -75,6 +78,7 @@ public class GameManager : MonoBehaviour
     /// Método llamado en un momento temprano de la inicialización.
     /// En el momento de la carga, si ya hay otra instancia creada,
     /// nos destruimos (al GameObject completo)
+    /// Desactiva el componente para evitar que se corra updates.
     /// </summary>
     protected void Awake()
     {
@@ -104,6 +108,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
             Init();
+            this.enabled = false;
         } // if-else somos instancia nueva o no.
     }
 
@@ -119,6 +124,18 @@ public class GameManager : MonoBehaviour
         } // if somos la instancia principal
     }
 
+    /// <summary>
+    /// Se llama cada frame si el componente está activo.
+    /// Por ahora solo sirve para esperar un cierto tiempo, según lo necesita Respawn().
+    /// </summary>
+    private void Update()
+    {
+        if (Time.time - _t > TiempoEsperaRespawn)
+        {
+            ReinicioEscena();
+            this.enabled = false;
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -188,7 +205,8 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.DesactivarInput();
         if (FadeIn != null) FadeIn.enabled = true;
         else Debug.Log("Componente FadeColor de FadeIn no asignado");
-        Invoke(nameof(ReinicioEscena), TiempoEsperaRespawn);
+        _t = Time.time;
+        this.enabled = true; // comienza el temporizador en el update
     }
     #endregion
 
@@ -210,11 +228,16 @@ public class GameManager : MonoBehaviour
         // a otro manager
     }
 
+    /// <summary>
+    /// Reinicia la escena actual.
+    /// </summary>
     private void ReinicioEscena()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         if (FadeOut != null) FadeOut.enabled = true;
         else Debug.Log("Componente FadeColor de FadeOut no asignado");
+
         InputManager.Instance.ActivarInput();
     }
     #endregion
