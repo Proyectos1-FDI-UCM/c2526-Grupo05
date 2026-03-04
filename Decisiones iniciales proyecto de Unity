@@ -1,0 +1,23 @@
+Reglas, decisiones, y directrices de implementación:
+
+-El pivote estará en el centro (por defecto de unity).
+
+-El origen de Unity se encontrará en el centro de la zona de inicio de cada escena. El jugador se podrá desplazar por el mundo, y la cámara lo hará con él.
+
+-En principio, se verán 32 * 18 tiles en pantalla. La cámara se posiciona a -10 unidades del plano de juego (por defecto de unity).
+
+-Cada tile tendrá una cantidad de pixels per unit de 20 por lado, es decir, un total de 400 pixeles por unidad.
+
+-NO usar espacios en blanco en nombres de archivos.
+
+-Poner nombres de métodos y clases significativos, en inglés, y en PascalCase.
+
+-no usar plugins de Unity.
+
+-METER SIEMPRE ARCHIVOS  A UNITY DESDE EL EDITOR (si no, no se genera el .meta).
+
+-DOCUMENTAR.
+
+-No poner variables públicas.
+
+-No eliminar quién hace cada cosa en github.
