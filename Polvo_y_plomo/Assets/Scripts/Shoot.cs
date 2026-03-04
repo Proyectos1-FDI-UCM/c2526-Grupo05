@@ -95,8 +95,7 @@ public class Shoot : MonoBehaviour
     /// <param name="direction"> Dirección a la que apuntará la bala </param>
     public void ShootBullet()
     {
-        // Aquí se instanciará la bala, y se le dará la dirección adecuada. 
-        BulletMove bala = Instantiate(Bullet, transform.position, transform.Localrotation).GetComponent<BulletMove>();
+        BulletMove bala = Instantiate(Bullet, transform.position, transform.localRotation).GetComponent<BulletMove>();
         //bala. ;
     }
 

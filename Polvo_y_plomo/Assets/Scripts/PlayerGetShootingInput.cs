@@ -13,7 +13,7 @@ using UnityEngine;
 /// Este componente recibirá el valor del input booleano _fire del InputManager. Cuando se reciba el input, llamará a otra función de un componente llamado Shoot, que generará una bala en 
 /// la dirección que esta clase le introduzca.
 /// </summary>
-public class Player : MonoBehaviour
+public class PlayerGetShootingInput : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
