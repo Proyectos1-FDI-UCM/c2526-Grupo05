@@ -18,6 +18,9 @@ using UnityEngine.UIElements;
 /// También se le puede asignar una lista de otros EnemySpawner que activar cuando termine la lista este spawner.
 /// 
 /// El componente se desactiva solo una vez acabada la lista, y nada impide que se vuelva a activar para repetir la lista.
+/// (!) Es recomendable que este componente se ponga en la escena como desactivado al comienzo, a no ser que se quiera que empiece inmediatamente.
+/// (!) Si se activa el componente más de 2 veces, la lista de ActivateSpawnersWhenDone se ejecutará 2 veces.
+/// Hay que tener esto en cuenta ya que es posible crear cadenas infintas si no se tiene cuidado.
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
@@ -72,10 +75,16 @@ public class EnemySpawner : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Almacena la rutina de spawn para asegurarse que se detiene al desactivarse el componente.
-    /// Se regista en onEnable().
+    /// Almacena el indice del enemigo que se esta esperando por hacer aparecer ahora.
+    /// Inicializado en OnEnable().
     /// </summary>
-    private Coroutine _spawnCoroutine;
+    private int _indEnemigo;
+
+    /// <summary>
+    /// Almacena el tiempo desde el último respawn del enemigo.
+    /// Inicializado en OnEnable().
+    /// </summary>
+    private float _t;
 
     #endregion
 
@@ -92,7 +101,8 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        _spawnCoroutine = StartCoroutine(SpawnRoutine());
+        _indEnemigo = 0;
+        _t = Time.time;
     }
 
     /// <summary>
@@ -102,10 +112,20 @@ public class EnemySpawner : MonoBehaviour
     private void OnDisable()
     {
         foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) spawner.enabled = true;
-        if (_spawnCoroutine != null)
+    }
+
+
+    private void Update()
+    {
+        if (Time.time - _t >= SpawnList[_indEnemigo].SpawnSecond) // spawn de nuevo enemigo
         {
-            StopCoroutine(_spawnCoroutine);
-            _spawnCoroutine = null;
+            _t = Time.time;
+            Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);
+            _indEnemigo++;
+            if (_indEnemigo >= SpawnList.Length) // lista terminada
+            {
+                this.enabled = false;
+            }
         }
     }
 
@@ -128,24 +148,6 @@ public class EnemySpawner : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-
-    /// <summary>
-    /// Corutina encargada de hacer aparecer la lista completa de enemigos, esperando los tiempos indicados.
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator SpawnRoutine()
-    {
-        int i = 0;
-        while (i < SpawnList.Length)
-        {
-            yield return new WaitForSeconds(SpawnList[i].SpawnSecond);
-
-            Instantiate(SpawnList[i].EnemySpawnPrefab, transform.position, transform.rotation);
-            i++;
-        }
-
-        this.enabled = false;
-    }
 
     #endregion
 

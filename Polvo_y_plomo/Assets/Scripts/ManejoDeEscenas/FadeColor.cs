@@ -14,6 +14,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Componente al que se le puede asignar cualquier objeto y busca este algún elemento de color.
 /// Si lo encuentra, realiza un fade de transparencia entre 2 asignables (inical y final) durante un tiempo asignable.
+/// (!) Ha de estar desactivada (como componente, no gameobject) al inicio de la escena. Si no lo está, se activará el fade.
 /// </summary>
 public class FadeColor : MonoBehaviour
 {

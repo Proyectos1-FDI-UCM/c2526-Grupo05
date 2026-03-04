@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.DesactivarInput();
         if (FadeIn != null) FadeIn.enabled = true;
         else Debug.Log("Componente FadeColor de FadeIn no asignado");
-        StartCoroutine(EsperaReinicioEscena());
+        Invoke(nameof(ReinicioEscena), TiempoEsperaRespawn);
     }
     #endregion
 
@@ -210,16 +210,13 @@ public class GameManager : MonoBehaviour
         // a otro manager
     }
 
-    private IEnumerator EsperaReinicioEscena()
+    private void ReinicioEscena()
     {
-        yield return new WaitForSeconds(TiempoEsperaRespawn);
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (FadeOut != null) FadeOut.enabled = true;
         else Debug.Log("Componente FadeColor de FadeOut no asignado");
         InputManager.Instance.ActivarInput();
     }
-
     #endregion
 } // class GameManager 
 // namespace
