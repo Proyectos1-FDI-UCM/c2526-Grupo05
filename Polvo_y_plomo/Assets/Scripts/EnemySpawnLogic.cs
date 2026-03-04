@@ -63,11 +63,6 @@ public class EnemySpawnLogic : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Almacena la corutina iniciada para asegurarse de que se acaba al final.
-    /// </summary>
-    private Coroutine _waitCoroutine;
-
-    /// <summary>
     /// Registra en el Awake() si hay un Animator asignado.
     /// Determina a partir de esto si en el Start() va a iniciar una animación y esperar que acabe esta para hacer el spawn, o solo hacer que aparezca el enemigo.
     /// </summary>
@@ -112,27 +107,13 @@ public class EnemySpawnLogic : MonoBehaviour
                 if (clip.name == StateName)
                 {
                     SpawnAnimator.Play(StateName, 0, 0f);
-                    StartCoroutine(WaitToSpawn(clip.length));
+                    Invoke(nameof(DoSpawn), clip.length);
                 }
             }
         }
         else
         {
-            Instantiate(EnemyPrefab, transform.position + SpawnPositionOffset, transform.rotation);
-            Destroy(gameObject);
-        }
-    }
-
-    /// <summary>
-    /// Se llama cuando el objeto es destruido.
-    /// Se asegura de que la corrutina se haya acabado antes de destruirse.
-    /// </summary>
-    private void OnDestroy()
-    {
-        if (_waitCoroutine != null)
-        {
-            StopCoroutine(_waitCoroutine);
-            _waitCoroutine = null;
+            DoSpawn();
         }
     }
 
@@ -156,17 +137,11 @@ public class EnemySpawnLogic : MonoBehaviour
     // mayúscula, incluida la primera letra)
 
     /// <summary>
-    /// Corrutina que permite esperar la duración del clip de la animación antes de hacer aparecer definitvamente al enemigo.
-    /// Destruye el objeto tras instanciar al enemigo.
+    /// Método que realiza el spawn del enemigo y destruye el objeto (puesto que ya no se va a usar).
     /// </summary>
-    /// <param name="waitLength"></param>
-    /// <returns></returns>
-    private IEnumerator WaitToSpawn(float waitLength)
+    private void DoSpawn()
     {
-        yield return new WaitForSeconds(waitLength);
-
         Instantiate(EnemyPrefab, transform.position + SpawnPositionOffset, transform.rotation);
-
         Destroy(gameObject);
     }
     #endregion   

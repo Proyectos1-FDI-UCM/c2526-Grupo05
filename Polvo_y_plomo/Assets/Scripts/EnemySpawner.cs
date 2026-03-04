@@ -97,7 +97,7 @@ public class EnemySpawner : MonoBehaviour
 
     /// <summary>
     /// Se llama al ser activado el componente, incluyendo al cargarse en la escena (si esta activo).
-    /// Se encarga de iniciar la rutina de spawn de enemgios, y registrarla.
+    /// Se encarga de inicializar el indice de la lista de enemigos y el tiempo que se tendrá en cuenta a la hora de hacer los spawns.
     /// </summary>
     private void OnEnable()
     {
@@ -107,7 +107,7 @@ public class EnemySpawner : MonoBehaviour
 
     /// <summary>
     /// Se llama al ser desactivado el componente. No se llama si al ser cargado el componente esta desactivado (necesariamente ha de ocurrir Enabled -> Disabled).
-    /// Realiza la activación de otros EnemySpawner y se asegura de que la corutina iniciada haya acabado.
+    /// Realiza la activación de otros EnemySpawner.
     /// </summary>
     private void OnDisable()
     {
