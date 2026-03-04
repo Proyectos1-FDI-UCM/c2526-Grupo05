@@ -86,8 +86,13 @@ public class PlayerGetShootingInput : MonoBehaviour
             Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"Shoot\", y no disparar.");
             Destroy(this);
         }
+    }
 
 
+    void Update()
+    {
+        CompruebaDisparo();
+        CompruebaRecarga();
     }
     #endregion
 

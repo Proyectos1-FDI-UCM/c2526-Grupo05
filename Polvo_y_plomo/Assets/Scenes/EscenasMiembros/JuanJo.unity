@@ -322,6 +322,8 @@ GameObject:
   m_Component:
   - component: {fileID: 649590574}
   - component: {fileID: 649590575}
+  - component: {fileID: 649590577}
+  - component: {fileID: 649590576}
   m_Layer: 0
   m_Name: RevolverSon
   m_TagString: Untagged
@@ -399,6 +401,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &649590576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649590573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785a8965b4f0b8c4e921ec946f519043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rate: 0.15
+  Reload: 0.3
+--- !u!114 &649590577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649590573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34a6c8481ce5c34d835c9f5a5a9938e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Objetivo: {fileID: 1246401683}
+  Bullet: {fileID: 481267826506717086, guid: 4dbd16fc43d46874e86933e6adaa0ebb, type: 3}
+  _numBalas: 6
+--- !u!1 &1246401683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8633089953209525018, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+  m_PrefabInstance: {fileID: 408981267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1570786355
 GameObject:
   m_ObjectHideFlags: 0

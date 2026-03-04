@@ -28,8 +28,17 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     private GameObject Objetivo = null;
 
+    /// <summary>
+    /// Esta variable referencia al Objeto de tipo BulletMove que se instanciará cada vez que se dispare (la bala);
+    /// </summary>
     [SerializeField]
     private BulletMove Bullet = null;
+
+    /// <summary>
+    /// Esta variable es el número de balas máximas que tendrá disponibles el Objeto con Shoot.
+    /// </summary>
+    [SerializeField]
+    private int _numBalas = 6;
 
     #endregion
 
@@ -42,6 +51,9 @@ public class Shoot : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Esta variable referencia al componente PlayerGetShootingInput que debe estar en el miso GameObject que Shoot (si es jugador).
+    /// </summary>
     private PlayerGetShootingInput _playerGetShootingInput = null;
 
     #endregion
@@ -95,10 +107,24 @@ public class Shoot : MonoBehaviour
     /// <param name="direction"> Dirección a la que apuntará la bala </param>
     public void ShootBullet()
     {
-        BulletMove bala = Instantiate(Bullet, transform.position, transform.localRotation).GetComponent<BulletMove>();
-        //bala. ;
+        if (_numBalas > 0)
+        {
+            float angulo = 180f / Mathf.PI * Mathf.Atan2((transform.parent.position - Objetivo.transform.position).y, (transform.parent.position - Objetivo.transform.position).x);
+            angulo %= 360;
+            if (angulo < 0) angulo += 360f;
+            Quaternion dir = Quaternion.Euler(0, 0, angulo + 90);
+
+            Instantiate(Bullet, transform.position, dir);
+
+            _numBalas--;
+        }
+        else { }
     }
 
+    public void RecargaBala()
+    {
+
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
