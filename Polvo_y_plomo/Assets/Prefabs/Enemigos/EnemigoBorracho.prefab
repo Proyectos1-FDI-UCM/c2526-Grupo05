@@ -165,9 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab46bea649c90f542882682334d2fa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChaseRadius: 5
-  AttackRadius: 3
-  ChaseSpeed: 3
+  ChaseRadius: 4
+  AttackRadius: 2
+  ChaseSpeed: 6
 --- !u!50 &8200727855567051127
 Rigidbody2D:
   serializedVersion: 5
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1380eecf6381b0848b213c509bfaf0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CooldownMelee: 2.5
+  CooldownMelee: 1.5
 --- !u!114 &2853623653024549938
 MonoBehaviour:
   m_ObjectHideFlags: 0
