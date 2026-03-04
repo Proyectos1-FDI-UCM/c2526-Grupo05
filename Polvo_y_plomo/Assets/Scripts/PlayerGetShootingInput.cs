@@ -24,8 +24,6 @@ public class Player : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     // GameObject asignable desde el editor que guarda el cursor del jugador
-    [SerializeField]
-    private GameObject Cursor = null;
 
     // Variable float que guarda el cooldown (CD) del disparo. Actualizada en el Update cada vez que este se realiza.
     [SerializeField]
@@ -33,7 +31,7 @@ public class Player : MonoBehaviour
 
     // Variable float que guarda el tiempo de recarga del disparo. Actualizada en el Update cada vez que este se realiza.
     [SerializeField]
-    private float Reload = 0.15f;
+    private float Reload = 0.3f;
 
     #endregion
 
@@ -50,6 +48,11 @@ public class Player : MonoBehaviour
     /// Esta variable almacena el último momento en el que se presionó la acción de disparar.
     /// </summary>
     private float _tiempoDesdeUltimoDisparo = -99f;
+
+    /// <summary>
+    /// Esta variable almacena el último momento en el que se presionó la acción de recargar.
+    /// </summary>
+    private float _tiempoDesdeUltimaRecarga = -99f;
 
     ///<summary>
     ///Esta variable almacena el componente de tipo Shoot (encargado de disparar) que tiene este GameObject;
@@ -77,18 +80,14 @@ public class Player : MonoBehaviour
             Destroy(this);
         }
 
-        if (Cursor == null)
-        {
-            Debug.Log("Se ha puesto el componente \"PlayerGetShootingInput\" sin un cursor asignado. No podrá disparar.");
-            Destroy(this);
-        }
-
-        /*_canMelee = GetComponent<CanMelee>();
-        if (_canMelee == null)
+        _shoot = GetComponent<Shoot>();
+        if (_shoot == null)
         {
             Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"Shoot\", y no disparar.");
             Destroy(this);
-        }*/
+        }
+
+
     }
     #endregion
 
@@ -110,13 +109,22 @@ public class Player : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    private void CompruebaInput()
+    private void CompruebaDisparo()
     {
-        /*if (InputManager._instance.FireWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
+        if (InputManager.Instance.FireWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
         {
-
+            _shoot.ShootBullet();
             _tiempoDesdeUltimoDisparo = Time.time;
-        }*/
+        }
+    }
+
+    private void CompruebaRecarga()
+    {
+        if (InputManager.Instance.ReloadWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimaRecarga > Reload)
+        {
+            //_shoot.;
+            _tiempoDesdeUltimaRecarga = Time.time;
+        }
     }
 
     #endregion   
