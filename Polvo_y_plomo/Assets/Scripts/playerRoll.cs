@@ -73,7 +73,7 @@ public class playerRoll : MonoBehaviour
     /// actualiza constantemente en el FixedUpdate para avisar de cuándo el jugador debe dejar de rodar. Inicializada a 99 por motivos que se explicarán más abajo
     /// </summary>
     /// <summary>
-    private Vector2 dirRoll;
+    private Vector2 _dirRoll;
     /// </summary>
     private float _tiempoRestanteRodado = 99f;
     /// <summary>
@@ -87,7 +87,7 @@ public class playerRoll : MonoBehaviour
     /// <summary>
     /// Componente correspondiente al disparo del jugador, que hara lo propio
     /// </summary>
-    private playerControlledMovement _disparoJugador;
+    private PlayerGetShootingInput _disparoJugador;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -106,6 +106,7 @@ public class playerRoll : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _desplazamientoJugador = GetComponent<playerControlledMovement>();
         _meleeJugador = GetComponent<playerMeleeAttack>();
+        _disparoJugador = GetComponentInChildren<PlayerGetShootingInput>();
     }
 
     /// <summary>
@@ -130,7 +131,7 @@ public class playerRoll : MonoBehaviour
     {
         if (_isRolling)
         {
-            _rb.linearVelocity = dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
+            _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
             _tiempoRestanteRodado -= Time.fixedDeltaTime;
         }
 
@@ -168,7 +169,7 @@ public class playerRoll : MonoBehaviour
     /// </summary>
     private void EmpiezaRoll()
     {
-        dirRoll = InputManager.Instance.MovementVector;
+        _dirRoll = InputManager.Instance.MovementVector;
         LogicaRoll(false);
         _tiempoRestanteRodado = DuracionRodado;
         _isRolling = true;
@@ -182,7 +183,7 @@ public class playerRoll : MonoBehaviour
     {
         _desplazamientoJugador.enabled = logica;
         _meleeJugador.enabled = logica;
-        //_disparoJugador.enabled = logica;
+        _disparoJugador.enabled = logica;
         HitboxJugador.enabled = logica;
         SpriteArmaJugador.enabled = logica;
     }
