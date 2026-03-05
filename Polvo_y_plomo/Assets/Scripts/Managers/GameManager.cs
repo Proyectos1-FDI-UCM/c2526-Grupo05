@@ -219,7 +219,6 @@ public class GameManager : MonoBehaviour
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
         _vidaJugador = NuevaVidaJugador;
-<<<<<<< HEAD
         for (int i = 0; i < Lifes.Length; i++)
         {
             if (i >= _vidaJugador)
@@ -227,16 +226,22 @@ public class GameManager : MonoBehaviour
                 Lifes[i].SetActive(false);
             }
         }
-        Debug.Log(_vidaJugador);
-=======
+        //Debug.Log(_vidaJugador);
         // codigo update HUD vida
     }
 
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
         _municionJugador = NuevaMunicionJugador;
+        for (int i = 0; i < Bullets.Length; i++)
+        {
+            if (i >= _municionJugador)
+            {
+                Bullets[i].SetActive(false);
+            }
+        }
+        //Debug.Log(_municionJugador);
         // codigo update HUD ammo
->>>>>>> 0d74faebb790d99ce13e65256dbc38193a56cd56
     }
 
     /// <summary>
