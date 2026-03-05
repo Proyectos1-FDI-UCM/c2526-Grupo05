@@ -25,14 +25,26 @@ public class playerRoll : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-    // Cooldown configurable del roll, que corre desde que se presiona la tecla
+    /// <summary>
+    /// Cooldown configurable del roll, que corre desde que se presiona la tecla
+    /// </summary>
     [SerializeField] private float CooldownRoll;
-    // Cuánto se desplaza el jugador con cada roll
+    /// <summary>
+    /// Cuánto se desplaza el jugador con cada roll
+    /// </summary>
     [SerializeField] private float DesplazamientoRodado;
-    // Cuánto dura el roll, desde que se presiona la tecla hasta que termina el desplazamiento
+    /// <summary>
+    /// Cuánto dura el roll, desde que se presiona la tecla hasta que termina el desplazamiento
+    /// </summary>
     [SerializeField] private float DuracionRodado;
-    // Collider de la hitbox (hijo) del jugador, que será desactivada posteriormente para evitar que este pueda recibir daño mientras rueda
+    /// <summary>
+    /// Collider de la hitbox (hijo) del jugador, que será desactivada posteriormente para evitar que este pueda recibir daño mientras rueda
+    /// </summary>
     [SerializeField] private BoxCollider2D HitboxJugador;
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] private SpriteRenderer SpriteArmaJugador;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -167,6 +179,7 @@ public class playerRoll : MonoBehaviour
         _meleeJugador.enabled = logica;
         //_disparoJugador.enabled = logica;
         HitboxJugador.enabled = logica;
+        SpriteArmaJugador.enabled = logica;
     }
     #endregion
 

@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jugador
       objectReference: {fileID: 0}
+    - target: {fileID: 8180277153169744243, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -227,6 +231,7 @@ MonoBehaviour:
   DesplazamientoRodado: 3.25
   DuracionRodado: 0.35
   HitboxJugador: {fileID: 209256865}
+  SpriteArmaJugador: {fileID: 1436817136}
 --- !u!61 &209256865 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 5036081665872762522, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
@@ -289,6 +294,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f603b35226294e54d9dc851670bc9f6d, type: 3}
+--- !u!212 &1436817136 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8180277153169744243, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+  m_PrefabInstance: {fileID: 44190206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1530827625
 PrefabInstance:
   m_ObjectHideFlags: 0
