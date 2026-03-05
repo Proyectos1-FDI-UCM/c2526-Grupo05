@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 8960657160136326528}
   - component: {fileID: 5273611612293079281}
   - component: {fileID: 1474871151810355398}
+  - component: {fileID: 8640769707630179225}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -532,6 +533,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VidaMax: 10
+--- !u!114 &8640769707630179225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ee189ee76c40141877477c842e8847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CooldownRoll: 1.5
+  DesplazamientoRodado: 3.25
+  DuracionRodado: 0.35
+  HitboxJugador: {fileID: 5036081665872762522}
+  SpriteArmaJugador: {fileID: 8180277153169744243}
 --- !u!1 &8633089953209525018
 GameObject:
   m_ObjectHideFlags: 0

@@ -179,9 +179,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6794519440049798451, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 44190211}
     - targetCorrespondingSourceObject: {fileID: 4959565184602570148, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 44190208}
@@ -205,36 +202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Reload: 1
   NumMaxBalas: 6
---- !u!1 &44190209 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6794519440049798451, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
-  m_PrefabInstance: {fileID: 44190206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &44190210 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
-  m_PrefabInstance: {fileID: 44190206}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &44190211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 44190209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ee189ee76c40141877477c842e8847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CooldownRoll: 1.5
-  DesplazamientoRodado: 3.25
-  DuracionRodado: 0.35
-  HitboxJugador: {fileID: 209256865}
-  SpriteArmaJugador: {fileID: 1436817136}
---- !u!61 &209256865 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5036081665872762522, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
   m_PrefabInstance: {fileID: 44190206}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1090519636
@@ -294,11 +264,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f603b35226294e54d9dc851670bc9f6d, type: 3}
---- !u!212 &1436817136 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8180277153169744243, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
-  m_PrefabInstance: {fileID: 44190206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1530827625
 PrefabInstance:
   m_ObjectHideFlags: 0

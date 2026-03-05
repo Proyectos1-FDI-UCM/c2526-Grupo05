@@ -1030,6 +1030,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jugador
       objectReference: {fileID: 0}
+    - target: {fileID: 8640769707630179225, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: SpriteArmaJugador
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8960657160136326528, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: Cursor
       value: 
@@ -1038,6 +1042,7 @@ PrefabInstance:
     - {fileID: 8960657160136326528, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
     - {fileID: 5273611612293079281, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
     - {fileID: 1474871151810355398, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+    - {fileID: 8640769707630179225, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8633089953209525018, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
     - {fileID: 4709658674322198269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}

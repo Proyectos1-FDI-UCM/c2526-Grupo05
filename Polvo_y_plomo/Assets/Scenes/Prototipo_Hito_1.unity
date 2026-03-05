@@ -1441,6 +1441,24 @@ MonoBehaviour:
   FadeIn: {fileID: 0}
   FadeOut: {fileID: 0}
   TiempoEsperaRespawn: 3
+  Lifes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Bullets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1200308215
 Transform:
   m_ObjectHideFlags: 0
@@ -1618,7 +1636,7 @@ PrefabInstance:
     - target: {fileID: 3448774173787822883, guid: 721b705fceb0d4affa38b81ff31eaefa, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d5f2ba6124ad440ec8c3ea8fb0abe848, type: 3}
+      objectReference: {fileID: 21300000, guid: c477b5516b850ae48a285de5a1e39892, type: 3}
     - target: {fileID: 3448774173787822883, guid: 721b705fceb0d4affa38b81ff31eaefa, type: 3}
       propertyPath: m_SortingOrder
       value: -1
