@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 8180277153169744243}
   - component: {fileID: 2353835037813424682}
   - component: {fileID: 2922786102867036322}
+  - component: {fileID: 8480573717615319094}
   m_Layer: 0
   m_Name: RevolverSon
   m_TagString: Untagged
@@ -200,7 +201,7 @@ Transform:
   m_GameObject: {fileID: 4959565184602570148}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.25, y: 0, z: 0}
+  m_LocalPosition: {x: 1.25, y: -0.2, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -289,6 +290,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rate: 0.15
   Cursor: {fileID: 3504479324421535513}
+--- !u!114 &8480573717615319094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4959565184602570148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad203d1d0710cb49bc56490640be0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Reload: 0.3
+  NumMaxBalas: 6
 --- !u!1 &6794519440049798451
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +318,9 @@ GameObject:
   - component: {fileID: 318241813652885617}
   - component: {fileID: 166880489185979541}
   - component: {fileID: 2913671630897624468}
+  - component: {fileID: 8960657160136326528}
+  - component: {fileID: 5273611612293079281}
+  - component: {fileID: 1474871151810355398}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -373,7 +391,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4109acea4d56bd44697729bb833a6299, type: 3}
+  m_Sprite: {fileID: 4483504832982471387, guid: a64fd7c0681edc04e98ec4e47462804f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -473,6 +491,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91c210d895fb3a47a35520c9d48d76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8960657160136326528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3e3750d15de0344a0a7da57726cbb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cursor: {fileID: 8633089953209525018}
+  CooldownMelee: 2.5
+--- !u!114 &5273611612293079281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf79ecfd9d29a245bdc220f6ae40236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeleePrefab: {fileID: 5015214724800111349, guid: 8e3abd07c76a80745873b79eeb433e2b, type: 3}
+  DistanciaSpawnAtaque: 1
+--- !u!114 &1474871151810355398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d492bab6509dbde449a17beac0a5072c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VidaMax: 10
 --- !u!1 &8633089953209525018
 GameObject:
   m_ObjectHideFlags: 0
