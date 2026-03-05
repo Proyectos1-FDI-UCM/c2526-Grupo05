@@ -160,7 +160,11 @@ public class HasAmmo : MonoBehaviour
             if (_numBalas == 0) IntentaRecarga();
             return true;  // dispara
         }
-        else return false;
+        else
+        { 
+
+            return false;
+        }
 
     }
 
