@@ -10,8 +10,8 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Componente que se le da a cualquier objeto que tenga la capacidad de realizar un ataque a melee.
+/// Se encarga únicamente de realizar el ataque, el cuando y cómo (controlador) se deja a otro script.
 /// </summary>
 public class CanMelee : MonoBehaviour
 {
@@ -22,7 +22,12 @@ public class CanMelee : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-    public GameObject MeleePrefab = null;
+
+    /// <summary>
+    /// Prefab del objeto que aparecerá para hacer daño.
+    /// </summary>
+    [SerializeField]
+    private GameObject MeleePrefab = null;
     #endregion
     
     // ---- ATRIBUTOS PRIVADOS ----

@@ -18,12 +18,15 @@ public class playerMeleeAttack : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
-    
-    // GameObject asignable desde el editor que guarda el cursor del jugador
+    /// <summary>
+    /// GameObject asignable desde el editor que guarda el cursor del jugador
+    /// </summary>
     [SerializeField] 
     private GameObject Cursor = null;
 
-    // Variable float que guarda el cooldown (CD) del ataque melee. Actualizada en el Update cada vez que este se realiza.
+    /// <summary>
+    /// Variable float que guarda el cooldown (CD) del ataque melee. Actualizada en el Update cada vez que este se realiza.
+    /// </summary>
     [SerializeField] 
     private float CooldownMelee = 2.5f;
 

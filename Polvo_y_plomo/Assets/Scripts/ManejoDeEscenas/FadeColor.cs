@@ -1,6 +1,6 @@
 //---------------------------------------------------------
 // Herramienta de fades de transparencia
-// Responsable de la creación de este archivo
+// Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -146,6 +146,10 @@ public class FadeColor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Realiza el FadeColor cambiando entre _startColor y _endColor (mismo color, distinta transparencia) a lo largo del tiempo.
+    /// Desactiva el componente trás acabar.
+    /// </summary>
     private void Update()
     {
         if (_t < FadeTime)

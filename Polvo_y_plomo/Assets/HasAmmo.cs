@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Script que se encarga del movimiento rectilíneo de la bala
-// Samuel Asensio Torres
+// Breve descripción del contenido del archivo
+// Responsable de la creación de este archivo
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Componente al que se le asigna una velocidad inicial y se encarga de mover el objeto a esta velocidad.
-/// Pensado para añadirlo a las balas.
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
 /// </summary>
-public class BulletMove : MonoBehaviour
+public class HasAmmo : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,8 +23,12 @@ public class BulletMove : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+ 
+    /// <summary>
+    /// Esta variable es el número de balas máximas que tendrá disponibles el Objeto con Shoot.
+    /// </summary>
     [SerializeField]
-    private float speed = 15f; // Velocidad de la bala
+    private int NumMaxBalas = 6;
 
     #endregion
 
@@ -37,6 +41,11 @@ public class BulletMove : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    private Shoot _shoot;
+    /// <summary>
+    /// Esta variable es el número de balas que tendrá disponibles el Objeto con Shoot.
+    /// </summary>
+    private int _numBalas = 6;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -47,12 +56,25 @@ public class BulletMove : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
+    /// </summary>
+    void Start()
+    {
+        _shoot = GetComponent<Shoot>();
+        if (_shoot == null)
+        {
+            Debug.Log("Se ha puesto el componente HasAmmo en un objeto sin componente Shoot. No funcionará.");
+            Destroy(this);
+        }
+    }
+
+    /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// Quiero que tenga un movimiento constante
     /// </summary>
     void Update()
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        
     }
     #endregion
 
@@ -63,9 +85,23 @@ public class BulletMove : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-
+    public void RecargaBala()
+    {
+        if (_numBalas < NumMaxBalas) _numBalas++;
+    }
     #endregion
-    
+  
+    public bool IntentaDisparo()
+    {
+        if (_numBalas > 0) 
+        {
+            _shoot.ShootBullet();
+            _numBalas--;
+            return true;  // dispara
+        }
+        else return false;
+
+    }
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -73,7 +109,7 @@ public class BulletMove : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion   
+    #endregion
 
-} // class BulletMove 
+} // class HasAmmo 
 // namespace

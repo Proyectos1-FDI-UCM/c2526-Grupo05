@@ -11,8 +11,8 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Componente que se usa para darle a un objeto un "tiempo de vida", que transcurre desde que
+/// se carga el objeto. Tras pasar el tiempo, el GameObject es destruido.
 /// </summary>
 public class DestroyOverTime : MonoBehaviour
 {
@@ -24,8 +24,11 @@ public class DestroyOverTime : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// Variable que almacena el tiempo de vida del objeto
+    /// </summary>
     [SerializeField]
-    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
+    private float LifeTime = 0.1f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -37,7 +40,10 @@ public class DestroyOverTime : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-    private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
+    /// <summary>
+    /// Variable que almacena el tiempo en el que spawnea el objeto
+    /// </summary>
+    private float _timeSpawn = 0f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -48,8 +54,7 @@ public class DestroyOverTime : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Se llama la primera vez que el componente esta activo, después del Awake.
-    /// Realiza comprobaciones necesarias para el componente.
+    /// Se llama la primera vez que el componente esta activo, después del Awake
     /// Guarda el tiempo de spawn.
     /// </summary>
     void Start()

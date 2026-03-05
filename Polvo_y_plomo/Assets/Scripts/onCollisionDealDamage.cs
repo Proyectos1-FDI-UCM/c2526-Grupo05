@@ -11,7 +11,7 @@ using UnityEngine;
 
 /// <summary>
 /// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad y stunnea a las que sean enemigos
+/// Resta un PV configurable a una entidad
 /// </summary>
 public class onCollisionDealDamage : MonoBehaviour
 {
@@ -23,10 +23,11 @@ public class onCollisionDealDamage : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// Variable que indica el daño que hace el objeto
+    /// </summary>
     [SerializeField]
-    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
-    [SerializeField]
-    private int DamageDone = 1;///Variable que indica el daño que hace el objeto
+    private int DamageDone = 1;
 
     #endregion
 
@@ -38,9 +39,6 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-
-
-    private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----

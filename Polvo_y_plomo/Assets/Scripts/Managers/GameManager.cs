@@ -35,14 +35,18 @@ public class GameManager : MonoBehaviour
     // Ejemplo: MaxHealthPoints
     /// <summary>
     /// Componente con el FadeIn configurado
+    /// Realizará un FadeIn de pantalla negra al morir el jugador.
     /// </summary>
     [SerializeField]
     private FadeColor FadeIn;
+
     /// <summary>
     /// Componente con el FadeOut configurado
+    /// Realizará un FadeOut de pantalla negra al reaparecer el jugador.
     /// </summary>
     [SerializeField]
     private FadeColor FadeOut;
+
     /// <summary>
     /// Tiempo que tardara la escena en reiniciarse
     /// </summary>
@@ -68,8 +72,9 @@ public class GameManager : MonoBehaviour
     /// Instancia única de la clase (singleton).
     /// </summary>
     private static GameManager _instance;
+
     /// <summary>
-    /// Esta es la vida del jugador
+    /// Esta es la vida actual del jugador
     /// </summary>
     private int _vidaJugador = 10;
 
@@ -200,6 +205,7 @@ public class GameManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
         System.GC.Collect();
     } // ChangeScene
+
     /// <summary>
     /// Este metodo actualiza la vida en el HUD
     /// </summary>
@@ -215,8 +221,12 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log(_vidaJugador);
     }
+
     /// <summary>
-    /// 
+    /// Método que se encarga de llevar los procesos tras la muerte del jugador.
+    /// Desactiva el input del jugador, inicia un FadeIn de pantalla negra y activa este componente para que en
+    /// el Update() se lleve un contador para esperar al FadeIn y luego reiniciar la escena.
+    /// Se llama desde HealthChanger, cuando muere el jugador.
     /// </summary>
     public void Respawn()
     {
@@ -240,6 +250,9 @@ public class GameManager : MonoBehaviour
         // De momento no hay nada que inicializar
     }
 
+    /// <summary>
+    /// Transfiere datos importantes de un GameManager que ha de destruirse al activo.
+    /// </summary>
     private void TransferManagerSetup()
     {
         // De momento no hay que transferir ningún setup
@@ -247,7 +260,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Reinicia la escena actual.
+    /// Reinicia la escena actual, activa el FadeOut de la pantalla negra y reactiva el input del jugador.
     /// </summary>
     private void ReinicioEscena()
     {

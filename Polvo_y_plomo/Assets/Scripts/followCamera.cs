@@ -36,6 +36,9 @@ public class followCamera : MonoBehaviour
     [SerializeField]
     private float Spring = 3f;
 
+    /// <summary>
+    /// Objeto al que sigue la cámara.
+    /// </summary>
     [SerializeField]
     private Transform Target;
 

@@ -57,7 +57,7 @@ public class PlayerGetShootingInput : MonoBehaviour
     ///<summary>
     ///Esta variable almacena el componente de tipo Shoot (encargado de disparar) que tiene este GameObject;
     ///</summary>>
-    private Shoot _shoot = null;
+    private HasAmmo _hasAmmo = null;
 
     #endregion
 
@@ -80,10 +80,10 @@ public class PlayerGetShootingInput : MonoBehaviour
             Destroy(this);
         }
 
-        _shoot = GetComponent<Shoot>();
-        if (_shoot == null)
+        _hasAmmo = GetComponent<HasAmmo>();
+        if (_hasAmmo == null)
         {
-            Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"Shoot\", y no disparar.");
+            Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"HasAmmo\", y no disparar.");
             Destroy(this);
         }
     }
@@ -118,8 +118,7 @@ public class PlayerGetShootingInput : MonoBehaviour
     {
         if (InputManager.Instance.FireWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
         {
-            _shoot.ShootBullet();
-            _tiempoDesdeUltimoDisparo = Time.time;
+            if (_hasAmmo.IntentaDisparo()) _tiempoDesdeUltimoDisparo = Time.time;
         }
     }
 
@@ -129,6 +128,8 @@ public class PlayerGetShootingInput : MonoBehaviour
         {
             //_shoot.;
             _tiempoDesdeUltimaRecarga = Time.time;
+            // RecargaBala();
+
         }
     }
 

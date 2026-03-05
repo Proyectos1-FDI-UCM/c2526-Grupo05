@@ -11,9 +11,11 @@ using UnityEngine;
 
 /// <summary>
 /// Esta clase permite a un enemigo a atacar cuando se ha acercado al jugador lo suficiente
-/// utilizando el componente ChasePlayer. También se define un tiempo de cooldown editable 
-/// que no permitirá realizar ataques hasta que haya pasado. Por último, llama al componente
-/// canMelee para spawnear al objeto melee correspondiente.
+/// utilizando el componente ChasePlayer. 
+/// También se define un tiempo de cooldown editable que no
+/// permitirá realizar ataques hasta que haya pasado. 
+/// Por último, llama al componente canMelee para spawnear 
+/// al objeto melee correspondiente.
 /// </summary>
 public class EnemyMeleeAttack : MonoBehaviour
 {
