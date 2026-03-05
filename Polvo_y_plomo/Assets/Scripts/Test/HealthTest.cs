@@ -44,7 +44,9 @@ public class Pruebas : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Con este metodo demostraremos que funciona HealthChanger
+    /// Con este metodo demostraremos que funciona HealthChanger.
+    /// Al entrar en colision este objeto, intenta hacerse uno de daño, si tiene componente de vida.
+    /// Si se le pone solo 1 de vida y el objeto muere al chocar, el sistema de vida irá bien.
     /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {

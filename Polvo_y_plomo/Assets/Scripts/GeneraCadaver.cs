@@ -57,7 +57,7 @@ public class GeneraCadaver : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
     ///<summary>
-    ///Este método genera un GameObject dado;
+    /// Este método genera un GameObject dado;
     ///</summary>
     public void PonCadaver()
     {

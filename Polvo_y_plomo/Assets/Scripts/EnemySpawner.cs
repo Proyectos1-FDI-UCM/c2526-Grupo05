@@ -48,7 +48,7 @@ public class EnemySpawner : MonoBehaviour
         /// <summary>
         /// Almacena cuanto tiempo tarda en aparecer este enemigo desde el último que apareció.
         /// </summary>
-        public float SpawnSecond;
+        public float SpawnDelay;
     }
 
     /// <summary>
@@ -114,10 +114,15 @@ public class EnemySpawner : MonoBehaviour
         foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) spawner.enabled = true;
     }
 
-
+    /// <summary>
+    /// Se llama cada frame cuando el componente esta activo.
+    /// Se encarga de verificar si ha pasado suficiente tiempo desde el último spawn de enemigo 
+    /// para hacer aparecer a otro, y si es así, lo hace aparecer.
+    /// Al acabar la lista, desactiva este mismo componente.
+    /// </summary>
     private void Update()
     {
-        if (Time.time - _t >= SpawnList[_indEnemigo].SpawnSecond) // spawn de nuevo enemigo
+        if (Time.time - _t >= SpawnList[_indEnemigo].SpawnDelay) // spawn de nuevo enemigo
         {
             _t = Time.time;
             Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);

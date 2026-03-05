@@ -10,8 +10,8 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Componente al que se le asigna una velocidad inicial y se encarga de mover el objeto a esta velocidad.
+/// Pensado para añadirlo a las balas.
 /// </summary>
 public class BulletMove : MonoBehaviour
 {
@@ -25,10 +25,6 @@ public class BulletMove : MonoBehaviour
 
     [SerializeField]
     private float speed = 15f; // Velocidad de la bala
-
-    /*[SerializeField]
-    private Vector2 Antonio = new Vector2;
-    */
 
     #endregion
 
@@ -49,15 +45,6 @@ public class BulletMove : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
-    {
-        
-    }
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
