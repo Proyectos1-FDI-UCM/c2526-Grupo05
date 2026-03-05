@@ -34,11 +34,6 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     private BulletMove Bullet = null;
 
-    /// <summary>
-    /// Esta variable es el número de balas máximas que tendrá disponibles el Objeto con Shoot.
-    /// </summary>
-    [SerializeField]
-    private int _numBalas = 6;
 
     #endregion
 
@@ -107,18 +102,12 @@ public class Shoot : MonoBehaviour
     /// <param name="direction"> Dirección a la que apuntará la bala </param>
     public void ShootBullet()
     {
-        if (_numBalas > 0)
-        {
             float angulo = 180f / Mathf.PI * Mathf.Atan2((transform.parent.position - Objetivo.transform.position).y, (transform.parent.position - Objetivo.transform.position).x);
             angulo %= 360;
             if (angulo < 0) angulo += 360f;
             Quaternion dir = Quaternion.Euler(0, 0, angulo + 90);
 
             Instantiate(Bullet, transform.position, dir);
-
-            _numBalas--;
-        }
-        else { }
     }
 
     /// <summary>
@@ -126,10 +115,6 @@ public class Shoot : MonoBehaviour
     /// recarga, o Cuando el número de balas llegue a 0. Primero recargará una bala. Después de un tiempo, recargará la segunda.
     /// Si durante este margen, se detecta que el arma se dispara o se rueda, se cancelará la recarga.
     /// </summary>
-    public void RecargaBala()
-    {
-
-    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
