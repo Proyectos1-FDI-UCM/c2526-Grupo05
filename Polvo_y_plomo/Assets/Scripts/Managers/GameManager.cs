@@ -221,10 +221,7 @@ public class GameManager : MonoBehaviour
         _vidaJugador = NuevaVidaJugador;
         for (int i = 0; i < Lifes.Length; i++)
         {
-            if (i >= _vidaJugador)
-            {
-                Lifes[i].SetActive(false);
-            }
+            Lifes[i].SetActive(i < _vidaJugador);
         }
         //Debug.Log(_vidaJugador);
     }
@@ -237,10 +234,7 @@ public class GameManager : MonoBehaviour
         _municionJugador = NuevaMunicionJugador;
         for (int i = 0; i < Bullets.Length; i++)
         {
-            if (i >= _municionJugador)
-            {
-                Bullets[i].SetActive(false);
-            }
+            Bullets[i].SetActive(i<_municionJugador);
         }
         //Debug.Log(_municionJugador);
     }
