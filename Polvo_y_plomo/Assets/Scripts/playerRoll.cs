@@ -43,22 +43,36 @@ public class playerRoll : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    // RigidBody del jugador para gestionar su velocidad lineal (física)
+    /// <summary>
+    /// RigidBody del jugador para gestionar su velocidad lineal (física)
+    /// </summary>
     private Rigidbody2D _rb;
-    // Variable que se actualiza cada vez que el jugador realiza un roll. Está inicializada a -99 para asegurar que se pueda realizar está acción nada más
-    // comienza el juego
+    /// <summary>
+    /// Variable que se actualiza cada vez que el jugador realiza un roll. Está inicializada a -99 para asegurar que se pueda realizar está acción nada más
+    /// comienza el juego
+    /// </summary>
     private float _tiempoDeUltimoRoll = -99f;
-    // Bool que dice si el jugador se encuentra rodando o no, lo que le indica al FixedUpdate si debe hacer cosas o no
+    /// <summary>
+    /// Bool que dice si el jugador se encuentra rodando o no, lo que le indica al FixedUpdate si debe hacer cosas o no
+    /// </summary>
     private bool _isRolling = false;
-    // Variable que se iguala a la duración del rodado (DuracionRodado) creada arriba, cada vez que se inicia una acción de roll. Durante dicha acción, se
-    // actualiza constantemente en el FixedUpdate para avisar de cuándo el jugador debe dejar de rodar. Inicializada a 99 por motivos que se explicarán más abajo
+    /// <summary>
+    /// Variable que se iguala a la duración del rodado (DuracionRodado) creada arriba, cada vez que se inicia una acción de roll. Durante dicha acción, se
+    /// actualiza constantemente en el FixedUpdate para avisar de cuándo el jugador debe dejar de rodar. Inicializada a 99 por motivos que se explicarán más abajo
+    /// </summary>
     private float _tiempoRestanteRodado = 99f;
-    // Componente correspondiente al desplazamiento del jugador, que necesita desactivarse durante el roll
+    /// <summary>
+    /// Componente correspondiente al desplazamiento del jugador, que necesita desactivarse durante el roll
+    /// </summary>
     private playerControlledMovement _desplazamientoJugador;
-    // Componente correspondiente al ataque melee del jugador, que también se debe desactivar
+    /// <summary>
+    /// Componente correspondiente al ataque melee del jugador, que también se debe desactivar
+    /// </summary>
     private playerMeleeAttack _meleeJugador;
-    // Componente correspondiente al disparo del jugador, que hara lo propio
-    private Player _disparoJugador;
+    /// <summary>
+    /// Componente correspondiente al disparo del jugador, que hara lo propio
+    /// </summary>
+    private playerControlledMovement _disparoJugador;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -151,6 +165,7 @@ public class playerRoll : MonoBehaviour
     {
         _desplazamientoJugador.enabled = logica;
         _meleeJugador.enabled = logica;
+        //_disparoJugador.enabled = logica;
         HitboxJugador.enabled = logica;
     }
     #endregion
