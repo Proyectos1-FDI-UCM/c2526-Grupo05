@@ -87,6 +87,12 @@ public class PlayerGetShootingInput : MonoBehaviour
             Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"HasAmmo\", y no podrá disparar.");
             Destroy(this);
         }
+
+        if (Cursor == null)
+        {
+            Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" sin asignarle objeto Cursor. No podrá disparar");
+            Destroy(this);
+        }
     }
 
     /// <summary>

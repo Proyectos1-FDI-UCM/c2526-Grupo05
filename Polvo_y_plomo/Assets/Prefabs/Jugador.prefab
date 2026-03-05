@@ -275,7 +275,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Objetivo: {fileID: 8633089953209525018}
   Bullet: {fileID: 481267826506717086, guid: 4dbd16fc43d46874e86933e6adaa0ebb, type: 3}
-  _numBalas: 6
 --- !u!114 &2922786102867036322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rate: 0.15
-  Reload: 0.3
+  Cursor: {fileID: 3504479324421535513}
 --- !u!1 &6794519440049798451
 GameObject:
   m_ObjectHideFlags: 0

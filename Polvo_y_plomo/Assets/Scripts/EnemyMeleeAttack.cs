@@ -129,9 +129,8 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void CanMelee()
     {
         Vector2 dirMvtoEnemigo = (PlayerCore.Instance.ReadPlayerPosition() - transform.position).normalized;
-        Vector2 posHitbox = (Vector2)transform.position + dirMvtoEnemigo;
 
-        _canMelee.HitboxMelee(dirMvtoEnemigo, posHitbox);
+        _canMelee.HitboxMelee(dirMvtoEnemigo);
     }
     #endregion   
 

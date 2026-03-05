@@ -27,7 +27,14 @@ public class CanMelee : MonoBehaviour
     /// Prefab del objeto que aparecerá para hacer daño.
     /// </summary>
     [SerializeField]
-    private GameObject MeleePrefab = null;
+    private GameObject MeleePrefab;
+
+    /// <summary>
+    /// Determina que tan lejos aparecerá el objeto del ataque desde su origen (este GameObject).
+    /// </summary>
+    [SerializeField]
+    private float DistanciaSpawnAtaque = 1f;
+
     #endregion
     
     // ---- ATRIBUTOS PRIVADOS ----
@@ -70,17 +77,15 @@ public class CanMelee : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
+    
     /// <summary>
     /// Método público que genera un prefab de hitbox de un ataque melee, en una posición y rotación dadas, y lo destruye tras cierto tiempo.
     /// </summary>
-    /// <param name="dirCursorJugador"></param>
-    /// <param name="posHitbox"></param>
-    public void HitboxMelee(Vector2 dirCursorJugador, Vector2 posHitbox)
+    /// <param name="dirAtaque"></param>
+    public void HitboxMelee(Vector2 dirAtaque)
     {
-        GameObject MeleeObj = Instantiate(MeleePrefab);
-        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirCursorJugador.y, dirCursorJugador.x);
-        MeleeObj.transform.rotation = Quaternion.Euler(0, 0, angulo);
-        MeleeObj.transform.position = posHitbox;
+        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
+        Instantiate(MeleePrefab, (Vector2)transform.position + DistanciaSpawnAtaque*dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
     }
 
     // ---- MÉTODOS PRIVADOS ----
