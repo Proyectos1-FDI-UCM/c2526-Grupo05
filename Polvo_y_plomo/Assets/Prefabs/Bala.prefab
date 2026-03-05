@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7337576895693044721}
   - component: {fileID: 6803853394881830857}
   - component: {fileID: 481267826506717086}
-  - component: {fileID: -2243166145139559037}
   - component: {fileID: 776694312800780688}
   - component: {fileID: 7122500367741915767}
+  - component: {fileID: 54676727101224411}
+  - component: {fileID: 8343871243347718618}
   m_Layer: 0
   m_Name: Bala
   m_TagString: Untagged
@@ -104,19 +105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
---- !u!114 &-2243166145139559037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7766981667260540878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cedb671f1ab52c478c2a06010d7c6de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DamageDone: 1
 --- !u!61 &776694312800780688
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -190,3 +178,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &54676727101224411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766981667260540878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef988ce376e25840b38e034c8a25c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8343871243347718618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766981667260540878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cedb671f1ab52c478c2a06010d7c6de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageDone: 1

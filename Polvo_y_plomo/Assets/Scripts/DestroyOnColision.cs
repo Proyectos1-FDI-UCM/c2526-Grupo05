@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// La bala se destruye cuando colisiona con un objeto
+// Samuel Asensio Torres
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,11 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// La bala se destruye cuando colisiona con un objeto
+/// Se crea un método para que cuando colisione un objeto con otro, en este
+/// caso, la bala con otro objeto (enemigo, cobertura...), se destruya la bala
 /// </summary>
-public class DestroyOnCollision : MonoBehaviour
+public class DestroyOnColision : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -42,23 +43,6 @@ public class DestroyOnCollision : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
-    {
-        
-    }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update()
-    {
-        
-    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -70,7 +54,7 @@ public class DestroyOnCollision : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -78,12 +62,16 @@ public class DestroyOnCollision : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    private void OnTriggerEnter2D(Collider2D other)
+    /// <summary>
+    /// Se llama cada vez que el collider del GameObject colisiona con otro collider.
+    /// Destruye el proyectil inmediatamente tras el impacto.
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        Destroy(gameObject);
     }
 
     #endregion   
 
-} // class DestroyOnCollision 
+} // class DestroyOnColision 
 // namespace
