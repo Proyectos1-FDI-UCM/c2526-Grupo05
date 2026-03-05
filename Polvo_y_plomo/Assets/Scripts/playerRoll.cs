@@ -72,6 +72,9 @@ public class playerRoll : MonoBehaviour
     /// Variable que se iguala a la duración del rodado (DuracionRodado) creada arriba, cada vez que se inicia una acción de roll. Durante dicha acción, se
     /// actualiza constantemente en el FixedUpdate para avisar de cuándo el jugador debe dejar de rodar. Inicializada a 99 por motivos que se explicarán más abajo
     /// </summary>
+    /// <summary>
+    private Vector2 dirRoll;
+    /// </summary>
     private float _tiempoRestanteRodado = 99f;
     /// <summary>
     /// Componente correspondiente al desplazamiento del jugador, que necesita desactivarse durante el roll
@@ -127,7 +130,7 @@ public class playerRoll : MonoBehaviour
     {
         if (_isRolling)
         {
-            _rb.linearVelocity = InputManager.Instance.MovementVector * DesplazamientoRodado * (1 / DuracionRodado);
+            _rb.linearVelocity = dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
             _tiempoRestanteRodado -= Time.fixedDeltaTime;
         }
 
@@ -164,6 +167,7 @@ public class playerRoll : MonoBehaviour
     /// </summary>
     private void EmpiezaRoll()
     {
+        dirRoll = InputManager.Instance.MovementVector;
         LogicaRoll(false);
         _tiempoRestanteRodado = DuracionRodado;
         _isRolling = true;
