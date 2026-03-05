@@ -1,6 +1,6 @@
 //---------------------------------------------------------
 // Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -23,7 +23,12 @@ public class HasAmmo : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
- 
+    /// <summary>
+    /// Variable float que guarda el tiempo de recarga del disparo. Actualizada en el Update cada vez que este se realiza.
+    /// </summary>
+    [SerializeField]
+    private float Reload = 0.3f;
+
     /// <summary>
     /// Esta variable es el número de balas máximas que tendrá disponibles el Objeto con Shoot.
     /// </summary>
@@ -42,10 +47,19 @@ public class HasAmmo : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     private Shoot _shoot;
+
     /// <summary>
     /// Esta variable es el número de balas que tendrá disponibles el Objeto con Shoot.
     /// </summary>
     private int _numBalas = 6;
+
+    /// <summary>
+    /// Guarda el tiempo desde la última recarga con éxito.
+    /// </summary>
+    
+    private float _tiempoUltimaRecarga;
+
+    private bool _isPlayer;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -59,7 +73,7 @@ public class HasAmmo : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// </summary>
-    void Start()
+    private void Awake()
     {
         _shoot = GetComponent<Shoot>();
         if (_shoot == null)
@@ -67,6 +81,12 @@ public class HasAmmo : MonoBehaviour
             Debug.Log("Se ha puesto el componente HasAmmo en un objeto sin componente Shoot. No funcionará.");
             Destroy(this);
         }
+
+        if (GetComponent<PlayerGetShootingInput>() == null) _isPlayer = false;
+        else _isPlayer = true;
+
+
+        this.enabled = false; // desactiva el update y se activará para la secuencia de recarga bala a bala.
     }
 
     /// <summary>
@@ -74,7 +94,26 @@ public class HasAmmo : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (Time.time - _tiempoUltimaRecarga > Reload)
+        {
+            _numBalas++;
+            if (_numBalas >= NumMaxBalas) this.enabled = false;
+            _tiempoUltimaRecarga = Time.time;
+        }
         
+        if (_isPlayer && IsReloadCanceledThisFrame() && _numBalas > 0)
+        {
+            this.enabled = false; // deja de recargar al cancelarse la acción.
+        } // necesario comprobar _numBalas ya que es posible que se cancele mientras que el jugador tiene 0 balas, evitando la recarga automática.
+    }
+
+    /// <summary>
+    /// Si el componente es destruido por no poder funcionar, se asegura que el resto de componentes dejen de funcionar también.
+    /// No puede destruir el controlador del disparo puesto que aquí no sabemos que script será.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Destroy(GetComponent<Shoot>());
     }
     #endregion
 
@@ -85,30 +124,41 @@ public class HasAmmo : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-    public void RecargaBala()
+
+    public bool IntentaDisparo(Vector2 fireDir)
     {
-        if (_numBalas < NumMaxBalas) _numBalas++;
-    }
-    #endregion
-  
-    public bool IntentaDisparo()
-    {
-        if (_numBalas > 0) 
+        if (_numBalas > 0)
         {
-            _shoot.ShootBullet();
+            _shoot.ShootBullet(fireDir);
             _numBalas--;
+            if (_numBalas == 0) IntentaRecarga();
             return true;  // dispara
         }
         else return false;
 
     }
+
+    public void IntentaRecarga()
+    {
+        // Si la recarga ya esta activa, no es necesario volver a recargar
+        if (!this.enabled && _numBalas < NumMaxBalas)
+        {
+            _tiempoUltimaRecarga = Time.time;
+            this.enabled = true; // inicia la recarga en el update.
+        }
+    }
+    #endregion
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-
+    private bool IsReloadCanceledThisFrame()
+    {
+        return (InputManager.Instance.FireWasPressedThisFrame() || InputManager.Instance.RollWasPressedThisFrame() || InputManager.Instance.MeleeWasPressedThisFrame());
+    }
     #endregion
 
 } // class HasAmmo 
