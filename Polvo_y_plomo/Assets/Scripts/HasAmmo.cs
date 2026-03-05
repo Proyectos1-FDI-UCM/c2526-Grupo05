@@ -51,7 +51,7 @@ public class HasAmmo : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Guarda el componente Shoot.
+    /// Guarda el componente Shoot del GameObject con munición.
     /// </summary>
     private Shoot _shoot;
 
@@ -97,6 +97,7 @@ public class HasAmmo : MonoBehaviour
         if (GetComponent<PlayerGetShootingInput>() == null) _isPlayer = false;
         else _isPlayer = true;
 
+        _numBalas = NumMaxBalas;
 
         this.enabled = false; // desactiva el update y se activará para la secuencia de recarga bala a bala.
     }
