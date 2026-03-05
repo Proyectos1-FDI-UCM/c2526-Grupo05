@@ -227,9 +227,11 @@ public class GameManager : MonoBehaviour
             }
         }
         //Debug.Log(_vidaJugador);
-        // codigo update HUD vida
     }
 
+    /// <summary>
+    /// Este metodo actualiza las balas en el HUD
+    /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
         _municionJugador = NuevaMunicionJugador;
@@ -241,7 +243,6 @@ public class GameManager : MonoBehaviour
             }
         }
         //Debug.Log(_municionJugador);
-        // codigo update HUD ammo
     }
 
     /// <summary>
