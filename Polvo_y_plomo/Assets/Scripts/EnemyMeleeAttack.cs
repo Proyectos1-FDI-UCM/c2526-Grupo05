@@ -122,7 +122,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     /// <summary>
     /// Este métoddo crea una variable de direccion del ataque y una de la posición del mismo.
-    /// Posteriormente llma al método que crea el objeto melee en el componente de CanMelee.
+    /// Posteriormente llama al método que crea el objeto melee en el componente de CanMelee.
     /// </summary>
     private void CanMelee()
     {

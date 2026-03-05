@@ -48,6 +48,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float TiempoEsperaRespawn = 3f;
+    /// <summary>
+    /// Lista de objetos de vida del HUD
+    /// </summary>
+    [SerializeField]
+    private GameObject[] Lifes = new GameObject[10];
+    /// <summary>
+    /// Lista de objetos de balas del HUD
+    /// </summary>
+    [SerializeField]
+    private GameObject[] Bullets = new GameObject[6];
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -196,6 +206,14 @@ public class GameManager : MonoBehaviour
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
         _vidaJugador = NuevaVidaJugador;
+        for (int i = 0; i < Lifes.Length; i++)
+        {
+            if (i >= _vidaJugador)
+            {
+                Lifes[i].SetActive(false);
+            }
+        }
+        Debug.Log(_vidaJugador);
     }
     /// <summary>
     /// 

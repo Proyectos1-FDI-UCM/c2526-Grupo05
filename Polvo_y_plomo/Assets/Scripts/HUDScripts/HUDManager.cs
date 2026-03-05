@@ -1,11 +1,10 @@
 //---------------------------------------------------------
-// Destruye un gameobject al transcurrir un tiempo editable
-// CamiloSandovalSánchez
+// Breve descripción del contenido del archivo
+// Responsable de la creación de este archivo
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
-using System;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
@@ -14,7 +13,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class DestroyOverTime : MonoBehaviour
+public class HUDManager : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -25,7 +24,10 @@ public class DestroyOverTime : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     [SerializeField]
-    private float LifeTime = 0.1f;///Variable que almacena el tiempo de vida del objeto
+    private GameObject[] Lifes = new GameObject[10];
+
+    [SerializeField]
+    private GameObject[] Bullets = new GameObject[6];
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -37,7 +39,6 @@ public class DestroyOverTime : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-    private float _timeSpawn = 0f;///Variable que almacena el tiempo en el que spawnea el objeto
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -48,25 +49,20 @@ public class DestroyOverTime : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Se llama la primera vez que el componente esta activo, después del Awake.
-    /// Realiza comprobaciones necesarias para el componente.
-    /// Guarda el tiempo de spawn.
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
     /// </summary>
     void Start()
     {
-        _timeSpawn = Time.time;
+
     }
 
     /// <summary>
-    /// Se llama cada frame
-    /// Elimina al objeto una vez que el tiempo de vida parametrizado se alcanza.
+    /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update()
     {
-        if (Time.time - _timeSpawn >= LifeTime)
-        {
-            Destroy(gameObject);
-        }
+        
     }
     #endregion
 
@@ -79,7 +75,7 @@ public class DestroyOverTime : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-
+    
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -87,7 +83,7 @@ public class DestroyOverTime : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    #endregion   
 
-} // class DestroyOverTime 
+} // class HUDManager 
 // namespace
