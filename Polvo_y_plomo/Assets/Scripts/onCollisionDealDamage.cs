@@ -61,6 +61,7 @@ public class onCollisionDealDamage : MonoBehaviour
         {
             health.CambiarVida(-DamageDone);
         }
+        Destroy(gameObject);
     }
 
     #endregion
