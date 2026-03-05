@@ -11,9 +11,11 @@ using UnityEngine;
 
 /// <summary>
 /// Esta clase permite a un enemigo a atacar cuando se ha acercado al jugador lo suficiente
-/// utilizando el componente ChasePlayer. También se define un tiempo de cooldown editable 
-/// que no permitirá realizar ataques hasta que haya pasado. Por último, llama al componente
-/// canMelee para spawnear al objeto melee correspondiente.
+/// utilizando el componente ChasePlayer. 
+/// También se define un tiempo de cooldown editable que no
+/// permitirá realizar ataques hasta que haya pasado. 
+/// Por último, llama al componente canMelee para spawnear 
+/// al objeto melee correspondiente.
 /// </summary>
 public class EnemyMeleeAttack : MonoBehaviour
 {
@@ -122,14 +124,13 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     /// <summary>
     /// Este métoddo crea una variable de direccion del ataque y una de la posición del mismo.
-    /// Posteriormente llma al método que crea el objeto melee en el componente de CanMelee.
+    /// Posteriormente llama al método que crea el objeto melee en el componente de CanMelee.
     /// </summary>
     private void CanMelee()
     {
         Vector2 dirMvtoEnemigo = (PlayerCore.Instance.ReadPlayerPosition() - transform.position).normalized;
-        Vector2 posHitbox = (Vector2)transform.position + dirMvtoEnemigo;
 
-        _canMelee.HitboxMelee(dirMvtoEnemigo, posHitbox);
+        _canMelee.HitboxMelee(dirMvtoEnemigo);
     }
     #endregion   
 

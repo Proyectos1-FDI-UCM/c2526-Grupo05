@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este componente se encargará de recibir el input de disparo del InpuManager y llamará a una función para disparar una bala.
-// Juan Jsé de Reyna Godoy
+// Controlador para el disparo del jugador.
+// Juan José de Reyna Godoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,11 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este componente recibirá el valor del input booleano _fire del InputManager. Cuando se reciba el input, llamará a otra función de un componente llamado Shoot, que generará una bala en 
-/// la dirección que esta clase le introduzca.
+/// Este componente recibirá el valor del input booleano _fire del InputManager. Cuando se reciba el input,
+/// llamará al componente HasAmmo del jugador y este se encargará del resto del disparo.
+/// Este componerse ha de situarse en el mismo GameObject junto a "HasAmmo" y "Shoot" para poder funcionar.
 /// </summary>
-public class Player : MonoBehaviour
+public class PlayerGetShootingInput : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,17 +24,18 @@ public class Player : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
-    // GameObject asignable desde el editor que guarda el cursor del jugador
-    [SerializeField]
-    private GameObject Cursor = null;
 
-    // Variable float que guarda el cooldown (CD) del disparo. Actualizada en el Update cada vez que este se realiza.
+    /// <summary>
+    /// Variable float que guarda el cooldown (CD) del disparo.
+    /// </summary>
     [SerializeField]
     private float Rate = 0.15f;
 
-    // Variable float que guarda el tiempo de recarga del disparo. Actualizada en el Update cada vez que este se realiza.
+    /// <summary>
+    /// Transform del cursor, hacia el que se disparará la bala.
+    /// </summary>
     [SerializeField]
-    private float Reload = 0.15f;
+    private Transform Cursor;
 
     #endregion
 
@@ -51,10 +53,11 @@ public class Player : MonoBehaviour
     /// </summary>
     private float _tiempoDesdeUltimoDisparo = -99f;
 
+
     ///<summary>
-    ///Esta variable almacena el componente de tipo Shoot (encargado de disparar) que tiene este GameObject;
+    /// Esta variable almacena el componente de tipo HasAmmo (encargado de disparar en el jugador) que tiene este GameObject;
     ///</summary>>
-    private Shoot _shoot = null;
+    private HasAmmo _hasAmmo;
 
     #endregion
 
@@ -66,10 +69,11 @@ public class Player : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Se llama una vez, en el primer frame.
-    /// Se harán comprobaciones de que el editor está correctamente colocado.
+    /// Se llama una vez si el componente esta activo al cargase en escena, después del Awake().
+    /// Se harán comprobaciones necesarias para el componente. Se tiene que hacer después del Awake() ya
+    /// que los componentes HasAmmo o Shoot podrían destruirse en el Awake() si falta algún componente.
     /// </summary>
-    void Start()
+    private void Start()
     {
         if (!InputManager.HasInstance())
         {
@@ -77,18 +81,37 @@ public class Player : MonoBehaviour
             Destroy(this);
         }
 
-        if (Cursor == null)
+        _hasAmmo = GetComponent<HasAmmo>();
+        if (_hasAmmo == null)
         {
-            Debug.Log("Se ha puesto el componente \"PlayerGetShootingInput\" sin un cursor asignado. No podrá disparar.");
+            Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"HasAmmo\", y no podrá disparar.");
             Destroy(this);
         }
 
-        /*_canMelee = GetComponent<CanMelee>();
-        if (_canMelee == null)
+        if (Cursor == null)
         {
-            Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" en un objeto sin el componente \"Shoot\", y no disparar.");
+            Debug.Log("Se ha puesto el componente  \"PlayerGetShootingInput\" sin asignarle objeto Cursor. No podrá disparar");
             Destroy(this);
-        }*/
+        }
+    }
+
+    /// <summary>
+    /// Si el componente es destruido por no poder funcionar, se asegura que el resto de componentes dejen de funcionar también.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Destroy(GetComponent<HasAmmo>());
+        Destroy(GetComponent<Shoot>());
+    }
+
+    /// <summary>
+    /// Se llama cada frame.
+    /// Revisa si el jugador esta intentando disparar (si es posible) o recargar.
+    /// </summary>
+    void Update()
+    {
+        CompruebaDisparo();
+        CompruebaRecarga();
     }
     #endregion
 
@@ -110,13 +133,36 @@ public class Player : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    private void CompruebaInput()
+    /// <summary>
+    /// Revisa si el jugador intenta disparar y si ha pasado suficiente tiempo como
+    /// para que pueda hacer, según la cadencia del arma.
+    /// Si es posible, llama a _hasAmmo para que se encargue del resto del intento del disparo.
+    /// Si se dispara con éxito se actualiza _tiempoDesdeUltimoDisparo.
+    /// </summary>
+    private void CompruebaDisparo()
     {
-        /*if (InputManager._instance.FireWasReleasedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
+        if (InputManager.Instance.FireWasPressedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
         {
+            // Calculo de la dirección de disparo.
+            Vector2 fireDir;
+            fireDir.x = Cursor.position.x - transform.parent.position.x;
+            fireDir.y = Cursor.transform.position.y - transform.parent.position.y;
 
-            _tiempoDesdeUltimoDisparo = Time.time;
-        }*/
+            // Disparo
+            if (_hasAmmo.IntentaDisparo(fireDir)) _tiempoDesdeUltimoDisparo = Time.time;
+        }
+    }
+
+    /// <summary>
+    /// Revisa si el jugador esta intentando recargar y manda una señal a
+    /// _hasAmmo para que intente empezar a recargar.
+    /// </summary>
+    private void CompruebaRecarga()
+    {
+        if (InputManager.Instance.ReloadWasPressedThisFrame())
+        {
+            _hasAmmo.IntentaRecarga();
+        }
     }
 
     #endregion   

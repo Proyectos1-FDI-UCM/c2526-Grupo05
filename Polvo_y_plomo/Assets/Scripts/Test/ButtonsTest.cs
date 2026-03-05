@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Manda mensajes de Debug.Log() para comprobar las acciones de boton (disparo, melee, recarga, habilidad, roll y exit)
+// Modifica un texto asignable para comprobar las acciones de boton (disparo, melee, recarga, habilidad, roll y exit)
 // Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -12,7 +12,7 @@ using UnityEngine;
 
 /// <summary>
 /// Componente para testear las acciones de tipo "boton" del InputManager
-/// Manda mensajes usando Debug.Log para cada acción.
+/// Cambia el texto del TextMeshProUGUI asignado para indicar que inputs se estan usando.
 /// </summary>
 public class ButtonsTest : MonoBehaviour
 {
@@ -64,7 +64,7 @@ public class ButtonsTest : MonoBehaviour
     }
     /// <summary>
     /// Se llama cada frame.
-    /// Comprueba cada método de las acciones Fire y Melee del InputManager.
+    /// Comprueba cada método de acciones en el InputManager.
     /// </summary>
     void Update()
     {

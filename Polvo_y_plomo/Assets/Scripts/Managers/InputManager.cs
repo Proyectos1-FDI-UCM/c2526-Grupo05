@@ -1,4 +1,4 @@
-    //---------------------------------------------------------
+//---------------------------------------------------------
 // Contiene el componente de InputManager
 // Guillermo Jiménez Díaz, Pedro Pablo Gómez Martín
 // Template-P1
@@ -27,8 +27,7 @@ using UnityEngine.InputSystem;
 /// Dependiendo de los botones que se quieran añadir, será necesario ampliar este
 /// InputManager. Para ello:
 /// - Revisar lo que se hace en Init para crear nuevas acciones
-/// - Añadir nuevos métodos para acceder al estado que estemos interesados
-///  
+/// - Añadir nuevos métodos para acceder al estado que estemos interesados  
 /// </summary>
 public class InputManager : MonoBehaviour
 {

@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Este Script creará una bala, y le dará una dirección adecuada.
+// Este Script creará una bala en la dirección indicada.
 // Juan José de Reyna Gosoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -10,7 +10,9 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este componente generará un GameObject cuando reciba una señal (se llame a la función adecuada: ), dándole a este GameObject la dirección adecuada (a la que apunta).
+/// Este componente generará un GameObject de bala cuando reciba una señal (se llame a la función adecuada: ). Le dará la dirección indicada en el método de spawn.
+/// 
+/// Es imperativo que este componente esté cómo hijo de un gameObject con RotateTowardsObject para que las balas aparezcan con la direccion y rotación adecuadas.
 /// </summary>
 public class Shoot : MonoBehaviour
 {
@@ -22,8 +24,18 @@ public class Shoot : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// GameObject que será el objetivo hacia el que se disparará la bala.
+    /// </summary>
     [SerializeField]
-    private GameObject Bullet;
+    private GameObject Objetivo;
+
+    /// <summary>
+    /// Esta variable referencia al Objeto de tipo BulletMove que se instanciará cada vez que se dispare (la bala);
+    /// </summary>
+    [SerializeField]
+    private BulletMove Bullet;
+
 
     #endregion
 
@@ -36,31 +48,47 @@ public class Shoot : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
+
     /// <summary>
     /// Se llama al iniciar el GameObject con el componente.
     /// Tendrá que hacer las comprobaciones necesarias de que el GameObject y el componente están en el formato adecuado.
     /// </summary>
     void Awake()
     {
-        
+        if (Objetivo == null)
+        {
+            Debug.Log("Se ha puesto el componente \"PlayerGetShootingInput\" sin asociarse un objetivo. No podrá disparar.");
+            Destroy(this);
+        }
+
+        if (Bullet == null)
+        {
+            Debug.Log("Se ha puesto el componente \"Shoot\" sin asociarse una bala. No podrá disparar.");
+            Destroy(this);
+        }
+
+        if (GetComponentInParent<rotateTowardsObject>() == null)
+        {
+            Debug.Log("Se ha puesto el componente \"Shoot\" en un objeto cuyo padre no tiene el componente RotateTowardsObject y el spawn de la bala fallaría. No podrá disparar");
+            Destroy(this);
+        }
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Si el componente es destruido por no poder funcionar, se asegura que el resto de componentes dejen de funcionar también.
+    /// No puede destruir el controlador del disparo puesto que aquí no sabemos que script será.
     /// </summary>
-    void Update()
+    private void OnDestroy()
     {
-        
+        Destroy(GetComponent<HasAmmo>());
     }
     #endregion
 
@@ -72,9 +100,22 @@ public class Shoot : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Este método instanciará una bala, y le pasará una dirección a la que desplazarse.
+    /// Esta será la dirección hacia el cursor.
+    /// </summary>
+    /// <param name="direction"> Dirección a la que apuntará la bala </param>
+    public void ShootBullet(Vector2 fireDir)
+    {
+        float angulo = 180f / Mathf.PI * Mathf.Atan2(fireDir.y, fireDir.x);
+        angulo %= 360;
+        if (angulo < 0) angulo += 360f;
+        Quaternion rot = Quaternion.Euler(0, 0, angulo);
 
+        Instantiate(Bullet, transform.position, rot);
+    }
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -82,7 +123,7 @@ public class Shoot : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion   
+    #endregion
 
 } // class Shoot 
 // namespace

@@ -59,7 +59,6 @@ public class HealthChanger : MonoBehaviour
         _vida = VidaMax;
         if (GetComponent<PlayerCore>() != null)
         {
-            Debug.Log("Jugador soy");
             _jugador = true;
         }
     }
@@ -83,14 +82,12 @@ public class HealthChanger : MonoBehaviour
         if (_vida + cambio <= VidaMax)
         {
             _vida += cambio;
-            Debug.Log(_vida);
             if (_jugador && GameManager.HasInstance())
             {
                 GameManager.Instance.UpdateHealthHUD(_vida);
             }
             if (_vida <= 0)
             {
-                Debug.Log("Jugador muriendo");
                 MetodoMuerte();
             }
         }

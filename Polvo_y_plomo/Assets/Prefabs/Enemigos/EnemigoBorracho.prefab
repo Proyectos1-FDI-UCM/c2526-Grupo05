@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1255211531776109209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d492bab6509dbde449a17beac0a5072c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VidaMax: 10
+  VidaMax: 1
 --- !u!114 &6002467434332016076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChaseRadius: 4
   AttackRadius: 2
-  ChaseSpeed: 6
+  ChaseSpeed: 4
 --- !u!50 &8200727855567051127
 Rigidbody2D:
   serializedVersion: 5
@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeleePrefab: {fileID: 5015214724800111349, guid: febc8594a582bd54488df1c76a5fa589, type: 3}
+  DistanciaSpawnAtaque: 1
 --- !u!114 &4036483193981919123
 MonoBehaviour:
   m_ObjectHideFlags: 0
