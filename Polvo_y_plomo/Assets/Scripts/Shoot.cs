@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Este Script creará una bala, y le dará una dirección adecuada.
+// Este Script creará una bala en la dirección indicada.
 // Juan José de Reyna Gosoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -10,7 +10,9 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este componente generará un GameObject cuando reciba una señal (se llame a la función adecuada: ), dándole a este GameObject la dirección adecuada (a la que apunta).
+/// Este componente generará un GameObject de bala cuando reciba una señal (se llame a la función adecuada: ). Le dará la dirección indicada en el método de spawn.
+/// 
+/// Es imperativo que este componente esté cómo hijo de un gameObject con RotateTowardsObject para que las balas aparezcan con la direccion y rotación adecuadas.
 /// </summary>
 public class Shoot : MonoBehaviour
 {
@@ -26,13 +28,13 @@ public class Shoot : MonoBehaviour
     /// GameObject que será el objetivo hacia el que se disparará la bala.
     /// </summary>
     [SerializeField]
-    private GameObject Objetivo = null;
+    private GameObject Objetivo;
 
     /// <summary>
     /// Esta variable referencia al Objeto de tipo BulletMove que se instanciará cada vez que se dispare (la bala);
     /// </summary>
     [SerializeField]
-    private BulletMove Bullet = null;
+    private BulletMove Bullet;
 
 
     #endregion
@@ -45,11 +47,6 @@ public class Shoot : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-
-    /// <summary>
-    /// Esta variable referencia al componente PlayerGetShootingInput que debe estar en el miso GameObject que Shoot (si es jugador).
-    /// </summary>
-    private PlayerGetShootingInput _playerGetShootingInput = null;
 
     #endregion
 
@@ -74,16 +71,24 @@ public class Shoot : MonoBehaviour
 
         if (Bullet == null)
         {
-            Debug.Log("Se ha puesto el componente \"PlayerGetShootingInput\" sin asociarse una bala. No podrá disparar.");
+            Debug.Log("Se ha puesto el componente \"Shoot\" sin asociarse una bala. No podrá disparar.");
             Destroy(this);
         }
 
-        _playerGetShootingInput = GetComponent<PlayerGetShootingInput>();
-        if (_playerGetShootingInput == null /* && Logica disparar enemigo, habrá que alterar el mensaje también */)
+        if (GetComponentInParent<rotateTowardsObject>() == null)
         {
-            Debug.Log("Se ha puesto el componente  \"Shoot\" en un objeto sin el componente \"PlayerGetShootingInput\", no podrá disparar.");
+            Debug.Log("Se ha puesto el componente \"Shoot\" en un objeto cuyo padre no tiene el componente RotateTowardsObject y el spawn de la bala fallaría. No podrá disparar");
             Destroy(this);
         }
+    }
+
+    /// <summary>
+    /// Si el componente es destruido por no poder funcionar, se asegura que el resto de componentes dejen de funcionar también.
+    /// No puede destruir el controlador del disparo puesto que aquí no sabemos que script será.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Destroy(GetComponent<HasAmmo>());
     }
     #endregion
 
@@ -100,21 +105,15 @@ public class Shoot : MonoBehaviour
     /// Esta será la dirección hacia el cursor.
     /// </summary>
     /// <param name="direction"> Dirección a la que apuntará la bala </param>
-    public void ShootBullet()
+    public void ShootBullet(Vector2 fireDir)
     {
-            float angulo = 180f / Mathf.PI * Mathf.Atan2((transform.parent.position - Objetivo.transform.position).y, (transform.parent.position - Objetivo.transform.position).x);
-            angulo %= 360;
-            if (angulo < 0) angulo += 360f;
-            Quaternion dir = Quaternion.Euler(0, 0, angulo + 90);
+        float angulo = 180f / Mathf.PI * Mathf.Atan2(fireDir.y, fireDir.x);
+        angulo %= 360;
+        if (angulo < 0) angulo += 360f;
+        Quaternion rot = Quaternion.Euler(0, 0, angulo);
 
-            Instantiate(Bullet, transform.position, dir);
+        Instantiate(Bullet, transform.position, rot);
     }
-
-    /// <summary>
-    /// Este método se encargará de todo el proceso de recargar el arma. Se le llamrá cuando el jugador introduzca el input de
-    /// recarga, o Cuando el número de balas llegue a 0. Primero recargará una bala. Después de un tiempo, recargará la segunda.
-    /// Si durante este margen, se detecta que el arma se dispara o se rueda, se cancelará la recarga.
-    /// </summary>
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

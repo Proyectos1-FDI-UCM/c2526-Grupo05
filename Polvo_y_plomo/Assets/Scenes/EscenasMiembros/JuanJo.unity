@@ -188,6 +188,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2922786102867036322, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: Cursor
+      value: 
+      objectReference: {fileID: 1350634428}
     - target: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -235,13 +239,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4959565184602570148, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 408981270}
   m_SourcePrefab: {fileID: 100100000, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+--- !u!1 &408981268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4959565184602570148, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+  m_PrefabInstance: {fileID: 408981267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &408981269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 670167139303617689, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
   m_PrefabInstance: {fileID: 408981267}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &408981270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408981268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad203d1d0710cb49bc56490640be0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Reload: 1
+  NumMaxBalas: 6
 --- !u!1001 &562719783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -299,6 +325,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3eeeaccf46f684f6da400b898bbc2f73, type: 3}
+--- !u!4 &1350634428 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3504479324421535513, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+  m_PrefabInstance: {fileID: 408981267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1983034233
 GameObject:
   m_ObjectHideFlags: 0

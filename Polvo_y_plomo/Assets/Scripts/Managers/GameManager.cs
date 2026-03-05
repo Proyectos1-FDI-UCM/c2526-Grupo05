@@ -74,9 +74,16 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     /// <summary>
-    /// Esta es la vida actual del jugador
+    /// Esta es la vida actual del jugador.
+    /// Inicializada en 10 por ser con la que empieza.
     /// </summary>
     private int _vidaJugador = 10;
+
+    /// <summary>
+    /// Esta es la munición actual del jugador.
+    /// Inicializada en 6 por ser en la que empieza.
+    /// </summary>
+    private int _municionJugador = 6;
 
     /// <summary>
     /// Guarda un tiempo concreto. Usado para esperar en el Update().
@@ -212,6 +219,7 @@ public class GameManager : MonoBehaviour
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
         _vidaJugador = NuevaVidaJugador;
+<<<<<<< HEAD
         for (int i = 0; i < Lifes.Length; i++)
         {
             if (i >= _vidaJugador)
@@ -220,6 +228,15 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log(_vidaJugador);
+=======
+        // codigo update HUD vida
+    }
+
+    public void UpdateAmmoHUD(int NuevaMunicionJugador)
+    {
+        _municionJugador = NuevaMunicionJugador;
+        // codigo update HUD ammo
+>>>>>>> 0d74faebb790d99ce13e65256dbc38193a56cd56
     }
 
     /// <summary>
