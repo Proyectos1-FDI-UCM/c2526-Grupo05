@@ -70,6 +70,7 @@ public class HasAmmo : MonoBehaviour
     /// de controlador de player). Inicializada en el Awake().
     /// </summary>
     private bool _isPlayer;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -110,6 +111,7 @@ public class HasAmmo : MonoBehaviour
         if (Time.time - _tiempoUltimaRecarga > Reload)
         {
             _numBalas++;
+            if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             if (_numBalas >= NumMaxBalas) this.enabled = false;
             _tiempoUltimaRecarga = Time.time;
         }
@@ -153,6 +155,7 @@ public class HasAmmo : MonoBehaviour
         {
             _shoot.ShootBullet(fireDir);
             _numBalas--;
+            if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             if (_numBalas == 0) IntentaRecarga();
             return true;  // dispara
         }
