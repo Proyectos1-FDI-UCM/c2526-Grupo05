@@ -42,7 +42,7 @@ public class playerRoll : MonoBehaviour
     /// </summary>
     [SerializeField] private BoxCollider2D HitboxJugador;
     /// <summary>
-    /// 
+    /// Sprite del arma del jugador, que debe desaparecer durante el roll.
     /// </summary>
     [SerializeField] private SpriteRenderer SpriteArmaJugador;
     #endregion
@@ -150,6 +150,7 @@ public class playerRoll : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
+
 
     #endregion
 

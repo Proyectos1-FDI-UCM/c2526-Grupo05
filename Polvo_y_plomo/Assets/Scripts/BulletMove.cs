@@ -47,12 +47,12 @@ public class BulletMove : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// Quiero que tenga un movimiento constante
+    /// Se ejecuta cada frame. Mueve la bala hacia su derecha local (0 grados) 
+    /// para coincidir con la rotación del disparo.
     /// </summary>
     void Update()
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
     #endregion
 
