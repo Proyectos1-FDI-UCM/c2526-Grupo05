@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
+// Intermediario que añade funcionalidad de municion a las armas de fuego.
 // Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -10,8 +10,12 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Componente que se puede colocar opcionalmente entre "Controlador de disparo" y "Generador de disparo (componente Shoot)".
+/// Contiene la lógica para poder recargar cuando el controlador se lo diga e intentar un disparo (que no realiza si no hay munición).
+/// Necesariamente ha de ponerse en el mismo GameObject en el que se situa el compnoente Shoot.
+/// 
+/// (!) Por ahora solo tiene lógica para parar la recarga del jugador. Se puede implementar facilmente para un enemigo con un nuevo
+/// método "CancelaRecarga()" o algo por el estilo (como no tenemos pensado añadirlo no esta implementado).
 /// </summary>
 public class HasAmmo : MonoBehaviour
 {
@@ -46,6 +50,9 @@ public class HasAmmo : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Guarda el componente Shoot.
+    /// </summary>
     private Shoot _shoot;
 
     /// <summary>
@@ -56,9 +63,12 @@ public class HasAmmo : MonoBehaviour
     /// <summary>
     /// Guarda el tiempo desde la última recarga con éxito.
     /// </summary>
-    
     private float _tiempoUltimaRecarga;
 
+    /// <summary>
+    /// Variable que determina si este componente esta puesto en el jugador (ducktyping
+    /// de controlador de player). Inicializada en el Awake().
+    /// </summary>
     private bool _isPlayer;
     #endregion
 
@@ -70,8 +80,9 @@ public class HasAmmo : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Se llama una vez al cargarse en escena.
+    /// Hace comprobaciones necesarias para el componente y registra si somos jugador.
+    /// Desactiva este componente para evitar llamadas innecesarias al Update().
     /// </summary>
     private void Awake()
     {
@@ -90,7 +101,9 @@ public class HasAmmo : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Se llama cada frame.
+    /// Lleva la lógica de recarga bala a bala.
+    /// Si se dispara, hace roll o ataque melee, la recarga se para.
     /// </summary>
     void Update()
     {
@@ -125,6 +138,15 @@ public class HasAmmo : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Método que recibe el intento de disparo desde el Controlador.
+    /// Si el disparo es posible, le comunica al componente _shoot que dispare.
+    /// Esto consume munición y si se llega a 0, se hace un intento de recarga automático.
+    /// 
+    /// Devuelve si el disparo ha sido exitoso o no.
+    /// </summary>
+    /// <param name="fireDir"></param>
+    /// <returns></returns>
     public bool IntentaDisparo(Vector2 fireDir)
     {
         if (_numBalas > 0)
@@ -138,6 +160,11 @@ public class HasAmmo : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Intenta iniciar la recarga activando este componente.
+    /// Evita recargar si ya se tiene la máxima capacidad de balas o si ya se esta recargando
+    /// (consiguiendo que no se reinicie la recarga).
+    /// </summary>
     public void IntentaRecarga()
     {
         // Si la recarga ya esta activa, no es necesario volver a recargar
@@ -155,6 +182,13 @@ public class HasAmmo : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Devuelve un booleano indicando si en este frame se ha pulsado alguna tecla que
+    /// deberá parar la recarga.
+    /// Solo sirve para el jugador.
+    /// </summary>
+    /// <returns></returns>
     private bool IsReloadCanceledThisFrame()
     {
         return (InputManager.Instance.FireWasPressedThisFrame() || InputManager.Instance.RollWasPressedThisFrame() || InputManager.Instance.MeleeWasPressedThisFrame());

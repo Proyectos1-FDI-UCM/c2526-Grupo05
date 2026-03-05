@@ -1,6 +1,6 @@
 //---------------------------------------------------------
 // Controlador para el disparo del jugador.
-// Juan Jsé de Reyna Godoy
+// Juan José de Reyna Godoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -104,6 +104,10 @@ public class PlayerGetShootingInput : MonoBehaviour
         Destroy(GetComponent<Shoot>());
     }
 
+    /// <summary>
+    /// Se llama cada frame.
+    /// Revisa si el jugador esta intentando disparar (si es posible) o recargar.
+    /// </summary>
     void Update()
     {
         CompruebaDisparo();
@@ -129,6 +133,12 @@ public class PlayerGetShootingInput : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
+    /// <summary>
+    /// Revisa si el jugador intenta disparar y si ha pasado suficiente tiempo como
+    /// para que pueda hacer, según la cadencia del arma.
+    /// Si es posible, llama a _hasAmmo para que se encargue del resto del intento del disparo.
+    /// Si se dispara con éxito se actualiza _tiempoDesdeUltimoDisparo.
+    /// </summary>
     private void CompruebaDisparo()
     {
         if (InputManager.Instance.FireWasPressedThisFrame() && Time.time - _tiempoDesdeUltimoDisparo > Rate)
@@ -143,6 +153,10 @@ public class PlayerGetShootingInput : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Revisa si el jugador esta intentando recargar y manda una señal a
+    /// _hasAmmo para que intente empezar a recargar.
+    /// </summary>
     private void CompruebaRecarga()
     {
         if (InputManager.Instance.ReloadWasPressedThisFrame())

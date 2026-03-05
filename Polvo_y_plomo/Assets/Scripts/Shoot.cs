@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Este Script creará una bala, y le dará una dirección adecuada.
+// Este Script creará una bala en la dirección indicada.
 // Juan José de Reyna Gosoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -10,7 +10,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este componente generará un GameObject cuando reciba una señal (se llame a la función adecuada: ), dándole a este GameObject la dirección adecuada (a la que apunta).
+/// Este componente generará un GameObject de bala cuando reciba una señal (se llame a la función adecuada: ). Le dará la dirección indicada en el método de spawn.
 /// 
 /// Es imperativo que este componente esté cómo hijo de un gameObject con RotateTowardsObject para que las balas aparezcan con la direccion y rotación adecuadas.
 /// </summary>
