@@ -18,6 +18,12 @@ using UnityEngine;
 /// con el GameManager para transferir información importante para
 /// la gestión global del juego (información que ha de pasar entre
 /// escenas)
+/// 
+/// +++
+/// Actualmente sirve para añadirse en toda escena en la que haya enemigos que
+/// persigan y/o ataquen al jugador (ChasePlayer y EnemyMeleeAttack lo usan).
+/// Se ha de asignar necesariamente el transform del jugador en el PlayerPosition para
+/// que todo funcione bien.
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
@@ -30,6 +36,12 @@ public class LevelManager : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+
+    /// <summary>
+    /// Parámetro en el que se ha de asignar el transform del jugador (necesario para muchos componentes de enemigos)
+    /// </summary>
+    [SerializeField]
+    private Transform PlayerPosition;
 
     #endregion
 
@@ -55,6 +67,19 @@ public class LevelManager : MonoBehaviour
             // Somos la primera y única instancia
             _instance = this;
             Init();
+        }
+        else
+        {
+            Debug.Log("Se han puesto 2 LevelManager en una misma escena. Uno será destruido");
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (this == _instance)
+        {
+            _instance = null;
         }
     }
 
@@ -89,6 +114,15 @@ public class LevelManager : MonoBehaviour
         return _instance != null;
     }
 
+    /// <summary>
+    /// Método para acceder al transform del jugador.
+    /// </summary>
+    /// <returns></returns>
+    public Transform PlayerTransform()
+    {
+        return PlayerPosition;
+    }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -100,7 +134,10 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void Init()
     {
-        // De momento no hay nada que inicializar
+        if (PlayerPosition == null)
+        {
+            Debug.Log("No se ha asignado PlayerPosition al LevelManager y es posible que componentes que lo necesiten den error");
+        }
     }
 
     #endregion

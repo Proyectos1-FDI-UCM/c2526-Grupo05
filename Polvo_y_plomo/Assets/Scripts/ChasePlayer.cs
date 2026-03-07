@@ -70,7 +70,13 @@ public class ChasePlayer : MonoBehaviour
     /// Almacena el Rigidbody2d del objeto.
     /// Inicializado en el Awake().
     /// </summary>
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
+
+    /// <summary>
+    /// Almacena el Transform del jugador leido en el LevelManager.
+    /// Inicializado en el Start();
+    /// </summary>
+    private Transform _playerTransform;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -85,8 +91,8 @@ public class ChasePlayer : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
         {
             Debug.Log("Se ha puesto el componente \"ChasePlayer\" en un objeto sin RigidBody2D. No podrá perseguir al jugador");
             Destroy(this);
@@ -95,14 +101,23 @@ public class ChasePlayer : MonoBehaviour
 
     private void Start()
     {
-        if (!PlayerCore.HasInstance())
+        if (!LevelManager.HasInstance())
         {
-            Debug.Log("Se ha puesto el componente \"ChasePlayer\" en una escena sin instancia de PlayerCore. No podrá perseguir al jugador");
+            Debug.Log("Se ha puesto el componente \"ChasePlayer\" en una escena sin instancia de LevelManager. No podrá perseguir al jugador");
             Destroy(this);
         }
         else
         {
-            _isChasing = (PlayerCore.Instance.ReadPlayerPosition() - transform.position).magnitude >= ChaseRadius;
+            _playerTransform = LevelManager.Instance.PlayerTransform();
+            if (_playerTransform == null)
+            {
+                Debug.Log("Se ha puesto el componente \"ChasePlayer\" en una escena en la que no se le ha asignado PlayerTransform al LevelManager. No podrá seguir al jugador");
+                Destroy(this);
+            }
+            else
+            {
+                _isChasing = (_playerTransform.position - transform.position).magnitude >= ChaseRadius;
+            }
         }
     }
 
@@ -113,20 +128,20 @@ public class ChasePlayer : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (!_isChasing && (PlayerCore.Instance.ReadPlayerPosition() - transform.position).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
+        if (!_isChasing && (_playerTransform.position - transform.position).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
         {
             _isChasing = true;
         }
-        else if (_isChasing && (PlayerCore.Instance.ReadPlayerPosition() - transform.position).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
+        else if (_isChasing && (_playerTransform.position - transform.position).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
         {
             _isChasing = false;
-            rb.linearVelocity = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
         }
 
         // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
         if (_isChasing)
         {
-            rb.linearVelocity = ChaseSpeed*(PlayerCore.Instance.ReadPlayerPosition() - transform.position).normalized;
+            _rb.linearVelocity = ChaseSpeed*(_playerTransform.position - transform.position).normalized;
         }
     }
     #endregion

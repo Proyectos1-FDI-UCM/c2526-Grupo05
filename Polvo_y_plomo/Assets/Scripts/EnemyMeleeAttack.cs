@@ -51,6 +51,12 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// Variable para usar el componente ChasePlayer
     /// </summary>
     private ChasePlayer _chasePlayer;
+
+    /// <summary>
+    /// Almacena el transform de el jugador, leido desde el LevelManager.
+    /// Inicializado en el Start().
+    /// </summary>
+    private Transform _playerTransform;
     /// <summary>
     /// Variable para guardar el momento de cada ataque
     /// </summary>
@@ -65,7 +71,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Método Start de programación defensiva, detecta los componentes CanMelee, ChasePlayer, Rigidbody2D y se comprueba que existe la instancia del jugador con PlayerCore.
+    /// Método Start de programación defensiva, detecta los componentes CanMelee, ChasePlayer, Rigidbody2D y se comprueba que existe LevelManager con PlayerTransform asignado.
     /// </summary>
     void Start()
     {
@@ -83,10 +89,18 @@ public class EnemyMeleeAttack : MonoBehaviour
             Destroy(this);
         }
 
-        if (!PlayerCore.HasInstance())
+        if (!LevelManager.HasInstance())
         {
-            Debug.Log("Se ha puesto el componente \"ChasePlayer\" en una escena sin instancia de PlayerCore. No podrá perseguir al jugador");
+            Debug.Log("Se ha puesto el componente \"EnemyMeleeAttack\" en una escena sin LevelManager. No podrá atacar al jugador");
             Destroy(this);
+        }
+        else
+        {
+            _playerTransform = LevelManager.Instance.PlayerTransform();
+            if (_playerTransform == null)
+            {
+                Debug.Log("Se ha puesto el componente \"EnemyMeleeAttack\" en una escena en la que no se le ha asignado PlayerPosition al LevelManager. No podrá atacar al jugador.");
+            }
         }
     }
 
@@ -128,7 +142,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// </summary>
     private void CanMelee()
     {
-        Vector2 dirMvtoEnemigo = (PlayerCore.Instance.ReadPlayerPosition() - transform.position).normalized;
+        Vector2 dirMvtoEnemigo = (_playerTransform.position - transform.position).normalized;
 
         _canMelee.HitboxMelee(dirMvtoEnemigo);
     }

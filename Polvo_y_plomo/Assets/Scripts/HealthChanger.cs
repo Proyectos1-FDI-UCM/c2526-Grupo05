@@ -57,7 +57,7 @@ public class HealthChanger : MonoBehaviour
     private void Start()
     {
         _vida = VidaMax;
-        if (GetComponent<PlayerCore>() != null)
+        if (GetComponent<playerControlledMovement>() != null)
         {
             _jugador = true;
         }
