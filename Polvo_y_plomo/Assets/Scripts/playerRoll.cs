@@ -80,14 +80,6 @@ public class playerRoll : MonoBehaviour
     /// Componente correspondiente al desplazamiento del jugador, que necesita desactivarse durante el roll
     /// </summary>
     private playerControlledMovement _desplazamientoJugador;
-    /// <summary>
-    /// Componente correspondiente al ataque melee del jugador, que también se debe desactivar
-    /// </summary>
-    private playerMeleeAttack _meleeJugador;
-    /// <summary>
-    /// Componente correspondiente al disparo del jugador, que hara lo propio
-    /// </summary>
-    private PlayerGetShootingInput _disparoJugador;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -98,15 +90,12 @@ public class playerRoll : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start que inicializa los atributos que guardan el RigidBody2D del jugador, así como sus scripts de desplazamiento básico (playerControlledMovement)
-    /// y ataque melee (playerMeleeAttack).
+    /// Start que inicializa los atributos que guardan el RigidBody2D del jugador, así como su script de desplazamiento básico (playerControlledMovement).
     /// </summary>
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _desplazamientoJugador = GetComponent<playerControlledMovement>();
-        _meleeJugador = GetComponent<playerMeleeAttack>();
-        _disparoJugador = GetComponentInChildren<PlayerGetShootingInput>();
     }
 
     /// <summary>
@@ -131,6 +120,7 @@ public class playerRoll : MonoBehaviour
     {
         if (_isRolling)
         {
+            Debug.Log(_dirRoll);
             _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
             _tiempoRestanteRodado -= Time.fixedDeltaTime;
         }
@@ -139,6 +129,7 @@ public class playerRoll : MonoBehaviour
         {
             _isRolling = false;
             _rb.linearVelocity = Vector2.zero;
+            InputManager.Instance.ActivarInput();
             LogicaRoll(true);
         }
     }
@@ -170,6 +161,7 @@ public class playerRoll : MonoBehaviour
     private void EmpiezaRoll()
     {
         _dirRoll = InputManager.Instance.MovementVector;
+        InputManager.Instance.DesactivarInput();
         LogicaRoll(false);
         _tiempoRestanteRodado = DuracionRodado;
         _isRolling = true;
@@ -182,8 +174,6 @@ public class playerRoll : MonoBehaviour
     private void LogicaRoll(bool logica)
     {
         _desplazamientoJugador.enabled = logica;
-        _meleeJugador.enabled = logica;
-        _disparoJugador.enabled = logica;
         HitboxJugador.enabled = logica;
         SpriteArmaJugador.enabled = logica;
     }
