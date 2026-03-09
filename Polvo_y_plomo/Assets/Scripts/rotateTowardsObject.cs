@@ -10,7 +10,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Componente que hace rotar a un objeto frente a otro asignable, para que lo mire.
+/// Componente que hace rotar a un objeto frente a otro asignable o al jugador, para que lo mire.
 /// Contiene un parámetro de Offset de rotación y la posibilidad de invertir el eje Y según la rotación para que esta se vea bien
 /// </summary>
 public class rotateTowardsObject : MonoBehaviour
@@ -24,10 +24,19 @@ public class rotateTowardsObject : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
-    /// El objeto en el que esta este script se rotará mirando hacia donde este el transform del objeto asignado
+    /// El objeto en el que esta este script se rotará mirando hacia donde este el transform del objeto asignado (o no,
+    /// según RotateTowarsPlayer)
     /// </summary>
     [SerializeField]
     private Transform Object;
+
+    /// <summary>
+    /// Booleano que decide si se va a ignorar el objeto asignado al que se quiere rotar. Si se ignora (si es true)
+    /// entonces rotará hacia el jugador (se remplaza en el Start() el Transform del Object por el del jugador).
+    /// Si es así, será necesario que en la escena haya LevelManager con el transform del jugador asignado.
+    /// </summary>
+    [SerializeField]
+    private bool RotateTowardsPlayer = false;
 
     /// <summary>
     /// Determina si el objeto se dará la vuelta al hacer el cambio de mirar de "izquierda a derecha".
@@ -64,6 +73,7 @@ public class rotateTowardsObject : MonoBehaviour
     /// Registra si el objeto esta invertido o no, para evitar estar cambiando el parámetro de escala innecesariamente.
     /// </summary>
     private bool _flipped = false;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -75,13 +85,38 @@ public class rotateTowardsObject : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (Object == null)
+        if (!RotateTowardsPlayer && Object == null)
         {
             Debug.Log("A un objeto con el componente \"rotateTowardsObject\" no se le ha puesto el transform de un objeto hacia el que rotar. No podrá hacerlo.");
             Destroy(this);
         }
 
         _originalScale = transform.localScale;
+    }
+
+    /// <summary>
+    /// Se llama una vez al ser cargado si el componente está activo, o al activarse por primera vez. Después del Awake().
+    /// Realiza comprobaciones necesarias para el componente.
+    /// </summary>
+    private void Start()
+    {
+        if (RotateTowardsPlayer)
+        {
+            if (!LevelManager.HasInstance())
+            {
+                Debug.Log("Se ha colocado el componente \"rotateTowardsObject\" con RotateTowardsPlayer activo, pero la escena no tiene LevelManager instance. No funcionará");
+                Destroy(this);
+            }
+            else
+            {
+               Object = LevelManager.Instance.PlayerTransform();
+                if (Object == null)
+                {
+                    Debug.Log("Se ha colocado el componente \"rotateTowardsObject\" con RotateTowardsPlayer activo, pero no se le ha asignado el Transform del jugador al LevelManager. No funcionará");
+                    Destroy(this);
+                }
+            }
+        }
     }
 
     /// <summary>

@@ -72,6 +72,7 @@ public class PlayerGetShootingInput : MonoBehaviour
     /// Se llama una vez si el componente esta activo al cargase en escena, después del Awake().
     /// Se harán comprobaciones necesarias para el componente. Se tiene que hacer después del Awake() ya
     /// que los componentes HasAmmo o Shoot podrían destruirse en el Awake() si falta algún componente.
+    /// Ha de colocarse en un objeto con padre (y este deberá ser el jugador para que funcione bien)
     /// </summary>
     private void Start()
     {
