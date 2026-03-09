@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 5785282}
   - component: {fileID: 5785281}
   - component: {fileID: 5785284}
-  - component: {fileID: 5785285}
   m_Layer: 5
   m_Name: Boton_PrototipoDelJuego (1)
   m_TagString: Untagged
@@ -216,7 +215,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5785285}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: QuickFixGameManagerHUD, Assembly-CSharp
         m_MethodName: ActivaObjeto
         m_Mode: 1
@@ -279,19 +278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NextScene: 1
---- !u!114 &5785285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5785278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785756b1d44f90f449ebe6b528692ba2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateObject: {fileID: 433360535}
 --- !u!1 &59990550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1206,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3577065079240657157, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
+      propertyPath: m_Name
+      value: BlackScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 4509599117545259617, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1265,15 +1255,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3577065079240657157, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
+    - {fileID: 595404864273400860, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
---- !u!1 &433360535 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 595404864273400860, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
-  m_PrefabInstance: {fileID: 433360534}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &433603728
 GameObject:
   m_ObjectHideFlags: 0

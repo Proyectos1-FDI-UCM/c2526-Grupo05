@@ -173,6 +173,15 @@ public class FadeColor : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Devuelve el Alpha actual del objetivo.
+    /// Lo usa el GameManager para saber si debe realizar el FadeOut al inicio de la escena.
+    /// </summary>
+    /// <returns></returns>
+    public float GetCurrentTargetAlpha()
+    {
+        return GetColor().a;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

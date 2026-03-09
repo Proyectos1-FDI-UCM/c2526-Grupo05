@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Componente con el FadeIn configurado
     /// Realizará un FadeIn de pantalla negra al morir el jugador.
+    /// Se debería configurar para que acabe en 1 de transparencia.
     /// </summary>
     [SerializeField]
     private FadeColor FadeIn;
@@ -68,6 +70,9 @@ public class GameManager : MonoBehaviour
 
     #region Atributos Privados (private fields)
 
+    private const int VIDABASEJUGADOR = 10;
+    private const int MUNICIONBASEJUGADOR = 6;
+
     /// <summary>
     /// Instancia única de la clase (singleton).
     /// </summary>
@@ -77,13 +82,13 @@ public class GameManager : MonoBehaviour
     /// Esta es la vida actual del jugador.
     /// Inicializada en 10 por ser con la que empieza.
     /// </summary>
-    private int _vidaJugador = 10;
+    private int _vidaJugador = VIDABASEJUGADOR;
 
     /// <summary>
     /// Esta es la munición actual del jugador.
     /// Inicializada en 6 por ser en la que empieza.
     /// </summary>
-    private int _municionJugador = 6;
+    private int _municionJugador = MUNICIONBASEJUGADOR;
 
     /// <summary>
     /// Guarda un tiempo concreto. Usado para esperar en el Update().
@@ -97,12 +102,13 @@ public class GameManager : MonoBehaviour
     #region Métodos de MonoBehaviour
 
     /// <summary>
-    /// Método llamado en un momento temprano de la inicialización.
+    /// Método llamado una vez después del Awake(), una vez otros componentes ya
+    /// se han inicializado correctamente.
     /// En el momento de la carga, si ya hay otra instancia creada,
     /// nos destruimos (al GameObject completo)
     /// Desactiva el componente para evitar que se corra updates.
     /// </summary>
-    protected void Awake()
+    private void Start()
     {
         if (_instance != null)
         {
@@ -115,12 +121,9 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
-            TransferManagerSetup();
+            GameManager.Instance.TransferManagerSetup(FadeIn, FadeOut, Lifes, Bullets);
+            NewSceneUpdate();
 
-            // Y ahora nos destruímos del todo. DestroyImmediate y no Destroy para evitar
-            // que se inicialicen el resto de componentes del GameObject para luego ser
-            // destruídos. Esto es importante dependiendo de si hay o no más managers
-            // en el GameObject.
             DestroyImmediate(this.gameObject);
         }
         else
@@ -247,12 +250,35 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Respawn()
     {
+        // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
+        _vidaJugador = VIDABASEJUGADOR;
+        _municionJugador = MUNICIONBASEJUGADOR;
+
+        // Animación de pantalla negra.
         InputManager.Instance.DesactivarInput();
         if (FadeIn != null) FadeIn.enabled = true;
-        else Debug.Log("Componente FadeColor de FadeIn no asignado");
+
+        // Espera en el update
         _t = Time.time;
         this.enabled = true; // comienza el temporizador en el update
     }
+
+    /// <summary>
+    /// Transfiere datos importantes de un GameManager que ha de destruirse al activo.
+    /// Reconfigura el HUD para incluir el de la escena actual.
+    /// </summary>
+    /// <param name="FadeIn"></param>
+    /// <param name="FadeOut"></param>
+    /// <param name="Lifes"></param>
+    /// <param name="Bullets"></param>
+    public void TransferManagerSetup(FadeColor FadeIn, FadeColor FadeOut, GameObject[] Lifes, GameObject[] Bullets)
+    {
+        this.FadeIn = FadeIn;
+        this.FadeOut = FadeOut;
+        this.Lifes = Lifes;
+        this.Bullets = Bullets;
+    }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -268,12 +294,32 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Transfiere datos importantes de un GameManager que ha de destruirse al activo.
+    /// Cuando un GameManager ya existe, esta función es llamada para actualizar
+    /// cosas necesarias en la nueva escena desde el GameManager original.
+    /// Sirve como indicador de que se ha cargado una nueva escena (que se llama solo
+    /// cuando al cargarla hay otro GameManager).
     /// </summary>
-    private void TransferManagerSetup()
+    private void NewSceneUpdate()
     {
-        // De momento no hay que transferir ningún setup
-        // a otro manager
+        // Hacer que se transfiera la vida actual del jugador 
+        if (LevelManager.HasInstance() && LevelManager.Instance.PlayerTransform() != null)
+        {
+            HealthChanger _playerHealth = LevelManager.Instance.PlayerTransform().GetComponent<HealthChanger>();
+            if (_playerHealth != null)
+            {
+                _playerHealth.CambiarVida(-(VIDABASEJUGADOR - _vidaJugador));
+            }
+        }
+
+        // Actualizar HUD del jugador
+        UpdateAmmoHUD(_municionJugador);
+        UpdateHealthHUD(_vidaJugador);
+
+        // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
+        this.enabled = false;
+        if (FadeOut != null) FadeOut.enabled = true;
+
+        if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
     }
 
     /// <summary>
@@ -282,11 +328,6 @@ public class GameManager : MonoBehaviour
     private void ReinicioEscena()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        if (FadeOut != null) FadeOut.enabled = true;
-        else Debug.Log("Componente FadeColor de FadeOut no asignado");
-
-        InputManager.Instance.ActivarInput();
     }
     #endregion
 } // class GameManager 
