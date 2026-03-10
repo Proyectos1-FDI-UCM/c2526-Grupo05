@@ -120,7 +120,7 @@ public class playerRoll : MonoBehaviour
     {
         if (_isRolling)
         {
-            _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado)/* * GameManager.Instance.SlowMultiplier*/;
+            _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado) * GameManager.Instance.SlowMultiplier;
             _tiempoRestanteRodado -= Time.fixedDeltaTime;
         }
 

@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Responsable de la creación de este archivo
+// Script de la habilidad "Disparo lento" del jugador
+// Creado por Jorge Ladrón de Guevara Jiménez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -30,6 +30,10 @@ public class playerSlowShot : MonoBehaviour
     /// Duración de la habilidad del jugador, que cambie en función de su nivel
     /// </summary>
     [SerializeField] private float[] PlayerAbilityDuration = new float[4];
+    /// <summary>
+    /// Número de kills necesarias para subir de nivel (cada vez) la habilidad
+    /// </summary>
+    [SerializeField] private int[] AbilityUpgradeKillThreshold = new int[4];
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -45,10 +49,6 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     private float _lastAbilityActivationTime = -99f;
     /// <summary>
-    /// Nivel actual de la habilidad. Inicializado a 0 para cuadrar con el array
-    /// </summary>
-    private int _abilityCurrentLevel = 0;
-    /// <summary>
     /// Bool que dice si la habilidad está activa actualmente o no
     /// </summary>
     private bool _abilityOn = false;
@@ -56,6 +56,10 @@ public class playerSlowShot : MonoBehaviour
     /// Tiempo restante de la habilidad en su activación actual
     /// </summary>
     private float _abilityDurationLasting = 99f;
+    /// <summary>
+    /// Nivel actual de la habilidad. Inicializado a 0 para cuadrar con el array (en realidad se supone que empieza a nivel 1)
+    /// </summary>
+    private int _abilityCurrentLevel = 0;
     /// <summary>
     /// Proporción de tiempo restante de la habilidad en su activación actual
     /// </summary>
@@ -70,12 +74,12 @@ public class playerSlowShot : MonoBehaviour
     // - Hay que borrar los que no se usen 
     
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Start de programación defensiva que comprueba si hay Input y Game Managers en la escena, advirtiendo en caso negativo
     /// </summary>
     void Start()
     {
-        
+        if (InputManager.Instance == null) Debug.Log("No hay InputManager en la escena");
+        if (GameManager.Instance == null) Debug.Log("No hay GameManager en la escena");
     }
 
     /// <summary>
@@ -88,7 +92,7 @@ public class playerSlowShot : MonoBehaviour
         {
             _abilityDurationLasting = PlayerAbilityDuration[_abilityCurrentLevel];
             _abilityOn = true;
-            //GameManager.Instance.SlowShotOn();
+            GameManager.Instance.SlowShotOn();
             _lastAbilityActivationTime = Time.time;
         }
 
@@ -101,7 +105,7 @@ public class playerSlowShot : MonoBehaviour
         if (_abilityDurationLasting <= 0 && _abilityOn)
         {
             _abilityOn = false;
-            //GameManager.Instance.SlowShotOff();
+            GameManager.Instance.SlowShotOff();
         }
     }
     #endregion
@@ -115,11 +119,11 @@ public class playerSlowShot : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     /// <summary>
-    /// Método público que aumenta el nivel de la habilidad del jugador.
+    /// Método público que aumenta el nivel de la habilidad del jugador en caso de que se haya alcanzado el umbral de kills que corresponda.
     /// </summary>
-    public void AbilityBuff()
+    public void PlayerKill(int kills)
     {
-        _abilityCurrentLevel++;
+        if (kills == AbilityUpgradeKillThreshold[_abilityCurrentLevel + 1]) _abilityCurrentLevel++;
     }
     #endregion
     

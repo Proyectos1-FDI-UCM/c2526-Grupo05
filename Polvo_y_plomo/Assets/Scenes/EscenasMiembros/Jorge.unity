@@ -372,6 +372,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerAbilityCooldown: 20
+  PlayerAbilityDuration:
+  - 1
+  - 1.5
+  - 2
+  - 3
+  AbilityUpgradeKillThreshold: 00000000140000001e00000032000000
 --- !u!1001 &1349321158
 PrefabInstance:
   m_ObjectHideFlags: 0
