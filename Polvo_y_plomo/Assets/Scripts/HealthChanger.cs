@@ -38,7 +38,7 @@ public class HealthChanger : MonoBehaviour
     /// <summary>
     /// Un booleano que determinará si somos el jugador
     /// </summary>
-    private bool _jugador;
+    private bool _jugador = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -49,12 +49,11 @@ public class HealthChanger : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Se llama al cargarse en la escena.
     /// Al iniciar el juego, la vida del gameObject tomará el valor de la vida con la que empieza.
     /// Si existe un GameManager y eres el jugador, establece la variable como true
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         _vida = VidaMax;
         if (GetComponent<playerControlledMovement>() != null)
