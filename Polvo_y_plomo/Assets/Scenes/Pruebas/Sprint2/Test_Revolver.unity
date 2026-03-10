@@ -539,7 +539,8 @@ PrefabInstance:
       propertyPath: Reload
       value: 0.7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

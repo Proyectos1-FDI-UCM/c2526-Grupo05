@@ -146,6 +146,19 @@ public class GameManager : MonoBehaviour
 
     #region Métodos de MonoBehaviour
 
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            // Somos el primer GameManager.
+            // Queremos sobrevivir a cambios de escena.
+            DontDestroyOnLoad(this.gameObject);
+            _instance = this;
+            Init();
+        }
+    }
+
     /// <summary>
     /// Método llamado una vez después del Awake(), una vez otros componentes ya
     /// se han inicializado correctamente.
@@ -155,7 +168,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        if (_instance != null)
+        if (this != _instance)
         {
             // No somos la primera instancia. Se supone que somos un
             // GameManager de una escena que acaba de cargarse, pero
@@ -173,11 +186,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Somos el primer GameManager.
-            // Queremos sobrevivir a cambios de escena.
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            Init();
             this.enabled = false;
         } // if-else somos instancia nueva o no.
     }
@@ -288,28 +296,6 @@ public class GameManager : MonoBehaviour
         }
         //Debug.Log(_municionJugador);
     }
-    /// <summary>
-    /// Este metodo actualiza las racha de muertes
-    /// </summary>
-    public void UpdateTotalDeaths()
-    {
-        _totalDeaths += 1;
-        //Debug.Log("_totalDeaths: " + _totalDeaths);
-    }
-    /// <summary>
-    /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
-    /// </summary>
-    public int TransferInitialPoints()
-    {
-        return _totalPoints;
-    }
-    /// <summary>
-    /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
-    /// </summary>
-    public void LevelEnds(int Points)
-    {
-        _totalPoints += Points;
-    }
 
     /// <summary>
     /// Actualiza el fill ammount de la imagen del liquido de la habilidad.
@@ -412,6 +398,29 @@ public class GameManager : MonoBehaviour
         StartFadeOutBlueScreen();
     }
 
+    /// <summary>
+    /// Este metodo actualiza las racha de muertes
+    /// </summary>
+    public void UpdateTotalDeaths()
+    {
+        _totalDeaths += 1;
+        //Debug.Log("_totalDeaths: " + _totalDeaths);
+    }
+    /// <summary>
+    /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
+    /// </summary>
+    public int TransferInitialPoints()
+    {
+        return _totalPoints;
+    }
+
+    /// <summary>
+    /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
+    /// </summary>
+    public void LevelEnds(int Points)
+    {
+        _totalPoints += Points;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
