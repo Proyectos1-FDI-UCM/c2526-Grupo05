@@ -141,7 +141,7 @@ public class ChasePlayer : MonoBehaviour
         // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
         if (_isChasing)
         {
-            _rb.linearVelocity = ChaseSpeed*(_playerTransform.position - transform.position).normalized;
+            _rb.linearVelocity = ChaseSpeed*(_playerTransform.position - transform.position).normalized * GameManager.Instance.SlowMultiplier;
         }
     }
     #endregion
