@@ -52,7 +52,7 @@ public class BulletMove : MonoBehaviour
     /// </summary>
     void Update()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        transform.Translate(Vector2.right * speed * Time.deltaTime * GameManager.Instance.SlowMultiplier);
     }
     #endregion
 

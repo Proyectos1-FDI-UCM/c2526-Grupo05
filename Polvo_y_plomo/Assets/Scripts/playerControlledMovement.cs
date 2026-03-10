@@ -83,7 +83,7 @@ public class playerControlledMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Movimiento del jugador
-        rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed;
+        rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed * GameManager.Instance.SlowMultiplier;
     }
 
     #endregion
