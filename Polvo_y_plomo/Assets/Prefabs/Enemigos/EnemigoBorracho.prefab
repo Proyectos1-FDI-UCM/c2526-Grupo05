@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3543519096889408412}
   - component: {fileID: 2853623653024549938}
   - component: {fileID: 4036483193981919123}
+  - component: {fileID: 1228974625072447001}
   m_Layer: 3
   m_Name: EnemigoBorracho
   m_TagString: Untagged
@@ -235,3 +236,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cadaver: {fileID: 3431735393579477392, guid: ce7a0d454f12f554cbf3b6db48204416, type: 3}
+--- !u!114 &1228974625072447001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255211531776109209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eed44f171a52b3247a900162322bea54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

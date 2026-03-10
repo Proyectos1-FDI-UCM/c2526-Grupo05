@@ -11,6 +11,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
+using TMPro.EditorUtilities;
 
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
@@ -118,6 +119,16 @@ public class GameManager : MonoBehaviour
     /// Inicializada en 6 por ser en la que empieza.
     /// </summary>
     private int _municionJugador = MUNICIONBASEJUGADOR;
+
+    /// <summary>
+    /// Este es el contador total de muertes.
+    /// </summary>
+    private int _totalDeaths = 0;
+    
+    /// <summary>
+    /// Este es el contador total de puntos.
+    /// </summary>
+    private int _totalPoints = 0;
 
     /// <summary>
     /// Guarda un tiempo concreto. Usado para esperar en el Update().
@@ -277,6 +288,28 @@ public class GameManager : MonoBehaviour
         }
         //Debug.Log(_municionJugador);
     }
+    /// <summary>
+    /// Este metodo actualiza las racha de muertes
+    /// </summary>
+    public void UpdateTotalDeaths()
+    {
+        _totalDeaths += 1;
+        //Debug.Log("_totalDeaths: " + _totalDeaths);
+    }
+    /// <summary>
+    /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
+    /// </summary>
+    public int TransferInitialPoints()
+    {
+        return _totalPoints;
+    }
+    /// <summary>
+    /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
+    /// </summary>
+    public void LevelEnds(int Points)
+    {
+        _totalPoints += Points;
+    }
 
     /// <summary>
     /// Actualiza el fill ammount de la imagen del liquido de la habilidad.
@@ -333,9 +366,16 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.DesactivarInput();
         if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
 
-        // Espera en el update
+
+        if (LevelManager.HasInstance())
+        {
+            LevelManager.Instance.InitialStreakPoints();
+        }
+
         _t = Time.time;
         this.enabled = true; // comienza el temporizador en el update
+
+
     }
 
     /// <summary>

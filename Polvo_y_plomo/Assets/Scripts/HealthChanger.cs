@@ -122,6 +122,8 @@ public class HealthChanger : MonoBehaviour
             }
             else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
             Destroy(gameObject);
+
+
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
         }
     }

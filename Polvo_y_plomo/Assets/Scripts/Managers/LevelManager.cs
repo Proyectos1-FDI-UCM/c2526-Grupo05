@@ -43,6 +43,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private Transform PlayerPosition;
 
+    /// <summary>
+    /// Este es el tiempo base de duración de la máxima racha alcanzada.
+    /// </summary>
+    [SerializeField]
+    private float StreakDuration = 5f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -54,6 +59,30 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private static LevelManager _instance;
 
+    /// <summary>
+    /// Este es el contador actual de muertes.
+    /// </summary>
+    private int _deathsCount = 0;
+
+
+    /// <summary>
+    /// Este es el tiempo de la racha actual.
+    /// </summary>
+    private float _actualStreakTime;
+    /// <summary>
+    /// Esta es la duración de la racha actual.
+    /// </summary>
+    private float _actualStreakDuration;
+
+    /// <summary>
+    /// Este es el multiplicador de puntaje, entendido como actual racha.
+    /// </summary>
+    private int _actualStreak = 1;
+
+    /// <summary>
+    /// Este es el puntaje.
+    /// </summary>
+    private int _streakPoints = 0;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -74,6 +103,11 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        _actualStreakDuration = StreakDuration;
+        InitialStreakPoints();
+    }
 
     private void OnDestroy()
     {
@@ -83,6 +117,17 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        //Debug.Log("Puntos: " + _streakPoints);
+        if ((_actualStreak > 1) && (Time.time - _actualStreakTime > _actualStreakDuration))
+        {
+            _actualStreak--;
+            _actualStreakDuration /= 2;
+            UpdateStreak();
+            //Debug.Log("Streak: x" + _actualStreak + ", StreakTime: " + _actualStreakDuration);
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -123,6 +168,60 @@ public class LevelManager : MonoBehaviour
         return PlayerPosition;
     }
 
+    /// <summary>
+    /// Este metodo actualiza las cantidad de muertes
+    /// </summary>
+    public void UpdateDeathsCount()
+    {
+        _deathsCount += 1;
+        if (GameManager.HasInstance()) GameManager.Instance.UpdateTotalDeaths();
+        Debug.Log("_deathsCount: " + _deathsCount);
+    }
+
+    /// <summary>
+    /// Este metodo actualiza las racha
+    /// </summary>
+    public void UpdateStreak(int EnemyPoints = 0)
+    {
+        _actualStreakTime = Time.time;
+        if (EnemyPoints >= 100)
+        {
+            _actualStreakDuration = StreakDuration;
+            _streakPoints += _actualStreak * EnemyPoints;
+            _actualStreak++;
+        }
+    }
+    /// <summary>
+    /// Este metodo reinicia los puntos a su valor inicial en el nivel
+    /// </summary>
+    public void InitialStreakPoints()
+    {
+        if (GameManager.HasInstance())
+        {
+            _streakPoints = GameManager.Instance.TransferInitialPoints();
+        }
+    }
+    /// <summary>
+    /// Este metodo reinicia los puntos a su valor inicial en el nivel
+    /// </summary>
+    public int GetActualStreak()
+    {
+        return _actualStreak;
+    }
+    /// <summary>
+    /// Este metodo reinicia los puntos a su valor inicial en el nivel
+    /// </summary>
+    public int GetActualPoints()
+    {
+        return _streakPoints;
+    }
+    /// <summary>
+    /// Este metodo avisa al GameManager del final del nivel y y manda los puntos obtenidos en el mismo
+    /// </summary>
+    public void LevelEnd()
+    {
+        if (GameManager.HasInstance()) GameManager.Instance.LevelEnds(_streakPoints);
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
