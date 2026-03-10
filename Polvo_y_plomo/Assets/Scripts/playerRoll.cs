@@ -80,6 +80,10 @@ public class playerRoll : MonoBehaviour
     /// Componente correspondiente al desplazamiento del jugador, que necesita desactivarse durante el roll
     /// </summary>
     private playerControlledMovement _desplazamientoJugador;
+    /// <summary>
+    /// Bool que dice si hay o no GameManager en la escena
+    /// </summary>
+    private bool _gameManager = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -96,6 +100,7 @@ public class playerRoll : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _desplazamientoJugador = GetComponent<playerControlledMovement>();
+        _gameManager = GameManager.HasInstance();
     }
 
     /// <summary>
@@ -120,7 +125,8 @@ public class playerRoll : MonoBehaviour
     {
         if (_isRolling)
         {
-            _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado) * GameManager.Instance.SlowMultiplier;
+            if (_gameManager) _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado) * GameManager.Instance.SlowMultiplier;
+            else _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
             _tiempoRestanteRodado -= Time.fixedDeltaTime;
         }
 

@@ -77,6 +77,10 @@ public class ChasePlayer : MonoBehaviour
     /// Inicializado en el Start();
     /// </summary>
     private Transform _playerTransform;
+    /// <summary>
+    /// Bool que dice si hay o no GameManager en la escena
+    /// </summary>
+    private bool _gameManager = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -119,6 +123,8 @@ public class ChasePlayer : MonoBehaviour
                 _isChasing = (_playerTransform.position - transform.position).magnitude >= ChaseRadius;
             }
         }
+
+        _gameManager = GameManager.HasInstance();
     }
 
     /// <summary>
@@ -141,7 +147,8 @@ public class ChasePlayer : MonoBehaviour
         // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
         if (_isChasing)
         {
-            _rb.linearVelocity = ChaseSpeed*(_playerTransform.position - transform.position).normalized * GameManager.Instance.SlowMultiplier;
+            if (_gameManager) _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized * GameManager.Instance.SlowMultiplier;
+            else _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
         }
     }
     #endregion

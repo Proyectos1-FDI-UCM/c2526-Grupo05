@@ -36,7 +36,10 @@ public class BulletMove : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-
+    /// <summary>
+    /// Bool que dice si hay o no GameManager en la escena
+    /// </summary>
+    private bool _gameManager = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -44,15 +47,20 @@ public class BulletMove : MonoBehaviour
 
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
-    // - Hay que borrar los que no se usen 
+    // - Hay que borrar los que no se usen
 
+    void Start()
+    {
+        _gameManager = GameManager.HasInstance();
+    }
     /// <summary>
     /// Se ejecuta cada frame. Mueve la bala hacia su derecha local (0 grados) 
     /// para coincidir con la rotación del disparo.
     /// </summary>
     void Update()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime * GameManager.Instance.SlowMultiplier);
+        if (_gameManager) transform.Translate(Vector2.right * speed * Time.deltaTime * GameManager.Instance.SlowMultiplier);
+        else transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
     #endregion
 

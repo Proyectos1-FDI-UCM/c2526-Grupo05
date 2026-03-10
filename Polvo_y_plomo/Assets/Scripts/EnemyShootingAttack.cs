@@ -70,6 +70,10 @@ public class EnemyShootingAttack : MonoBehaviour
     /// Almacena el último tiempo en el que el enemigo disparó.
     /// </summary>
     private float _tUltimoDisparo = -99;
+    /// <summary>
+    /// Bool que dice si hay o no GameManager en la escena
+    /// </summary>
+    private bool _gameManager = false;
     #endregion
     
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -113,6 +117,8 @@ public class EnemyShootingAttack : MonoBehaviour
             Debug.Log("Se ha colocado el componente \"EnemyShootingAttack\" en un objeto cuyo mayor padre no tiene el componente \"ChasePlayer\". No podrá disparar");
             Destroy(this);
         }
+
+        _gameManager = GameManager.HasInstance();
     }
 
     /// <summary>
@@ -121,7 +127,18 @@ public class EnemyShootingAttack : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!_chasePlayer.IsChasing() && Time.time - _tUltimoDisparo > CooldownDisparos)
+        if (_gameManager)
+        {
+            _tUltimoDisparo += Time.deltaTime * GameManager.Instance.SlowMultiplier;
+
+            if (!_chasePlayer.IsChasing() && _tUltimoDisparo > CooldownDisparos)
+            {
+                Dispara();
+                _tUltimoDisparo = Time.time;
+            }
+        }
+        
+        else if (!_chasePlayer.IsChasing() && Time.time - _tUltimoDisparo > CooldownDisparos)
         {
             Dispara();
             _tUltimoDisparo = Time.time;

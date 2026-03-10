@@ -45,7 +45,10 @@ public class playerControlledMovement : MonoBehaviour
     /// Guarda el Rigidbody2D del objeto. Inicializado en el awake.
     /// </summary>
     private Rigidbody2D rb;
-
+    /// <summary>
+    /// Bool que dice si hay o no GameManager en la escena
+    /// </summary>
+    private bool _gameManager = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -74,6 +77,8 @@ public class playerControlledMovement : MonoBehaviour
             Debug.Log("Se ha puesto el componente \"playerControlledMovement\" en una escena sin InputManager. No podrá moverse.");
             Destroy(this);
         }
+
+        _gameManager = GameManager.HasInstance();
     }
 
     /// <summary>
@@ -83,7 +88,8 @@ public class playerControlledMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Movimiento del jugador
-        rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed * GameManager.Instance.SlowMultiplier;
+        if (_gameManager) rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed * GameManager.Instance.SlowMultiplier;
+        else rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed;
     }
 
     #endregion

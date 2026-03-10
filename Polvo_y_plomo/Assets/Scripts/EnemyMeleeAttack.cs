@@ -61,6 +61,10 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// Variable para guardar el momento de cada ataque
     /// </summary>
     private float _tiempoDesdeUltimoMelee = -99f;
+    /// <summary>
+    /// Bool que dice si hay o no GameManager en la escena
+    /// </summary>
+    private bool _gameManager = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -102,6 +106,8 @@ public class EnemyMeleeAttack : MonoBehaviour
                 Debug.Log("Se ha puesto el componente \"EnemyMeleeAttack\" en una escena en la que no se le ha asignado PlayerPosition al LevelManager. No podrá atacar al jugador.");
             }
         }
+
+        _gameManager = GameManager.HasInstance();
     }
 
     /// <summary>
@@ -110,7 +116,19 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!_chasePlayer.IsChasing() && Time.time - _tiempoDesdeUltimoMelee > CooldownMelee)
+        if (_gameManager)
+        {
+            _tiempoDesdeUltimoMelee += Time.deltaTime * GameManager.Instance.SlowMultiplier;
+
+            if (!_chasePlayer.IsChasing() && _tiempoDesdeUltimoMelee > CooldownMelee)
+            {
+                CanMelee();
+
+                _tiempoDesdeUltimoMelee = 0;
+            }
+        }
+        
+        else if (!_chasePlayer.IsChasing() && Time.time - _tiempoDesdeUltimoMelee > CooldownMelee)
         {
             CanMelee();
 
