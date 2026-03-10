@@ -360,6 +360,7 @@ public class GameManager : MonoBehaviour
     public void SlowShotOn()
     {
         SlowMultiplier = 0.25f;
+        StartFadeInBlueScreen();
     }
 
     /// <summary>
@@ -368,6 +369,7 @@ public class GameManager : MonoBehaviour
     public void SlowShotOff()
     {
         SlowMultiplier = 1.00f;
+        StartFadeOutBlueScreen();
     }
 
     #endregion

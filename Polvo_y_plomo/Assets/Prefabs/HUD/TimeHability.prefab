@@ -32,8 +32,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7610954051771955099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.05}
-  m_AnchorMax: {x: 0.15, y: 0.225}
+  m_AnchorMin: {x: 0.15, y: 0.05}
+  m_AnchorMax: {x: 0.25, y: 0.225}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 98711b99166b377498ed88c8c7bca6a5, type: 3}
-  m_Type: 3
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 8172802878820711693}
   - component: {fileID: 7372636155120978114}
   - component: {fileID: 4643379848388643272}
+  - component: {fileID: 2729333757283200151}
   m_Layer: 5
   m_Name: HabilityShadow
   m_TagString: Untagged
@@ -211,8 +212,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7610954051771955099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.05}
-  m_AnchorMax: {x: 0.15, y: 0.225}
+  m_AnchorMin: {x: 0.15, y: 0.05}
+  m_AnchorMax: {x: 0.25, y: 0.225}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -254,6 +255,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2729333757283200151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8166582737348023214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5a66adb4da59d48b5e8f8c22eee80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageFilled: {fileID: 4643379848388643272}
 --- !u!1 &8256383668195943183
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +280,6 @@ GameObject:
   - component: {fileID: 1965311753780631388}
   - component: {fileID: 8876123019902082288}
   - component: {fileID: 8432907416314288406}
-  - component: {fileID: 1484702308934516573}
   m_Layer: 5
   m_Name: HabilityLiquid
   m_TagString: Untagged
@@ -288,8 +301,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7610954051771955099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.05}
-  m_AnchorMax: {x: 0.15, y: 0.225}
+  m_AnchorMin: {x: 0.15, y: 0.05}
+  m_AnchorMax: {x: 0.25, y: 0.225}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -344,16 +357,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageFilled: {fileID: 8876123019902082288}
---- !u!114 &1484702308934516573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8256383668195943183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f3742bd509e9c4f8dc58ee263113b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CycleTime: 2

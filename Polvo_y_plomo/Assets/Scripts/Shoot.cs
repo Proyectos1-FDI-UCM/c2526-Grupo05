@@ -25,12 +25,6 @@ public class Shoot : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
-    /// GameObject que será el objetivo hacia el que se disparará la bala.
-    /// </summary>
-    [SerializeField]
-    private GameObject Objetivo;
-
-    /// <summary>
     /// Esta variable referencia al Objeto de tipo BulletMove que se instanciará cada vez que se dispare (la bala);
     /// </summary>
     [SerializeField]
@@ -63,12 +57,6 @@ public class Shoot : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        if (Objetivo == null)
-        {
-            Debug.Log("Se ha puesto el componente \"PlayerGetShootingInput\" sin asociarse un objetivo. No podrá disparar.");
-            Destroy(this);
-        }
-
         if (Bullet == null)
         {
             Debug.Log("Se ha puesto el componente \"Shoot\" sin asociarse una bala. No podrá disparar.");

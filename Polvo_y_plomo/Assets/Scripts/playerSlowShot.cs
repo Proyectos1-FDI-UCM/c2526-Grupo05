@@ -80,6 +80,10 @@ public class playerSlowShot : MonoBehaviour
     {
         if (InputManager.Instance == null) Debug.Log("No hay InputManager en la escena");
         if (GameManager.Instance == null) Debug.Log("No hay GameManager en la escena");
+
+        // Se inicializa activo los cooldowns.
+        GameManager.Instance.UpdateTimeHabilityLiquid(1);
+        GameManager.Instance.UpdateTimeHabilityShadow(0);
     }
 
     /// <summary>
@@ -88,7 +92,7 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (InputManager.Instance.HabilityWasPressedThisFrame() && Time.time - _lastAbilityActivationTime > PlayerAbilityCooldown)
+        if (InputManager.Instance.HabilityWasPressedThisFrame() && !_abilityOn && Time.time - _lastAbilityActivationTime > PlayerAbilityCooldown)
         {
             _abilityDurationLasting = PlayerAbilityDuration[_abilityCurrentLevel];
             _abilityOn = true;
@@ -99,13 +103,29 @@ public class playerSlowShot : MonoBehaviour
         if (_abilityOn)
         {
             _abilityDurationLasting -= Time.deltaTime;
-            _abilityProportionLasting = _abilityDurationLasting / PlayerAbilityDuration[_abilityCurrentLevel];
-        }
+            if (_abilityDurationLasting <= 0)
+            {
+                _abilityDurationLasting = 0;
 
-        if (_abilityDurationLasting <= 0 && _abilityOn)
+                _abilityOn = false;
+                GameManager.Instance.SlowShotOff();
+
+                // Reset de las burbujas
+                GameManager.Instance.UpdateTimeHabilityLiquid(1);
+                GameManager.Instance.UpdateTimeHabilityShadow(1);
+            }
+            else
+            {
+                _abilityProportionLasting = _abilityDurationLasting / PlayerAbilityDuration[_abilityCurrentLevel];
+
+                // pintar el fillAmmount del liquido de la habilidad
+                GameManager.Instance.UpdateTimeHabilityLiquid(_abilityProportionLasting);
+            }
+        }
+        else
         {
-            _abilityOn = false;
-            GameManager.Instance.SlowShotOff();
+            // pintar el fillAmmount de la sombra de la habilidad
+            GameManager.Instance.UpdateTimeHabilityShadow(1 - (Time.time - _lastAbilityActivationTime) / PlayerAbilityCooldown);
         }
     }
     #endregion
