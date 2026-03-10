@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Object: {fileID: 3504479324421535513}
+  RotateTowardsPlayer: 0
   FlipY: 1
   RotationOffset: 0
 --- !u!1 &4821254670401775029
@@ -274,7 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34a6c8481ce5c34d835c9f5a5a9938e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Objetivo: {fileID: 8633089953209525018}
   Bullet: {fileID: 481267826506717086, guid: 4dbd16fc43d46874e86933e6adaa0ebb, type: 3}
 --- !u!114 &2922786102867036322
 MonoBehaviour:
@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 5273611612293079281}
   - component: {fileID: 1474871151810355398}
   - component: {fileID: 8640769707630179225}
+  - component: {fileID: 3385198336411724539}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -537,6 +538,25 @@ MonoBehaviour:
   DuracionRodado: 0.35
   HitboxJugador: {fileID: 5036081665872762522}
   SpriteArmaJugador: {fileID: 8180277153169744243}
+--- !u!114 &3385198336411724539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9f93f04eb6a714aa25603d6a891f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerAbilityCooldown: 20
+  PlayerAbilityDuration:
+  - 1
+  - 1.5
+  - 2
+  - 3
+  AbilityUpgradeKillThreshold: 00000000140000001e00000032000000
 --- !u!1 &8633089953209525018
 GameObject:
   m_ObjectHideFlags: 0

@@ -128,11 +128,11 @@ public class ChasePlayer : MonoBehaviour
     }
 
     /// <summary>
-    /// Se llama cada frame.
+    /// Se llama cada actualización de la física.
     /// Comprueba la lógica de persecución y actualiza _isChasing en función de esta.
     /// Además controla el frenarse cuando se empieza a atacar, y si esta persiguiendo, se mueve a velocidad constante hacia el jugador.
     /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
         if (!_isChasing && (_playerTransform.position - transform.position).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
         {
@@ -147,8 +147,8 @@ public class ChasePlayer : MonoBehaviour
         // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
         if (_isChasing)
         {
-            if (_gameManager) _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized * GameManager.Instance.SlowMultiplier;
-            else _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
+            _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
+            if (_gameManager) _rb.linearVelocity *= GameManager.Instance.SlowMultiplier;
         }
     }
     #endregion

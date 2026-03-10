@@ -111,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) spawner.enabled = true;
+        foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) if (spawner != null) spawner.enabled = true;
     }
 
     /// <summary>

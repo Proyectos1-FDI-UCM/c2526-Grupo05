@@ -70,8 +70,10 @@ public class EnemyShootingAttack : MonoBehaviour
     /// Almacena el último tiempo en el que el enemigo disparó.
     /// </summary>
     private float _tUltimoDisparo = -99;
+
     /// <summary>
-    /// Bool que dice si hay o no GameManager en la escena
+    /// Bool que dice si hay o no GameManager en la escena.
+    /// Inicicializado en el Start().
     /// </summary>
     private bool _gameManager = false;
     #endregion
@@ -127,18 +129,10 @@ public class EnemyShootingAttack : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (_gameManager)
-        {
-            _tUltimoDisparo += Time.deltaTime * GameManager.Instance.SlowMultiplier;
-
-            if (!_chasePlayer.IsChasing() && _tUltimoDisparo > CooldownDisparos)
-            {
-                Dispara();
-                _tUltimoDisparo = Time.time;
-            }
-        }
+        float compareTime = CooldownDisparos;
+        if (_gameManager) compareTime *= 1 / GameManager.Instance.SlowMultiplier;
         
-        else if (!_chasePlayer.IsChasing() && Time.time - _tUltimoDisparo > CooldownDisparos)
+        if (!_chasePlayer.IsChasing() && Time.time - _tUltimoDisparo > CooldownDisparos)
         {
             Dispara();
             _tUltimoDisparo = Time.time;
