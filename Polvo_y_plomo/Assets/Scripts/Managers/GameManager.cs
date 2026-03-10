@@ -40,14 +40,42 @@ public class GameManager : MonoBehaviour
     /// Se debería configurar para que acabe en 1 de transparencia.
     /// </summary>
     [SerializeField]
-    private FadeColor FadeIn;
+    private FadeColor FadeInBlackScreen;
 
     /// <summary>
     /// Componente con el FadeOut configurado
     /// Realizará un FadeOut de pantalla negra al reaparecer el jugador.
     /// </summary>
     [SerializeField]
-    private FadeColor FadeOut;
+    private FadeColor FadeOutBlackScreen;
+
+    /// <summary>
+    /// Componente con el FadeIn configurado.
+    /// Realizará un FadeIn de pantalla azul al activarse la habilidad de tiempo lento del jugador.
+    /// </summary>
+    [SerializeField]
+    private FadeColor FadeInBlueScreen;
+
+    /// <summary>
+    /// Componente con FadeOut configurado.
+    /// Realizará un FadeOut de pantalla azul al desactivarse la habilidad de tiempo lento del jugador.
+    /// </summary>
+    [SerializeField]
+    private FadeColor FadeOutBlueScreen;
+
+    /// <summary>
+    /// Componente con el "líquido" de la habilidad (duración restante de esta)
+    /// Se podrá llamar al GameManager para modificar su fillAmmount.
+    /// </summary>
+    [SerializeField]
+    private ImageFill HabilityLiquid;
+
+    /// <summary>
+    /// Componente con la "sombra" de la habilidad (duración restante del cooldown de la habilidad)
+    /// Se podrá llamar al GameManager para modificar su fillAmmount.
+    /// </summary>
+    [SerializeField]
+    private ImageFill HabilityShadow;
 
     /// <summary>
     /// Tiempo que tardara la escena en reiniciarse
@@ -64,6 +92,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject[] Bullets = new GameObject[6];
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -121,7 +150,7 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
-            GameManager.Instance.TransferManagerSetup(FadeIn, FadeOut, Lifes, Bullets);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, Lifes, Bullets);
             NewSceneUpdate();
 
             DestroyImmediate(this.gameObject);
@@ -216,6 +245,8 @@ public class GameManager : MonoBehaviour
         System.GC.Collect();
     } // ChangeScene
 
+    #region Metodos únicos del Hud
+
     /// <summary>
     /// Este metodo actualiza la vida en el HUD
     /// </summary>
@@ -243,6 +274,45 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Actualiza el fill ammount de la imagen del liquido de la habilidad.
+    /// Se irá llamando durante la duración de la habilidad para indicar cuanto tiempo le queda.
+    /// </summary>
+    /// <param name="fillAmmount"></param>
+    public void UpdateTimeHabilityLiquid(float fillAmmount)
+    {
+        if (HabilityLiquid != null) HabilityLiquid.UpdateImageFillAmmount(fillAmmount);
+    }
+
+    /// <summary>
+    /// Actualiza el fill ammount de la imagen de la sombra de la habilidad.
+    /// Se irá llamando durante el cooldown de la habilidad para indicar cuánto tiempo queda.
+    /// </summary>
+    /// <param name="fillAmmount"></param>
+    public void UpdateTimeHabilityShadow(float fillAmmount)
+    {
+        if (HabilityShadow != null) HabilityShadow.UpdateImageFillAmmount(fillAmmount);
+    }
+
+    /// <summary>
+    /// Empieza el FadeIn de la pantalla azul.
+    /// Se llamará cuando empiece la habilidad del jugador, desde su correspondiente script.
+    /// </summary>
+    public void StartFadeInBlueScreen()
+    {
+        if (FadeInBlueScreen != null) FadeInBlueScreen.enabled = true;
+    }
+
+    /// <summary>
+    /// Empieza el FadeOut de la pantalla azul.
+    /// Se llamará cuando acabe la habilidad del jugador, desde su correspondiente script.
+    /// </summary>
+    public void StartFadeOutBlueScreen()
+    {
+        if (FadeOutBlueScreen != null) FadeOutBlueScreen.enabled = true;
+    }
+
+    #endregion
+    /// <summary>
     /// Método que se encarga de llevar los procesos tras la muerte del jugador.
     /// Desactiva el input del jugador, inicia un FadeIn de pantalla negra y activa este componente para que en
     /// el Update() se lleve un contador para esperar al FadeIn y luego reiniciar la escena.
@@ -256,7 +326,7 @@ public class GameManager : MonoBehaviour
 
         // Animación de pantalla negra.
         InputManager.Instance.DesactivarInput();
-        if (FadeIn != null) FadeIn.enabled = true;
+        if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
 
         // Espera en el update
         _t = Time.time;
@@ -273,8 +343,8 @@ public class GameManager : MonoBehaviour
     /// <param name="Bullets"></param>
     public void TransferManagerSetup(FadeColor FadeIn, FadeColor FadeOut, GameObject[] Lifes, GameObject[] Bullets)
     {
-        this.FadeIn = FadeIn;
-        this.FadeOut = FadeOut;
+        this.FadeInBlackScreen = FadeIn;
+        this.FadeOutBlackScreen = FadeOut;
         this.Lifes = Lifes;
         this.Bullets = Bullets;
     }
@@ -317,7 +387,7 @@ public class GameManager : MonoBehaviour
 
         // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
         this.enabled = false;
-        if (FadeOut != null) FadeOut.enabled = true;
+        if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
 
         if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
     }
