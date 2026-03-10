@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 963654306252283241}
   - component: {fileID: 4864011063731840737}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RevolverFather
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Object: {fileID: 3504479324421535513}
+  RotateTowardsPlayer: 0
   FlipY: 1
   RotationOffset: 0
 --- !u!1 &4821254670401775029
@@ -136,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 670167139303617689}
   - component: {fileID: 740238817445643814}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: playerStalker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +186,7 @@ GameObject:
   - component: {fileID: 2353835037813424682}
   - component: {fileID: 2922786102867036322}
   - component: {fileID: 8480573717615319094}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RevolverSon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +322,7 @@ GameObject:
   - component: {fileID: 5273611612293079281}
   - component: {fileID: 1474871151810355398}
   - component: {fileID: 8640769707630179225}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Jugador
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +549,7 @@ GameObject:
   - component: {fileID: 3504479324421535513}
   - component: {fileID: 5060418863419148043}
   - component: {fileID: 5751868665921935878}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
