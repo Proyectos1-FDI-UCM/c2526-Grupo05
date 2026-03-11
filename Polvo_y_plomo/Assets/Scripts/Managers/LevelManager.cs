@@ -24,6 +24,12 @@ using UnityEngine;
 /// persigan y/o ataquen al jugador (ChasePlayer y EnemyMeleeAttack lo usan).
 /// Se ha de asignar necesariamente el transform del jugador en el PlayerPosition para
 /// que todo funcione bien.
+/// 
+/// +++
+/// Ahora lleva toda la lógica de las rachas de muerte y el puntaje, avisando al GameManager
+/// sobre todos los sucesos relevantes. Recibe de este al cargarse el puntaje actual, y tiene
+/// una función a la que habrá que llamar para que se registre el puntaje en el GameManager
+/// una vez superado un nivel.
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
@@ -183,7 +189,7 @@ public class LevelManager : MonoBehaviour
     {
         _deathsCount += 1;
         if (GameManager.HasInstance()) GameManager.Instance.UpdateTotalDeaths();
-        Debug.Log("_deathsCount: " + _deathsCount);
+        // Debug.Log("_deathsCount: " + _deathsCount);
     }
 
     /// <summary>
@@ -229,8 +235,8 @@ public class LevelManager : MonoBehaviour
         }
         else if (EnemyPoints > 0)
         {
-            KeepStreak();
             UpdateScore(EnemyPoints);
+            KeepStreak();
         }
     }
 

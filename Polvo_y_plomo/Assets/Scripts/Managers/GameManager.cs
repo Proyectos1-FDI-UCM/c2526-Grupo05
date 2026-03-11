@@ -111,7 +111,8 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI StreakMultiplier;
 
     /// <summary>
-    /// Texto que muestra los puntos en el HUD.
+    /// Componente con el "liquido" de la barra que muestra cuanto porcentaje de tiempo
+    /// queda para que la racha baje en 1.
     /// </summary>
     [SerializeField]
     private ImageFill StreakBar;
@@ -308,7 +309,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScoreHUD(int NuevoScoreJugador)
     {
         _totalPoints = NuevoScoreJugador;
-        ScoreText.text = _totalPoints.ToString();
+        if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
     }
 
     /// <summary>
@@ -317,7 +318,7 @@ public class GameManager : MonoBehaviour
     /// <param name="NuevoScoreJugador"></param>
     public void UpdateStreakMultiplierHUD(int Streak)
     {
-        StreakMultiplier.text = "x" + Streak.ToString();
+        if (StreakMultiplier != null) StreakMultiplier.text = "x" + Streak.ToString();
     }
 
     /// <summary>

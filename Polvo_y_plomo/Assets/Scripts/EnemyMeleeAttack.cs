@@ -104,6 +104,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             if (_playerTransform == null)
             {
                 Debug.Log("Se ha puesto el componente \"EnemyMeleeAttack\" en una escena en la que no se le ha asignado PlayerPosition al LevelManager. No podrá atacar al jugador.");
+                Destroy(this);
             }
         }
 

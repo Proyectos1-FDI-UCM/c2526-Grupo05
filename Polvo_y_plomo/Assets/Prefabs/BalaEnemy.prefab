@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7122500367741915767}
   - component: {fileID: 54676727101224411}
   - component: {fileID: 8343871243347718618}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: BalaEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
