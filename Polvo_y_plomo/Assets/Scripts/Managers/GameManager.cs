@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, Lifes, Bullets);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen,FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets);
             NewSceneUpdate();
 
             DestroyImmediate(this.gameObject);
@@ -372,10 +372,15 @@ public class GameManager : MonoBehaviour
     /// <param name="FadeOut"></param>
     /// <param name="Lifes"></param>
     /// <param name="Bullets"></param>
-    public void TransferManagerSetup(FadeColor FadeIn, FadeColor FadeOut, GameObject[] Lifes, GameObject[] Bullets)
+    public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
+        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets)
     {
-        this.FadeInBlackScreen = FadeIn;
-        this.FadeOutBlackScreen = FadeOut;
+        this.FadeInBlackScreen = FadeInBlackScreen;
+        this.FadeOutBlackScreen = FadeOutBlackScreen;
+        this.FadeInBlueScreen = FadeInBlueScreen;
+        this.FadeOutBlueScreen = FadeOutBlueScreen;
+        this.HabilityLiquid = HabilityLiquid;
+        this.HabilityShadow = HabilityShadow;
         this.Lifes = Lifes;
         this.Bullets = Bullets;
     }
