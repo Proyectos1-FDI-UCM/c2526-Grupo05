@@ -44,22 +44,27 @@ public class playerSlowShot : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
+
     /// <summary>
     /// Variable que guarda la última vez que el jugador activó su habilidad. Inicializada a -99 para que se pueda usar desde segundo 0
     /// </summary>
     private float _lastAbilityActivationTime = -99f;
+
     /// <summary>
     /// Bool que dice si la habilidad está activa actualmente o no
     /// </summary>
     private bool _abilityOn = false;
+
     /// <summary>
     /// Tiempo restante de la habilidad en su activación actual
     /// </summary>
     private float _abilityDurationLasting = 99f;
+
     /// <summary>
     /// Nivel actual de la habilidad. Inicializado a 0 para cuadrar con el array (en realidad se supone que empieza a nivel 1)
     /// </summary>
     private int _abilityCurrentLevel = 0;
+
     /// <summary>
     /// Proporción de tiempo restante de la habilidad en su activación actual
     /// </summary>
@@ -78,8 +83,16 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     void Start()
     {
-        if (InputManager.Instance == null) Debug.Log("No hay InputManager en la escena");
-        if (GameManager.Instance == null) Debug.Log("No hay GameManager en la escena");
+        if (InputManager.Instance == null)
+        {
+            Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin InputManager. No funcionará.");
+            Destroy(this);
+        }
+        if (GameManager.Instance == null)
+        {
+            Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin GameManager. No funcionará.");
+            Destroy(this);
+        }
 
         // Se inicializa activo los cooldowns.
         GameManager.Instance.UpdateTimeHabilityLiquid(1);
@@ -94,9 +107,10 @@ public class playerSlowShot : MonoBehaviour
     {
         if (InputManager.Instance.HabilityWasPressedThisFrame() && !_abilityOn && Time.time - _lastAbilityActivationTime > PlayerAbilityCooldown)
         {
+            // activacion de la habilidad
             _abilityDurationLasting = PlayerAbilityDuration[_abilityCurrentLevel];
             _abilityOn = true;
-            GameManager.Instance.SlowShotOn();
+            GameManager.Instance.SlowShotOn(); // el resto de componentes que involucran a cosas en movimiento, tiempos, etc ahora van más lentos.
             _lastAbilityActivationTime = Time.time;
         }
 

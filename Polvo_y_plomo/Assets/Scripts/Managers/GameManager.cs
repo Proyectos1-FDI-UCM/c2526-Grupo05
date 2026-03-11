@@ -12,7 +12,6 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 using TMPro.EditorUtilities;
-using TMPro;
 
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
@@ -84,24 +83,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float TiempoEsperaRespawn = 3f;
-
     /// <summary>
     /// Lista de objetos de vida del HUD
     /// </summary>
     [SerializeField]
     private GameObject[] Lifes = new GameObject[10];
-
     /// <summary>
     /// Lista de objetos de balas del HUD
     /// </summary>
     [SerializeField]
     private GameObject[] Bullets = new GameObject[6];
-
-    /// <summary>
-    /// Texto que muestra los puntos del jugador en el HUD.
-    /// </summary>
-    [SerializeField]
-    private TextMeshProUGUI ScoreText;
 
     #endregion
 
@@ -130,12 +121,6 @@ public class GameManager : MonoBehaviour
     private int _municionJugador = MUNICIONBASEJUGADOR;
 
     /// <summary>
-    /// Este es el puntuaje actual del jugador.
-    /// Se inicializa en 0.
-    /// </summary>
-    private int _puntuacionJugador = MUNICIONBASEJUGADOR;
-
-    /// <summary>
     /// Este es el contador total de muertes.
     /// </summary>
     private int _totalDeaths = 0;
@@ -161,6 +146,19 @@ public class GameManager : MonoBehaviour
 
     #region Métodos de MonoBehaviour
 
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            // Somos el primer GameManager.
+            // Queremos sobrevivir a cambios de escena.
+            DontDestroyOnLoad(this.gameObject);
+            _instance = this;
+            Init();
+        }
+    }
+
     /// <summary>
     /// Método llamado una vez después del Awake(), una vez otros componentes ya
     /// se han inicializado correctamente.
@@ -170,7 +168,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        if (_instance != null)
+        if (this != _instance)
         {
             // No somos la primera instancia. Se supone que somos un
             // GameManager de una escena que acaba de cargarse, pero
@@ -181,18 +179,13 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, Lifes, Bullets);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen,FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets);
             NewSceneUpdate();
 
             DestroyImmediate(this.gameObject);
         }
         else
         {
-            // Somos el primer GameManager.
-            // Queremos sobrevivir a cambios de escena.
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            Init();
             this.enabled = false;
         } // if-else somos instancia nueva o no.
     }
@@ -292,15 +285,6 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo actualiza los puntos en el HUD
-    /// </summary>
-    public void UpdateScoreHUD(int NuevaPuntuacionJugador)
-    {
-        _puntuacionJugador = NuevaPuntuacionJugador;
-        ScoreText.text = _puntuacionJugador.ToString();
-    }
-
-    /// <summary>
     /// Este metodo actualiza las balas en el HUD
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
@@ -311,31 +295,6 @@ public class GameManager : MonoBehaviour
             if (Bullets[i] != null) Bullets[i].SetActive(i<_municionJugador);
         }
         //Debug.Log(_municionJugador);
-    }
-
-    /// <summary>
-    /// Este metodo actualiza las racha de muertes
-    /// </summary>
-    public void UpdateTotalDeaths()
-    {
-        _totalDeaths += 1;
-        //Debug.Log("_totalDeaths: " + _totalDeaths);
-    }
-
-    /// <summary>
-    /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
-    /// </summary>
-    public int TransferInitialPoints()
-    {
-        return _totalPoints;
-    }
-
-    /// <summary>
-    /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
-    /// </summary>
-    public void LevelEnds(int Points)
-    {
-        _totalPoints += Points;
     }
 
     /// <summary>
@@ -413,10 +372,15 @@ public class GameManager : MonoBehaviour
     /// <param name="FadeOut"></param>
     /// <param name="Lifes"></param>
     /// <param name="Bullets"></param>
-    public void TransferManagerSetup(FadeColor FadeIn, FadeColor FadeOut, GameObject[] Lifes, GameObject[] Bullets)
+    public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
+        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets)
     {
-        this.FadeInBlackScreen = FadeIn;
-        this.FadeOutBlackScreen = FadeOut;
+        this.FadeInBlackScreen = FadeInBlackScreen;
+        this.FadeOutBlackScreen = FadeOutBlackScreen;
+        this.FadeInBlueScreen = FadeInBlueScreen;
+        this.FadeOutBlueScreen = FadeOutBlueScreen;
+        this.HabilityLiquid = HabilityLiquid;
+        this.HabilityShadow = HabilityShadow;
         this.Lifes = Lifes;
         this.Bullets = Bullets;
     }
@@ -439,6 +403,29 @@ public class GameManager : MonoBehaviour
         StartFadeOutBlueScreen();
     }
 
+    /// <summary>
+    /// Este metodo actualiza las racha de muertes
+    /// </summary>
+    public void UpdateTotalDeaths()
+    {
+        _totalDeaths += 1;
+        //Debug.Log("_totalDeaths: " + _totalDeaths);
+    }
+    /// <summary>
+    /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
+    /// </summary>
+    public int TransferInitialPoints()
+    {
+        return _totalPoints;
+    }
+
+    /// <summary>
+    /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
+    /// </summary>
+    public void LevelEnds(int Points)
+    {
+        _totalPoints += Points;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

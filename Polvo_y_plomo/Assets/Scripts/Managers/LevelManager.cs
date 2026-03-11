@@ -190,7 +190,7 @@ public class LevelManager : MonoBehaviour
             _actualStreakDuration = StreakDuration;
             _streakPoints += _actualStreak * EnemyPoints;
             _actualStreak++;
-            GameManager.Instance.UpdateScoreHUD(_actualStreak);
+            ///GameManager.Instance.UpdateScoreHUD(_actualStreak);
         }
     }
     /// <summary>
