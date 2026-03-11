@@ -12,6 +12,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 using TMPro.EditorUtilities;
+using TMPro;
 
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+
     /// <summary>
     /// Componente con el FadeIn configurado
     /// Realizará un FadeIn de pantalla negra al morir el jugador.
@@ -83,16 +85,36 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float TiempoEsperaRespawn = 3f;
+
     /// <summary>
     /// Lista de objetos de vida del HUD
     /// </summary>
     [SerializeField]
-    private GameObject[] Lifes = new GameObject[10];
+    private GameObject[] Lifes = new GameObject[VIDABASEJUGADOR];
+  
     /// <summary>
     /// Lista de objetos de balas del HUD
     /// </summary>
     [SerializeField]
-    private GameObject[] Bullets = new GameObject[6];
+    private GameObject[] Bullets = new GameObject[MUNICIONBASEJUGADOR];
+
+    /// <summary>
+    /// Texto que muestra los puntos en el HUD.
+    /// </summary>
+    [SerializeField]
+    private TextMeshProUGUI ScoreText;
+
+    /// <summary>
+    /// Texto que muestra el multiplicador en el HUD.
+    /// </summary>
+    [SerializeField]
+    private TextMeshProUGUI StreakMultiplier;
+
+    /// <summary>
+    /// Texto que muestra los puntos en el HUD.
+    /// </summary>
+    [SerializeField]
+    private ImageFill StreakBar;
 
     #endregion
 
@@ -100,7 +122,14 @@ public class GameManager : MonoBehaviour
 
     #region Atributos Privados (private fields)
 
+    /// <summary>
+    /// Constante que guarda la vida máxima del jugador.
+    /// </summary>
     private const int VIDABASEJUGADOR = 10;
+
+    /// <summary>
+    /// Constante que guarda la munición máxima del jugador.
+    /// </summary>
     private const int MUNICIONBASEJUGADOR = 6;
 
     /// <summary>
@@ -146,7 +175,9 @@ public class GameManager : MonoBehaviour
 
     #region Métodos de MonoBehaviour
 
-
+    /// <summary>
+    /// Se ejecuta al instaciar el componente.
+    /// </summary>
     private void Awake()
     {
         if (_instance == null)
@@ -272,7 +303,25 @@ public class GameManager : MonoBehaviour
     #region Metodos únicos del Hud
 
     /// <summary>
-    /// Este metodo actualiza la vida en el HUD
+    /// Este metodo actualiza los puntos en el HUD.
+    /// </summary>
+    public void UpdateScoreHUD(int NuevoScoreJugador)
+    {
+        _totalPoints = NuevoScoreJugador;
+        ScoreText.text = _totalPoints.ToString();
+    }
+
+    /// <summary>
+    /// Este método actualiza la racha de muertes en el HUD.
+    /// </summary>
+    /// <param name="NuevoScoreJugador"></param>
+    public void UpdateStreakMultiplierHUD(int Streak)
+    {
+        StreakMultiplier.text = "x" + Streak.ToString();
+    }
+
+    /// <summary>
+    /// Este metodo actualiza la vida en el HUD.
     /// </summary>
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
@@ -281,7 +330,6 @@ public class GameManager : MonoBehaviour
         {
             if (Lifes[i] != null) Lifes[i].SetActive(i < _vidaJugador);
         }
-        //Debug.Log(_vidaJugador);
     }
 
     /// <summary>
@@ -305,6 +353,16 @@ public class GameManager : MonoBehaviour
     public void UpdateTimeHabilityLiquid(float fillAmmount)
     {
         if (HabilityLiquid != null) HabilityLiquid.UpdateImageFillAmmount(fillAmmount);
+    }
+
+    /// <summary>
+    /// Actualiza el fill ammount de la imagen del tiempo de la racha.
+    /// Se llamará en cada comprobación.
+    /// </summary>
+    /// <param name="fillAmmount"></param>
+    public void UpdateStreakBar(float fillAmmount)
+    {
+        if (StreakBar != null) StreakBar.UpdateImageFillAmmount(fillAmmount);
     }
 
     /// <summary>
@@ -336,6 +394,7 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
     /// <summary>
     /// Método que se encarga de llevar los procesos tras la muerte del jugador.
     /// Desactiva el input del jugador, inicia un FadeIn de pantalla negra y activa este componente para que en
@@ -411,6 +470,7 @@ public class GameManager : MonoBehaviour
         _totalDeaths += 1;
         //Debug.Log("_totalDeaths: " + _totalDeaths);
     }
+
     /// <summary>
     /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
     /// </summary>
