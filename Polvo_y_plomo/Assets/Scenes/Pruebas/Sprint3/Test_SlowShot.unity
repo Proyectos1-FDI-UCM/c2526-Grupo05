@@ -127,6 +127,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityAmountOfLevels
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[0].PlayerAbilityDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[1].PlayerAbilityDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[2].PlayerAbilityDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[3].PlayerAbilityDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[1].AbilityUpgradeKillThreshold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[2].AbilityUpgradeKillThreshold
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385198336411724539, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: AbilityLevels.Array.data[3].AbilityUpgradeKillThreshold
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -26,14 +26,28 @@ public class playerSlowShot : MonoBehaviour
     /// Cooldown de la habilidad del jugador
     /// </summary>
     [SerializeField] private float PlayerAbilityCooldown = 20f;
+
     /// <summary>
-    /// Duración de la habilidad del jugador, que cambie en función de su nivel
+    /// Struct que guarda el tiempo de duración de la habilidad del jugador en un nivel, y el umbral de kills que necesita alcanzar para llegar a tal nivel
     /// </summary>
-    [SerializeField] private float[] PlayerAbilityDuration = new float[4];
+    [System.Serializable] public struct abilityDuration_UpgradeKillThreshold
+    {
+        /// <summary>
+        /// Duración de la habilidad del jugador en un nivel
+        /// </summary>
+        public float PlayerAbilityDuration;
+        /// <summary>
+        /// Número de kills necesarias para alcanzar un nivel de la habilidad del jugador
+        /// </summary>
+        public int AbilityUpgradeKillThreshold;
+    }
+
     /// <summary>
-    /// Número de kills necesarias para subir de nivel (cada vez) la habilidad
+    /// Número de niveles posibles de la habilidad
     /// </summary>
-    [SerializeField] private int[] AbilityUpgradeKillThreshold = new int[4];
+    [SerializeField] public int AbilityAmountOfLevels;
+
+    [SerializeField] private abilityDuration_UpgradeKillThreshold[] AbilityLevels;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -70,14 +84,20 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     private float _abilityProportionLasting = 1.00f;
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
+
+    void OnValidate()
+    {
+        if (AbilityLevels.Length > AbilityAmountOfLevels) Debug.Log("Hay " + (AbilityLevels.Length - AbilityAmountOfLevels) + "más niveles creados en el array de los que debería.");
+        else if (AbilityLevels.Length < AbilityAmountOfLevels) Debug.Log("Hay " + (AbilityAmountOfLevels - AbilityLevels.Length) + "menos niveles creados en el array de los que debería.");
+    }
+
     /// <summary>
     /// Start de programación defensiva que comprueba si hay Input y Game Managers en la escena, advirtiendo en caso negativo
     /// </summary>
@@ -108,7 +128,7 @@ public class playerSlowShot : MonoBehaviour
         if (InputManager.Instance.HabilityWasPressedThisFrame() && !_abilityOn && Time.time - _lastAbilityActivationTime > PlayerAbilityCooldown)
         {
             // activacion de la habilidad
-            _abilityDurationLasting = PlayerAbilityDuration[_abilityCurrentLevel];
+            _abilityDurationLasting = AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
             _abilityOn = true;
             GameManager.Instance.SlowShotOn(); // el resto de componentes que involucran a cosas en movimiento, tiempos, etc ahora van más lentos.
             _lastAbilityActivationTime = Time.time;
@@ -130,7 +150,7 @@ public class playerSlowShot : MonoBehaviour
             }
             else
             {
-                _abilityProportionLasting = _abilityDurationLasting / PlayerAbilityDuration[_abilityCurrentLevel];
+                _abilityProportionLasting = _abilityDurationLasting / AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
 
                 // pintar el fillAmmount del liquido de la habilidad
                 GameManager.Instance.UpdateTimeHabilityLiquid(_abilityProportionLasting);
@@ -157,7 +177,7 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     public void PlayerKill(int kills)
     {
-        if (kills == AbilityUpgradeKillThreshold[_abilityCurrentLevel + 1]) _abilityCurrentLevel++;
+        if ((_abilityCurrentLevel < (AbilityLevels.Length - 1)) && kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold) _abilityCurrentLevel++;
     }
     #endregion
     
