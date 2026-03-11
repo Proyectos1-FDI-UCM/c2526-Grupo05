@@ -551,12 +551,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerAbilityCooldown: 20
-  PlayerAbilityDuration:
-  - 1
-  - 1.5
-  - 2
-  - 3
-  AbilityUpgradeKillThreshold: 00000000140000001e00000032000000
+  AbilityLevels:
+  - PlayerAbilityDuration: 1
+    AbilityUpgradeKillThreshold: 20
+  - PlayerAbilityDuration: 1.5
+    AbilityUpgradeKillThreshold: 50
+  - PlayerAbilityDuration: 2
+    AbilityUpgradeKillThreshold: 100
+  - PlayerAbilityDuration: 3
+    AbilityUpgradeKillThreshold: -1
 --- !u!1 &8633089953209525018
 GameObject:
   m_ObjectHideFlags: 0

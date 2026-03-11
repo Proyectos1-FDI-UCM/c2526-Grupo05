@@ -25,17 +25,20 @@ public class playerSlowShot : MonoBehaviour
     /// <summary>
     /// Cooldown de la habilidad del jugador
     /// </summary>
-    [SerializeField] private float PlayerAbilityCooldown = 20f;
+    [SerializeField] 
+    private float PlayerAbilityCooldown = 20f;
 
     /// <summary>
     /// Struct que guarda el tiempo de duración de la habilidad del jugador en un nivel, y el umbral de kills que necesita alcanzar para llegar a tal nivel
     /// </summary>
-    [System.Serializable] public struct abilityDuration_UpgradeKillThreshold
+    [System.Serializable] 
+    public struct Level
     {
         /// <summary>
         /// Duración de la habilidad del jugador en un nivel
         /// </summary>
         public float PlayerAbilityDuration;
+
         /// <summary>
         /// Número de kills necesarias para alcanzar un nivel de la habilidad del jugador
         /// </summary>
@@ -43,11 +46,10 @@ public class playerSlowShot : MonoBehaviour
     }
 
     /// <summary>
-    /// Número de niveles posibles de la habilidad
+    /// Niveles de habilidad configurados.
     /// </summary>
-    [SerializeField] public int AbilityAmountOfLevels;
-
-    [SerializeField] private abilityDuration_UpgradeKillThreshold[] AbilityLevels;
+    [SerializeField] 
+    private Level[] AbilityLevels;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -92,12 +94,6 @@ public class playerSlowShot : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-    void OnValidate()
-    {
-        if (AbilityLevels.Length > AbilityAmountOfLevels) Debug.Log("Hay " + (AbilityLevels.Length - AbilityAmountOfLevels) + "más niveles creados en el array de los que debería.");
-        else if (AbilityLevels.Length < AbilityAmountOfLevels) Debug.Log("Hay " + (AbilityAmountOfLevels - AbilityLevels.Length) + "menos niveles creados en el array de los que debería.");
-    }
-
     /// <summary>
     /// Start de programación defensiva que comprueba si hay Input y Game Managers en la escena, advirtiendo en caso negativo
     /// </summary>
@@ -112,6 +108,15 @@ public class playerSlowShot : MonoBehaviour
         {
             Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin GameManager. No funcionará.");
             Destroy(this);
+        }
+
+        foreach (Level level in  AbilityLevels)
+        {
+            if (level.PlayerAbilityDuration == 0 || level.AbilityUpgradeKillThreshold == 0)
+            {
+                Debug.Log("En \"playerSlowShot\" se ha añadido un nivel de habilidad sin configuración puesta. No funcionará.");
+                Destroy(this);
+            }
         }
 
         // Se inicializa activo los cooldowns.
