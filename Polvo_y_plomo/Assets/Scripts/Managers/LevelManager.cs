@@ -68,7 +68,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Este es el tiempo de la racha actual.
     /// </summary>
-    private float _actualStreakTime;
+    private float _streakTime;
 
     /// <summary>
     /// Esta es la duración de la racha actual.
@@ -78,12 +78,12 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Este es el multiplicador de puntaje, entendido como actual racha.
     /// </summary>
-    private int _actualStreak = 1;
+    private int _streak = 1;
 
     /// <summary>
     /// Este es el puntaje.
     /// </summary>
-    private int _streakPoints = 0;
+    private int _points = 0;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -120,14 +120,14 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("Puntos: " + _streakPoints);
-        if ((_actualStreak > 1) && (Time.time - _actualStreakTime > _actualStreakDuration))
+        Debug.Log("Puntos: " + _points);
+        UpdateStreak();/*
+        if ((_streak > 1) && (Time.time - _streakTime > _actualStreakDuration))
         {
-            _actualStreak--;
+            _streak--;
             _actualStreakDuration /= 2;
-            UpdateStreak();
             //Debug.Log("Streak: x" + _actualStreak + ", StreakTime: " + _actualStreakDuration);
-        }
+        }*/
     }
     #endregion
 
@@ -180,18 +180,26 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo actualiza las racha
+    /// Este metodo actualiza la racha
     /// </summary>
     public void UpdateStreak(int EnemyPoints = 0)
     {
-        _actualStreakTime = Time.time;
-        if (EnemyPoints >= 100)
+        if ((_streak > 1) && (Time.time - _streakTime > _actualStreakDuration))
+        {
+            _streak--;
+            _actualStreakDuration /= 2;
+            _streakTime = Time.time;
+        }
+        else if (EnemyPoints > 0)
         {
             _actualStreakDuration = StreakDuration;
-            _streakPoints += _actualStreak * EnemyPoints;
-            _actualStreak++;
-            ///GameManager.Instance.UpdateScoreHUD(_actualStreak);
+            _points += _streak * EnemyPoints;
+            _streak++;
+            _streakTime = Time.time;
         }
+            Debug.Log("Streak: x" + _streak + ", StreakTime: " + _actualStreakDuration);
+        ///GameManager.Instance.UpdateScoreHUD(_actualStreak);
+
     }
     /// <summary>
     /// Este metodo reinicia los puntos a su valor inicial en el nivel
@@ -200,29 +208,15 @@ public class LevelManager : MonoBehaviour
     {
         if (GameManager.HasInstance())
         {
-            _streakPoints = GameManager.Instance.TransferInitialPoints();
+            _points = GameManager.Instance.TransferInitialPoints();
         }
-    }
-    /// <summary>
-    /// Este metodo reinicia los puntos a su valor inicial en el nivel
-    /// </summary>
-    public int GetActualStreak()
-    {
-        return _actualStreak;
-    }
-    /// <summary>
-    /// Este metodo reinicia los puntos a su valor inicial en el nivel
-    /// </summary>
-    public int GetActualPoints()
-    {
-        return _streakPoints;
     }
     /// <summary>
     /// Este metodo avisa al GameManager del final del nivel y y manda los puntos obtenidos en el mismo
     /// </summary>
     public void LevelEnd()
     {
-        if (GameManager.HasInstance()) GameManager.Instance.LevelEnds(_streakPoints);
+        if (GameManager.HasInstance()) GameManager.Instance.LevelEnds(_points);
     }
     #endregion
 
