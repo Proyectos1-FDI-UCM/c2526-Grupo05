@@ -12,6 +12,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 using TMPro.EditorUtilities;
+using TMPro;
 
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
@@ -83,16 +84,24 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float TiempoEsperaRespawn = 3f;
+
     /// <summary>
     /// Lista de objetos de vida del HUD
     /// </summary>
     [SerializeField]
     private GameObject[] Lifes = new GameObject[10];
+
     /// <summary>
     /// Lista de objetos de balas del HUD
     /// </summary>
     [SerializeField]
     private GameObject[] Bullets = new GameObject[6];
+
+    /// <summary>
+    /// Texto que muestra los puntos del jugador en el HUD.
+    /// </summary>
+    [SerializeField]
+    private TextMeshProUGUI ScoreText;
 
     #endregion
 
@@ -119,6 +128,12 @@ public class GameManager : MonoBehaviour
     /// Inicializada en 6 por ser en la que empieza.
     /// </summary>
     private int _municionJugador = MUNICIONBASEJUGADOR;
+
+    /// <summary>
+    /// Este es el puntuaje actual del jugador.
+    /// Se inicializa en 0.
+    /// </summary>
+    private int _puntuacionJugador = MUNICIONBASEJUGADOR;
 
     /// <summary>
     /// Este es el contador total de muertes.
@@ -277,6 +292,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Este metodo actualiza los puntos en el HUD
+    /// </summary>
+    public void UpdateScoreHUD(int NuevaPuntuacionJugador)
+    {
+        _puntuacionJugador = NuevaPuntuacionJugador;
+        ScoreText.text = _puntuacionJugador.ToString();
+    }
+
+    /// <summary>
     /// Este metodo actualiza las balas en el HUD
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
@@ -288,6 +312,7 @@ public class GameManager : MonoBehaviour
         }
         //Debug.Log(_municionJugador);
     }
+
     /// <summary>
     /// Este metodo actualiza las racha de muertes
     /// </summary>
@@ -296,6 +321,7 @@ public class GameManager : MonoBehaviour
         _totalDeaths += 1;
         //Debug.Log("_totalDeaths: " + _totalDeaths);
     }
+
     /// <summary>
     /// Este metodo devuelve el valor int almacenado en _levelPoints, entendido como puntos iniciales
     /// </summary>
@@ -303,6 +329,7 @@ public class GameManager : MonoBehaviour
     {
         return _totalPoints;
     }
+
     /// <summary>
     /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
     /// </summary>
