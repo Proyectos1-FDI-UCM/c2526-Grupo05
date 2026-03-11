@@ -69,6 +69,7 @@ public class LevelManager : MonoBehaviour
     /// Este es el tiempo de la racha actual.
     /// </summary>
     private float _actualStreakTime;
+
     /// <summary>
     /// Esta es la duración de la racha actual.
     /// </summary>
@@ -189,6 +190,7 @@ public class LevelManager : MonoBehaviour
             _actualStreakDuration = StreakDuration;
             _streakPoints += _actualStreak * EnemyPoints;
             _actualStreak++;
+            ///GameManager.Instance.UpdateScoreHUD(_actualStreak);
         }
     }
     /// <summary>
