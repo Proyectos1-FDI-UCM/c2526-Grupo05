@@ -111,6 +111,12 @@ public class playerSlowShot : MonoBehaviour
             Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin GameManager. No funcionará.");
             Destroy(this);
         }
+        else
+        {
+            // Se inicializa activo los cooldowns.
+            GameManager.Instance.UpdateTimeHabilityLiquid(1);
+            GameManager.Instance.UpdateTimeHabilityShadow(0);
+        }
 
         foreach (Level level in  AbilityLevels)
         {
@@ -120,10 +126,6 @@ public class playerSlowShot : MonoBehaviour
                 Destroy(this);
             }
         }
-
-        // Se inicializa activo los cooldowns.
-        GameManager.Instance.UpdateTimeHabilityLiquid(1);
-        GameManager.Instance.UpdateTimeHabilityShadow(0);
     }
 
     /// <summary>
