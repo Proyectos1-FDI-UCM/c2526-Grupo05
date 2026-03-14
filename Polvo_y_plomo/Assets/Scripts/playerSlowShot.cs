@@ -10,8 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Clase que controla toda la lógica y funcionamiento de la habilidad del jugador, la cual, tras el input adecuado, comienza un contador en el que el "tiempo" de juego está ralentizado (no totalmente,
+/// ya que por ejemplo, los cooldowns del jugador no se ven afectados). Esta ralentización está representada por la variable de get público del GameManager. La duración de la habilidad aumenta según sube
+/// de nivel, tras alcanzar umbrales de kills (comunicación de nuevo con el GM que es el que guarda las kills del jugador).
+/// Además, su CD y nivel se ven representados en el HUD con una burbuja (que se llena proporcionalmente) y una barra respectivamente. El CD de la habilidad no cambia con la subida de nivel.
 /// </summary>
 public class playerSlowShot : MonoBehaviour
 {
@@ -111,6 +113,12 @@ public class playerSlowShot : MonoBehaviour
             Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin GameManager. No funcionará.");
             Destroy(this);
         }
+        else
+        {
+            // Se inicializa activo los cooldowns.
+            GameManager.Instance.UpdateTimeHabilityLiquid(1);
+            GameManager.Instance.UpdateTimeHabilityShadow(0);
+        }
 
         foreach (Level level in  AbilityLevels)
         {
@@ -120,10 +128,6 @@ public class playerSlowShot : MonoBehaviour
                 Destroy(this);
             }
         }
-
-        // Se inicializa activo los cooldowns.
-        GameManager.Instance.UpdateTimeHabilityLiquid(1);
-        GameManager.Instance.UpdateTimeHabilityShadow(0);
     }
 
     /// <summary>

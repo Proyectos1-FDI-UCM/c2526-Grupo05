@@ -27,7 +27,7 @@ public class GeneraCadaver : MonoBehaviour
     /// Este será el cadáver del GameObject con este componente.
     /// </summary>
     [SerializeField]
-    GameObject Cadaver;
+    GameObject[] Cadaver;
     #endregion
     
     // ---- ATRIBUTOS PRIVADOS ----
@@ -57,11 +57,14 @@ public class GeneraCadaver : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
     ///<summary>
-    /// Este método genera un GameObject dado;
+    /// Este método genera un array de GameObjects dados;
     ///</summary>
     public void PonCadaver()
     {
-        Instantiate(Cadaver, transform.position, transform.rotation);
+        foreach (GameObject c in Cadaver)
+        {
+            if (c != null) Instantiate(c, transform.position, transform.rotation);
+        }
     }
     #endregion
     

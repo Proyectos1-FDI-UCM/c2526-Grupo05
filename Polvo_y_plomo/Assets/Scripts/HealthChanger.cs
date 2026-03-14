@@ -39,6 +39,13 @@ public class HealthChanger : MonoBehaviour
     /// Un booleano que determinará si somos el jugador
     /// </summary>
     private bool _jugador = false;
+
+    /// <summary>
+    /// Almacena el componente _canFlash si existe.
+    /// Se asume que iniciará el parpadeo si se recibe daño.
+    /// Inicializado en el Start().
+    /// </summary>
+    private CanFlash _canFlash;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -49,17 +56,19 @@ public class HealthChanger : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Se llama al cargarse en la escena.
+    /// Se llama al cargarse en la escena si esta activo, o al activarse por primera vez.
     /// Al iniciar el juego, la vida del gameObject tomará el valor de la vida con la que empieza.
     /// Si existe un GameManager y eres el jugador, establece la variable como true
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         _vida = VidaMax;
         if (GetComponent<playerControlledMovement>() != null)
         {
             _jugador = true;
         }
+
+        _canFlash = GetComponent<CanFlash>();
     }
     #endregion
 
@@ -85,9 +94,19 @@ public class HealthChanger : MonoBehaviour
             {
                 GameManager.Instance.UpdateHealthHUD(_vida);
             }
+
+            if (cambio < 0 && _canFlash != null)
+            {
+                _canFlash.StartFlashes();
+            }
+
             if (_vida <= 0)
             {
                 MetodoMuerte();
+            }
+            else if (cambio < 0 && _canFlash != null)
+            {
+                _canFlash.StartFlashes();
             }
         }
     }
