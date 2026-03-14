@@ -22,6 +22,7 @@ public class playerSlowShot : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+
     /// <summary>
     /// Cooldown de la habilidad del jugador
     /// </summary>
@@ -29,7 +30,8 @@ public class playerSlowShot : MonoBehaviour
     private float PlayerAbilityCooldown = 20f;
 
     /// <summary>
-    /// Struct que guarda el tiempo de duración de la habilidad del jugador en un nivel, y el umbral de kills que necesita alcanzar para llegar a tal nivel
+    /// Struct que guarda el tiempo de duración de la habilidad del jugador en un nivel, y el umbral de kills que necesita alcanzar
+    /// para llegar a tal nivel.
     /// </summary>
     [System.Serializable] 
     public struct Level
@@ -125,8 +127,9 @@ public class playerSlowShot : MonoBehaviour
     }
 
     /// <summary>
-    /// Update que comprueba si se puede activar la habilidad cada vez que recibe el input adecuado, y en caso positivo activarla, estableciendo a sus valores
-    /// correspondientes las variables declaradas previamente, que controlan la lógica de desactivación tras el tiempo esperado según el nivel de la habilidad.
+    /// Update que comprueba si se puede activar la habilidad cada vez que recibe el input adecuado, y en caso positivo activarla,
+    /// estableciendo a sus valores correspondientes las variables declaradas previamente, que controlan la lógica de desactivación
+    /// tras el tiempo esperado según el nivel de la habilidad.
     /// </summary>
     void Update()
     {
@@ -182,7 +185,12 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     public void PlayerKill(int kills)
     {
-        if ((_abilityCurrentLevel < (AbilityLevels.Length - 1)) && kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold) _abilityCurrentLevel++;
+        if ((_abilityCurrentLevel < (AbilityLevels.Length - 1)) && kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
+        {
+            _abilityCurrentLevel++;
+            GameManager.Instance.UpdateLevelBar(0);
+        }
+
     }
     #endregion
     

@@ -117,6 +117,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private ImageFill StreakBar;
 
+    /// <summary>
+    /// Componente con el "liquido" de la barra que muestra cuantas muertes
+    /// quedan para que la habilidad suba de nivel.
+    /// </summary>
+    [SerializeField]
+    private ImageFill LevelBar;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -166,8 +173,9 @@ public class GameManager : MonoBehaviour
     private float _t;
 
     /// <summary>
-    /// Variable de get PÚBLICO (no te asustes Ángel) pero set privado, que guarda la velocidad de ralentización, distinta de 1,00 cuando la habilidad del jugador está activa.
-    /// Ha de ser de get público para que aquellos scripts que la necesitan para modificar su velocidad, tengan acceso a ella.
+    /// Variable de get PÚBLICO (no te asustes Ángel) pero set privado, que guarda la velocidad de ralentización, distinta de 1,00 cuando
+    /// la habilidad del jugador está activa. Ha de ser de get público para que aquellos scripts que la necesitan para modificar su velocidad,
+    /// tengan acceso a ella.
     /// </summary>
     public float SlowMultiplier { get; private set; } = 1.00f;
     #endregion
@@ -364,6 +372,16 @@ public class GameManager : MonoBehaviour
     public void UpdateStreakBar(float fillAmmount)
     {
         if (StreakBar != null) StreakBar.UpdateImageFillAmmount(fillAmmount);
+    }
+
+    /// <summary>
+    /// Actualiza el fill ammount de la imagen del nivel de la habilidad.
+    /// se llamará en 
+    /// </summary>
+    /// <param name="fillAmmount"></param>
+    public void UpdateLevelBar(float fillAmmount)
+    {
+        if (LevelBar != null) LevelBar.UpdateImageFillAmmount(fillAmmount);
     }
 
     /// <summary>
