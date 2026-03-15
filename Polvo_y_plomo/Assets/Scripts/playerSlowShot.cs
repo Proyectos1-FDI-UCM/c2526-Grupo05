@@ -89,6 +89,16 @@ public class playerSlowShot : MonoBehaviour
     /// Proporción de tiempo restante de la habilidad en su activación actual
     /// </summary>
     private float _abilityProportionLasting = 1.00f;
+
+    /// <summary>
+    /// Es la unidad de progreso que hace la LevelBar del HUD cada vez que muere un enemigo.
+    /// </summary>
+    private float _segmentLevelBar = 0f;
+
+    /// <summary>
+    /// Es la cantidad de unidades de progreso de la LevelBar del HUD
+    /// </summary>
+    private float _sumSegmentLevelBar = 0f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -128,6 +138,8 @@ public class playerSlowShot : MonoBehaviour
                 Destroy(this);
             }
         }
+
+        _segmentLevelBar = 1f / AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold;
     }
 
     /// <summary>
@@ -186,15 +198,23 @@ public class playerSlowShot : MonoBehaviour
 
     /// <summary>
     /// Método público que aumenta el nivel de la habilidad del jugador en caso de que se haya alcanzado el umbral de kills que corresponda.
+    /// Actualiza la barra de nivel del HUD.
     /// </summary>
     public void PlayerKill(int kills)
     {
-        if ((_abilityCurrentLevel < (AbilityLevels.Length - 1)) && kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
+        if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold && (_abilityCurrentLevel < (AbilityLevels.Length - 1)) )
         {
             _abilityCurrentLevel++;
             GameManager.Instance.UpdateLevelBar(0);
+            _sumSegmentLevelBar = 0f;
+            _segmentLevelBar = 1f / (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel - 1].AbilityUpgradeKillThreshold);
+            Debug.Log(_abilityCurrentLevel);
         }
-
+        else
+        {
+            _sumSegmentLevelBar += _segmentLevelBar;
+            GameManager.Instance.UpdateLevelBar(_sumSegmentLevelBar);
+        }
     }
     #endregion
     
@@ -209,3 +229,4 @@ public class playerSlowShot : MonoBehaviour
 
 } // class playerSlowShot 
 // namespace
+ 

@@ -74,7 +74,6 @@ public class PointsOnDestroy : MonoBehaviour
         {
             if (LevelManager.HasInstance())
             {
-                LevelManager.Instance.UpdateDeathsCount();
                 LevelManager.Instance.UpdateScoreSystem(Points);
             }
         }

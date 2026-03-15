@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Este es el contador actual de muertes.
     /// </summary>
-    private int _deathsCount = 0;
+    //private int _deathsCount = 0;
 
     /// <summary>
     /// Este es el tiempo de la racha actual.
@@ -92,7 +92,6 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private int _points = 0;
     #endregion
-
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
 
     #region Métodos de MonoBehaviour
@@ -185,12 +184,14 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Este metodo actualiza las cantidad de muertes
     /// </summary>
-    public void UpdateDeathsCount()
+    /*
+     * public void UpdateDeathsCount()
     {
         _deathsCount += 1;
-        if (GameManager.HasInstance()) GameManager.Instance.UpdateTotalDeaths();
+        if (GameManager.HasInstance()) GameManager.Instance.AnEnemyDied();
         // Debug.Log("_deathsCount: " + _deathsCount);
     }
+    */
 
     /// <summary>
     /// Este método reduce la racha, reduce el tiempo de duraión de la nueva racha, y actualiza el tiempo de la última racha

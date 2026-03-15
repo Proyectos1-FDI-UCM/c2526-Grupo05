@@ -77,6 +77,7 @@ public class ChasePlayer : MonoBehaviour
     /// Inicializado en el Start();
     /// </summary>
     private Transform _playerTransform;
+
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>

@@ -438,8 +438,6 @@ public class GameManager : MonoBehaviour
 
         _t = Time.time;
         this.enabled = true; // comienza el temporizador en el update
-
-
     }
 
     /// <summary>
@@ -484,10 +482,17 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Este metodo actualiza las racha de muertes
     /// </summary>
-    public void UpdateTotalDeaths()
+    public void AnEnemyDied()
     {
         _totalDeaths += 1;
-        //Debug.Log("_totalDeaths: " + _totalDeaths);
+        LevelManager levelM = LevelManager.Instance;
+        Transform playerPos = levelM.PlayerTransform();
+        if (playerPos != null)
+        {
+            playerSlowShot playerSlSh = playerPos.GetComponent<playerSlowShot>();
+            playerSlSh.PlayerKill(_totalDeaths);
+        }
+        
     }
 
     /// <summary>

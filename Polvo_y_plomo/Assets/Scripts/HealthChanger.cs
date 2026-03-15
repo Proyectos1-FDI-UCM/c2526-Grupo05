@@ -134,6 +134,23 @@ public class HealthChanger : MonoBehaviour
         }
         else
         {
+            if (GetComponent<ChasePlayer>() != null)
+            {
+                if (GameManager.HasInstance())
+                {
+                    GameManager.Instance.AnEnemyDied();
+                }
+                else
+                {
+                    Debug.Log("No hay GameManager en la escena, no se podrá actualizar el número de muertes");
+                    Destroy(this);
+                }
+            }
+            else
+            {
+                Debug.Log("Este Objeto no tiene un componente ChasePlayer, no se podrá aumentar el número de muertes");
+                Destroy(this);
+            }
             if (GetComponent<GeneraCadaver>() != null)
             {
                 GeneraCadaver genCad = GetComponent<GeneraCadaver>();
@@ -141,8 +158,6 @@ public class HealthChanger : MonoBehaviour
             }
             else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
             Destroy(gameObject);
-
-
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
         }
     }
