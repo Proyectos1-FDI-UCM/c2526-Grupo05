@@ -63,6 +63,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private EnemySpawner[] ActivateSpawnersWhenDone;
 
+    [SerializeField]
+    private bool LastSpawner = false;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -112,12 +114,13 @@ public class EnemySpawner : MonoBehaviour
     private void OnDisable()
     {
         foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) if (spawner != null) spawner.enabled = true;
+        if (LastSpawner) LevelManager.Instance.LastSpawnerOff();
     }
 
     /// <summary>
     /// Se llama cada frame cuando el componente esta activo.
     /// Se encarga de verificar si ha pasado suficiente tiempo desde el último spawn de enemigo 
-    /// para hacer aparecer a otro, y si es así, lo hace aparecer.
+    /// para hacer aparecer a otro, y si es así, lo hace aparecer, avisando al LevelManager de ello.
     /// Al acabar la lista, desactiva este mismo componente.
     /// </summary>
     private void Update()
@@ -127,6 +130,7 @@ public class EnemySpawner : MonoBehaviour
             _t = Time.time;
             Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);
             _indEnemigo++;
+            LevelManager.Instance.EnemySpawned(); // le dice al LevelManager que hay un nuevo enemigo en escena
             if (_indEnemigo >= SpawnList.Length) // lista terminada
             {
                 this.enabled = false;

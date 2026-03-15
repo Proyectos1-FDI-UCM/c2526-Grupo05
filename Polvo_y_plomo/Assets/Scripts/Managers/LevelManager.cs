@@ -91,6 +91,16 @@ public class LevelManager : MonoBehaviour
     /// Este es el puntaje.
     /// </summary>
     private int _points = 0;
+
+    /// <summary>
+    /// Dice si el último spawner del nivel ya ha hecho su función o no.
+    /// </summary>
+    private bool _lastLevelSpawnerOff = false;
+
+    /// <summary>
+    /// Número de enemigos totales en escena.
+    /// </summary>
+    private int _totalEnemiesInScene = 0;
     #endregion
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
 
@@ -135,11 +145,13 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Se ejecurta cada frame. Actualizará la racha y el puntuaje.
+    /// Se ejecurta cada frame. Actualizará la racha y el puntuaje y comprobará las condiciones de victoria del nivel para finalizarlo.
     /// </summary>
     private void Update()
     {
         UpdateScoreSystem();
+
+        if (_lastLevelSpawnerOff && _totalEnemiesInScene == 0) LevelEnd();
     }
     #endregion
 
@@ -180,18 +192,6 @@ public class LevelManager : MonoBehaviour
     {
         return PlayerPosition;
     }
-
-    /// <summary>
-    /// Este metodo actualiza las cantidad de muertes
-    /// </summary>
-    /*
-     * public void UpdateDeathsCount()
-    {
-        _deathsCount += 1;
-        if (GameManager.HasInstance()) GameManager.Instance.AnEnemyDied();
-        // Debug.Log("_deathsCount: " + _deathsCount);
-    }
-    */
 
     /// <summary>
     /// Este método reduce la racha, reduce el tiempo de duraión de la nueva racha, y actualiza el tiempo de la última racha
@@ -271,6 +271,30 @@ public class LevelManager : MonoBehaviour
     public void LevelEnd()
     {
         if (GameManager.HasInstance()) GameManager.Instance.LevelEnds(_points);
+    }
+
+    /// <summary>
+    /// Indica que el último spawner del nivel ya ha terminado su función.
+    /// </summary>
+    public void LastSpawnerOff()
+    {
+        _lastLevelSpawnerOff = true;
+    }
+
+    /// <summary>
+    /// Aumenta el contador de enemigos totales en escena.
+    /// </summary>
+    public void EnemySpawned()
+    {
+        _totalEnemiesInScene++;
+    }
+
+    /// <summary>
+    /// Reduce el contador de enemigos totales en escena.
+    /// </summary>
+    public void EnemyKilled()
+    {
+        _totalEnemiesInScene--;
     }
     #endregion
 

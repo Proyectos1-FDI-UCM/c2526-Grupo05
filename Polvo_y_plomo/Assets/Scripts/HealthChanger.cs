@@ -123,6 +123,7 @@ public class HealthChanger : MonoBehaviour
     /// Este metodo comprueba si el gameObject que le invoca es el jugador.
     /// Dependiendo de si lo llama el gameObject del jugador destruirá reiniciará la escena
     /// De otra manera comprueba si el gameObject tiene cadaver, si lo tiene lo genera el cadaver, de lo contrario destruye el objeto 
+    /// Además, avisa al LevelManager cuando lo que muere es un enemigo
     /// (Incompleto/Futuro)
     /// </summary>
     private void MetodoMuerte()
@@ -134,22 +135,10 @@ public class HealthChanger : MonoBehaviour
         }
         else
         {
-            if (GetComponent<ChasePlayer>() != null)
+            if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
             {
-                if (GameManager.HasInstance())
-                {
-                    GameManager.Instance.AnEnemyDied();
-                }
-                else
-                {
-                    Debug.Log("No hay GameManager en la escena, no se podrá actualizar el número de muertes");
-                    Destroy(this);
-                }
-            }
-            else
-            {
-                Debug.Log("Este Objeto no tiene un componente ChasePlayer, no se podrá aumentar el número de muertes");
-                Destroy(this);
+                LevelManager.Instance.EnemyKilled(); // un enemigo menos en escena
+                GameManager.Instance.AnEnemyDied(); // Cambia nivel de la habilidad.
             }
             if (GetComponent<GeneraCadaver>() != null)
             {
