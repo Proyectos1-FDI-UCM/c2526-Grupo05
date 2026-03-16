@@ -109,12 +109,12 @@ public class EnemySpawner : MonoBehaviour
 
     /// <summary>
     /// Se llama al ser desactivado el componente. No se llama si al ser cargado el componente esta desactivado (necesariamente ha de ocurrir Enabled -> Disabled).
-    /// Realiza la activación de otros EnemySpawner.
+    /// Realiza la activación de otros EnemySpawner y envia la señal de que el último spawner ha acabado al LevelManager si es así.
     /// </summary>
     private void OnDisable()
     {
         foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) if (spawner != null) spawner.enabled = true;
-        if (LastSpawner) LevelManager.Instance.LastSpawnerOff();
+        if (LastSpawner) LevelManager.Instance.LastSpawnerDone(); // condición de victoria último spawner
     }
 
     /// <summary>
@@ -130,7 +130,6 @@ public class EnemySpawner : MonoBehaviour
             _t = Time.time;
             Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);
             _indEnemigo++;
-            LevelManager.Instance.EnemySpawned(); // le dice al LevelManager que hay un nuevo enemigo en escena
             if (_indEnemigo >= SpawnList.Length) // lista terminada
             {
                 this.enabled = false;
