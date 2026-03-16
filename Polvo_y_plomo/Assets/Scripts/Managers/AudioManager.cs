@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
+// Singleton que maneja el audio del juego usando una AudioSource Pool.
 // Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
@@ -11,8 +11,14 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Clase que contiene métodos públicos para hacer sonar clips en posiciones indicas (SFX) y
+/// música (con el AudioSource que ha de tener este manager).
+/// Para que funcione se le debe asignar un AudioSourcePrefab con sonido en 3D (para que sea posicional)
+/// mientras que el AudioSource del manager ha de ser 2D (para la música).
+/// También tiene parámetros de volumen (editables desde el editor y métodos públicos) para SFX y música.
+/// 
+/// Al llamar a Play() o se instancia un AudioSourcePrefab o se mueve uno existente que no este funcionando
+/// para poner el clip indicado en la posición indicada.
 /// </summary>
 public class AudioManager : MonoBehaviour
 {
@@ -97,6 +103,11 @@ public class AudioManager : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
+    /// <summary>
+    /// Se llama al cargarse en escena.
+    /// Realiza comprobaciones necesarias para el componente y si tiene éxito
+    /// se establece como _instance y se mete al DontDestroyOnLoad.
+    /// </summary>
     private void Awake()
     {
         if (_instance == null)
@@ -113,8 +124,8 @@ public class AudioManager : MonoBehaviour
                 Destroy(gameObject);
             }
             _poolAudioSources = new AudioSource[MaxAudioSources];
-            _instance = this;
             DontDestroyOnLoad(gameObject);
+            _instance = this;
         }
         else // no somos la primera instancia
         {
@@ -122,13 +133,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Se llama cada frame mientras el componente este activo.
+    /// Revisa las AudioSource que estan marcadas como ocupadas para ver si ya
+    /// han acabado.
+    /// </summary>
     private void Update()
     {
-        //Debug.Log("Creadas: " + _createdAudioSources);
-        //Debug.Log("Libres: " + _firstOccupiedAudioSource);
         for (int i = _firstOccupiedAudioSource; i < _createdAudioSources; i++)
         {
-            //Debug.Log(i + ": isPlaying = " + _poolAudioSources[i].isPlaying);
             if (!_poolAudioSources[i].isPlaying) // AudioSource liberado
             {
                 FreeAudioSource(i);
@@ -204,6 +217,7 @@ public class AudioManager : MonoBehaviour
             _mySource.Stop();
         }
         _mySource.clip = music;
+        _mySource.volume = VolumeMusic;
         _mySource.Play();
     }
 
