@@ -42,12 +42,6 @@ public class Pruebas : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
-    /// <summary>
-    /// Con este metodo demostraremos que funciona HealthChanger.
-    /// Al entrar en colision este objeto, intenta hacerse uno de daño, si tiene componente de vida.
-    /// Si se le pone solo 1 de vida y el objeto muere al chocar, el sistema de vida irá bien.
-    /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Primero conseguimos la "instancia" del script en este objeto
@@ -59,7 +53,6 @@ public class Pruebas : MonoBehaviour
             miSalud.CambiarVida(-1);
         }
     }
-
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -78,7 +71,11 @@ public class Pruebas : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-
+    /// <summary>
+    /// Con este metodo demostraremos que funciona HealthChanger.
+    /// Al entrar en colision este objeto, intenta hacerse uno de daño, si tiene componente de vida.
+    /// Si se le pone solo 1 de vida y el objeto muere al chocar, el sistema de vida irá bien.
+    /// </summary>
     #endregion
 
 } // class Pruebas 

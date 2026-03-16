@@ -110,7 +110,15 @@ public class HealthChanger : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Con este metodo podremos saber si la vida del jugador es igual o mayor a la vida máxima
+    /// Con eso podremos determinar si puede ser curado por objetos o no
+    /// </summary>
+    public bool CuracionPermitida()
+    {
+        if (_vida < VidaMax) return true;
+        else return false;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
