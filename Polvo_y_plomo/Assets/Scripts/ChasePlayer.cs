@@ -162,6 +162,11 @@ public class ChasePlayer : MonoBehaviour
         {
             _rb.linearVelocity = Vector2.zero;
         }
+
+        if (_isStunned)
+        {
+            _rb.linearVelocity = Vector2.zero;
+        }
     }
     #endregion
 
@@ -194,7 +199,13 @@ public class ChasePlayer : MonoBehaviour
     /// </summary>
     public void Stunned(bool stunned)
     {
-        _isStunned = stunned;
+        _isStunned = stunned;/*
+        if (stunned) _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        else 
+        {
+            _rb.constraints = RigidbodyConstraints2D.None;
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }*/
     }
 
     #endregion

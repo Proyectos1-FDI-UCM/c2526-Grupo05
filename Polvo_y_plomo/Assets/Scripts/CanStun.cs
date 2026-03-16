@@ -97,7 +97,6 @@ public class CanStun : MonoBehaviour
     {
         _stunStart = Time.time;
         _chasePlayer.Stunned(true);
-        _chasePlayer.enabled = false;
     }
     #endregion
 
