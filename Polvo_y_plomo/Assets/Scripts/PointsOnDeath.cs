@@ -13,7 +13,7 @@ using UnityEngine;
 /// Antes de cada class, descripción de qué es y para qué sirve,
 /// usando todas las líneas que sean necesarias.
 /// </summary>
-public class PointsOnDestroy : MonoBehaviour
+public class PointsOnDeath : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -27,7 +27,7 @@ public class PointsOnDestroy : MonoBehaviour
     /// Número de puntos obtenidos del enemigo
     /// </summary>
     [SerializeField]
-    private int Points=100;
+    private int Points = 100;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -38,11 +38,6 @@ public class PointsOnDestroy : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-
-    /// <summary>
-    /// Un booleano que determinará si somos el enemigo
-    /// </summary>
-    private bool _enemigo;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -51,33 +46,6 @@ public class PointsOnDestroy : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
-    {
-
-        if (GetComponent<ChasePlayer>() != null)
-        {
-            _enemigo = true;
-        }
-    }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    private void OnDestroy()
-    {
-        if (_enemigo)
-        {
-            if (LevelManager.HasInstance())
-            {
-                LevelManager.Instance.UpdateScoreSystem(Points);
-            }
-        }
-    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -88,6 +56,19 @@ public class PointsOnDestroy : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Se llama al morir el enemigo o cuando se deba dar puntos.
+    /// Da los puntos, enviandolos al LevelManager.
+    /// Solo lo hace 1 vez, luego se destruye.
+    /// </summary>
+    public void GivePoints()
+    {
+        if (LevelManager.HasInstance())
+        {
+            LevelManager.Instance.UpdateScoreSystem(Points);
+        }
+        Destroy(this);
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

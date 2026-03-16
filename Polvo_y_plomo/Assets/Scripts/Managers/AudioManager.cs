@@ -212,13 +212,19 @@ public class AudioManager : MonoBehaviour
     /// <param name="music"></param>
     public void PlayMusic(AudioClip music)
     {
-        if (_mySource.isPlaying)
-        {
-            _mySource.Stop();
-        }
+        if (_mySource.isPlaying) _mySource.Stop();
+
         _mySource.clip = music;
         _mySource.volume = VolumeMusic;
         _mySource.Play();
+    }
+
+    /// <summary>
+    /// Para la música.
+    /// </summary>
+    public void StopMusic()
+    {
+        _mySource.Stop();
     }
 
     #region Métodos públicos para el volumen

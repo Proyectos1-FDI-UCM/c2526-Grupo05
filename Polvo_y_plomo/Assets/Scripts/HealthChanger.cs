@@ -66,6 +66,7 @@ public class HealthChanger : MonoBehaviour
         if (GetComponent<playerControlledMovement>() != null)
         {
             _jugador = true;
+            if (GameManager.HasInstance()) _vida = GameManager.Instance.InitHealthChanger();
         }
 
         _canFlash = GetComponent<CanFlash>();
@@ -135,6 +136,12 @@ public class HealthChanger : MonoBehaviour
         }
         else // si no es jugador
         {
+            IsEnemy isenemy = GetComponent<IsEnemy>();
+            if (isenemy != null) isenemy.EnemyDied();
+
+            PointsOnDeath points = GetComponent<PointsOnDeath>();
+            if (points != null) points.GivePoints();
+
             // spawn del cadaver
             if (GetComponent<GeneraCadaver>() != null)
             {

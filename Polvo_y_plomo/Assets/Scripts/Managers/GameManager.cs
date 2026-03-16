@@ -124,6 +124,26 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private ImageFill LevelBar;
 
+    /// <summary>
+    /// Componente de audio que almacena la canción de victoria que sonará
+    /// tras ganar un nivel.
+    /// </summary>
+    [SerializeField]
+    private AudioClip VictoryMusic;
+
+    /// <summary>
+    /// Indice de la escena que contiene el nivel al que se pasará tras
+    /// ganar la partida.
+    /// </summary>
+    [SerializeField]
+    private int NextLevel = 0;
+
+    /// <summary>
+    /// Almacena cuanto tiempo se tardará en cargar la siguiente escena tras
+    /// la victoria del jugador.
+    /// </summary>
+    [SerializeField]
+    private float TiempoEsperaSiguienteNivel = 5f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -180,6 +200,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private static float _slowMultiplier = 1f;
 
+    /// <summary>
+    /// Indica si el jugador ha muerto.
+    /// Se usa para diferenciar que contador usar en el Update().
+    /// </summary>
+    private bool _playerDied = false;
+
+    
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -221,8 +248,8 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen,FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets);
-            NewSceneUpdate();
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen,FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic);
+            GameManager.Instance.NewSceneUpdate();
 
             DestroyImmediate(this.gameObject);
         }
@@ -250,10 +277,22 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Time.time - _t > TiempoEsperaRespawn)
+        if (_playerDied)
         {
-            ReinicioEscena();
-            this.enabled = false;
+            if (Time.time - _t > TiempoEsperaRespawn)
+            {
+                this.enabled = false;
+                ReinicioEscena();
+            }
+        }
+        else
+        {
+            if (Time.time - _t > TiempoEsperaSiguienteNivel)
+            {
+                if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
+                this.enabled = false;
+                ChangeScene(NextLevel);
+            }
         }
     }
     #endregion
@@ -327,9 +366,9 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Este metodo actualiza los puntos en el HUD.
     /// </summary>
-    public void UpdateScoreHUD(int NuevoScoreJugador)
+    public void UpdateScoreHUD(int cambioDePuntos)
     {
-        _totalPoints = NuevoScoreJugador;
+        _totalPoints += cambioDePuntos;
         if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
     }
 
@@ -438,18 +477,17 @@ public class GameManager : MonoBehaviour
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
+        if (LevelManager.HasInstance()) _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
+        else _totalPoints = 0;
 
         // Animación de pantalla negra.
-        InputManager.Instance.DesactivarInput();
+        if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
         if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
 
-
-        if (LevelManager.HasInstance())
-        {
-            LevelManager.Instance.InitialStreakPoints();
-        }
+        
 
         _t = Time.time;
+        _playerDied = true;
         this.enabled = true; // comienza el temporizador en el update
     }
 
@@ -457,12 +495,9 @@ public class GameManager : MonoBehaviour
     /// Transfiere datos importantes de un GameManager que ha de destruirse al activo.
     /// Reconfigura el HUD para incluir el de la escena actual.
     /// </summary>
-    /// <param name="FadeIn"></param>
-    /// <param name="FadeOut"></param>
-    /// <param name="Lifes"></param>
-    /// <param name="Bullets"></param>
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
-        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets)
+        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier,
+        ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic)
     {
         this.FadeInBlackScreen = FadeInBlackScreen;
         this.FadeOutBlackScreen = FadeOutBlackScreen;
@@ -472,6 +507,11 @@ public class GameManager : MonoBehaviour
         this.HabilityShadow = HabilityShadow;
         this.Lifes = Lifes;
         this.Bullets = Bullets;
+        this.ScoreText = ScoreText;
+        this.StreakMultiplier = StreakMultiplier;
+        this.StreakBar = StreakBar;
+        this.LevelBar = LevelBar;
+        this.VictoryMusic = VictoryMusic;
     }
 
     /// <summary>
@@ -516,9 +556,46 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
     /// </summary>
-    public void LevelEnds(int Points)
+    public void LevelEnds()
     {
-        _totalPoints += Points;
+        if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
+        if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
+        if (AudioManager.HasInstance()) AudioManager.Instance.PlayMusic(VictoryMusic);
+
+        _t = Time.time;
+        _playerDied = false;
+        this.enabled = true; // inicia contador en Update().
+
+    }
+
+    /// <summary>
+    /// Cuando un GameManager ya existe, esta función es llamada para actualizar
+    /// cosas necesarias en la nueva escena desde el GameManager original.
+    /// Sirve como indicador de que se ha cargado una nueva escena (que se llama solo
+    /// cuando al cargarla hay otro GameManager).
+    /// </summary>
+    public void NewSceneUpdate()
+    {
+        // Actualizar HUD del jugador
+        UpdateAmmoHUD(_municionJugador);
+        UpdateHealthHUD(_vidaJugador);
+        UpdateScoreHUD(0);
+
+        // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
+        this.enabled = false;
+        if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
+
+        if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
+    }
+
+    /// <summary>
+    /// Método para preguntarle al GameManager la vida a la que debe aparecer el jugador.
+    /// Lo llama el HealthChanger del jugador al inicializarse.
+    /// </summary>
+    /// <returns></returns>
+    public int InitHealthChanger()
+    {
+        return _vidaJugador;
     }
     #endregion
 
@@ -531,36 +608,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Init()
     {
-        // De momento no hay nada que inicializar
-    }
 
-    /// <summary>
-    /// Cuando un GameManager ya existe, esta función es llamada para actualizar
-    /// cosas necesarias en la nueva escena desde el GameManager original.
-    /// Sirve como indicador de que se ha cargado una nueva escena (que se llama solo
-    /// cuando al cargarla hay otro GameManager).
-    /// </summary>
-    private void NewSceneUpdate()
-    {
-        // Hacer que se transfiera la vida actual del jugador 
-        if (LevelManager.HasInstance() && LevelManager.Instance.PlayerTransform() != null)
-        {
-            HealthChanger _playerHealth = LevelManager.Instance.PlayerTransform().GetComponent<HealthChanger>();
-            if (_playerHealth != null)
-            {
-                _playerHealth.CambiarVida(-(VIDABASEJUGADOR - _vidaJugador));
-            }
-        }
-
-        // Actualizar HUD del jugador
-        UpdateAmmoHUD(_municionJugador);
-        UpdateHealthHUD(_vidaJugador);
-
-        // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
-        this.enabled = false;
-        if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
-
-        if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
     }
 
     /// <summary>
@@ -570,6 +618,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
     #endregion
 } // class GameManager 
 // namespace

@@ -114,7 +114,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnDisable()
     {
         foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) if (spawner != null) spawner.enabled = true;
-        if (LastSpawner) LevelManager.Instance.LastSpawnerDone(); // condición de victoria último spawner
+        if (LevelManager.HasInstance() && LastSpawner) LevelManager.Instance.LastSpawnerDone(); // condición de victoria último spawner
     }
 
     /// <summary>
