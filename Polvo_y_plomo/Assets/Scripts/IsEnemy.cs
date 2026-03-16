@@ -53,15 +53,6 @@ public class IsEnemy : MonoBehaviour
         if (LevelManager.HasInstance()) LevelManager.Instance.EnemySpawned(); // le dice al LevelManager que hay un nuevo enemigo en escena
     }
 
-    /// <summary>
-    /// Se llama al destruirse un objeto.
-    /// Indica al LevelManager y al GameManager que ha muerto un enemigo.
-    /// </summary>
-    private void OnDestroy()
-    {
-        if (LevelManager.HasInstance()) LevelManager.Instance.EnemyKilled(); // un enemigo menos en escena
-        if (GameManager.HasInstance()) GameManager.Instance.AnEnemyDied(); // Cambia nivel de la habilidad.
-    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -71,6 +62,19 @@ public class IsEnemy : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
+
+    /// <summary>
+    /// Se llama al morir un enemigoo.
+    /// Indica al LevelManager y al GameManager que ha muerto un enemigo.
+    /// </summary>
+    public void EnemyDied()
+    {
+        if (LevelManager.HasInstance()) LevelManager.Instance.EnemyKilled();
+        if (GameManager.HasInstance())
+        {
+            GameManager.Instance.AnEnemyDied(); // Cambia nivel de la habilidad.
+        }
+    }
 
     #endregion
 
