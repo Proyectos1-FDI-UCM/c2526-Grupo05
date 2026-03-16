@@ -29,6 +29,9 @@ using UnityEngine;
 /// Ahora lleva toda la lógica de las rachas de muerte y el puntaje, avisando al GameManager
 /// sobre todos los sucesos relevantes. Recibe de este al cargarse el puntaje actual, y tiene
 /// una función a la que habrá que llamar para que se registre el puntaje en el GameManager
+/// 
+/// +++
+/// Se ha añadido la funcionalidad para que reciba 
 /// una vez superado un nivel.
 /// </summary>
 public class LevelManager : MonoBehaviour
@@ -276,7 +279,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Indica que el último spawner del nivel ya ha terminado su función.
     /// </summary>
-    public void LastSpawnerOff()
+    public void LastSpawnerDone()
     {
         _lastLevelSpawnerOff = true;
     }

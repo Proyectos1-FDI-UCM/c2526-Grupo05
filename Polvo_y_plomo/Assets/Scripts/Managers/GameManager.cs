@@ -173,11 +173,13 @@ public class GameManager : MonoBehaviour
     private float _t;
 
     /// <summary>
-    /// Variable de get PÚBLICO (no te asustes Ángel) pero set privado, que guarda la velocidad de ralentización, distinta de 1,00 cuando
-    /// la habilidad del jugador está activa. Ha de ser de get público para que aquellos scripts que la necesitan para modificar su velocidad,
-    /// tengan acceso a ella.
+    /// Variable que guarda la velocidad de ralentización, distinta de 1,00 cuando
+    /// la habilidad del jugador está activa. 
+    /// Tiene una variable de acceso con un get para que aquellos scripts que la necesitan para 
+    /// modificar su velocidad, tengan acceso a ella.
     /// </summary>
-    public float SlowMultiplier { get; private set; } = 1.00f;
+    private static float _slowMultiplier = 1f;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -269,6 +271,17 @@ public class GameManager : MonoBehaviour
         {
             Debug.Assert(_instance != null);
             return _instance;
+        }
+    }
+
+    /// <summary>
+    /// Propiedad para acceder al valor de _slowMultiplier.
+    /// </summary>
+    public static float SlowMultiplier
+    {
+        get
+        {
+            return _slowMultiplier;
         }
     }
 
@@ -466,7 +479,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SlowShotOn()
     {
-        SlowMultiplier = 0.25f;
+        _slowMultiplier = 0.25f;
         StartFadeInBlueScreen();
     }
 
@@ -475,7 +488,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SlowShotOff()
     {
-        SlowMultiplier = 1.00f;
+        _slowMultiplier = 1.00f;
         StartFadeOutBlueScreen();
     }
 

@@ -133,13 +133,9 @@ public class HealthChanger : MonoBehaviour
             if (GameManager.HasInstance()) GameManager.Instance.Respawn();
             Destroy(this);
         }
-        else
+        else // si no es jugador
         {
-            if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
-            {
-                LevelManager.Instance.EnemyKilled(); // un enemigo menos en escena
-                GameManager.Instance.AnEnemyDied(); // Cambia nivel de la habilidad.
-            }
+            // spawn del cadaver
             if (GetComponent<GeneraCadaver>() != null)
             {
                 GeneraCadaver genCad = GetComponent<GeneraCadaver>();

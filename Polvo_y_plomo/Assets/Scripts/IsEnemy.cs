@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Script que se encarga del movimiento rectilíneo de la bala
-// Samuel Asensio Torres
+// Componente que se añade a enemigos para que sus muertes cuenten
+// Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,11 @@ using UnityEngine;
 
 
 /// <summary>
-/// Componente al que se le asigna una velocidad inicial y se encarga de mover el objeto a esta velocidad.
-/// Pensado para añadirlo a las balas.
+/// Script que se le añade únicamente a los enemigos y que puede servir para hacer DuckTyping (han de tenerlo todos los enemigos).
+/// Lleva lógica sobre enemigos; actualiza la cuenta de ellos en la escena (para el LevelManager) y indica cuando ha muerto
+/// uno a LevelManager y GameManager.
 /// </summary>
-public class BulletMove : MonoBehaviour
+public class IsEnemy : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,9 +23,6 @@ public class BulletMove : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
-    [SerializeField]
-    private float speed = 15f; // Velocidad de la bala
 
     #endregion
 
@@ -36,10 +34,7 @@ public class BulletMove : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    /// <summary>
-    /// Bool que dice si hay o no GameManager en la escena
-    /// </summary>
-    private bool _gameManager = false;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -47,20 +42,25 @@ public class BulletMove : MonoBehaviour
 
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
-    // - Hay que borrar los que no se usen
+    // - Hay que borrar los que no se usen 
 
-    void Start()
-    {
-        _gameManager = GameManager.HasInstance();
-    }
     /// <summary>
-    /// Se ejecuta cada frame. Mueve la bala hacia su derecha local (0 grados) 
-    /// para coincidir con la rotación del disparo.
+    /// Se llama una vez al cargarse en escena si el componente esta activo, o tras activarse por primera vez.
+    /// Le indica al LevelManager que ha aparecido un enemigo.
     /// </summary>
-    void Update()
+    private void Start()
     {
-        if (_gameManager) transform.Translate(Vector2.right * speed * Time.deltaTime * GameManager.SlowMultiplier);
-        else transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (LevelManager.HasInstance()) LevelManager.Instance.EnemySpawned(); // le dice al LevelManager que hay un nuevo enemigo en escena
+    }
+
+    /// <summary>
+    /// Se llama al destruirse un objeto.
+    /// Indica al LevelManager y al GameManager que ha muerto un enemigo.
+    /// </summary>
+    private void OnDestroy()
+    {
+        if (LevelManager.HasInstance()) LevelManager.Instance.EnemyKilled(); // un enemigo menos en escena
+        if (GameManager.HasInstance()) GameManager.Instance.AnEnemyDied(); // Cambia nivel de la habilidad.
     }
     #endregion
 
@@ -73,7 +73,7 @@ public class BulletMove : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -81,7 +81,7 @@ public class BulletMove : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion   
+    #endregion
 
-} // class BulletMove 
+} // class IsEnemy 
 // namespace
