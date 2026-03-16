@@ -65,6 +65,14 @@ public class ChasePlayer : MonoBehaviour
     /// Se inicializa en el Start() y en cada Update().
     /// </summary>
     private bool _isChasing;
+    /// <summary>
+    /// Parámetro que registra si el enemigo persigue al jugador.
+    /// True = está persiguiendo.
+    /// False = está atacando.
+    /// 
+    /// Se inicializa en el Start() y en cada Update().
+    /// </summary>
+    private bool _isStunned;
 
     /// <summary>
     /// Almacena el Rigidbody2d del objeto.
@@ -77,7 +85,6 @@ public class ChasePlayer : MonoBehaviour
     /// Inicializado en el Start();
     /// </summary>
     private Transform _playerTransform;
-
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>
@@ -169,6 +176,21 @@ public class ChasePlayer : MonoBehaviour
     public bool IsChasing()
     {
         return _isChasing;
+    }
+    /// <summary>
+    /// Método para leer y saber si el componente esta persiguiendo actualmente al jugador.
+    /// </summary>
+    /// <returns></returns>
+    public bool Stunned()
+    {
+        return _isStunned;
+    }
+    /// <summary>
+    /// Método para alterar el valor de la variable _isStunned.
+    /// </summary>
+    public void Stunned(bool stunned)
+    {
+        _isStunned = stunned;
     }
 
     #endregion
