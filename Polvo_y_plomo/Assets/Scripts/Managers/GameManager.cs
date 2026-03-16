@@ -498,14 +498,11 @@ public class GameManager : MonoBehaviour
     public void AnEnemyDied()
     {
         _totalDeaths += 1;
-        LevelManager levelM = LevelManager.Instance;
-        Transform playerPos = levelM.PlayerTransform();
-        if (playerPos != null)
+        if (LevelManager.HasInstance() && LevelManager.Instance.PlayerTransform() != null)
         {
-            playerSlowShot playerSlSh = playerPos.GetComponent<playerSlowShot>();
-            playerSlSh.PlayerKill(_totalDeaths);
+            playerSlowShot playerSlSh = LevelManager.Instance.PlayerTransform().GetComponent<playerSlowShot>();
+            if (playerSlSh != null) playerSlSh.PlayerKill(_totalDeaths);
         }
-        
     }
 
     /// <summary>

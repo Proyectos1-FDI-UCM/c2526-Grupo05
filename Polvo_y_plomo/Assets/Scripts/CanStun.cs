@@ -44,7 +44,7 @@ public class CanStun : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// </summary>
-    private float _stunStart;
+    private float _stunStart = -99f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
