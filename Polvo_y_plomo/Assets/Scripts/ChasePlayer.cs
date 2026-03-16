@@ -149,7 +149,7 @@ public class ChasePlayer : MonoBehaviour
         if (_isChasing)
         {
             _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
-            if (_gameManager) _rb.linearVelocity *= GameManager.Instance.SlowMultiplier;
+            if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
         }
     }
     #endregion

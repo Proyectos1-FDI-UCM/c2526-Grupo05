@@ -130,7 +130,7 @@ public class EnemyShootingAttack : MonoBehaviour
     void Update()
     {
         float compareTime = CooldownDisparos;
-        if (_gameManager) compareTime *= 1 / GameManager.Instance.SlowMultiplier;
+        if (_gameManager) compareTime *= 1 / GameManager.SlowMultiplier;
         
         if (!_chasePlayer.IsChasing() && Time.time - _tUltimoDisparo > CooldownDisparos)
         {
