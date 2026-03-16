@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// CamiloSandovalSánchez
+// Breve descripción del contenido del archivo
+// Camilo Sandoval Sánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class OnCollisionStun : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,12 +22,6 @@ public class onCollisionDealDamage : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
-    /// <summary>
-    /// Variable que indica el daño que hace el objeto
-    /// </summary>
-    [SerializeField]
-    private int DamageDone = 1;
 
     #endregion
 
@@ -39,6 +33,7 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -48,17 +43,16 @@ public class onCollisionDealDamage : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-
     /// <summary>
     /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
+    /// Activa el stun del objecto con el que colisiona si este tiene el componente CanStun.
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
-        if (health != null)
+        CanStun stun = collision.gameObject.GetComponent<CanStun>();
+        if (stun != null)
         {
-            health.CambiarVida(-DamageDone);
+            stun.Stun();
         }
     }
 
@@ -83,5 +77,5 @@ public class onCollisionDealDamage : MonoBehaviour
 
     #endregion
 
-} // class MeleeObject 
+} // class OnCollisionStun 
 // namespace

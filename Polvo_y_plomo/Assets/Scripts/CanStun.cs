@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// CamiloSandovalSánchez
+// Breve descripción del contenido del archivo
+// Camilo Sandoval Sánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class CanStun : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,13 +22,8 @@ public class onCollisionDealDamage : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
-    /// <summary>
-    /// Variable que indica el daño que hace el objeto
-    /// </summary>
     [SerializeField]
-    private int DamageDone = 1;
-
+    private float StunDuration = 1.0f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -39,6 +34,17 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
+    /// </summary>
+    private ChasePlayer _chasePlayer;
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
+    /// </summary>
+    private float _stunStart;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -48,20 +54,31 @@ public class onCollisionDealDamage : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-
     /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Start()
     {
-        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
-        if (health != null)
+        _chasePlayer = GetComponent<ChasePlayer>();
+        if ( _chasePlayer == null)
         {
-            health.CambiarVida(-DamageDone);
+            Debug.Log("Se ha puesto el componente \"CanStun\" en un objeto sin el componente \"ChasePlayer\", y no podrá ser stunneado.");
+            Destroy(this);
         }
     }
 
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        if (!_chasePlayer.enabled && (Time.time - _stunStart > StunDuration))
+        {
+            _chasePlayer.enabled = true;
+            _chasePlayer.Stunned(false);
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -72,6 +89,16 @@ public class onCollisionDealDamage : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
+    /// </summary>
+    public void Stun()
+    {
+        _stunStart = Time.time;
+        _chasePlayer.Stunned(true);
+        _chasePlayer.enabled = false;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -83,5 +110,5 @@ public class onCollisionDealDamage : MonoBehaviour
 
     #endregion
 
-} // class MeleeObject 
+} // class CanStun 
 // namespace

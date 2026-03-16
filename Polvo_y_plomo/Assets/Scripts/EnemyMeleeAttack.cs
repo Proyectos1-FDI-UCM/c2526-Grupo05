@@ -119,7 +119,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         float compareTime = CooldownMelee;
         if (_gameManager) CooldownMelee *= 1 / GameManager.Instance.SlowMultiplier;
-        if (!_chasePlayer.IsChasing() && Time.time - _tiempoDesdeUltimoMelee > compareTime)
+        if ((!_chasePlayer.IsChasing() && !_chasePlayer.Stunned()) && Time.time - _tiempoDesdeUltimoMelee > compareTime)
         {
             CanMelee();
 
