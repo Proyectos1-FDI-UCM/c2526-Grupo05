@@ -49,10 +49,10 @@ public class OnCollisionStun : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        CanStun stun = collision.gameObject.GetComponent<CanStun>();
-        if (stun != null)
+        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if (hitbox != null)
         {
-            stun.Stun();
+            hitbox.HitboxStun();
         }
     }
 
