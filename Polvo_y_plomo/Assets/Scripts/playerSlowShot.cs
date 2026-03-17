@@ -154,7 +154,7 @@ public class playerSlowShot : MonoBehaviour
                 f = true;
             }
         }
-        _segmentLevelBar = (float)(kills) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+        _segmentLevelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
         GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
     }
 
@@ -223,12 +223,11 @@ public class playerSlowShot : MonoBehaviour
             if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
             {
                 _abilityCurrentLevel++;
-                Debug.Log("Sube de nivel la habilidad del jugador: " + _abilityCurrentLevel);
                 GameManager.Instance.UpdateLevelBar(0);
             }
             else
             {
-                _segmentLevelBar = (float)(kills) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+                _segmentLevelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
                 GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
             }
         }
