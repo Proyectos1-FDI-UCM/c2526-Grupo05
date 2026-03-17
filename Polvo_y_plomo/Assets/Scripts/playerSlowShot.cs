@@ -149,10 +149,10 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        int kills = GameManager._instance.TransferTotalDeaths();
+        int kills = GameManager.Instance.TransferTotalDeaths();
         _abilityCurrentLevel = 0;
         bool f = false;
-        while (_abilityCurrentLevel < AbilityLevels.Lenght && !f)
+        while (_abilityCurrentLevel < AbilityLevels.Length && !f)
         {
             if (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold < kills)
             {
