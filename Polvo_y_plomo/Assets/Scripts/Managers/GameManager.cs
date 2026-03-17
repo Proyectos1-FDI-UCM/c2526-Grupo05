@@ -514,6 +514,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Este método devuelve el número de muertes almacenado en el GameManager.
+    /// </summary>
+    public int TransferTotalDeaths()
+    {
+        return _totalDeaths;
+    }
+
+    /// <summary>
     /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
     /// </summary>
     public void LevelEnds(int Points)
