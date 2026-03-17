@@ -140,30 +140,26 @@ public class playerSlowShot : MonoBehaviour
         }
 
         _segmentLevelBar = 1f / AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold;
-    }
 
-    /// <summary>
-    /// El Awake se ejecuta cuando se activa un objeto con el componente.
-    /// En este, en función de las muertes en total que lleve esta partida, dato almacenado por el GameManager,
-    /// se establece el nivel de la habilidad del jugador. 
-    /// </summary>
-    void Awake()
-    {
-        int kills = GameManager.Instance.TransferTotalDeaths();
-        _abilityCurrentLevel = 0;
-        bool f = false;
-        while (_abilityCurrentLevel < AbilityLevels.Length && !f)
+        if (GameManager.HasInstance())
         {
-            if (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold < kills)
+            int kills = GameManager.Instance.TransferTotalDeaths();
+            _abilityCurrentLevel = 0;
+            bool f = false;
+            while (_abilityCurrentLevel < AbilityLevels.Length && !f)
             {
-                _abilityCurrentLevel++;
+                if (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold < kills)
+                {
+                    _abilityCurrentLevel++;
+                }
+                else
+                {
+                    f = true;
+                }
             }
-            else
-            {
-                f = true;
-            }
+            PlayerKill(kills);
         }
-        PlayerKill(kills);
+        else Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin GameManager. No funcionará.");
     }
 
     /// <summary>
@@ -226,19 +222,21 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     public void PlayerKill(int kills)
     {
-        Debug.Log("level " + _abilityCurrentLevel);
-        if ((_abilityCurrentLevel < (AbilityLevels.Length - 1)) && kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold )
+        if (_abilityCurrentLevel < (AbilityLevels.Length - 1) )
         {
-            _abilityCurrentLevel++;
-            GameManager.Instance.UpdateLevelBar(0);
-            _sumSegmentLevelBar = 0f;
-            _segmentLevelBar = 1f / (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel - 1].AbilityUpgradeKillThreshold);
-            Debug.Log(_abilityCurrentLevel);
-        }
-        else
-        {
-            _sumSegmentLevelBar += _segmentLevelBar;
-            GameManager.Instance.UpdateLevelBar(_sumSegmentLevelBar);
+            if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
+            {
+                _abilityCurrentLevel++;
+                Debug.Log("Sube de nivel la habilidad del jugador: " + _abilityCurrentLevel);
+                GameManager.Instance.UpdateLevelBar(0);
+            }
+            else
+            {
+                _segmentLevelBar = (kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) /
+                    (AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+                GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
+                Debug.Log("Ha muerto un enemigo, aumenta la barra");
+            }
         }
     }
     #endregion
