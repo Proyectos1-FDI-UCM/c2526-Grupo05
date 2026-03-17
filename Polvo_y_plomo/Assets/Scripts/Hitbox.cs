@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-// CamiloSandovalSánchez
+// Componente para hacer que una hitbox en un objeto hijo funcione como si estuviese en el padre.
+// Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,14 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este script maneja el comportamiento de un gameObject que funciona como zona en la que una entidad recibe daño
-/// Resta un PV configurable a una entidad
+/// Componente para hacer de intermediario entre componentes que requieran interactuar con hitboxes y
+/// el objeto padre que contiene los componentes con los que interactuar.
+/// 
+/// Actualmente cumple 2 funcionalidades:
+/// 1) Recibe una señal de stun del OnCollisionStun y se la envia al CanStun del padre.
+/// 2) Recibe daño hecho de OnCollisionDealDamage y se lo envia como daño al HealthChanger del padre.
 /// </summary>
-public class onCollisionDealDamage : MonoBehaviour
+public class Hitbox : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,12 +26,6 @@ public class onCollisionDealDamage : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
-    /// <summary>
-    /// Variable que indica el daño que hace el objeto
-    /// </summary>
-    [SerializeField]
-    private int DamageDone = 1;
 
     #endregion
 
@@ -39,6 +37,16 @@ public class onCollisionDealDamage : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
+
+    /// <summary>
+    /// Almacena el HealthChanger del padre si lo tiene.
+    /// </summary>
+    private HealthChanger _healthChanger;
+
+    /// <summary>
+    /// Almacena el CanStun del padre si lo tiene.
+    /// </summary>
+    private CanStun _canStun;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -48,18 +56,14 @@ public class onCollisionDealDamage : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-
     /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Cambia la vida del objecto con el que colisiona si este tiene el componente HealthManager.
+    /// Se llama una vez tras cargarse en la escena si el componente esta activo, o la primera vez que se active.
+    /// Inicializa el componente.
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
-        if (hitbox != null)
-        {
-            hitbox.HitboxDealDamage(DamageDone);
-        }
+        _healthChanger = GetComponentInParent<HealthChanger>();
+        _canStun = GetComponentInParent<CanStun>();
     }
 
     #endregion
@@ -72,6 +76,25 @@ public class onCollisionDealDamage : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Se encarga de enviarle al objeto padre el daño hecho, inviertiendole el signo.
+    /// Solo lo hace si el padre tiene HealthChanger.
+    /// </summary>
+    /// <param name="DamageDone"></param>
+    public void HitboxDealDamage(int DamageDone)
+    {
+        if (_healthChanger != null) _healthChanger.CambiarVida(-DamageDone);
+    }
+
+    /// <summary>
+    /// Se encarga de enviarle al objeto padre la señal de Stun.
+    /// Solo lo hace si el padre tiene CanStun.
+    /// </summary>
+    public void HitboxStun()
+    {
+        if (_canStun != null) _canStun.Stun();
+    }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -83,5 +106,5 @@ public class onCollisionDealDamage : MonoBehaviour
 
     #endregion
 
-} // class MeleeObject 
+} // class Hitbox 
 // namespace

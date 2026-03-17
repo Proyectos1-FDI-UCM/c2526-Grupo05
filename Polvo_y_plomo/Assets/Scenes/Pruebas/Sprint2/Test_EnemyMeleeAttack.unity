@@ -554,6 +554,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemigoBorracho
       objectReference: {fileID: 0}
+    - target: {fileID: 6605164626941545888, guid: f603b35226294e54d9dc851670bc9f6d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

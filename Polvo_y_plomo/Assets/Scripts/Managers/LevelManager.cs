@@ -241,7 +241,6 @@ public class LevelManager : MonoBehaviour
     {
         if (EnemyPoints > 0)
         {
-            Debug.Log(EnemyPoints * _streak);
             if (GameManager.HasInstance()) GameManager.Instance.UpdateScoreHUD(EnemyPoints * _streak);
             KeepStreak();
         }
