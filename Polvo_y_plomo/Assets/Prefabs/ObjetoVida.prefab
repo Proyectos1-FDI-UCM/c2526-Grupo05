@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2896980082316717347}
   - component: {fileID: 1438761213475260554}
   - component: {fileID: 2935224476946838689}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ObjetoVida
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.040880322, g: 1, b: 0.2308946, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -116,5 +116,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab1b4dd6bff6d24e8f1afccbd487862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlashTime: 0.2
-  FlashesUntilDisable: 25
+  FlashTime: 0.15
+  FlashesUntilDisable: 50
