@@ -132,7 +132,7 @@ public class playerSlowShot : MonoBehaviour
 
         foreach (Level level in  AbilityLevels)
         {
-            if (level.PlayerAbilityDuration == 0 || level.AbilityUpgradeKillThreshold == 0)
+            if (level.PlayerAbilityDuration == 0 && level.AbilityUpgradeKillThreshold == 0)
             {
                 Debug.Log("En \"playerSlowShot\" se ha añadido un nivel de habilidad sin configuración puesta. No funcionará.");
                 Destroy(this);

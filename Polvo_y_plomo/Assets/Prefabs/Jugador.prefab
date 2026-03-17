@@ -566,13 +566,13 @@ MonoBehaviour:
   PlayerAbilityCooldown: 20
   AbilityLevels:
   - PlayerAbilityDuration: 1
-    AbilityUpgradeKillThreshold: 20
+    AbilityUpgradeKillThreshold: 0
   - PlayerAbilityDuration: 1.5
-    AbilityUpgradeKillThreshold: 50
+    AbilityUpgradeKillThreshold: 20
   - PlayerAbilityDuration: 2
-    AbilityUpgradeKillThreshold: 100
+    AbilityUpgradeKillThreshold: 50
   - PlayerAbilityDuration: 3
-    AbilityUpgradeKillThreshold: -1
+    AbilityUpgradeKillThreshold: 100
 --- !u!1 &8633089953209525018
 GameObject:
   m_ObjectHideFlags: 0
