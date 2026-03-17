@@ -477,8 +477,17 @@ public class GameManager : MonoBehaviour
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
-        if (LevelManager.HasInstance()) _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
-        else _totalPoints = 0;
+        if (LevelManager.HasInstance())
+        {
+            _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
+            _totalDeaths = LevelManager.Instance.GetKillsAtStartOfLevel();
+        }
+        else
+        {
+            _totalPoints = 0;
+            _totalDeaths = 0;
+        }
+
 
         // Animación de pantalla negra.
         if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();

@@ -6,6 +6,7 @@
 //---------------------------------------------------------
 
 using UnityEngine;
+using UnityEngineInternal;
 // Añadir aquí el resto de directivas using
 
 
@@ -139,27 +140,22 @@ public class playerSlowShot : MonoBehaviour
             }
         }
 
-        _segmentLevelBar = 1f / AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold;
-
-        if (GameManager.HasInstance())
+        int kills = GameManager.Instance.TransferTotalDeaths();
+        _abilityCurrentLevel = 0;
+        bool f = false;
+        while (_abilityCurrentLevel < AbilityLevels.Length - 1 && !f)
         {
-            int kills = GameManager.Instance.TransferTotalDeaths();
-            _abilityCurrentLevel = 0;
-            bool f = false;
-            while (_abilityCurrentLevel < AbilityLevels.Length && !f)
+            if (AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold <= kills)
             {
-                if (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold < kills)
-                {
-                    _abilityCurrentLevel++;
-                }
-                else
-                {
-                    f = true;
-                }
+                _abilityCurrentLevel++;
             }
-            PlayerKill(kills);
+            else
+            {
+                f = true;
+            }
         }
-        else Debug.Log("Se ha puesto el componente \"playerSlowShot\" en una escena sin GameManager. No funcionará.");
+        _segmentLevelBar = (float)(kills) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+        GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
     }
 
     /// <summary>
@@ -232,10 +228,8 @@ public class playerSlowShot : MonoBehaviour
             }
             else
             {
-                _segmentLevelBar = (kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) /
-                    (AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+                _segmentLevelBar = (float)(kills) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
                 GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
-                Debug.Log("Ha muerto un enemigo, aumenta la barra");
             }
         }
     }
