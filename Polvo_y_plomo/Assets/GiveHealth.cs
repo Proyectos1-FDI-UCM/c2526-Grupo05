@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Camilo Sandoval Sánchez
+// Componente que se añade a un objeto y le da la capacidad de curar vida.
+// Miguel Gómez García 
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Script que verifica si el gameObject con el que choca tiene la vida máxima, y si no lo tiene podrá curarle una cierta cantidad de vida configurable.
+/// El objeto con este script sera destruido tras una cierta cantidad de tiempo configurable.
 /// </summary>
-public class PointsOnDestroy : MonoBehaviour
+public class GiveHealth : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,12 +22,24 @@ public class PointsOnDestroy : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
     /// <summary>
-    /// Número de puntos obtenidos del enemigo
+    /// Con esta variable indicaremos la cantidad de curación que podra darnos el gameObject
     /// </summary>
     [SerializeField]
-    private int Points=100;
+    private int CantidadCuracion = 1;
+
+    /// <summary>
+    /// Con esta variable indicaremos el tiempo de vida de nuestro gameObject
+    /// </summary>
+    [SerializeField]
+    private float TiempoVida = 15f;
+
+    /// <summary>
+    /// Con esta variable indicaremos el tiempo de vida de nuestro gameObject
+    /// </summary>
+    [SerializeField]
+    private float TiempoParpadeo = 5f;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -39,10 +51,9 @@ public class PointsOnDestroy : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-    /// <summary>
-    /// Un booleano que determinará si somos el enemigo
-    /// </summary>
-    private bool _enemigo;
+    private bool _yaHaEmpezadoAParpadear = false;
+
+    private CanFlash _canFlash;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -56,27 +67,25 @@ public class PointsOnDestroy : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before 
     /// any of the Update methods are called the first time.
     /// </summary>
-    void Start()
-    {
 
-        if (GetComponent<ChasePlayer>() != null)
-        {
-            _enemigo = true;
-        }
+    private void Awake()
+    {
+        _canFlash = GetComponent<CanFlash>();
     }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    private void OnDestroy()
+    void Update()
     {
-        if (_enemigo)
+        TiempoVida -= Time.deltaTime;
+        
+        if (TiempoVida <= TiempoParpadeo && !_yaHaEmpezadoAParpadear)
         {
-            if (LevelManager.HasInstance())
+            if (_canFlash != null)
             {
-                LevelManager.Instance.UpdateScoreSystem(Points);
+                _canFlash.StartFlashes();
+                _yaHaEmpezadoAParpadear = true;
             }
         }
+
+        if (TiempoVida <= 0) Destroy(gameObject);
     }
     #endregion
 
@@ -97,7 +106,20 @@ public class PointsOnDestroy : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        HealthChanger curacion = collision.gameObject.GetComponent<HealthChanger>();
+        if (curacion != null && curacion.CuracionPermitida())
+        {
+            curacion.CambiarVida(CantidadCuracion);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("Se esta intentando curar vida a un GameObject sin el componente HealthChanger o con la vida al máximo, no se podrá curar");
+        }
+    }
+    #endregion   
 
-} // class PointsOnDesttroy 
+} // class GiveHealth 
 // namespace

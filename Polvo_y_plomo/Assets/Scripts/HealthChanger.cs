@@ -66,6 +66,7 @@ public class HealthChanger : MonoBehaviour
         if (GetComponent<playerControlledMovement>() != null)
         {
             _jugador = true;
+            if (GameManager.HasInstance()) _vida = GameManager.Instance.InitHealthChanger();
         }
 
         _canFlash = GetComponent<CanFlash>();
@@ -110,7 +111,15 @@ public class HealthChanger : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Con este metodo podremos saber si la vida del jugador es igual o mayor a la vida máxima
+    /// Con eso podremos determinar si puede ser curado por objetos o no
+    /// </summary>
+    public bool CuracionPermitida()
+    {
+        if (_vida < VidaMax) return true;
+        else return false;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -135,6 +144,12 @@ public class HealthChanger : MonoBehaviour
         }
         else // si no es jugador
         {
+            IsEnemy isenemy = GetComponent<IsEnemy>();
+            if (isenemy != null) isenemy.EnemyDied();
+
+            PointsOnDeath points = GetComponent<PointsOnDeath>();
+            if (points != null) points.GivePoints();
+
             // spawn del cadaver
             if (GetComponent<GeneraCadaver>() != null)
             {

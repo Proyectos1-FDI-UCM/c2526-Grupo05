@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Prueba simple para hacer daño a un objeto con HealthChanger.
-// Miguel Gómez García
+// Breve descripción del contenido del archivo
+// Camilo Sandoval Sánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Script para hacerse daño al chocar un objeto con el HealthChanger.
-/// Al chocar con cualquier cosa (ha de tener Rigidbody y Collider) intenta reducir la vida del propio objeto (ha de tener también el componente HealthChanger).
+/// Antes de cada class, descripción de qué es y para qué sirve,
+/// usando todas las líneas que sean necesarias.
 /// </summary>
-public class Pruebas : MonoBehaviour
+public class PointsOnDeath : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,6 +23,11 @@ public class Pruebas : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// Número de puntos obtenidos del enemigo
+    /// </summary>
+    [SerializeField]
+    private int Points = 100;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -33,7 +38,6 @@ public class Pruebas : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -42,17 +46,6 @@ public class Pruebas : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Primero conseguimos la "instancia" del script en este objeto
-        HealthChanger miSalud = GetComponent<HealthChanger>();
-
-        // Luego, si el componente existe, llamamos al método
-        if (miSalud != null)
-        {
-            miSalud.CambiarVida(-1);
-        }
-    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -63,6 +56,19 @@ public class Pruebas : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Se llama al morir el enemigo o cuando se deba dar puntos.
+    /// Da los puntos, enviandolos al LevelManager.
+    /// Solo lo hace 1 vez, luego se destruye.
+    /// </summary>
+    public void GivePoints()
+    {
+        if (LevelManager.HasInstance())
+        {
+            LevelManager.Instance.UpdateScoreSystem(Points);
+        }
+        Destroy(this);
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -71,12 +77,8 @@ public class Pruebas : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-    /// <summary>
-    /// Con este metodo demostraremos que funciona HealthChanger.
-    /// Al entrar en colision este objeto, intenta hacerse uno de daño, si tiene componente de vida.
-    /// Si se le pone solo 1 de vida y el objeto muere al chocar, el sistema de vida irá bien.
-    /// </summary>
+
     #endregion
 
-} // class Pruebas 
+} // class PointsOnDesttroy 
 // namespace

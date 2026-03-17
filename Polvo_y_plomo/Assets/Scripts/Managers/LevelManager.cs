@@ -91,7 +91,8 @@ public class LevelManager : MonoBehaviour
     private int _streak = 1;
 
     /// <summary>
-    /// Este es el puntaje.
+    /// Este es el puntaje inicial registrado al iniciarse la escena.
+    /// Inicializado en el Start(). Puede ser distinto de 0.
     /// </summary>
     private int _points = 0;
 
@@ -133,7 +134,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _streakDuration = MaxStreakDuration;
-        InitialStreakPoints();
+        if (GameManager.HasInstance()) _points = GameManager.Instance.TransferInitialPoints();
     }
 
     /// <summary>
@@ -154,7 +155,11 @@ public class LevelManager : MonoBehaviour
     {
         UpdateScoreSystem();
 
-        if (_lastLevelSpawnerOff && _totalEnemiesInScene == 0) LevelEnd();
+        if (_lastLevelSpawnerOff && _totalEnemiesInScene == 0)
+        {
+            LevelEnd();
+            this.enabled = false;
+        }
     }
     #endregion
 
@@ -205,8 +210,11 @@ public class LevelManager : MonoBehaviour
         _streak--;
         _streakDuration /= DIV_STREAK_DUR;
         _lastStreak = Time.time;
-        GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
-        if (_streak > 2) GameManager.Instance.UpdateStreakBar(1);
+        if (GameManager.HasInstance())
+        {
+            GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
+            if (_streak > 2) GameManager.Instance.UpdateStreakBar(1);
+        }
     }
 
     /// <summary>
@@ -218,8 +226,11 @@ public class LevelManager : MonoBehaviour
         _streakDuration = MaxStreakDuration;
         _streak++;
         _lastStreak = Time.time;
-        GameManager.Instance.UpdateStreakBar(1);
-        GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
+        if (GameManager.HasInstance())
+        {
+            GameManager.Instance.UpdateStreakBar(1);
+            GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
+        }
     }
 
     /// <summary>
@@ -228,52 +239,31 @@ public class LevelManager : MonoBehaviour
     /// <param name="EnemyPoints"></param>
     public void UpdateScoreSystem(int EnemyPoints = 0)
     {
-        if (_streak > 1)
+        if (EnemyPoints > 0)
         {
-            GameManager.Instance.UpdateStreakBar(1 - (Time.time - _lastStreak) / _streakDuration);
+            Debug.Log(EnemyPoints * _streak);
+            if (GameManager.HasInstance()) GameManager.Instance.UpdateScoreHUD(EnemyPoints * _streak);
+            KeepStreak();
         }
 
         if ((_streak > 1) && (Time.time - _lastStreak > _streakDuration))
         {
             ReduceStreak();
         }
-        else if (EnemyPoints > 0)
+
+        if (_streak > 1)
         {
-            UpdateScore(EnemyPoints);
-            KeepStreak();
+            if (GameManager.HasInstance()) GameManager.Instance.UpdateStreakBar(1 - (Time.time - _lastStreak) / _streakDuration);
         }
     }
 
-    /// <summary>
-    /// Este método actualiza lo puntos del jugador, y se los envía al GameManager para que los actualice en el HUD.
-    /// </summary>
-    /// <param name="EnemyPoints"></param>
-    public void UpdateScore(int EnemyPoints = 0)
-    {
-        if (EnemyPoints > 0)
-        {
-            _points += _streak * EnemyPoints;
-            GameManager.Instance.UpdateScoreHUD(_points);
-        }
-    }
 
     /// <summary>
-    /// Este metodo reinicia los puntos a su valor inicial en el nivel
-    /// </summary>
-    public void InitialStreakPoints()
-    {
-        if (GameManager.HasInstance())
-        {
-            _points = GameManager.Instance.TransferInitialPoints();
-        }
-    }
-
-    /// <summary>
-    /// Este metodo avisa al GameManager del final del nivel y y manda los puntos obtenidos en el mismo
+    /// Este metodo avisa al GameManager del final del nivel
     /// </summary>
     public void LevelEnd()
     {
-        if (GameManager.HasInstance()) GameManager.Instance.LevelEnds(_points);
+        if (GameManager.HasInstance()) GameManager.Instance.LevelEnds();
     }
 
     /// <summary>
@@ -298,6 +288,14 @@ public class LevelManager : MonoBehaviour
     public void EnemyKilled()
     {
         _totalEnemiesInScene--;
+    }
+    
+    /// <summary>
+    /// Devuelve los puntos al inicio del nivel.
+    /// </summary>
+    public int GetPointsAtStartOfLevel()
+    {
+        return _points;
     }
     #endregion
 
