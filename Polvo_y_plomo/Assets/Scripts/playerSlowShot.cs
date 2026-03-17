@@ -226,7 +226,8 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     public void PlayerKill(int kills)
     {
-        if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold && (_abilityCurrentLevel < (AbilityLevels.Length - 1)) )
+        Debug.Log("level " + _abilityCurrentLevel);
+        if ((_abilityCurrentLevel < (AbilityLevels.Length - 1)) && kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold )
         {
             _abilityCurrentLevel++;
             GameManager.Instance.UpdateLevelBar(0);
