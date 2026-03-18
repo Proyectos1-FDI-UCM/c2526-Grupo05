@@ -159,7 +159,7 @@ public class ChasePlayer : MonoBehaviour
         else if (_isChasing && (_playerTransform.position - transform.position).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
         {
             _isChasing = false;
-            _rb.linearVelocity = Vector2.zero;
+            if (!_isStunned) _rb.linearVelocity = Vector2.zero;
         }
 
         // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
@@ -170,12 +170,12 @@ public class ChasePlayer : MonoBehaviour
         }
         else
         {
-            _rb.linearVelocity = Vector2.zero;
+            if (!_isStunned) _rb.linearVelocity = Vector2.zero;
         }
 
         if (_isStunned)
         {
-            _rb.linearVelocity = Knockback(_rb.linearVelocity);
+            _rb.linearVelocity = Knockback(_rb.linearVelocity) * GameManager.SlowMultiplier;
         }
     }
     #endregion
@@ -211,7 +211,7 @@ public class ChasePlayer : MonoBehaviour
     {
         _isStunned = stunned;
         _animator.SetBool("Stun", stunned);
-        if (stunned) _rb.linearVelocity = (transform.position - _playerTransform.position).normalized * 3;
+        if (stunned) _rb.linearVelocity = (transform.position - _playerTransform.position).normalized * 10;
     }
     /// <summary>
     /// Método para empujar al enemigo en dirección contraria al jugador.
