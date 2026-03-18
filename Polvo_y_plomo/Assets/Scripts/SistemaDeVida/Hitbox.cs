@@ -16,6 +16,9 @@ using UnityEngine;
 /// Actualmente cumple 2 funcionalidades:
 /// 1) Recibe una señal de stun del OnCollisionStun y se la envia al CanStun del padre.
 /// 2) Recibe daño hecho de OnCollisionDealDamage y se lo envia como daño al HealthChanger del padre.
+/// 
+/// +++
+/// Funcionalidad añadida para que funcione con GiveHealth.
 /// </summary>
 public class Hitbox : MonoBehaviour
 {
@@ -46,7 +49,7 @@ public class Hitbox : MonoBehaviour
     /// <summary>
     /// Almacena el CanStun del padre si lo tiene.
     /// </summary>
-    private CanStun _canStun;
+    private CanBeStunned _canStun;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -63,7 +66,7 @@ public class Hitbox : MonoBehaviour
     private void Start()
     {
         _healthChanger = GetComponentInParent<HealthChanger>();
-        _canStun = GetComponentInParent<CanStun>();
+        _canStun = GetComponentInParent<CanBeStunned>();
     }
 
     #endregion
@@ -95,6 +98,21 @@ public class Hitbox : MonoBehaviour
         if (_canStun != null) _canStun.Stun();
     }
 
+    /// <summary>
+    /// Se encarga de enviarle al objeto padre la señal de curación.
+    /// Solo lo hace si tiene HealthChanger y si la curación es válida.
+    /// Si es así, destruye el objeto desde el que se llama el método (interpretado
+    /// como recoger el pickup de vida).
+    /// </summary>
+    /// <param name="ObjetoQueLlama"></param>
+    public void HitboxHeal(GameObject ObjetoQueLlama, int CantidadCuracion)
+    {
+        if (_healthChanger != null && _healthChanger.CuracionPermitida())
+        {
+            _healthChanger.CambiarVida(CantidadCuracion);
+            Destroy(ObjetoQueLlama);
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

@@ -12,8 +12,10 @@ using UnityEngine;
 /// <summary>
 /// Esta clase permite a un enemigo a atacar cuando se ha acercado al jugador lo suficiente
 /// utilizando el componente ChasePlayer. 
+/// 
 /// También se define un tiempo de cooldown editable que no
 /// permitirá realizar ataques hasta que haya pasado. 
+/// 
 /// Por último, llama al componente canMelee para spawnear 
 /// al objeto melee correspondiente.
 /// </summary>
@@ -47,6 +49,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// Variable para usar el componente CanMelee
     /// </summary>
     private CanMelee _canMelee;
+
     /// <summary>
     /// Variable para usar el componente ChasePlayer
     /// </summary>
@@ -57,10 +60,12 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// Inicializado en el Start().
     /// </summary>
     private Transform _playerTransform;
+
     /// <summary>
     /// Variable para guardar el momento de cada ataque
     /// </summary>
     private float _tiempoDesdeUltimoMelee = -99f;
+
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>
@@ -75,9 +80,9 @@ public class EnemyMeleeAttack : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Método Start de programación defensiva, detecta los componentes CanMelee, ChasePlayer, Rigidbody2D y se comprueba que existe LevelManager con PlayerTransform asignado.
+    /// Método Awake de programación defensiva, detecta los componentes CanMelee y ChasePlayer
     /// </summary>
-    void Start()
+    void Awake()
     {
         _canMelee = GetComponent<CanMelee>();
         if (_canMelee == null)
@@ -92,7 +97,13 @@ public class EnemyMeleeAttack : MonoBehaviour
             Debug.Log("Se ha puesto el componente  \"EnemyMeleeAttack\" en un objeto sin el componente \"ChasePlayer\", y no podrá atacar.");
             Destroy(this);
         }
+    }
 
+    /// <summary>
+    /// Start de programación defensiva en el que se comprueba que existe LevelManager con PlayerTransform asignado y se registra si existe GameManager.
+    /// </summary>
+    private void Start()
+    {
         if (!LevelManager.HasInstance())
         {
             Debug.Log("Se ha puesto el componente \"EnemyMeleeAttack\" en una escena sin LevelManager. No podrá atacar al jugador");
@@ -119,12 +130,22 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         float compareTime = CooldownMelee;
         if (_gameManager) CooldownMelee *= 1 / GameManager.SlowMultiplier;
-        if ((!_chasePlayer.IsChasing() && !_chasePlayer.Stunned()) && Time.time - _tiempoDesdeUltimoMelee > compareTime)
+        if ((!_chasePlayer.IsChasing()) && Time.time - _tiempoDesdeUltimoMelee > compareTime)
         {
-            CanMelee();
+            DoMelee();
 
             _tiempoDesdeUltimoMelee = Time.time;
         }
+    }
+
+    /// <summary>
+    /// Método llamado al destruirse el componente
+    /// Elimina otros componentes que dependen completamente de este, si existen.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Destroy(GetComponent<CanMelee>());
+        // se podría destruir ChasePlayer... pero realmente puede funcinoar sin controlador
     }
     #endregion
 
@@ -149,7 +170,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// Este métoddo crea una variable de direccion del ataque y una de la posición del mismo.
     /// Posteriormente llama al método que crea el objeto melee en el componente de CanMelee.
     /// </summary>
-    private void CanMelee()
+    private void DoMelee()
     {
         Vector2 dirMvtoEnemigo = (_playerTransform.position - transform.position).normalized;
 

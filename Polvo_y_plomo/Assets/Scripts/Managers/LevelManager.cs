@@ -31,8 +31,19 @@ using UnityEngine;
 /// una función a la que habrá que llamar para que se registre el puntaje en el GameManager
 /// 
 /// +++
-/// Se ha añadido la funcionalidad para que reciba 
-/// una vez superado un nivel.
+/// Se ha añadido la funcionalidad de que almacene los puntos y cantidad de muertes al inicio
+/// de una escena, funcionando junto al GameManager para permitir el respawn del jugador con
+/// las estadisticas que tenía al entrar al nivel.
+/// 
+/// +++
+/// Se ha añadido la funcionalidad para que reciba mejoras de nivel
+/// una vez superado una escena.
+/// 
+/// +++
+/// Se ha añadido la funcionalidad de tener condiciones de victoria para el nivel; actualmente
+/// solo existe 1 y es que no haya enemigos en escena y el último spawner haya acabado de hacer
+/// sus spawns (dentro de EnemySpawner se puede configurar si se es el último spawner).
+/// 
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
@@ -63,6 +74,9 @@ public class LevelManager : MonoBehaviour
 
     #region Atributos Privados (private fields)
 
+    /// <summary>
+    /// Número por el que se va dividiendo la duración de descenso de racha en cada pérdida.
+    /// </summary>
     private const float DIV_STREAK_DUR = 2;
 
     /// <summary>
@@ -71,17 +85,12 @@ public class LevelManager : MonoBehaviour
     private static LevelManager _instance;
 
     /// <summary>
-    /// Este es el contador actual de muertes.
-    /// </summary>
-    //private int _deathsCount = 0;
-
-    /// <summary>
     /// Este es el tiempo de la racha actual.
     /// </summary>
     private float _lastStreak = -99f;
 
     /// <summary>
-    /// Esta es la duración de la racha actual.
+    /// Esta es la duración de la racha actual (la que se puede ir reduciendo).
     /// </summary>
     private float _streakDuration;
 
@@ -94,7 +103,7 @@ public class LevelManager : MonoBehaviour
     /// Este es el puntaje inicial registrado al iniciarse la escena.
     /// Inicializado en el Start(). Puede ser distinto de 0.
     /// </summary>
-    private int _points = 0;
+    private int _pointsOnStart = 0;
 
     /// <summary>
     /// Guarda la cantidad de muertes iniciales al cargarse la escena.
@@ -142,7 +151,7 @@ public class LevelManager : MonoBehaviour
         _streakDuration = MaxStreakDuration;
         if (GameManager.HasInstance())
         {
-            _points = GameManager.Instance.TransferInitialPoints();
+            _pointsOnStart = GameManager.Instance.TransferInitialPoints();
             _killsOnStart = GameManager.Instance.TransferTotalDeaths();
         }
     }
@@ -212,46 +221,16 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este método reduce la racha, reduce el tiempo de duraión de la nueva racha, y actualiza el tiempo de la última racha
-    /// (Lo que debe hacer si NO se ha llegado a matar a otro enemigo).
-    /// </summary>
-    public void ReduceStreak()
-    {
-        _streak--;
-        _streakDuration /= DIV_STREAK_DUR;
-        _lastStreak = Time.time;
-        if (GameManager.HasInstance())
-        {
-            GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
-            if (_streak > 2) GameManager.Instance.UpdateStreakBar(1);
-        }
-    }
-
-    /// <summary>
-    /// Este método aumenta la racha, mantiene la duración de la racha, y actualiza el tiempo de la última racha.
-    /// (Lo que debe hacer si se ha matado a otro enemigo).
-    /// </summary>
-    public void KeepStreak()
-    {
-        _streakDuration = MaxStreakDuration;
-        _streak++;
-        _lastStreak = Time.time;
-        if (GameManager.HasInstance())
-        {
-            GameManager.Instance.UpdateStreakBar(1);
-            GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
-        }
-    }
-
-    /// <summary>
     /// Este método actualiza racha y puntuaje, en función de si se mantiene o no la racha.
+    /// Puede recibir 0 puntos (o negativos) para simplemente actualizar la racha.
+    /// Si se le envian puntos, los procesa y envia al GameManager.
     /// </summary>
     /// <param name="EnemyPoints"></param>
     public void UpdateScoreSystem(int EnemyPoints = 0)
     {
         if (EnemyPoints > 0)
         {
-            if (GameManager.HasInstance()) GameManager.Instance.UpdateScoreHUD(EnemyPoints * _streak);
+            if (GameManager.HasInstance()) GameManager.Instance.UpdateScoreHUD(EnemyPoints * _streak); // enviado de puntos al GameManager
             KeepStreak();
         }
 
@@ -268,7 +247,7 @@ public class LevelManager : MonoBehaviour
 
 
     /// <summary>
-    /// Este metodo avisa al GameManager del final del nivel
+    /// Este metodo avisa al GameManager del final del nivel, 
     /// </summary>
     public void LevelEnd()
     {
@@ -301,14 +280,16 @@ public class LevelManager : MonoBehaviour
     
     /// <summary>
     /// Devuelve los puntos al inicio del nivel.
+    /// Necesario para la funcionalidad de Respawn() de GameManager,
     /// </summary>
     public int GetPointsAtStartOfLevel()
     {
-        return _points;
+        return _pointsOnStart;
     }
 
     /// <summary>
     /// Devuelve la cantidad de kills al inicio del nivel.
+    /// Necesario para la funcionalidad de Respawn() de GameManager.
     /// </summary>
     /// <returns></returns>
     public int GetKillsAtStartOfLevel()
@@ -329,6 +310,38 @@ public class LevelManager : MonoBehaviour
         if (PlayerPosition == null)
         {
             Debug.Log("No se ha asignado PlayerPosition al LevelManager y es posible que componentes que lo necesiten den error");
+        }
+    }
+
+    /// <summary>
+    /// Este método reduce la racha, reduce el tiempo de duraión de la nueva racha, y actualiza el tiempo de la última racha
+    /// (Lo que debe hacer si NO se ha llegado a matar a otro enemigo).
+    /// </summary>
+    private void ReduceStreak()
+    {
+        _streak--;
+        _streakDuration /= DIV_STREAK_DUR;
+        _lastStreak = Time.time;
+        if (GameManager.HasInstance())
+        {
+            GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
+            if (_streak > 2) GameManager.Instance.UpdateStreakBar(1);
+        }
+    }
+
+    /// <summary>
+    /// Este método aumenta la racha, mantiene la duración de la racha, y actualiza el tiempo de la última racha.
+    /// (Lo que debe hacer si se ha matado a otro enemigo).
+    /// </summary>
+    private void KeepStreak()
+    {
+        _streakDuration = MaxStreakDuration;
+        _streak++;
+        _lastStreak = Time.time;
+        if (GameManager.HasInstance())
+        {
+            GameManager.Instance.UpdateStreakBar(1);
+            GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
         }
     }
 

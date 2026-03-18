@@ -25,7 +25,7 @@ public class DestroyOnColision : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -36,13 +36,22 @@ public class DestroyOnColision : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
+
+    /// <summary>
+    /// Se llama cada vez que el collider del GameObject colisiona con otro collider.
+    /// Destruye el proyectil inmediatamente tras el impacto.
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -61,15 +70,6 @@ public class DestroyOnColision : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-
-    /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider.
-    /// Destruye el proyectil inmediatamente tras el impacto.
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
-    }
 
     #endregion   
 

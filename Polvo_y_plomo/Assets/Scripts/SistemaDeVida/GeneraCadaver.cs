@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// Camilo Sandoval Sánchez
+// Este script generará otro GameObject cuando sea llamado.
+// Juan José de Reyna Godoy
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,10 +10,14 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Cuando un GameObject muera (jugador, enemigo o cobertura), su clase HealthManager, que gestiona su vida, llame a esta, y esta genere un cadaver, es decir otro GameObject que remplaze al
+/// anterior, con menos lógica y otras caracteríticas (principalmente desactivar colisiones y otro renderizado). El HealthManager llamará a esta clase una vez la vida del objeto llegue a cero,
+/// y llamará a la función correspondiente antes de destruir el objeto anterior.
+/// 
+/// +++
+/// Implementada funcionalidad para que puedan aparecer varios cadáveres (necesario para dejar caer drops de vida)
 /// </summary>
-public class CanStun : MonoBehaviour
+public class GeneraCadaver : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -22,10 +26,13 @@ public class CanStun : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+    /// <summary>
+    /// Estos serán los cadáveres del GameObject con este componente.
+    /// </summary>
     [SerializeField]
-    private float StunDuration = 1.0f;
+    GameObject[] Cadaveres;
     #endregion
-
+    
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -35,49 +42,14 @@ public class CanStun : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    private ChasePlayer _chasePlayer;
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    private float _stunStart = -99f;
     #endregion
-
+    
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-
+    
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
-    {
-        _chasePlayer = GetComponent<ChasePlayer>();
-        if ( _chasePlayer == null)
-        {
-            Debug.Log("Se ha puesto el componente \"CanStun\" en un objeto sin el componente \"ChasePlayer\", y no podrá ser stunneado.");
-            Destroy(this);
-        }
-    }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update()
-    {
-        if (Time.time - _stunStart > StunDuration * GameManager.SlowMultiplier)
-        {
-            _chasePlayer.Stunned(false);
-        }
-    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -88,17 +60,18 @@ public class CanStun : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    public void Stun()
+    ///<summary>
+    /// Este método genera un array de GameObjects dados;
+    ///</summary>
+    public void PonCadaver()
     {
-        _stunStart = Time.time;
-        _chasePlayer.Stunned(true);
+        foreach (GameObject c in Cadaveres)
+        {
+            if (c != null) Instantiate(c, transform.position + c.transform.position, transform.rotation);
+        }
     }
     #endregion
-
+    
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -106,7 +79,7 @@ public class CanStun : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    #endregion   
 
-} // class CanStun 
+} // class CoberturaScripy 
 // namespace

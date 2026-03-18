@@ -1,20 +1,25 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
+// Script que permite a un GameObject ser Stuneado por un ataque a melee.
 // Camilo Sandoval Sánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
 using UnityEngine;
-using DG.Tweening;
 // Añadir aquí el resto de directivas using
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Script que lleva la lógica necesaria para que un enemigo pueda ser stuneado
+/// tras recibir un ataque con OnCollisionStun. Esto implica parar todo su movimiento
+/// natural y empujarlo en una dirección durante el stun.
+/// 
+/// En concreto se encarga de activar en ChasePlayer (componente necesario) la lógica
+/// de ser Stunneado, y de desactivarla tras pasar suficiente tiempo en el Update().
+/// 
+/// Este componente se inicializa desactivado (para evitar un Update innecesario).
 /// </summary>
-public class OnCollisionStun : MonoBehaviour
+public class CanBeStunned : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,9 +28,8 @@ public class OnCollisionStun : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
     [SerializeField]
-    private Animator _animator;
+    private float StunDuration = 1.0f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -37,6 +41,15 @@ public class OnCollisionStun : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Almacena el ChasePlayer que debe tener el objeto con este componente.
+    /// </summary>
+    private ChasePlayer _chasePlayer;
+
+    /// <summary>
+    /// Almacena el momento en el que empezó el último Stun.
+    /// </summary>
+    private float _tStunStart = -99f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -46,19 +59,36 @@ public class OnCollisionStun : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-    /// <summary>
-    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
-    /// Activa el stun del objecto con el que colisiona si este tiene el componente CanStun.
+    /// <summary> 
+    /// Se llama al cargarse en escena.
+    /// Hace comprobaciones necesarias para el componente.
     /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Awake()
     {
-        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
-        if (hitbox != null)
+        _chasePlayer = GetComponent<ChasePlayer>();
+        if ( _chasePlayer == null)
         {
-            hitbox.HitboxStun();
+            Debug.Log("Se ha puesto el componente \"CanStun\" en un objeto sin el componente \"ChasePlayer\", y no podrá ser stunneado.");
+            Destroy(this);
         }
+
+        this.enabled = false;
     }
 
+    /// <summary>
+    /// Se llama cada frame mientras el componente este activo.
+    /// Realiza un contador
+    /// </summary>
+    void Update()
+    {
+        float compareTime = StunDuration;
+        if (GameManager.HasInstance()) compareTime /= GameManager.SlowMultiplier;
+        if (Time.time - _tStunStart > compareTime)
+        {
+            _chasePlayer.Stunned(false);
+            this.enabled = false;
+        }
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -69,6 +99,15 @@ public class OnCollisionStun : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Método llamado por OnCollisionStun para iniciar el stun.
+    /// </summary>
+    public void Stun()
+    {
+        _tStunStart = Time.time;
+        _chasePlayer.Stunned(true);
+        this.enabled = true;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -80,5 +119,5 @@ public class OnCollisionStun : MonoBehaviour
 
     #endregion
 
-} // class OnCollisionStun 
+} // class CanStun 
 // namespace

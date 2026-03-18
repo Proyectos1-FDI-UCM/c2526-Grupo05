@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5a66adb4da59d48b5e8f8c22eee80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageFilled: {fileID: 4840294578044607632}
+  ImageFilled: {fileID: 4840294578044607632}
 --- !u!1 &9183367429818536552
 GameObject:
   m_ObjectHideFlags: 0

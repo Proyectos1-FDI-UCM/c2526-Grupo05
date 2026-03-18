@@ -77,14 +77,35 @@ public class EnemyShootingAttack : MonoBehaviour
     /// </summary>
     private bool _gameManager = false;
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
+
+    /// <summary>
+    /// Se llama al cargarse en escena.
+    /// Hace comprobaciones necesarias para el componente y registra otras.
+    /// </summary>
+    private void Awake()
+    {
+        _shoot = GetComponent<Shoot>();
+        if (_shoot == null)
+        {
+            Debug.Log("Se ha colocado el componente \"EnemyShootingAttack\" en un objeto que no tiene el componente \"Shoot\". No podrá disparar");
+            Destroy(this);
+        }
+
+        _chasePlayer = transform.root.GetComponent<ChasePlayer>(); // se revisa en el objeto más "grande", el "mayor padre"
+        if (_chasePlayer == null)
+        {
+            Debug.Log("Se ha colocado el componente \"EnemyShootingAttack\" en un objeto cuyo mayor padre no tiene el componente \"ChasePlayer\". No podrá disparar");
+            Destroy(this);
+        }
+    }
+
     /// <summary>
     /// Se llama una vez si el componente esta activo al cargarse en escena, o según se active. Después del Awake().
     /// Hace comprobaciones necesarias para el componente y registra otras.
@@ -104,20 +125,6 @@ public class EnemyShootingAttack : MonoBehaviour
                 Debug.Log("Se ha colocado el componente \"EnemyShootingAttack\" en una escena al que no se le ha asignado al LevelManager el Transform del jugador. No funcionará");
                 Destroy(this);
             }
-        }
-
-        _shoot = GetComponent<Shoot>();
-        if (_shoot == null)
-        {
-            Debug.Log("Se ha colocado el componente \"EnemyShootingAttack\" en un objeto que no tiene el componente \"Shoot\". No podrá disparar");
-            Destroy(this);
-        }
-
-        _chasePlayer = transform.root.GetComponent<ChasePlayer>(); // se revisa en el objeto más "grande", el "mayor padre"
-        if (_chasePlayer == null)
-        {
-            Debug.Log("Se ha colocado el componente \"EnemyShootingAttack\" en un objeto cuyo mayor padre no tiene el componente \"ChasePlayer\". No podrá disparar");
-            Destroy(this);
         }
 
         _gameManager = GameManager.HasInstance();

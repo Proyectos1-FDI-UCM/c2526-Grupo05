@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este script generará otro GameObject cuando sea llamado.
-// Juan José de Reyna Godoy
+// Hace que al morir se de una cantidad configurable de puntos.
+// Camilo Sandoval Sánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,11 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Cuando un GameObject muera (jugador, enemigo o cobertura), su clase HealthManager, que gestiona su vida, llame a esta, y esta genere un cadaver, es decir otro GameObject que remplaze al
-/// anterior, con menos lógica y otras caracteríticas (principalmente desactivar colisiones y otro renderizado). El HealthManager llamará a esta clase una vez la vida del objeto llegue a cero,
-/// y llamará a la función correspondiente antes de destruir el objeto anterior.
+/// Atributo que se le da a un objeto que pueda morir (que tenga HealthChanger) para
+/// que de puntos en su muerte.
 /// </summary>
-public class GeneraCadaver : MonoBehaviour
+public class PointsOnDeath : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,13 +22,14 @@ public class GeneraCadaver : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+
     /// <summary>
-    /// Este será el cadáver del GameObject con este componente.
+    /// Número de puntos obtenidos del enemigo
     /// </summary>
     [SerializeField]
-    GameObject[] Cadaver;
+    private int Points = 100;
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -38,12 +38,11 @@ public class GeneraCadaver : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
@@ -56,18 +55,22 @@ public class GeneraCadaver : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-    ///<summary>
-    /// Este método genera un array de GameObjects dados;
-    ///</summary>
-    public void PonCadaver()
+
+    /// <summary>
+    /// Se llama al morir el enemigo o cuando se deba dar puntos.
+    /// Da los puntos, enviandolos al LevelManager.
+    /// Solo lo hace 1 vez, luego se destruye.
+    /// </summary>
+    public void GivePoints()
     {
-        foreach (GameObject c in Cadaver)
+        if (LevelManager.HasInstance())
         {
-            if (c != null) Instantiate(c, transform.position, transform.rotation);
+            LevelManager.Instance.UpdateScoreSystem(Points);
         }
+        Destroy(this);
     }
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
@@ -75,7 +78,7 @@ public class GeneraCadaver : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion   
+    #endregion
 
-} // class CoberturaScripy 
+} // class PointsOnDesttroy 
 // namespace

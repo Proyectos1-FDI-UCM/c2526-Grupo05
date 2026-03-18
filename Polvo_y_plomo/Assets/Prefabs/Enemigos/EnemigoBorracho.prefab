@@ -125,6 +125,7 @@ MonoBehaviour:
   ChaseRadius: 4
   AttackRadius: 2
   ChaseSpeed: 4
+  StunSpeed: 7
 --- !u!50 &8200727855567051127
 Rigidbody2D:
   serializedVersion: 5
@@ -191,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a3bc37fd63acc4da9754829f22e2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cadaver:
+  Cadaveres:
   - {fileID: 3431735393579477392, guid: ce7a0d454f12f554cbf3b6db48204416, type: 3}
 --- !u!114 &1228974625072447001
 MonoBehaviour:

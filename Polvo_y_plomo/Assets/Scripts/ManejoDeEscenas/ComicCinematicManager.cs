@@ -31,32 +31,38 @@ public class ComicCinematicManager : MonoBehaviour
     /// <summary>
     /// Lista de sprites que componen la cinemática en orden de aparición.
     /// </summary>
-    [SerializeField] public Sprite[] ComicPanels;
+    [SerializeField] 
+    private Sprite[] ComicPanels;
 
     /// <summary>
     /// Componente de UI de tipo Image donde se mostrarán los paneles.
     /// </summary>
-    [SerializeField] public Image PanelImage;
+    [SerializeField] 
+    private Image PanelImage;
 
     /// <summary>
     /// Texto de UI para mostrar los mensajes de "saltar" o "continuar".
     /// </summary>
-    [SerializeField] public TextMeshProUGUI PromptText;
+    [SerializeField]
+    private TextMeshProUGUI PromptText;
 
     /// <summary>
     /// Duración en segundos del fundido de entrada de cada panel.
     /// </summary>
-    [SerializeField] public float FadeDuration = 1.5f;
+    [SerializeField] 
+    private float FadeDuration = 1.5f;
 
     /// <summary>
     /// Tiempo en segundos que el panel permanece en pantalla antes de pasar al siguiente automáticamente.
     /// </summary>
-    [SerializeField] public float WaitTimeAfterAnimation = 3.0f;
+    [SerializeField] 
+    private float WaitTimeAfterAnimation = 3.0f;
 
     /// <summary>
     /// Referencia al componente ChangeScene para gestionar el cambio de nivel.
     /// </summary>
-    [SerializeField] public ChangeScene SceneChanger;
+    [SerializeField] 
+    private ChangeScene SceneChanger;
 
     #endregion
 
@@ -103,6 +109,15 @@ public class ComicCinematicManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        if (SceneChanger == null)
+        {
+            Debug.LogError("Falta asignar el componente ChangeScene en el Inspector.");
+        }
+        if (!InputManager.HasInstance())
+        {
+            Debug.LogError("Se ha puesto un ComicCinematicManager en una escena sin InputManager y no se podrá saltar los comics");
+        }
+
         // Asegurar que la imagen sea transparente al inicio
         Color initialColor = PanelImage.color;
         initialColor.a = 0f;
@@ -119,7 +134,7 @@ public class ComicCinematicManager : MonoBehaviour
         if (_isAnimating)
         {
             // Si está animando y se pulsa un botón, forzamos el final de la animación
-            if (Input.anyKeyDown)
+            if (InputManager.HasInstance() && InputManager.Instance.AnyButtonWasPressedThisFrame())
             {
                 SkipAnimation();
             }
@@ -129,8 +144,8 @@ public class ComicCinematicManager : MonoBehaviour
             // Si ya terminó de animar, restamos tiempo al temporizador automático
             _waitTimer -= Time.deltaTime;
 
-            // Avanza si el jugador pulsa un botón O si el tiempo se agota
-            if (Input.anyKeyDown || _waitTimer <= 0f)
+            // Avanza si el tiempo se agota
+            if (_waitTimer <= 0f)
             {
                 _currentPanelIndex++;
                 ShowNextPanel();
@@ -192,7 +207,9 @@ public class ComicCinematicManager : MonoBehaviour
         c.a = 1f;
         PanelImage.color = c; // Fuerza la opacidad total
 
-        OnAnimationComplete();
+        // Acaba la animación actual para que en el update se pase al siguiente panel
+        _isAnimating = false;
+        _waitTimer = 0;
     }
 
     /// <summary>
@@ -213,10 +230,6 @@ public class ComicCinematicManager : MonoBehaviour
         if (SceneChanger != null)
         {
             SceneChanger.ChangeToNextScene();
-        }
-        else
-        {
-            Debug.LogError("Falta asignar el componente ChangeScene en el Inspector.");
         }
     }
 

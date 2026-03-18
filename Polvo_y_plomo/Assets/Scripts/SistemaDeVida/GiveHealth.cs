@@ -35,7 +35,7 @@ public class GiveHealth : MonoBehaviour
     private float TiempoVida = 15f;
 
     /// <summary>
-    /// Con esta variable indicaremos el tiempo de vida de nuestro gameObject
+    /// Variable que indica a partir de cuantos segundos de vida RESTANTES empieza el parpadeo
     /// </summary>
     [SerializeField]
     private float TiempoParpadeo = 5f;
@@ -51,8 +51,15 @@ public class GiveHealth : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Maneja si ya se han iniciado los parpadeos del objeto cuando va a desaparecer en el Update().
+    /// </summary>
     private bool _yaHaEmpezadoAParpadear = false;
 
+    /// <summary>
+    /// Almacena el componente _canFlash si existe en este GameObject.
+    /// Inicializado en el Awake().
+    /// </summary>
     private CanFlash _canFlash;
     #endregion
 
@@ -64,28 +71,47 @@ public class GiveHealth : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Se llama al cargarse en la escena.
+    /// Registra el componente _canFlash.
     /// </summary>
-
     private void Awake()
     {
         _canFlash = GetComponent<CanFlash>();
     }
+
+    /// <summary>
+    /// Se llama cada frame si el componente esta activo.
+    /// Lleva un timer desde que se instancia el objeto (estando activo) para hacer que desaparezca
+    /// tras su tiempo de vida y para iniciar el parpadeo antes de desparecer.
+    /// </summary>
     void Update()
     {
         TiempoVida -= Time.deltaTime;
         
         if (TiempoVida <= TiempoParpadeo && !_yaHaEmpezadoAParpadear)
         {
-            if (_canFlash != null)
-            {
-                _canFlash.StartFlashes();
-                _yaHaEmpezadoAParpadear = true;
-            }
+            if (_canFlash != null) _canFlash.StartFlashes();
+            _yaHaEmpezadoAParpadear = true;
         }
 
         if (TiempoVida <= 0) Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Se llama cuando el collider trigger de GiveHealth choca con algo.
+    /// (!) NO se comprueba si con lo que se choca es jugador (solo ha de tener
+    /// HealthChanger y poca vida para curarse).
+    /// Esto quiere decir que se deben ajustar las layers de colision para que solo
+    /// se choque con el jugador si así se quiere.
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if (hitbox != null)
+        {
+            hitbox.HitboxHeal(gameObject, CantidadCuracion);
+        }
     }
     #endregion
 
@@ -105,20 +131,6 @@ public class GiveHealth : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        HealthChanger curacion = collision.gameObject.GetComponent<HealthChanger>();
-        if (curacion != null && curacion.CuracionPermitida())
-        {
-            curacion.CambiarVida(CantidadCuracion);
-            Destroy(gameObject);
-        }
-        else
-        {
-            Debug.Log("Se esta intentando curar vida a un GameObject sin el componente HealthChanger o con la vida al máximo, no se podrá curar");
-        }
-    }
     #endregion   
 
 } // class GiveHealth 

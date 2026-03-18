@@ -17,6 +17,12 @@ using UnityEngine;
 /// 
 /// El componente se centra en llevar la lógica de persecución y almacenar si actualmente estamos persiguiendo o no.
 /// Usa un RigidBody2D para alterar su velocidad lineal y perseguir al jugador.
+/// 
+/// +++
+/// Se ha añadido la funcionalidad para que el enemigo sea stunneado. Se controla mediante CanBeStunned.
+/// En concreto la funcionalidad esta añadida aquí ya que era necesario reconfigurar este componente para evitar
+/// el movimiento durante el stun, y erá más sencillo que también se encargase de hacer el empuje.
+/// Mientras el enemigo esta stunneado, _isChasing es verdadero y por ende los enemigos no atacan.
 /// </summary>
 public class ChasePlayer : MonoBehaviour
 {
@@ -46,6 +52,11 @@ public class ChasePlayer : MonoBehaviour
     [SerializeField]
     private float ChaseSpeed = 6f;
 
+    /// <summary>
+    /// Parámetro que almacena la velocidad (tiles/second) a la que el enemigo es empujado tras ser stunneado.
+    /// </summary>
+    [SerializeField]
+    private float StunSpeed = 7f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -62,22 +73,20 @@ public class ChasePlayer : MonoBehaviour
     /// True = está persiguiendo.
     /// False = está atacando.
     /// 
-    /// Se inicializa en el Start() y en cada Update().
+    /// Se inicializa en el Start() y actualiza en cada FixedUpdate().
     /// </summary>
     private bool _isChasing;
+
     /// <summary>
-    /// Parámetro que registra si el enemigo persigue al jugador.
-    /// True = está persiguiendo.
-    /// False = está atacando.
-    /// 
-    /// Se inicializa en el Start() y en cada Update().
+    /// Parámetro que indica si el enemigo está stunneado.
     /// </summary>
-    private bool _isStunned;
+    private bool _isStunned = false;
 
     /// <summary>
     /// Almacena el Rigidbody2d del objeto.
     /// Inicializado en el Awake().
     /// </summary>
+    
     private Rigidbody2D _rb;
     /// <summary>
     /// Almacena el Animator del objeto.
@@ -90,10 +99,16 @@ public class ChasePlayer : MonoBehaviour
     /// Inicializado en el Start();
     /// </summary>
     private Transform _playerTransform;
+
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>
     private bool _gameManager = false;
+
+    /// <summary>
+    /// Almacena la dirección y velocidad del stun en el momento en el que se inicia.
+    /// </summary>
+    private Vector3 _stunVelocity;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -104,6 +119,7 @@ public class ChasePlayer : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
+    /// Se llama al cargarse en escena.
     /// Hace comprobaciones necesarias para que exista este componente.
     /// </summary>
     private void Awake()
@@ -114,6 +130,7 @@ public class ChasePlayer : MonoBehaviour
             Debug.Log("Se ha puesto el componente \"ChasePlayer\" en un objeto sin RigidBody2D. No podrá perseguir al jugador");
             Destroy(this);
         }
+
         _animator = GetComponent<Animator>();
         if (_animator == null)
         {
@@ -121,6 +138,10 @@ public class ChasePlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Se llama una vez si el componente esta activo o al activarse por primera vez.
+    /// Hace comprobaciones necesarias para el componente, después del Awake().
+    /// </summary>
     private void Start()
     {
         if (!LevelManager.HasInstance())
@@ -152,31 +173,44 @@ public class ChasePlayer : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (!_isChasing && (_playerTransform.position - transform.position).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
+        if (_isStunned) // lógica de stunneo
         {
-            _isChasing = true;
-        }
-        else if (_isChasing && (_playerTransform.position - transform.position).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
-        {
-            _isChasing = false;
-            if (!_isStunned) _rb.linearVelocity = Vector2.zero;
-        }
-
-        // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
-        if (_isChasing)
-        {
-            _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
+            _isChasing = true; // durante el stun se indica que se persigue para evitar ataques de enemigo
+            _rb.linearVelocity = _stunVelocity;
             if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
         }
         else
         {
-            if (!_isStunned) _rb.linearVelocity = Vector2.zero;
-        }
+            if (!_isChasing && (_playerTransform.position - transform.position).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
+            {
+                _isChasing = true;
+            }
+            else if (_isChasing && (_playerTransform.position - transform.position).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
+            {
+                _isChasing = false;
+                if (!_isStunned) _rb.linearVelocity = Vector2.zero;
+            }
 
-        if (_isStunned)
-        {
-            _rb.linearVelocity = Knockback(_rb.linearVelocity) * GameManager.SlowMultiplier;
+            // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
+            if (_isChasing)
+            {
+                _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
+                if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
+            }
+            else
+            {
+                if (!_isStunned) _rb.linearVelocity = Vector2.zero;
+            }
         }
+    }
+
+    /// <summary>
+    /// Se llama al destruirse el componente.
+    /// Intentará destruir otros componentes que dependen completamente del ChasePlayer.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Destroy(GetComponent<CanBeStunned>());
     }
     #endregion
 
@@ -196,30 +230,18 @@ public class ChasePlayer : MonoBehaviour
     {
         return _isChasing;
     }
-    /// <summary>
-    /// Método para leer y saber si el componente esta persiguiendo actualmente al jugador.
-    /// </summary>
-    /// <returns></returns>
-    public bool Stunned()
-    {
-        return _isStunned;
-    }
+
     /// <summary>
     /// Método para alterar el valor de la variable _isStunned.
+    /// Si se inicia un Stun se registra la velocidad y la dirección a la que debe moverse durante el stun.
     /// </summary>
     public void Stunned(bool stunned)
     {
         _isStunned = stunned;
         _animator.SetBool("Stun", stunned);
-        if (stunned) _rb.linearVelocity = (transform.position - _playerTransform.position).normalized * 10;
+        if (stunned) _stunVelocity = StunSpeed * (transform.position - _playerTransform.position).normalized;
     }
-    /// <summary>
-    /// Método para empujar al enemigo en dirección contraria al jugador.
-    /// </summary>
-    public Vector2 Knockback(Vector2 vector)
-    {
-        return (vector * 0.8f);
-    }
+
 
     #endregion
 

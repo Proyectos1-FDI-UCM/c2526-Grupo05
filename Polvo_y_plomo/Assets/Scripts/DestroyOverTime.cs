@@ -42,8 +42,9 @@ public class DestroyOverTime : MonoBehaviour
 
     /// <summary>
     /// Variable que almacena el tiempo en el que spawnea el objeto
+    /// Inicializada en el Start()
     /// </summary>
-    private float _timeSpawn = 0f;
+    private float _timeSpawn;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----

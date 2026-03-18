@@ -29,7 +29,7 @@ public class CanFlash : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
-    /// Cuánto tiempo tarda en hacer un flash (sprite normal -> color completo -> sprite normal)
+    /// Cuánto tiempo tarda en hacer un flash (color completo -> sprite normal)
     /// </summary>
     [SerializeField]
     private float FlashTime = 0.2f;

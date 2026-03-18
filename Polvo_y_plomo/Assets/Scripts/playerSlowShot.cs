@@ -87,19 +87,14 @@ public class playerSlowShot : MonoBehaviour
     private int _abilityCurrentLevel = 0;
 
     /// <summary>
-    /// Proporción de tiempo restante de la habilidad en su activación actual
+    /// Proporción de tiempo restante de la habilidad en su activación actual (para el HUD)
     /// </summary>
     private float _abilityProportionLasting = 1.00f;
 
     /// <summary>
-    /// Es la unidad de progreso que hace la LevelBar del HUD cada vez que muere un enemigo.
+    /// Es el porcentaje de progreso para subir al siguiente nivel de habilidad (para el HUD)
     /// </summary>
-    private float _segmentLevelBar = 0f;
-
-    /// <summary>
-    /// Es la cantidad de unidades de progreso de la LevelBar del HUD
-    /// </summary>
-    private float _sumSegmentLevelBar = 0f;
+    private float _levelBar = 0f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -140,6 +135,7 @@ public class playerSlowShot : MonoBehaviour
             }
         }
 
+        // Inicialización de los niveles
         int kills = GameManager.Instance.TransferTotalDeaths();
         _abilityCurrentLevel = 0;
         bool f = false;
@@ -154,8 +150,9 @@ public class playerSlowShot : MonoBehaviour
                 f = true;
             }
         }
-        _segmentLevelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
-        GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
+        // Render inicial de la barra de nivel
+        _levelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+        GameManager.Instance.UpdateLevelBar(_levelBar);
     }
 
     /// <summary>
@@ -165,15 +162,16 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // Activacion de la habilidad
         if (InputManager.Instance.HabilityWasPressedThisFrame() && !_abilityOn && Time.time - _lastAbilityActivationTime > PlayerAbilityCooldown)
         {
-            // activacion de la habilidad
             _abilityDurationLasting = AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
             _abilityOn = true;
             GameManager.Instance.SlowShotOn(); // el resto de componentes que involucran a cosas en movimiento, tiempos, etc ahora van más lentos.
             _lastAbilityActivationTime = Time.time;
         }
 
+        // Lógica de la habilidad
         if (_abilityOn)
         {
             _abilityDurationLasting -= Time.deltaTime;
@@ -227,8 +225,8 @@ public class playerSlowShot : MonoBehaviour
             }
             else
             {
-                _segmentLevelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
-                GameManager.Instance.UpdateLevelBar(_segmentLevelBar);
+                _levelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+                GameManager.Instance.UpdateLevelBar(_levelBar);
             }
         }
     }

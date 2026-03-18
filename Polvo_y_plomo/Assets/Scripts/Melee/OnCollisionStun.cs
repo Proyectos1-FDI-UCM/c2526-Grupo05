@@ -1,19 +1,20 @@
 //---------------------------------------------------------
-// Script que genera la hitbox de un ataque melee
-// Jorge Ladrón de Guevara Jiménez
+// Script para hacer que un ataque stunee.
+// Camilo Sandoval Sánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
 using UnityEngine;
+using DG.Tweening;
 // Añadir aquí el resto de directivas using
 
 
 /// <summary>
-/// Componente que se le da a cualquier objeto que tenga la capacidad de realizar un ataque a melee.
-/// Se encarga únicamente de realizar el ataque, el cuando y cómo (controlador) se deja a otro script.
+/// Script que hace que cuando un GameObject choque con este se llame a la Hitbox
+/// del choque (si existe) para intentar stunear al objeto.
 /// </summary>
-public class CanMelee : MonoBehaviour
+public class OnCollisionStun : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -23,20 +24,8 @@ public class CanMelee : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
-    /// <summary>
-    /// Prefab del objeto que aparecerá para hacer daño.
-    /// </summary>
-    [SerializeField]
-    private GameObject MeleePrefab;
-
-    /// <summary>
-    /// Determina que tan lejos aparecerá el objeto del ataque desde su origen (este GameObject).
-    /// </summary>
-    [SerializeField]
-    private float DistanciaSpawnAtaque = 1f;
-
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -47,25 +36,27 @@ public class CanMelee : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
+
     /// <summary>
-    /// Start de programación defensiva en caso de que no se haya asignado ningún prefab a generar.
+    /// Se llama cada vez que el collider del GameObject colisiona con otro collider
+    /// Activa el stun del objecto con el que colisiona si este tiene el componente CanStun.
     /// </summary>
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (MeleePrefab == null)
+        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if (hitbox != null)
         {
-            Debug.Log("Se ha puesto el componente \"CanMelee\" sin un prefab de hitbox asignado. No podrá generar la hitbox.");
-            Destroy(this);
+            hitbox.HitboxStun();
         }
     }
+
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -77,16 +68,6 @@ public class CanMelee : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
-    /// <summary>
-    /// Método público que genera un prefab de hitbox de un ataque melee, en una posición y rotación dadas, y lo destruye tras cierto tiempo.
-    /// </summary>
-    /// <param name="dirAtaque"></param>
-    public void HitboxMelee(Vector2 dirAtaque)
-    {
-        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
-        Instantiate(MeleePrefab, (Vector2)transform.position + DistanciaSpawnAtaque*dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
-    }
 
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
@@ -95,7 +76,7 @@ public class CanMelee : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion   
+    #endregion
 
-} // class CanMelee 
+} // class OnCollisionStun 
 // namespace

@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5a66adb4da59d48b5e8f8c22eee80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageFilled: {fileID: 4643379848388643272}
+  ImageFilled: {fileID: 4643379848388643272}
 --- !u!1 &8256383668195943183
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,4 +356,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5a66adb4da59d48b5e8f8c22eee80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageFilled: {fileID: 8876123019902082288}
+  ImageFilled: {fileID: 8876123019902082288}
