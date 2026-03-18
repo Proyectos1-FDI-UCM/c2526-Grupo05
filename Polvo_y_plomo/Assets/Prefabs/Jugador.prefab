@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2292199746581496351}
   - component: {fileID: 5036081665872762522}
+  - component: {fileID: 3571823559236605224}
   m_Layer: 6
   m_Name: PlayerHitbox
   m_TagString: Untagged
@@ -62,7 +63,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -78,6 +79,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3571823559236605224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41351036725294068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e133e046b422446a3069e4ee771a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4709658674322198269
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +335,7 @@ GameObject:
   - component: {fileID: 1474871151810355398}
   - component: {fileID: 8640769707630179225}
   - component: {fileID: 3385198336411724539}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Jugador
   m_TagString: Untagged
   m_Icon: {fileID: 0}

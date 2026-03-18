@@ -6,6 +6,7 @@
 //---------------------------------------------------------
 
 using UnityEngine;
+using DG.Tweening;
 // Añadir aquí el resto de directivas using
 
 
@@ -23,6 +24,8 @@ public class OnCollisionStun : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    [SerializeField]
+    private Animator _animator;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -49,10 +52,10 @@ public class OnCollisionStun : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        CanStun stun = collision.gameObject.GetComponent<CanStun>();
-        if (stun != null)
+        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if (hitbox != null)
         {
-            stun.Stun();
+            hitbox.HitboxStun();
         }
     }
 

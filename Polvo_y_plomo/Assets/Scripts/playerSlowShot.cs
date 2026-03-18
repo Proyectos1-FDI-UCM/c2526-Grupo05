@@ -143,6 +143,30 @@ public class playerSlowShot : MonoBehaviour
     }
 
     /// <summary>
+    /// El Awake se ejecuta cuando se activa un objeto con el componente.
+    /// En este, en función de las muertes en total que lleve esta partida, dato almacenado por el GameManager,
+    /// se establece el nivel de la habilidad del jugador. 
+    /// </summary>
+    void Awake()
+    {
+        int kills = GameManager.Instance.TransferTotalDeaths();
+        _abilityCurrentLevel = 0;
+        bool f = false;
+        while (_abilityCurrentLevel < AbilityLevels.Length && !f)
+        {
+            if (AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold < kills)
+            {
+                _abilityCurrentLevel++;
+            }
+            else
+            {
+                f = true;
+            }
+        }
+        PlayerKill(kills);
+    }
+
+    /// <summary>
     /// Update que comprueba si se puede activar la habilidad cada vez que recibe el input adecuado, y en caso positivo activarla,
     /// estableciendo a sus valores correspondientes las variables declaradas previamente, que controlan la lógica de desactivación
     /// tras el tiempo esperado según el nivel de la habilidad.

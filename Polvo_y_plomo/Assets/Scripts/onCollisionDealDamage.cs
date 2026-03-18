@@ -55,10 +55,10 @@ public class onCollisionDealDamage : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HealthChanger health = collision.gameObject.GetComponent<HealthChanger>();
-        if (health != null)
+        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if (hitbox != null)
         {
-            health.CambiarVida(-DamageDone);
+            hitbox.HitboxDealDamage(DamageDone);
         }
     }
 

@@ -73,9 +73,8 @@ public class CanStun : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!_chasePlayer.enabled && (Time.time - _stunStart > StunDuration))
+        if (Time.time - _stunStart > StunDuration)
         {
-            _chasePlayer.enabled = true;
             _chasePlayer.Stunned(false);
         }
     }

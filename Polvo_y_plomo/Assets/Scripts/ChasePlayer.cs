@@ -79,6 +79,11 @@ public class ChasePlayer : MonoBehaviour
     /// Inicializado en el Awake().
     /// </summary>
     private Rigidbody2D _rb;
+    /// <summary>
+    /// Almacena el Animator del objeto.
+    /// Inicializado en el Awake().
+    /// </summary>
+    private Animator _animator;
 
     /// <summary>
     /// Almacena el Transform del jugador leido en el LevelManager.
@@ -108,6 +113,11 @@ public class ChasePlayer : MonoBehaviour
         {
             Debug.Log("Se ha puesto el componente \"ChasePlayer\" en un objeto sin RigidBody2D. No podrá perseguir al jugador");
             Destroy(this);
+        }
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+        {
+            Debug.Log("Se ha puesto el componente \"ChasePlayer\" en un objeto sin Animator. No podrá hacer sus animaciones");
         }
     }
 
@@ -165,7 +175,7 @@ public class ChasePlayer : MonoBehaviour
 
         if (_isStunned)
         {
-            _rb.linearVelocity = Vector2.zero;
+            _rb.linearVelocity = Knockback(_rb.linearVelocity);
         }
     }
     #endregion
@@ -199,13 +209,16 @@ public class ChasePlayer : MonoBehaviour
     /// </summary>
     public void Stunned(bool stunned)
     {
-        _isStunned = stunned;/*
-        if (stunned) _rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        else 
-        {
-            _rb.constraints = RigidbodyConstraints2D.None;
-            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        }*/
+        _isStunned = stunned;
+        _animator.SetBool("Stun", stunned);
+        if (stunned) _rb.linearVelocity = (transform.position - _playerTransform.position).normalized * 3;
+    }
+    /// <summary>
+    /// Método para empujar al enemigo en dirección contraria al jugador.
+    /// </summary>
+    public Vector2 Knockback(Vector2 vector)
+    {
+        return (vector * 0.8f);
     }
 
     #endregion
