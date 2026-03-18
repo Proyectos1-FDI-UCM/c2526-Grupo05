@@ -97,6 +97,12 @@ public class LevelManager : MonoBehaviour
     private int _points = 0;
 
     /// <summary>
+    /// Guarda la cantidad de muertes iniciales al cargarse la escena.
+    /// Se inicializa en Start(). Puede ser distinto de 0.
+    /// </summary>
+    private int _killsOnStart = 0;
+
+    /// <summary>
     /// Dice si el último spawner del nivel ya ha hecho su función o no.
     /// </summary>
     private bool _lastLevelSpawnerOff = false;
@@ -134,7 +140,11 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _streakDuration = MaxStreakDuration;
-        if (GameManager.HasInstance()) _points = GameManager.Instance.TransferInitialPoints();
+        if (GameManager.HasInstance())
+        {
+            _points = GameManager.Instance.TransferInitialPoints();
+            _killsOnStart = GameManager.Instance.TransferTotalDeaths();
+        }
     }
 
     /// <summary>
@@ -295,6 +305,15 @@ public class LevelManager : MonoBehaviour
     public int GetPointsAtStartOfLevel()
     {
         return _points;
+    }
+
+    /// <summary>
+    /// Devuelve la cantidad de kills al inicio del nivel.
+    /// </summary>
+    /// <returns></returns>
+    public int GetKillsAtStartOfLevel()
+    {
+        return _killsOnStart;
     }
     #endregion
 

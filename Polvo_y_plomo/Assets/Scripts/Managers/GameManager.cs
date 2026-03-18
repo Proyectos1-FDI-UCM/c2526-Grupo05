@@ -226,6 +226,10 @@ public class GameManager : MonoBehaviour
             _instance = this;
             Init();
         }
+        else
+        {
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic);
+        }
     }
 
     /// <summary>
@@ -248,7 +252,6 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen,FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic);
             GameManager.Instance.NewSceneUpdate();
 
             DestroyImmediate(this.gameObject);
@@ -477,8 +480,17 @@ public class GameManager : MonoBehaviour
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
-        if (LevelManager.HasInstance()) _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
-        else _totalPoints = 0;
+        if (LevelManager.HasInstance())
+        {
+            _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
+            _totalDeaths = LevelManager.Instance.GetKillsAtStartOfLevel();
+        }
+        else
+        {
+            _totalPoints = 0;
+            _totalDeaths = 0;
+        }
+
 
         // Animación de pantalla negra.
         if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
