@@ -73,7 +73,7 @@ public class CanStun : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.time - _stunStart > StunDuration)
+        if (Time.time - _stunStart > StunDuration * GameManager.SlowMultiplier)
         {
             _chasePlayer.Stunned(false);
         }
