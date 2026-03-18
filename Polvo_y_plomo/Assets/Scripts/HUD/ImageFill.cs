@@ -29,7 +29,7 @@ public class ImageFill : MonoBehaviour
     /// será modificado.
     /// </summary>
     [SerializeField]
-    private Image imageFilled;
+    private Image ImageFilled;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -56,14 +56,14 @@ public class ImageFill : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (imageFilled == null)
+        if (ImageFilled == null)
         {
             Debug.Log("No se ha asignado imagen en el componente \"ImageFill\", no funcionará");
             Destroy(this);
         }
-        if (imageFilled.type != Image.Type.Filled)
+        if (ImageFilled.type != Image.Type.Filled)
         {
-            Debug.Log("Se ha asignado en el componente \"imageFill\" una imagen que no es del tipo Filled. No funcionará");
+            Debug.Log("Se ha asignado en el componente \"ImageFill\" una imagen que no es del tipo Filled. No funcionará");
             Destroy(this);
         }
     }
@@ -79,7 +79,7 @@ public class ImageFill : MonoBehaviour
 
     public void UpdateImageFillAmmount(float fillAmount)
     {
-        imageFilled.fillAmount = fillAmount;
+        ImageFilled.fillAmount = fillAmount;
     }
 
     #endregion

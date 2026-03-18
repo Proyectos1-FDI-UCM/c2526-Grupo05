@@ -24,6 +24,45 @@ using TMPro;
 /// GameManager para evitar problemas al usarlo. Además, se debería producir
 /// un intercambio de información entre los GameManager de distintas escenas.
 /// Generalmente, esta información debería estar en un LevelManager o similar.
+/// 
+/// Funcionalidades implementadas:
+/// +++
+/// Manejo del HUD: Se le pueden asignar distintos elementos del HUD para
+/// que se vayan modificando con los datos del juego. Funcionará sin problemas
+/// si no son asignados.
+/// 
+/// +++
+/// Manejo entre escenas: Se le pueden asignar distintos tiempos de espera antes de
+/// reiniciar el nivel o cargar la siguiente escena. Se encarga de llevar la lógica 
+/// de reinicio de escena (Respawn()); reiniciar atributos del jugador, desactivar 
+/// el input, realiza la animación de pantalla negra e inicia un contador con el Update(). 
+/// También el de victoria de nivel (LevelEnds()) poniendo la pantalla negra, música 
+/// de victoria y iniciando un contador distinto en el Update().
+/// Las esperas se llevan en el Update, usando un parámetro para distinguir entre jugador
+/// derrotado y victoria.
+/// Por último tiene un método para reiniciar la escena y otro para cargar una distinta (usado
+/// por el componente ChangeScene, para indicarle que a que escena cambiar).
+/// 
+/// +++
+/// Tranferencia de información: permite configurarle a cada GameManager un
+/// HUD en cada escena, que se transfiere en Awake() cuando la nueva instancia se da cuenta de que 
+/// ya existe otro.
+/// Incluye llevar la cuenta de la vida del jugador, su munición, cantidad de kills y cantidad de puntos.
+/// Además el GameManager, al estar en el DontDestroyOnLoad, acarrea información entre escenas;
+/// la vida del jugador, su puntaje y su cantidad de muertes. Este acarreo es intencionado y si el jugador
+/// muriese estos datos se reinician a los que había al inicio de la escena (si hay LevelManager), o a 0.
+/// Al cargarse en una escena, si había otro GameManager, es llamado el método NewSceneUpdate(), desde el
+/// Start(). En esta llamada se hacen cosas necesarias al cargarse una escena; actualizar la vida del jugador,
+/// el HUD, su puntaje, sus niveles de habilidad...
+/// Si no hay otro GameManager se asume que la transferencia de datos es innecesaria.
+/// 
+/// +++
+/// Lógica para la habilidad "SlowShot" del jugador, "ralentizando" el juego: todos los otros componentes que
+/// tengan comportamientos relacionados con el tiempo usaran, si existe GameManager Instance, el parámetro
+/// _slowMultiplier para simular la relantización del tiempo.
+/// En caso de que no exista Instance, usan 1.
+/// 
+/// 
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -81,12 +120,6 @@ public class GameManager : MonoBehaviour
     private ImageFill HabilityShadow;
 
     /// <summary>
-    /// Tiempo que tardara la escena en reiniciarse
-    /// </summary>
-    [SerializeField]
-    private float TiempoEsperaRespawn = 3f;
-
-    /// <summary>
     /// Lista de objetos de vida del HUD
     /// </summary>
     [SerializeField]
@@ -137,6 +170,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private int NextLevel = 0;
+
+    /// <summary>
+    /// Tiempo que tardara la escena en reiniciarse
+    /// </summary>
+    [SerializeField]
+    private float TiempoEsperaRespawn = 3f;
 
     /// <summary>
     /// Almacena cuanto tiempo se tardará en cargar la siguiente escena tras
@@ -228,6 +267,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            // Transferencia de configuración del HUD
             GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic);
         }
     }
@@ -252,12 +292,15 @@ public class GameManager : MonoBehaviour
             // Esto permitirá al GameManager real mantener su estado interno
             // pero acceder a los elementos de la nueva escena
             // o bien olvidar los de la escena previa de la que venimos
+            
+            // Mensaje de actualización de escena para la carga inicial
             GameManager.Instance.NewSceneUpdate();
 
             DestroyImmediate(this.gameObject);
         }
         else
         {
+            // Se desactiva el componente para no usar el Update() hasta que sea necesario un contador.
             this.enabled = false;
         } // if-else somos instancia nueva o no.
     }
@@ -276,11 +319,11 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Se llama cada frame si el componente está activo.
-    /// Por ahora solo sirve para esperar un cierto tiempo, según lo necesita Respawn().
+    /// Realiza distintas esperas en función de _playerDied para los métodos de Respawn() y LevelEnds().
     /// </summary>
     private void Update()
     {
-        if (_playerDied)
+        if (_playerDied) // proviene de Respawn()
         {
             if (Time.time - _t > TiempoEsperaRespawn)
             {
@@ -288,7 +331,7 @@ public class GameManager : MonoBehaviour
                 ReinicioEscena();
             }
         }
-        else
+        else // proviene de LevelEnds().
         {
             if (Time.time - _t > TiempoEsperaSiguienteNivel)
             {
@@ -303,7 +346,7 @@ public class GameManager : MonoBehaviour
     // ---- MÉTODOS PÚBLICOS ----
 
     #region Métodos públicos
-
+    #region Propiedades de acceso
     /// <summary>
     /// Propiedad para acceder a la única instancia de la clase.
     /// </summary>
@@ -339,6 +382,9 @@ public class GameManager : MonoBehaviour
     {
         return _instance != null;
     }
+    #endregion
+
+    #region Funcionalidad manejo de escenas publicos
 
     /// <summary>
     /// Método que cambia la escena actual por la indicada en el parámetro.
@@ -364,10 +410,63 @@ public class GameManager : MonoBehaviour
         System.GC.Collect();
     } // ChangeScene
 
+    /// <summary>
+    /// Método que se encarga de llevar los procesos tras la muerte del jugador.
+    /// Desactiva el input del jugador, inicia un FadeIn de pantalla negra y activa este componente para que en
+    /// el Update() se lleve un contador para esperar al FadeIn y luego reiniciar la escena.
+    /// Se llama desde HealthChanger, cuando muere el jugador.
+    /// </summary>
+    public void Respawn()
+    {
+        // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
+        _vidaJugador = VIDABASEJUGADOR;
+        _municionJugador = MUNICIONBASEJUGADOR;
+        if (LevelManager.HasInstance())
+        {
+            _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
+            _totalDeaths = LevelManager.Instance.GetKillsAtStartOfLevel();
+        }
+        else
+        {
+            _totalPoints = 0;
+            _totalDeaths = 0;
+        }
+
+
+        // Animación de pantalla negra.
+        if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
+        if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
+
+
+
+        _t = Time.time;
+        _playerDied = true;
+        this.enabled = true; // comienza el temporizador en el update
+    }
+
+    /// <summary>
+    /// Este metodo gestiona el final de un nivel
+    /// </summary>
+    public void LevelEnds()
+    {
+        // Feedback de victoria
+        if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
+        if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
+        if (AudioManager.HasInstance()) AudioManager.Instance.PlayMusic(VictoryMusic);
+
+        _t = Time.time;
+        _playerDied = false;
+        this.enabled = true; // inicia contador en Update().
+
+    }
+
+
+    #endregion
+
     #region Metodos únicos del Hud
 
     /// <summary>
-    /// Este metodo actualiza los puntos en el HUD.
+    /// Este metodo actualiza los puntos, y su HUD.
     /// </summary>
     public void UpdateScoreHUD(int cambioDePuntos)
     {
@@ -376,7 +475,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este método actualiza la racha de muertes en el HUD.
+    /// Este método actualiza la racha de muertes y su HUD.
     /// </summary>
     /// <param name="NuevoScoreJugador"></param>
     public void UpdateStreakMultiplierHUD(int Streak)
@@ -385,7 +484,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo actualiza la vida en el HUD.
+    /// Este metodo actualiza la vida y su HUD.
     /// </summary>
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
@@ -397,7 +496,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo actualiza las balas en el HUD
+    /// Este metodo actualiza las balas y su HUD
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
@@ -469,39 +568,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    /// <summary>
-    /// Método que se encarga de llevar los procesos tras la muerte del jugador.
-    /// Desactiva el input del jugador, inicia un FadeIn de pantalla negra y activa este componente para que en
-    /// el Update() se lleve un contador para esperar al FadeIn y luego reiniciar la escena.
-    /// Se llama desde HealthChanger, cuando muere el jugador.
-    /// </summary>
-    public void Respawn()
-    {
-        // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
-        _vidaJugador = VIDABASEJUGADOR;
-        _municionJugador = MUNICIONBASEJUGADOR;
-        if (LevelManager.HasInstance())
-        {
-            _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
-            _totalDeaths = LevelManager.Instance.GetKillsAtStartOfLevel();
-        }
-        else
-        {
-            _totalPoints = 0;
-            _totalDeaths = 0;
-        }
-
-
-        // Animación de pantalla negra.
-        if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
-        if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
-
-        
-
-        _t = Time.time;
-        _playerDied = true;
-        this.enabled = true; // comienza el temporizador en el update
-    }
+    #region Metodos transferencia de informacion
 
     /// <summary>
     /// Transfiere datos importantes de un GameManager que ha de destruirse al activo.
@@ -527,25 +594,27 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público que modifica la velocidad de ralentización consecuencia de la activación de la habilidad del jugador
+    /// Cuando un GameManager ya existe, esta función es llamada para actualizar
+    /// cosas necesarias en la nueva escena desde el GameManager original.
+    /// Sirve como indicador de que se ha cargado una nueva escena (que se llama solo
+    /// cuando al cargarla hay otro GameManager).
     /// </summary>
-    public void SlowShotOn()
+    public void NewSceneUpdate()
     {
-        _slowMultiplier = 0.25f;
-        StartFadeInBlueScreen();
+        // Actualizar HUD del jugador
+        UpdateAmmoHUD(_municionJugador);
+        UpdateHealthHUD(_vidaJugador);
+        UpdateScoreHUD(0);
+
+        // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
+        this.enabled = false;
+        if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
+
+        if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
     }
 
     /// <summary>
-    /// Método público que modifica la velocidad de ralentización consecuencia de la desactivación de la habilidad del jugador
-    /// </summary>
-    public void SlowShotOff()
-    {
-        _slowMultiplier = 1.00f;
-        StartFadeOutBlueScreen();
-    }
-
-    /// <summary>
-    /// Este metodo actualiza las racha de muertes
+    /// Este metodo actualiza la cantidad de muertes y los niveles de habilidad del jugador.
     /// </summary>
     public void AnEnemyDied()
     {
@@ -574,41 +643,6 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo gestiona el final de un nivel (acumula en el total los puntos recibidos , etc...)
-    /// </summary>
-    public void LevelEnds()
-    {
-        if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
-        if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
-        if (AudioManager.HasInstance()) AudioManager.Instance.PlayMusic(VictoryMusic);
-
-        _t = Time.time;
-        _playerDied = false;
-        this.enabled = true; // inicia contador en Update().
-
-    }
-
-    /// <summary>
-    /// Cuando un GameManager ya existe, esta función es llamada para actualizar
-    /// cosas necesarias en la nueva escena desde el GameManager original.
-    /// Sirve como indicador de que se ha cargado una nueva escena (que se llama solo
-    /// cuando al cargarla hay otro GameManager).
-    /// </summary>
-    public void NewSceneUpdate()
-    {
-        // Actualizar HUD del jugador
-        UpdateAmmoHUD(_municionJugador);
-        UpdateHealthHUD(_vidaJugador);
-        UpdateScoreHUD(0);
-
-        // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
-        this.enabled = false;
-        if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
-
-        if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
-    }
-
-    /// <summary>
     /// Método para preguntarle al GameManager la vida a la que debe aparecer el jugador.
     /// Lo llama el HealthChanger del jugador al inicializarse.
     /// </summary>
@@ -617,6 +651,29 @@ public class GameManager : MonoBehaviour
     {
         return _vidaJugador;
     }
+    #endregion
+
+    #region Funcionalidad SlowShot
+    /// <summary>
+    /// Método público que modifica la velocidad de ralentización consecuencia de la activación de la habilidad del jugador
+    /// </summary>
+    public void SlowShotOn()
+    {
+        _slowMultiplier = 0.25f;
+        StartFadeInBlueScreen();
+    }
+
+    /// <summary>
+    /// Método público que modifica la velocidad de ralentización consecuencia de la desactivación de la habilidad del jugador
+    /// </summary>
+    public void SlowShotOff()
+    {
+        _slowMultiplier = 1.00f;
+        StartFadeOutBlueScreen();
+    }
+
+    // NOTA: Los niveles de habilida del jugador se actualizan también en AnEnemyDied(), en la región de Transferencia de información.
+    #endregion
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

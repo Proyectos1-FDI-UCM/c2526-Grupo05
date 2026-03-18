@@ -118,12 +118,12 @@ public class FadeColor : MonoBehaviour
     }
 
     /// <summary>
-    /// Se llama al cargarse en escena por primera vez, si el componente está activo.
+    /// Se llama al cargarse en escena por primera vez.
     /// Intenta sacar un componente SpriteRenderer, Image o Renderer con color del objeto target, y registra el color inicial con GetColor().
     /// También calcula cuales han de ser los colores iniciales y finales según las transparencias indicadas.
     /// Si no hay target o no hay componente con color hay programación defensiva que evita que el componente falle.
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         if (target != null)
         {
@@ -173,15 +173,6 @@ public class FadeColor : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
-    /// <summary>
-    /// Devuelve el Alpha actual del objetivo.
-    /// Lo usa el GameManager para saber si debe realizar el FadeOut al inicio de la escena.
-    /// </summary>
-    /// <returns></returns>
-    public float GetCurrentTargetAlpha()
-    {
-        return GetColor().a;
-    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----

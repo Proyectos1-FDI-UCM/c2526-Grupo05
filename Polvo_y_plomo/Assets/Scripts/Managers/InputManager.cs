@@ -104,6 +104,10 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private InputAction _look;
 
+    /// <summary>
+    /// Acción para AnyButton.
+    /// </summary>
+    private InputAction _anyButton;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -403,6 +407,40 @@ public class InputManager : MonoBehaviour
         return _exit.WasReleasedThisFrame();
     }
     #endregion
+    #region Metodos para "AnyButton"
+    /// <summary>
+    /// Método para saber si el botón de pausa (AnyButton) está pulsado
+    /// Devolverá true en todos los frames en los que se mantenga pulsado
+    /// <returns>True, si el botón está pulsado</returns>
+    /// </summary>
+    public bool AnyButtonIsPressed()
+    {
+        return _anyButton.IsPressed();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de pausa (AnyButton) se ha pulsado en este frame
+    /// <returns>Devuelve true, si el botón ha sido pulsado en este frame
+    /// y false, en otro caso
+    /// </returns>
+    /// </summary>
+    public bool AnyButtonWasPressedThisFrame()
+    {
+        return _anyButton.WasPressedThisFrame();
+    }
+
+    /// <summary>
+    /// Método para saber si el botón de pausa (AnyButton) ha dejado de pulsarse
+    /// durante este frame
+    /// <returns>Devuelve true, si el botón se ha dejado de pulsar en
+    /// este frame; y false, en otro caso.
+    /// </returns>
+    /// </summary>
+    public bool AnyButtonWasReleasedThisFrame()
+    {
+        return _anyButton.WasReleasedThisFrame();
+    }
+    #endregion
 
     /// <summary>
     /// Método que desactiva los Inputs
@@ -507,6 +545,12 @@ public class InputManager : MonoBehaviour
         _exit = _theController.Player.Exit;
         // Por si la borran
         if (_exit == null) Debug.Log("Se ha borrado la acción \"Exit\" y el jugador no podrá abrir el menú de pausa");
+
+        // Para el AnyButton
+        // Tendrá métodos AnyButtonIsPressed, AnyButtonWasPressedTihsFrame y AnyButtonWasReleasedThisFrame.
+        _anyButton = _theController.Player.AnyButton;
+        // Por si la borran
+        if (_exit == null) Debug.Log("Se ha borrado la acción \"AnyButton\" y el jugador no podrá abrir el menú de pausa");
 
     }
 
