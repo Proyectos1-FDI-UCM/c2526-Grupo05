@@ -88,6 +88,29 @@ public class CursorBloqueado : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Rompe el bloqueo y permite que el ratón pueda moverse libremente.
+    /// A su vez, se vuelve a hacer visible.
+    /// Es público ya que el PauseMenuManager va a necesitar apagar este objeto mientras el menu este
+    /// abierto y se encargará del manejo del cursor.
+    /// </summary>
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    /// <summary>
+    /// Bloquearemos el ratón en el centro de la pantalla.
+    /// Y su visibilidad será nula, es decir, invisible, es más estético esto para no molestar.
+    /// Es público ya que el PauseMenuManager va a necesitar apagar este objeto mientras el menu este
+    /// abierto y se encargará del manejo del cursor.
+    /// </summary>
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -97,25 +120,6 @@ public class CursorBloqueado : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    /// <summary>
-    /// Bloquearemos el ratón en el centro de la pantalla.
-    /// Y su visibilidad será nula, es decir, invisible, es más estético esto para no molestar.
-    /// </summary>
-    private void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    /// <summary>
-    /// Rompe el bloqueo y permite que el ratón pueda moverse libremente.
-    /// A su vez, se vuelve a hacer visible.
-    /// </summary>
-    private void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
 
     #endregion
 

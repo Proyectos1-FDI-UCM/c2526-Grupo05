@@ -86,8 +86,9 @@ public class GiveHealth : MonoBehaviour
     /// </summary>
     void Update()
     {
-        TiempoVida -= Time.deltaTime;
-        
+        if (GameManager.HasInstance()) TiempoVida -= Time.deltaTime * GameManager.SlowMultiplier;
+        else TiempoVida -= Time.deltaTime;
+
         if (TiempoVida <= TiempoParpadeo && !_yaHaEmpezadoAParpadear)
         {
             if (_canFlash != null) _canFlash.StartFlashes();

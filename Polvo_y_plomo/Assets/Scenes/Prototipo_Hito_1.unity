@@ -3066,6 +3066,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Puntaje_Racha
       objectReference: {fileID: 0}
+    - target: {fileID: 4840294578044607632, guid: 8081aee40de37ab4c98182c5a9a25019, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7534402347573465689, guid: 8081aee40de37ab4c98182c5a9a25019, type: 3}
       propertyPath: m_Pivot.x
       value: 0

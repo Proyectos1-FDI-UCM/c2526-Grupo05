@@ -41,10 +41,10 @@ public class DestroyOverTime : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Variable que almacena el tiempo en el que spawnea el objeto
+    /// Variable que el tiempo restante de vida del objeto
     /// Inicializada en el Start()
     /// </summary>
-    private float _timeSpawn;
+    private float _tLifeSpan;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -60,7 +60,7 @@ public class DestroyOverTime : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _timeSpawn = Time.time;
+        _tLifeSpan = LifeTime;
     }
 
     /// <summary>
@@ -69,7 +69,10 @@ public class DestroyOverTime : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.time - _timeSpawn >= LifeTime)
+        if (GameManager.HasInstance()) _tLifeSpan -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tLifeSpan -= Time.deltaTime;
+
+        if (_tLifeSpan <= 0)
         {
             Destroy(gameObject);
         }

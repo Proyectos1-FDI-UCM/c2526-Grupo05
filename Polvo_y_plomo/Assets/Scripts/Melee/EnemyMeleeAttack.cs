@@ -62,9 +62,9 @@ public class EnemyMeleeAttack : MonoBehaviour
     private Transform _playerTransform;
 
     /// <summary>
-    /// Variable para guardar el momento de cada ataque
+    /// Variable para guardar cuanto tiempo falta para volver a atacar.
     /// </summary>
-    private float _tiempoDesdeUltimoMelee = -99f;
+    private float _tRemainingToMelee = 0;
 
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
@@ -128,13 +128,14 @@ public class EnemyMeleeAttack : MonoBehaviour
     /// </summary>
     void Update()
     {
-        float compareTime = CooldownMelee;
-        if (_gameManager) CooldownMelee *= 1 / GameManager.SlowMultiplier;
-        if ((!_chasePlayer.IsChasing()) && Time.time - _tiempoDesdeUltimoMelee > compareTime)
+        if (_gameManager) _tRemainingToMelee -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tRemainingToMelee -= Time.deltaTime;
+
+        if ((!_chasePlayer.IsChasing()) && _tRemainingToMelee <= 0)
         {
             DoMelee();
 
-            _tiempoDesdeUltimoMelee = Time.time;
+            _tRemainingToMelee = CooldownMelee;
         }
     }
 

@@ -454,7 +454,6 @@ public class InputManager : MonoBehaviour
         _reload.Disable();
         _hability.Disable();
         _roll.Disable();
-        _exit.Disable();
     }
     /// <summary>
     /// Método que activa los Inputs
@@ -468,7 +467,6 @@ public class InputManager : MonoBehaviour
         _reload.Enable();
         _hability.Enable();
         _roll.Enable();
-        _exit.Enable();
     }
     #endregion
 

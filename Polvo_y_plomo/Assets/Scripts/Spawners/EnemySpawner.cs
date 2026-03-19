@@ -83,8 +83,7 @@ public class EnemySpawner : MonoBehaviour
     private int _indEnemigo;
 
     /// <summary>
-    /// Almacena el tiempo desde el último respawn del enemigo.
-    /// Inicializado en OnEnable().
+    /// Almacena el tiempo que falta para el siguiente spawn de enemigo
     /// </summary>
     private float _t;
 
@@ -104,7 +103,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnEnable()
     {
         _indEnemigo = 0;
-        _t = Time.time;
+        if (SpawnList.Length != 0) _t = SpawnList[_indEnemigo].SpawnDelay;  
     }
 
     /// <summary>
@@ -125,15 +124,19 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Time.time - _t >= SpawnList[_indEnemigo].SpawnDelay) // spawn de nuevo enemigo
+        if (GameManager.HasInstance()) _t -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _t -= Time.deltaTime;
+
+        if (_t <= 0) // spawn de nuevo enemigo
         {
-            _t = Time.time;
             Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);
             _indEnemigo++;
+
             if (_indEnemigo >= SpawnList.Length) // lista terminada
             {
                 this.enabled = false;
             }
+            else _t = SpawnList[_indEnemigo].SpawnDelay; ;
         }
     }
 

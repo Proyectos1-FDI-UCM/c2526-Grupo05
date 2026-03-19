@@ -44,7 +44,7 @@ public class playerControlledMovement : MonoBehaviour
     /// <summary>
     /// Guarda el Rigidbody2D del objeto. Inicializado en el awake.
     /// </summary>
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>
@@ -59,8 +59,8 @@ public class playerControlledMovement : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
         {
             Debug.Log("Se ha puesto el componente \"playerControlledMovement\" en un objeto sin Rigidbody2D. No podrá moverse.");
             Destroy(this);
@@ -88,8 +88,8 @@ public class playerControlledMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Movimiento del jugador
-        if (_gameManager) rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed * GameManager.SlowMultiplier;
-        else rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed;
+        _rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed;
+        if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
     }
 
     #endregion

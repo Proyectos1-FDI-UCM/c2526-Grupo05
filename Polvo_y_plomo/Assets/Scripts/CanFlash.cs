@@ -52,7 +52,7 @@ public class CanFlash : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Almacena el último segundo en el que se completó un flash (vuelta a sprite normal).
+    /// Almacena el tiempo que queda para acabar un flash (vuelta a sprite normal).
     /// </summary>
     private float _tLastFlash;
 
@@ -101,9 +101,12 @@ public class CanFlash : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.time - _tLastFlash > FlashTime) // 1  flash completo
+        if (GameManager.HasInstance()) _tLastFlash -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tLastFlash -= Time.deltaTime;
+
+        if (_tLastFlash <= 0) // 1  flash completo
         {
-            _tLastFlash = Time.time;
+            _tLastFlash = FlashTime;
             _flashesAmmount++;
             if (_flashesAmmount >= FlashesUntilDisable)
             {
@@ -113,7 +116,7 @@ public class CanFlash : MonoBehaviour
         }
         else // hacer el flash
         {
-            _mat.SetFloat("_FlashAmount", 1 - (Time.time - _tLastFlash)/FlashTime);
+            _mat.SetFloat("_FlashAmount", 1 - _tLastFlash / FlashTime);
         }
     }
     #endregion
@@ -132,7 +135,7 @@ public class CanFlash : MonoBehaviour
     /// </summary>
     public void StartFlashes()
     {
-        _tLastFlash = Time.time;
+        _tLastFlash = FlashTime;
         _flashesAmmount = 0;
         this.enabled = true;
     }

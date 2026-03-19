@@ -61,9 +61,9 @@ public class HasAmmo : MonoBehaviour
     private int _numBalas = 6;
 
     /// <summary>
-    /// Guarda el tiempo desde la última recarga con éxito.
+    /// Guarda el tiempo que falta para recargar otra bala desde el inicio de esta y bala por bala.
     /// </summary>
-    private float _tiempoUltimaRecarga;
+    private float _tParaSiguienteRecarga;
 
     /// <summary>
     /// Variable que determina si este componente esta puesto en el jugador (ducktyping
@@ -109,12 +109,15 @@ public class HasAmmo : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.time - _tiempoUltimaRecarga > Reload)
+        if (GameManager.HasInstance()) _tParaSiguienteRecarga -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tParaSiguienteRecarga -= Time.deltaTime;
+
+        if (_tParaSiguienteRecarga <= 0)
         {
             _numBalas++;
             if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             if (_numBalas >= NumMaxBalas) this.enabled = false;
-            _tiempoUltimaRecarga = Time.time;
+            _tParaSiguienteRecarga = Reload;
         }
         
         if (_isPlayer && IsReloadCanceledThisFrame() && _numBalas > 0)
@@ -178,7 +181,7 @@ public class HasAmmo : MonoBehaviour
         // Si la recarga ya esta activa, no es necesario volver a recargar
         if (!this.enabled && _numBalas < NumMaxBalas)
         {
-            _tiempoUltimaRecarga = Time.time;
+            _tParaSiguienteRecarga = Reload;
             this.enabled = true; // inicia la recarga en el update.
         }
     }

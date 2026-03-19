@@ -85,9 +85,9 @@ public class LevelManager : MonoBehaviour
     private static LevelManager _instance;
 
     /// <summary>
-    /// Este es el tiempo de la racha actual.
+    /// Este es el tiempo restante de la racha actual.
     /// </summary>
-    private float _lastStreak = -99f;
+    private float _tLastStreak = 0;
 
     /// <summary>
     /// Esta es la duración de la racha actual (la que se puede ir reduciendo).
@@ -228,20 +228,23 @@ public class LevelManager : MonoBehaviour
     /// <param name="EnemyPoints"></param>
     public void UpdateScoreSystem(int EnemyPoints = 0)
     {
+        if (GameManager.HasInstance()) _tLastStreak -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tLastStreak -= Time.deltaTime;
+
         if (EnemyPoints > 0)
         {
             if (GameManager.HasInstance()) GameManager.Instance.UpdateScoreHUD(EnemyPoints * _streak); // enviado de puntos al GameManager
             KeepStreak();
         }
 
-        if ((_streak > 1) && (Time.time - _lastStreak > _streakDuration))
+        if ((_streak > 1) && (_tLastStreak <= 0))
         {
             ReduceStreak();
         }
 
         if (_streak > 1)
         {
-            if (GameManager.HasInstance()) GameManager.Instance.UpdateStreakBar(1 - (Time.time - _lastStreak) / _streakDuration);
+            if (GameManager.HasInstance()) GameManager.Instance.UpdateStreakBar(_tLastStreak / _streakDuration);
         }
     }
 
@@ -321,7 +324,7 @@ public class LevelManager : MonoBehaviour
     {
         _streak--;
         _streakDuration /= DIV_STREAK_DUR;
-        _lastStreak = Time.time;
+        _tLastStreak = _streakDuration;
         if (GameManager.HasInstance())
         {
             GameManager.Instance.UpdateStreakMultiplierHUD(_streak);
@@ -337,7 +340,7 @@ public class LevelManager : MonoBehaviour
     {
         _streakDuration = MaxStreakDuration;
         _streak++;
-        _lastStreak = Time.time;
+        _tLastStreak = _streakDuration;
         if (GameManager.HasInstance())
         {
             GameManager.Instance.UpdateStreakBar(1);

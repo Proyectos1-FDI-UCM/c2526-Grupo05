@@ -177,7 +177,11 @@ public class ChasePlayer : MonoBehaviour
         {
             _isChasing = true; // durante el stun se indica que se persigue para evitar ataques de enemigo
             _rb.linearVelocity = _stunVelocity;
-            if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
+            if (_gameManager)
+            {
+                _rb.linearVelocity *= GameManager.SlowMultiplier;
+                if (_animator != null) _animator.speed = GameManager.SlowMultiplier;
+            }
         }
         else
         {
@@ -239,6 +243,7 @@ public class ChasePlayer : MonoBehaviour
     {
         _isStunned = stunned;
         _animator.SetBool("Stun", stunned);
+        _animator.speed = 1f; // reinicio de la velocidad de animación
         if (stunned) _stunVelocity = StunSpeed * (transform.position - _playerTransform.position).normalized;
     }
 

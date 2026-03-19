@@ -67,9 +67,9 @@ public class playerSlowShot : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Variable que guarda la última vez que el jugador activó su habilidad. Inicializada a -99 para que se pueda usar desde segundo 0
+    /// Variable que guarda el tiempo restante para activar otra vez la habilidad.
     /// </summary>
-    private float _lastAbilityActivationTime = -99f;
+    private float _tToReactivateAbility = 0;
 
     /// <summary>
     /// Bool que dice si la habilidad está activa actualmente o no
@@ -79,7 +79,7 @@ public class playerSlowShot : MonoBehaviour
     /// <summary>
     /// Tiempo restante de la habilidad en su activación actual
     /// </summary>
-    private float _abilityDurationLasting = 99f;
+    private float _tRemainingOfAbility;
 
     /// <summary>
     /// Nivel actual de la habilidad. Inicializado a 0 para cuadrar con el array (en realidad se supone que empieza a nivel 1)
@@ -162,22 +162,26 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (!_abilityOn) _tToReactivateAbility -= Time.deltaTime * GameManager.SlowMultiplier;
+
         // Activacion de la habilidad
-        if (InputManager.Instance.HabilityWasPressedThisFrame() && !_abilityOn && Time.time - _lastAbilityActivationTime > PlayerAbilityCooldown)
+        if (InputManager.Instance.HabilityWasPressedThisFrame() && !_abilityOn &&_tToReactivateAbility <= 0)
         {
-            _abilityDurationLasting = AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
+            _tRemainingOfAbility = AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
             _abilityOn = true;
             GameManager.Instance.SlowShotOn(); // el resto de componentes que involucran a cosas en movimiento, tiempos, etc ahora van más lentos.
-            _lastAbilityActivationTime = Time.time;
+            // el _tToReactivateHability se reinicia una vez _abilityOn = false.
         }
 
         // Lógica de la habilidad
         if (_abilityOn)
         {
-            _abilityDurationLasting -= Time.deltaTime;
-            if (_abilityDurationLasting <= 0)
+            _tRemainingOfAbility -= Time.deltaTime;
+
+            if (_tRemainingOfAbility <= 0)
             {
-                _abilityDurationLasting = 0;
+                _tRemainingOfAbility = 0;
+                _tToReactivateAbility = PlayerAbilityCooldown;
 
                 _abilityOn = false;
                 GameManager.Instance.SlowShotOff();
@@ -188,7 +192,7 @@ public class playerSlowShot : MonoBehaviour
             }
             else
             {
-                _abilityProportionLasting = _abilityDurationLasting / AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
+                _abilityProportionLasting = _tRemainingOfAbility / AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration;
 
                 // pintar el fillAmmount del liquido de la habilidad
                 GameManager.Instance.UpdateTimeHabilityLiquid(_abilityProportionLasting);
@@ -197,7 +201,7 @@ public class playerSlowShot : MonoBehaviour
         else
         {
             // pintar el fillAmmount de la sombra de la habilidad
-            GameManager.Instance.UpdateTimeHabilityShadow(1 - (Time.time - _lastAbilityActivationTime) / PlayerAbilityCooldown);
+            GameManager.Instance.UpdateTimeHabilityShadow(_tToReactivateAbility / PlayerAbilityCooldown);
         }
     }
     #endregion

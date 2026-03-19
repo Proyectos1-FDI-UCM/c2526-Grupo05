@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using System.Collections;
+using TMPro.EditorUtilities;
 // Añadir aquí el resto de directivas using
 
 
@@ -63,13 +64,7 @@ public class EnemySpawnLogic : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
-    /// Guarda el tiempo en el que aparece este objeto. Sirve para esperar a la animación en el update.
-    /// Se inicializa en el Awake().
-    /// </summary>
-    private float _t;
-
-    /// <summary>
-    /// Guarda la duración del clip de animación indicado.
+    /// Guarda la duración del clip de animación indicado.Sirve para esperar a la animación en el update.
     /// Inicializado en el Awake() si hay animación.
     /// </summary>
     private float _duracionAnimacion;
@@ -100,12 +95,12 @@ public class EnemySpawnLogic : MonoBehaviour
         if (SpawnAnimator == null) DoSpawn();
         else
         {
-            _t = Time.time;
             foreach (AnimationClip clip in SpawnAnimator.runtimeAnimatorController.animationClips)
             {
                 if (clip.name == StateName)
                 {
                     SpawnAnimator.Play(StateName, 0, 0f);
+                    SpawnAnimator.speed = 1f;
                     _duracionAnimacion = clip.length;
                 }
             }
@@ -118,7 +113,14 @@ public class EnemySpawnLogic : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Time.time - _t > _duracionAnimacion) DoSpawn();
+        if (GameManager.HasInstance())
+        {
+            _duracionAnimacion -= Time.deltaTime * GameManager.SlowMultiplier;
+            if (SpawnAnimator != null) SpawnAnimator.speed = GameManager.SlowMultiplier;
+        }
+        else _duracionAnimacion -= Time.deltaTime;
+
+        if (_duracionAnimacion <= 0) DoSpawn();
     }
 
     #endregion

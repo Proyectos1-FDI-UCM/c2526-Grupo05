@@ -41,8 +41,10 @@ public class playerMeleeAttack : MonoBehaviour
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
 
-    // Variable float que guarda el último instante en el que se realizó el ataque melee.
-    private float _tiempoDesdeUltimoMelee = -99f;
+    /// <summary>
+    /// Variable float que guarda cuanto tiempo queda para volver a hacer un ataque a melee
+    /// </summary>
+    private float _tRemainingToMelee = 0;
 
     // Almacena el componente CanMelee que ha de tener el objeto con este script. Inicializado en Start().
     private CanMelee _canMelee;
@@ -52,16 +54,10 @@ public class playerMeleeAttack : MonoBehaviour
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
     /// <summary>
-    /// Método Start de programación defensiva, para evitar buscar input de melee sin InputManager, MeleePrefab o Cursor.
+    /// Método Awake() de programación defensiva, revisando cosas necesarias para el componente.
     /// </summary>
-    void Start()
+    private void Awake()
     {
-        if (!InputManager.HasInstance())
-        {
-            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" en una escena sin InputManager. No podrá atacar con melee.");
-            Destroy(this);
-        }
-
         if (Cursor == null)
         {
             Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" sin un cursor asignado. No podrá atacar con melee.");
@@ -77,16 +73,31 @@ public class playerMeleeAttack : MonoBehaviour
     }
 
     /// <summary>
+    /// Método Start de programación defensiva, para evitar buscar input de melee sin InputManager.
+    /// </summary>
+    void Start()
+    {
+        if (!InputManager.HasInstance())
+        {
+            Debug.Log("Se ha puesto el componente \"playerMeleeAttack\" en una escena sin InputManager. No podrá atacar con melee.");
+            Destroy(this);
+        }
+    }
+
+    /// <summary>
     /// En el Update se comprueba, a través del InputManager, que el control del ataque melee se ha presionado.
     /// Esto se hace frame a frame para evitar que el jugador deje pulsada la tecla, ya que esto haría demasiado artificial la mecánica.
     /// Cuando se cumple la condición, se llama al método del ataque melee proporcionándole la posición actual del jugador, que será utilizada en dicho método.
     /// </summary>
     void Update()
     {
-        if (InputManager.Instance.MeleeWasPressedThisFrame() && Time.time - _tiempoDesdeUltimoMelee > CooldownMelee)
+        if (GameManager.HasInstance()) _tRemainingToMelee -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tRemainingToMelee -= Time.deltaTime;
+
+        if (InputManager.Instance.MeleeWasPressedThisFrame() && _tRemainingToMelee <= 0)
         {
-            CanMelee();
-            _tiempoDesdeUltimoMelee = Time.time;
+            DoMelee();
+            _tRemainingToMelee = CooldownMelee;
         }
     }
     #endregion
@@ -107,7 +118,7 @@ public class playerMeleeAttack : MonoBehaviour
     /// Método privado que calcula la dirección del cursor con respecto al jugador tomando ambas posiciones (la del jugador desde el Update), para saber dónde
     /// generar la hitbox. Después llama al script "CanMelee" para que genere dicha hitbox en función de la información que le proporcione este script.
     /// </summary>
-    private void CanMelee()
+    private void DoMelee()
     {
         Vector2 posCursor = Cursor.transform.position;
         Vector2 dirCursorJugador = (posCursor - (Vector2)transform.position).normalized;

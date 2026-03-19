@@ -55,6 +55,9 @@ using TMPro;
 /// Start(). En esta llamada se hacen cosas necesarias al cargarse una escena; actualizar la vida del jugador,
 /// el HUD, su puntaje, sus niveles de habilidad...
 /// Si no hay otro GameManager se asume que la transferencia de datos es innecesaria.
+/// +
+/// Añadida a esta funcionalidad el método MatchEnded() que reinicia las estadísticas a cero. Será útil después
+/// para añadir la funcionalidad de guardar el Highscore
 /// 
 /// +++
 /// Lógica para la habilidad "SlowShot" del jugador, "ralentizando" el juego: todos los otros componentes que
@@ -418,6 +421,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Respawn()
     {
+        Debug.Log("respawn");
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
@@ -602,15 +606,32 @@ public class GameManager : MonoBehaviour
     public void NewSceneUpdate()
     {
         // Actualizar HUD del jugador
-        UpdateAmmoHUD(_municionJugador);
+        UpdateAmmoHUD(MUNICIONBASEJUGADOR);
         UpdateHealthHUD(_vidaJugador);
         UpdateScoreHUD(0);
+
+        // Reiniciar flujo del tiempo (es posible salir de una escena con la habilidad activada, si no se reinicia,
+        // se podría mantener la habilidad siempre activa.
+        SlowShotOff();
 
         // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
         this.enabled = false;
         if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
 
         if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
+    }
+
+    /// <summary>
+    /// Método que se llamará una vez acabada la partida (por salirse al menu principal o ganar el juego).
+    /// Actualmente solo reinicia las Stats del jugador.
+    /// (---) falta implementar que se guarde el highscore
+    /// </summary>
+    public void MatchEnded()
+    {
+        // Reinicio de Stats
+        _vidaJugador = VIDABASEJUGADOR;
+        _totalDeaths = 0;
+        _totalPoints = 0;
     }
 
     /// <summary>
@@ -653,7 +674,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Funcionalidad SlowShot
+    #region Funcionalidad SlowShot y Pausa
     /// <summary>
     /// Método público que modifica la velocidad de ralentización consecuencia de la activación de la habilidad del jugador
     /// </summary>
@@ -668,10 +689,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SlowShotOff()
     {
-        _slowMultiplier = 1.00f;
+        ResumeGame();
         StartFadeOutBlueScreen();
     }
 
+    public void PauseGame()
+    {
+        _slowMultiplier = 0;
+    }
+
+    public void ResumeGame()
+    {
+        _slowMultiplier = 1.00f;
+    }
     // NOTA: Los niveles de habilida del jugador se actualizan también en AnEnemyDied(), en la región de Transferencia de información.
     #endregion
     #endregion

@@ -60,30 +60,35 @@ public class playerRoll : MonoBehaviour
     /// </summary>
     private Rigidbody2D _rb;
     /// <summary>
-    /// Variable que se actualiza cada vez que el jugador realiza un roll. Está inicializada a -99 para asegurar que se pueda realizar está acción nada más
-    /// comienza el juego
+    /// Variable que se actualiza cada vez que el jugador realiza un roll. Almacena cuanto tiempo falta para volver a poder rodar.
     /// </summary>
-    private float _tiempoDeUltimoRoll = -99f;
+    private float _tVolverARodar = 0;
+
     /// <summary>
     /// Bool que dice si el jugador se encuentra rodando o no, lo que le indica al FixedUpdate si debe hacer cosas o no
     /// </summary>
     private bool _isRolling = false;
+
     /// <summary>
     /// Variable que se iguala a la duración del rodado (DuracionRodado) creada arriba, cada vez que se inicia una acción de roll. Durante dicha acción, se
-    /// actualiza constantemente en el FixedUpdate para avisar de cuándo el jugador debe dejar de rodar. Inicializada a 99 por motivos que se explicarán más abajo
+    /// actualiza constantemente en el FixedUpdate para avisar de cuándo el jugador debe dejar de rodar.
     /// </summary>
-    /// <summary>
-    private Vector2 _dirRoll;
-    /// </summary>
-    private float _tiempoRestanteRodado = 99f;
+    private float _tDuracionRodado;
+
     /// <summary>
     /// Componente correspondiente al desplazamiento del jugador, que necesita desactivarse durante el roll
     /// </summary>
     private playerControlledMovement _desplazamientoJugador;
+
     /// <summary>
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>
     private bool _gameManager = false;
+
+    /// <summary>
+    /// Almacena la dirección en la que se está dando el roll.
+    /// </summary>
+    private Vector2 _dirRoll;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -100,6 +105,11 @@ public class playerRoll : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _desplazamientoJugador = GetComponent<playerControlledMovement>();
+        if (_desplazamientoJugador == null)
+        {
+            Debug.Log("Se ha colocado \"PlayerRoll\" en un gameobject sin PlayerControlledMovement, no funcionará");
+            Destroy(this);
+        }
         _gameManager = GameManager.HasInstance();
     }
 
@@ -109,10 +119,12 @@ public class playerRoll : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (InputManager.Instance.RollWasPressedThisFrame() && InputManager.Instance.MovementVector != Vector2.zero &&
-            Time.time - _tiempoDeUltimoRoll > CooldownRoll)
+        if (_gameManager) _tVolverARodar -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tVolverARodar -= Time.deltaTime;
+
+        if (InputManager.Instance.RollWasPressedThisFrame() && InputManager.Instance.MovementVector != Vector2.zero && _tVolverARodar <= 0)
         {
-            _tiempoDeUltimoRoll = Time.time;
+            _tVolverARodar = CooldownRoll;
             EmpiezaRoll();
         }
     }
@@ -125,17 +137,19 @@ public class playerRoll : MonoBehaviour
     {
         if (_isRolling)
         {
-            if (_gameManager) _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado) * GameManager.SlowMultiplier;
-            else _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
-            _tiempoRestanteRodado -= Time.fixedDeltaTime;
-        }
+            _rb.linearVelocity = _dirRoll * DesplazamientoRodado * (1 / DuracionRodado);
+            if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
 
-        if (_tiempoRestanteRodado <= 0)
-        {
-            _isRolling = false;
-            _rb.linearVelocity = Vector2.zero;
-            InputManager.Instance.ActivarInput();
-            LogicaRoll(true);
+            if (_gameManager) _tDuracionRodado -= Time.fixedDeltaTime * GameManager.SlowMultiplier;
+            else _tDuracionRodado -= Time.fixedDeltaTime;
+
+            if (_tDuracionRodado <= 0)
+            {
+                _isRolling = false;
+                _rb.linearVelocity = Vector2.zero;
+                InputManager.Instance.ActivarInput();
+                LogicaRoll(true);
+            }
         }
     }
     #endregion
@@ -168,7 +182,7 @@ public class playerRoll : MonoBehaviour
         _dirRoll = InputManager.Instance.MovementVector;
         InputManager.Instance.DesactivarInput();
         LogicaRoll(false);
-        _tiempoRestanteRodado = DuracionRodado;
+        _tDuracionRodado = DuracionRodado;
         _isRolling = true;
     }
 

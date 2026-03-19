@@ -47,9 +47,9 @@ public class CanBeStunned : MonoBehaviour
     private ChasePlayer _chasePlayer;
 
     /// <summary>
-    /// Almacena el momento en el que empezó el último Stun.
+    /// Almacena cuanto falta de duración de Stun.
     /// </summary>
-    private float _tStunStart = -99f;
+    private float _tOfStunRemaining;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -81,9 +81,11 @@ public class CanBeStunned : MonoBehaviour
     /// </summary>
     void Update()
     {
-        float compareTime = StunDuration;
-        if (GameManager.HasInstance()) compareTime /= GameManager.SlowMultiplier;
-        if (Time.time - _tStunStart > compareTime)
+        // Reducción del contador según el flujo del tiempo.
+        if (GameManager.HasInstance()) _tOfStunRemaining -= Time.deltaTime * GameManager.SlowMultiplier;
+        else _tOfStunRemaining -= Time.deltaTime;
+
+        if (_tOfStunRemaining <= 0)
         {
             _chasePlayer.Stunned(false);
             this.enabled = false;
@@ -104,7 +106,7 @@ public class CanBeStunned : MonoBehaviour
     /// </summary>
     public void Stun()
     {
-        _tStunStart = Time.time;
+        _tOfStunRemaining = StunDuration;
         _chasePlayer.Stunned(true);
         this.enabled = true;
     }
