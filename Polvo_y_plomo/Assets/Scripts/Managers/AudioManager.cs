@@ -244,7 +244,8 @@ public class AudioManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSFXVolume(float volume)
     {
-        if (volume >= 0 && volume <= 1) VolumeSFX = volume;
+        volume = Mathf.Clamp01(volume);
+        VolumeSFX = volume;
     }
 
 
@@ -264,11 +265,9 @@ public class AudioManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        if (volume >= 0 && volume <= 1)
-        {
-            VolumeMusic = volume;
-            _mySource.volume = VolumeMusic;
-        }
+        volume = Mathf.Clamp01(volume);
+        VolumeMusic = volume;
+        _mySource.volume = VolumeMusic;
     }
     #endregion
 

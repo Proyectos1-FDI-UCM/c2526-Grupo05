@@ -104,7 +104,23 @@ public class playerControlledCursor : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
+    /// <summary>
+    /// Método público que devuelve el multiplicador de la velocidad del cursor.
+    /// </summary>
+    /// <returns></returns>
+    public float GetCursorSpeed()
+    {
+        return CursorSpeedMultiplier;
+    }
 
+    /// <summary>
+    /// Método público que reestablece el valor del multiplicador de la velocidad del cursor.
+    /// </summary>
+    /// <param name="newSpeed"></param>
+    public void SetCursorSpeed(float newSpeed)
+    {
+        if (newSpeed > 0 && newSpeed <= 1f) CursorSpeedMultiplier = newSpeed;
+    }
     #endregion
     
     // ---- MÉTODOS PRIVADOS ----
