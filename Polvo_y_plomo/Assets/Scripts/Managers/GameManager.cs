@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 using TMPro.EditorUtilities;
 using TMPro;
-
+using System.IO;
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
 /// que orquesta el funcionamiento general de la aplicación,
@@ -186,6 +186,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float TiempoEsperaSiguienteNivel = 5f;
+
+    [Header("Highscore")]
+
+    [SerializeField]
+    TextMeshProUGUI highScoreTextUI;
+
+    [SerializeField]
+    int highScore;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -248,7 +257,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private bool _playerDied = false;
 
-    
+
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -276,6 +286,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Si hay un highscore, lo muestra en pantalla y de lo contrario lo marca como cero
     /// Método llamado una vez después del Awake(), una vez otros componentes ya
     /// se han inicializado correctamente.
     /// En el momento de la carga, si ya hay otra instancia creada,
@@ -306,6 +317,7 @@ public class GameManager : MonoBehaviour
             // Se desactiva el componente para no usar el Update() hasta que sea necesario un contador.
             this.enabled = false;
         } // if-else somos instancia nueva o no.
+        if (SceneManager.GetActiveScene().name == "Menu") LoadScore();
     }
 
     /// <summary>
@@ -476,6 +488,7 @@ public class GameManager : MonoBehaviour
     {
         _totalPoints += cambioDePuntos;
         if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
+        SaveScore(_totalPoints);
     }
 
     /// <summary>
@@ -704,6 +717,24 @@ public class GameManager : MonoBehaviour
     }
     // NOTA: Los niveles de habilida del jugador se actualizan también en AnEnemyDied(), en la región de Transferencia de información.
     #endregion
+    public void SaveScore(int score)
+    {
+        string data = score.ToString();
+        string path = Application.persistentDataPath + "/Score.txt";
+
+        if (File.Exists(path))
+        {
+            string contenido = File.ReadAllText(path);
+            int savedScore = int.Parse(contenido);
+
+            if (savedScore >= score)
+            {
+                return;
+            }
+        }
+        File.WriteAllText(path, data);
+        Debug.Log("Puntuación guardada en: " + path);
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -725,7 +756,28 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    
 
+    private void LoadScore()
+    {
+
+        if (highScoreTextUI == null) return;
+
+        string path = Application.persistentDataPath + "/Score.txt";
+
+        if (File.Exists(path))
+        {
+
+            string file = File.ReadAllText(path);
+
+
+            highScoreTextUI.text = "Highscore: " + file;
+            highScore = int.Parse(file);
+
+        }
+        //Ponerla en la UI
+
+    }
     #endregion
 } // class GameManager 
 // namespace
