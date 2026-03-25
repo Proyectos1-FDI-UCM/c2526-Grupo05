@@ -206,6 +206,7 @@ public class ChasePlayer : MonoBehaviour
                 if (!_isStunned) _rb.linearVelocity = Vector2.zero;
             }
         }
+        _animator.SetFloat("LinearSpeed", _rb.linearVelocity.magnitude);
     }
 
     /// <summary>
