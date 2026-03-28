@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Este Script creará una bala en la dirección indicada.
-// Juan José de Reyna Gosoy
+// Controlador de disparo específico para la escopeta. Dispara perdigones en cono.
+// Samuel Asensio Torres
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,11 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Este componente generará un GameObject de bala cuando reciba una señal (se llame a la función adecuada: ). Le dará la dirección indicada en el método de spawn.
-/// 
-/// Es imperativo que este componente esté cómo hijo de un gameObject con RotateTowardsObject para que las balas aparezcan con la direccion y rotación adecuadas.
+/// Componente que genera múltiples proyectiles (perdigones) en una dispersión cónica.
+/// Debe estar como hijo del arma principal.
 /// </summary>
-public class Shoot : MonoBehaviour
+public class ShootEscopeta : MonoBehaviour
 {
     // ---- ATRIBUTOS DEL INSPECTOR ----
     #region Atributos del Inspector (serialized fields)
@@ -25,11 +24,28 @@ public class Shoot : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
-    /// Esta variable referencia al Objeto de tipo BulletMove que se instanciará cada vez que se dispare (la bala);
+    /// Prefab del perdigón que se instanciará. Debe ser una versión más pequeña de la bala normal.
     /// </summary>
     [SerializeField]
-    protected BulletMove Bullet;
+    private BulletMove PerdigonPrefab;
 
+    /// <summary>
+    /// Rango total en grados del cono de dispersión.
+    /// </summary>
+    [SerializeField]
+    private float RangoCono = 60f;
+
+    /// <summary>
+    /// Número de perdigones a disparar por cada acción.
+    /// </summary>
+    [SerializeField]
+    private int NumPerdigones = 4;
+
+    /// <summary>
+    /// Separación mínima en grados garantizada entre cada perdigón.
+    /// </summary>
+    [SerializeField]
+    private float DisparidadMinima = 5f;
 
     #endregion
 
@@ -52,21 +68,21 @@ public class Shoot : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Se llama al iniciar el GameObject con el componente.
-    /// Tendrá que hacer las comprobaciones necesarias de que el GameObject y el componente están en el formato adecuado.
+    /// Validaciones iniciales de dependencias.
     /// </summary>
-    void Awake()
+    private void Awake()
     {
-        if (Bullet == null)
+        if (PerdigonPrefab == null)
         {
-            Debug.Log("Se ha puesto el componente \"Shoot\" sin asociarse una bala. No podrá disparar.");
+            Debug.LogError("No se ha asignado el prefab del perdigón en ShootEscopeta. El arma no funcionará.");
             Destroy(this);
         }
 
-        if (GetComponentInParent<rotateTowardsObject>() == null)
+        // Validación matemática para evitar superposiciones si se configura mal en el inspector
+        if (DisparidadMinima * NumPerdigones >= RangoCono)
         {
-            Debug.Log("Se ha puesto el componente \"Shoot\" en un objeto cuyo padre no tiene el componente RotateTowardsObject y el spawn de la bala fallaría. No podrá disparar");
-            Destroy(this);
+            Debug.LogWarning("La disparidad mínima es demasiado alta para el rango del cono.");
+            DisparidadMinima = (RangoCono / NumPerdigones) - 1f;
         }
     }
 
@@ -89,19 +105,34 @@ public class Shoot : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     /// <summary>
-    /// Este método instanciará una bala, y le pasará una dirección a la que desplazarse.
-    /// Esta será la dirección hacia el cursor.
+    /// Dispara múltiples perdigones en la dirección indicada, aplicando la dispersión en cono
+    /// y asegurando una disparidad direccional mínima entre ellos mediante división por sectores.
     /// </summary>
-    /// <param name="direction"> Dirección a la que apuntará la bala </param>
     public void ShootBullet(Vector2 fireDir)
     {
-        float angulo = 180f / Mathf.PI * Mathf.Atan2(fireDir.y, fireDir.x);
-        angulo %= 360;
-        if (angulo < 0) angulo += 360f;
-        Quaternion rot = Quaternion.Euler(0, 0, angulo);
+        float anguloBase = 180f / Mathf.PI * Mathf.Atan2(fireDir.y, fireDir.x);
 
-        Instantiate(Bullet, transform.position, rot);
+        float tamañoSector = RangoCono / NumPerdigones;
+        float mitadCono = RangoCono / 2f;
+        float padding = DisparidadMinima / 2f;
+
+        for (int i = 0; i < NumPerdigones; i++)
+        {
+            float limiteMin = -mitadCono + (i * tamañoSector);
+            float limiteMax = limiteMin + tamañoSector;
+
+            float variacionAleatoria = Random.Range(limiteMin + padding, limiteMax - padding);
+            float anguloFinal = anguloBase + variacionAleatoria;
+
+            anguloFinal %= 360;
+            if (anguloFinal < 0) anguloFinal += 360f;
+
+            Quaternion rotacionPerdigon = Quaternion.Euler(0, 0, anguloFinal);
+
+            Instantiate(PerdigonPrefab, transform.position, rotacionPerdigon);
+        }
     }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -113,5 +144,5 @@ public class Shoot : MonoBehaviour
 
     #endregion
 
-} // class Shoot 
+} // class ShootEscopeta 
 // namespace

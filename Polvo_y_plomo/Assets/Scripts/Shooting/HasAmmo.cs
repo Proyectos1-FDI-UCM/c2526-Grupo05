@@ -16,6 +16,9 @@ using UnityEngine;
 /// 
 /// (!) Por ahora solo tiene lógica para parar la recarga del jugador. Se puede implementar facilmente para un enemigo con un nuevo
 /// método "CancelaRecarga()" o algo por el estilo (como no tenemos pensado añadirlo no esta implementado).
+/// 
+/// +++
+/// Se ha reescrito un poco el código para incluir el ShootEscopeta
 /// </summary>
 public class HasAmmo : MonoBehaviour
 {
@@ -56,6 +59,11 @@ public class HasAmmo : MonoBehaviour
     private Shoot _shoot;
 
     /// <summary>
+    /// Guarda el componente ShootEscopeta del GameObject con munición.
+    /// </summary>
+    private ShootEscopeta _shootEscopeta;
+
+    /// <summary>
     /// Esta variable es el número de balas que tendrá disponibles el Objeto con Shoot.
     /// </summary>
     private int _numBalas = 6;
@@ -88,9 +96,10 @@ public class HasAmmo : MonoBehaviour
     private void Awake()
     {
         _shoot = GetComponent<Shoot>();
-        if (_shoot == null)
+        _shootEscopeta = GetComponent<ShootEscopeta>();
+        if (_shoot == null && _shootEscopeta == null)
         {
-            Debug.Log("Se ha puesto el componente HasAmmo en un objeto sin componente Shoot. No funcionará.");
+            Debug.Log("Se ha puesto el componente HasAmmo en un objeto sin componente Shoot ni ShootEscopeta. No funcionará.");
             Destroy(this);
         }
 
@@ -132,7 +141,8 @@ public class HasAmmo : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        Destroy(GetComponent<Shoot>());
+        if (_shoot != null) Destroy(_shoot);
+        if (_shootEscopeta != null) Destroy(_shootEscopeta);
     }
     #endregion
 
@@ -157,15 +167,17 @@ public class HasAmmo : MonoBehaviour
     {
         if (_numBalas > 0)
         {
-            _shoot.ShootBullet(fireDir);
+            // Ejecuta el disparo dependiendo de qué componente tenga el arma
+            if (_shoot != null) _shoot.ShootBullet(fireDir);
+            else if (_shootEscopeta != null) _shootEscopeta.ShootBullet(fireDir);
+
             _numBalas--;
             if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             if (_numBalas == 0) IntentaRecarga();
             return true;  // dispara
         }
         else
-        { 
-
+        {
             return false;
         }
 
