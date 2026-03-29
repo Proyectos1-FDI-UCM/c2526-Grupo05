@@ -108,6 +108,7 @@ public class ShootEscopeta : MonoBehaviour
     /// Dispara múltiples perdigones en la dirección indicada, aplicando la dispersión en cono
     /// y asegurando una disparidad direccional mínima entre ellos mediante división por sectores.
     /// </summary>
+    /// /// <param name="fireDir">Vector de dirección central del apuntado.</param>
     public void ShootBullet(Vector2 fireDir)
     {
         float anguloBase = 180f / Mathf.PI * Mathf.Atan2(fireDir.y, fireDir.x);

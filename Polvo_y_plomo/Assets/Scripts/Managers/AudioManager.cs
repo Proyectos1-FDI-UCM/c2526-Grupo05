@@ -116,12 +116,14 @@ public class AudioManager : MonoBehaviour
             {
                 Debug.Log("Al AudioManager no se le ha asigando AudioSourcePrefab y no funcionará");
                 Destroy(gameObject);
+                return;
             }
             _mySource = GetComponent<AudioSource>();
             if (_mySource == null)
             {
                 Debug.Log("El AudioManager no tiene componente AudioSource y no funcionará");
                 Destroy(gameObject);
+                return;
             }
             _poolAudioSources = new AudioSource[MaxAudioSources];
             DontDestroyOnLoad(gameObject);
