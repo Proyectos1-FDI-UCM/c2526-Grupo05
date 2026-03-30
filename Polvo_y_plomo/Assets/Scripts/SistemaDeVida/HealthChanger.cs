@@ -122,6 +122,15 @@ public class HealthChanger : MonoBehaviour
         if (_vida < VidaMax) return true;
         else return false;
     }
+
+    /// <summary>
+    /// Método público que devuelve la vida actual del GameObject. Utilizado principalmente para transicionar fases en enemigos grandes (Suzie).
+    /// </summary>
+    /// <returns></returns>
+    public int GetCurrentHealth()
+    {
+        return _vida;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
