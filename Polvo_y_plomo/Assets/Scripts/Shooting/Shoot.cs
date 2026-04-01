@@ -28,7 +28,7 @@ public class Shoot : MonoBehaviour
     /// Esta variable referencia al Objeto de tipo BulletMove que se instanciará cada vez que se dispare (la bala);
     /// </summary>
     [SerializeField]
-    private BulletMove Bullet;
+    protected BulletMove Bullet;
 
 
     #endregion
