@@ -98,16 +98,31 @@ public class playerRoll : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
+        {
+            Debug.Log("Se ha colocado \"PlayerRoll\" en un gameobject sin RigidBody2D, no funcionará");
+            Destroy(this);
+        }
+
+        _desplazamientoJugador = GetComponent<playerControlledMovement>();
+        if (_desplazamientoJugador == null)
+        {
+            Debug.Log("Se ha colocado \"PlayerRoll\" en un gameobject sin PlayerControlledMovement, no funcionará");
+            Destroy(this);
+        }
+    }
+
     /// <summary>
     /// Start que inicializa los atributos que guardan el RigidBody2D del jugador, así como su script de desplazamiento básico (playerControlledMovement).
     /// </summary>
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _desplazamientoJugador = GetComponent<playerControlledMovement>();
-        if (_desplazamientoJugador == null)
+        if (!InputManager.HasInstance())
         {
-            Debug.Log("Se ha colocado \"PlayerRoll\" en un gameobject sin PlayerControlledMovement, no funcionará");
+            Debug.Log("Se ha puesto \"PlayerRoll\" en una escena sin InputManager. No funcionará");
             Destroy(this);
         }
         _gameManager = GameManager.HasInstance();
