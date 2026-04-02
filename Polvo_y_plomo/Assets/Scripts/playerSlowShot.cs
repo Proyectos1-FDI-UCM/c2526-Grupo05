@@ -136,7 +136,10 @@ public class playerSlowShot : MonoBehaviour
         }
 
         // Inicialización de los niveles
-        int kills = GameManager.Instance.TransferTotalDeaths();
+        int kills;
+        if (GameManager.HasInstance()) kills = GameManager.Instance.TransferTotalDeaths();
+        else kills = 0;
+
         _abilityCurrentLevel = 0;
         bool f = false;
         while (_abilityCurrentLevel < AbilityLevels.Length - 1 && !f)
@@ -152,7 +155,7 @@ public class playerSlowShot : MonoBehaviour
         }
         // Render inicial de la barra de nivel
         _levelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
-        GameManager.Instance.UpdateLevelBar(_levelBar);
+        if (GameManager.HasInstance()) GameManager.Instance.UpdateLevelBar(_levelBar);
     }
 
     /// <summary>
