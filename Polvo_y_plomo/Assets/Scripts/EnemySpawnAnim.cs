@@ -60,6 +60,14 @@ public class EnemySpawnAnim : MonoBehaviour
             Debug.Log("Se ha puesto el componente EnemySpawnAnim sin el componente Animator");
             Destroy(this);
         }
+    }
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before 
+    /// any of the Update methods are called the first time.
+    /// </summary>
+    void Start()
+    {
         _chasePlayer = GetComponent<ChasePlayer>();
         if (_chasePlayer != null)
         {
@@ -76,14 +84,6 @@ public class EnemySpawnAnim : MonoBehaviour
     }
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
-    {
-    }
-
-    /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void FixedUpdate()
@@ -94,7 +94,6 @@ public class EnemySpawnAnim : MonoBehaviour
             _chasePlayer = GetComponent<ChasePlayer>();
             if (_chasePlayer != null)
             {
-                _chasePlayer.Stunned(false);
                 _chasePlayer.enabled = true;
             }
             _enemyMeleeAttack = GetComponent<EnemyMeleeAttack>();
