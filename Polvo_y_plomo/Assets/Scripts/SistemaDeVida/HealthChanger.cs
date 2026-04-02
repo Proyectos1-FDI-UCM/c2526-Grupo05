@@ -46,6 +46,11 @@ public class HealthChanger : MonoBehaviour
     /// Inicializado en el Start().
     /// </summary>
     private CanFlash _canFlash;
+
+    /// <summary>
+    /// Un booleano que determinará si podemos recibir daño o no 
+    /// </summary
+    private bool _canRecieveDamage = true;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -86,8 +91,26 @@ public class HealthChanger : MonoBehaviour
     /// Si te quedas sin vida llamara al metodo para matar
     /// Si eres el jugador, actualiza tu vida en el HUD
     /// </summary>
+    
+    
+    /// <summary>
+    /// Metodo que permitirá que no nos hagan daño mientras estamos escondidos
+    /// </summary
+    public void BlockDamage()
+    {
+        _canRecieveDamage = false;
+    }
+
+    /// <summary>
+    /// Metodo que permitirá que nos hagan daño mientras no estamos escondidos
+    /// </summary
+    public void AllowDamage()
+    {
+        _canRecieveDamage = true;
+    }
     public void CambiarVida(int cambio = -1)      
     {
+        if (!_canRecieveDamage) return;
         if (_vida <= VidaMax)
         {
             _vida += cambio;

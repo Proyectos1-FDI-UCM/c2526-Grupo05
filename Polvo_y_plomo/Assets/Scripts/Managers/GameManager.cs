@@ -423,6 +423,7 @@ public class GameManager : MonoBehaviour
         System.GC.Collect();
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
         System.GC.Collect();
+        SaveScore(_totalPoints);
     } // ChangeScene
 
     /// <summary>
@@ -488,7 +489,6 @@ public class GameManager : MonoBehaviour
     {
         _totalPoints += cambioDePuntos;
         if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
-        SaveScore(_totalPoints);
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8450082553039774674}
   m_Layer: 8
   m_Name: Barril_Cobertura
-  m_TagString: Untagged
+  m_TagString: Cobertura
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,8 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a3bc37fd63acc4da9754829f22e2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cadaver:
-  - {fileID: 1206322481291541026, guid: e42eb6e9e815b9d4789356a524c17d60, type: 3}
+  Cadaveres: []
 --- !u!1 &159057533660135593
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,8 +5,9 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
-using UnityEngine;
+using System;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UIElements;
 // Añadir aquí el resto de directivas using
 
@@ -87,6 +88,11 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     private float _t;
 
+    /// <summary>
+    /// Almacena una referencia al script principal de Suzie
+    /// </summary>
+    private SuzieScript _boss;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -114,6 +120,11 @@ public class EnemySpawner : MonoBehaviour
     {
         foreach (EnemySpawner spawner in ActivateSpawnersWhenDone) if (spawner != null) spawner.enabled = true;
         if (LevelManager.HasInstance() && LastSpawner) LevelManager.Instance.LastSpawnerDone(); // condición de victoria último spawner
+
+        if (_boss != null)
+        {
+            _boss.DeactivateSpawnWarning();
+        }
     }
 
     /// <summary>
@@ -160,6 +171,13 @@ public class EnemySpawner : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
+    /// <summary>
+    /// Método público para asignar la referencia del jefe a este spawner.
+    /// </summary>
+    public void SetBoss(SuzieScript jefe)
+    {
+        _boss = jefe;
+    }
     #endregion
 
 } // class EnemySpawner 
