@@ -28,6 +28,11 @@ public class EnemySpawnAnim : MonoBehaviour
     private int SpawnAnimation;
     [SerializeField]
     private float SpawnDuration = 5f;
+    /// <summary>
+    /// Prefab del enemigo funcional que va a aparecer.
+    /// </summary>
+    [SerializeField]
+    private GameObject EnemyPrefab;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
