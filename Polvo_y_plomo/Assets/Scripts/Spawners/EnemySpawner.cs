@@ -91,7 +91,7 @@ public class EnemySpawner : MonoBehaviour
     /// <summary>
     /// Almacena una referencia al script principal de Suzie
     /// </summary>
-    private SuzieScript _boss;
+    private SuziesSecondPattern _boss;
 
     #endregion
 
@@ -174,7 +174,7 @@ public class EnemySpawner : MonoBehaviour
     /// <summary>
     /// Método público para asignar la referencia del jefe a este spawner.
     /// </summary>
-    public void SetBoss(SuzieScript jefe)
+    public void SetBoss(SuziesSecondPattern jefe)
     {
         _boss = jefe;
     }
