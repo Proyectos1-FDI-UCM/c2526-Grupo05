@@ -1594,7 +1594,7 @@ PrefabInstance:
     - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4109acea4d56bd44697729bb833a6299, type: 3}
+      objectReference: {fileID: -3332666923180988721, guid: 030ed91b5eaf5aa45bcaf067ddffd3e8, type: 3}
     - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -1606,6 +1606,14 @@ PrefabInstance:
     - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902324470021608073, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
+      propertyPath: FlashTime
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902324470021608073, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
+      propertyPath: FlashesUntilDisable
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8424402985830408694, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: m_Name
@@ -1621,7 +1629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9065238930568911990, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: MovingTime
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
