@@ -96,6 +96,20 @@ public class SuziesSecondPattern : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     /// <summary>
+    /// El patron 2 de Suzie, que reproduce el sonido, se esconde y activa los spawners
+    /// </summary>
+    public void IniciarPatron()
+    {
+        Whistle.Play();
+        Hide();
+
+        if (Pattern2Spawner != null)
+        {
+            Pattern2Spawner.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
     /// Suma los Spawners que se han desactivado y si se han acabado Suzie vuelve a ser vulnerable
     /// </summary>
     public void DeactivateSpawnWarning()
@@ -107,6 +121,8 @@ public class SuziesSecondPattern : MonoBehaviour
         {
             UnHide(); 
             deactivatedSpawns = 0; // Reseteamos el contador para la próxima vez
+
+            GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
         }
     }
 
@@ -118,20 +134,6 @@ public class SuziesSecondPattern : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
-
-    /// <summary>
-    /// El patron 2 de Suzie, que reproduce el sonido, se esconde y activa los spawners
-    /// </summary>
-    private void Pattern2()
-    {
-        Whistle.Play();
-        Hide();
-
-        if (Pattern2Spawner != null)
-        {
-            Pattern2Spawner.gameObject.SetActive(true);
-        }
-    }
 
     /// <summary>
     /// Metodo que esconde a Suzie y hace que no pueda recibir

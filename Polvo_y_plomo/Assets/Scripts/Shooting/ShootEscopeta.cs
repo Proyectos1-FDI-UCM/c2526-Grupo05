@@ -74,14 +74,14 @@ public class ShootEscopeta : MonoBehaviour
     {
         if (PerdigonPrefab == null)
         {
-            Debug.LogError("No se ha asignado el prefab del perdigón en ShootEscopeta. El arma no funcionará.");
+            Debug.Log("No se ha asignado el prefab del perdigón en ShootEscopeta. El arma no funcionará.");
             Destroy(this);
         }
 
         // Validación matemática para evitar superposiciones si se configura mal en el inspector
         if (DisparidadMinima * NumPerdigones >= RangoCono)
         {
-            Debug.LogWarning("La disparidad mínima es demasiado alta para el rango del cono.");
+            Debug.Log("La disparidad mínima es demasiado alta para el rango del cono.");
             DisparidadMinima = (RangoCono / NumPerdigones) - 1f;
         }
     }
