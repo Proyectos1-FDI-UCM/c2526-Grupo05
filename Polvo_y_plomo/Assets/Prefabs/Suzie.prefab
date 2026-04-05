@@ -105,7 +105,10 @@ GameObject:
   - component: {fileID: 166880489185979541}
   - component: {fileID: 1474871151810355398}
   - component: {fileID: -826618973651338904}
-  - component: {fileID: 8588104322072639697}
+  - component: {fileID: 818661390719619333}
+  - component: {fileID: 6168801973893669910}
+  - component: {fileID: 2496806042617715599}
+  - component: {fileID: 891348008343334330}
   m_Layer: 10
   m_Name: Suzie
   m_TagString: Untagged
@@ -359,7 +362,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8588104322072639697
+--- !u!114 &818661390719619333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,16 +371,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 6794519440049798451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed4b4b267362c648ad04d611a8f5094, type: 3}
+  m_Script: {fileID: 11500000, guid: abb8f35d34b54394fa6dafcf28c013bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wistle: {fileID: -826618973651338904}
+  _healthManager: {fileID: 1474871151810355398}
+  _patron1: {fileID: 6168801973893669910}
+  _patron2: {fileID: 2496806042617715599}
+  _patron3: {fileID: 891348008343334330}
+--- !u!114 &6168801973893669910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6d6089184a0204a82aefebb3e2ac45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionsPerCycle: 3
+  HealthLossToHide: 2
+  DistanceToPeekingPos: 4
+  MaxShootingTime: 2.8
+  LapseBetweenShots: 0.2
+  MaxHidingTime: 3
+--- !u!114 &2496806042617715599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da64d4f6a126e1843a4be8960921c590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Whistle: {fileID: -826618973651338904}
   HealthManager: {fileID: 1474871151810355398}
   Spawns: []
   Pattern2Spawner: {fileID: 0}
+--- !u!114 &891348008343334330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794519440049798451}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 356a62b4197847343a036807b6961e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Barrels: []
   player: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
-  grenadePrefab: {fileID: 2373247839654434356, guid: c561e6d9defd9f44db909798807ad467, type: 3}
+  Contador1: 0.5
+  Contador2: 2
 --- !u!1001 &7980009603341665458
 PrefabInstance:
   m_ObjectHideFlags: 0

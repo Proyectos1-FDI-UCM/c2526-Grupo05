@@ -277,6 +277,9 @@ public class SuziesFirstPattern : MonoBehaviour
         // lanza dinamita hacia "dir"
         _lastPeekingMoment = Time.time;
         _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
+
+        GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
+        this.enabled = false;
     }
 
     /// <summary>

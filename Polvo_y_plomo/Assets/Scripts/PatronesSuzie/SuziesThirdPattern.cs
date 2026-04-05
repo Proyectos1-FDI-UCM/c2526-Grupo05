@@ -79,25 +79,51 @@ public class SuziesThirdPattern : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     
     /// <summary>
-    /// En el start localizaremos los objetos con el tag de barril y los guardaremos en una lista
+    /// En el update dependiendo de los booleanos que se hayan marcado como true, lanzaremos la segunda dinamita con el tiempo configurable al objetivo
+    /// </summary>
+    void Update()
+    {
+        if (_manyBarrels && Time.time - _firstTimer > Contador1)
+        {
+            ThrowSecondGrenade();
+            FinalizarPatron();
+        }
+        else if (_lessThanTwo && Time.time - _firstTimer > Contador2)
+        {
+            _secondTarget = player.position;
+            ThrowSecondGrenade();
+            FinalizarPatron();
+        }
+    }
+
+    #endregion
+
+    // ---- MÉTODOS PÚBLICOS ----
+    #region Métodos públicos
+    // Documentar cada método que aparece aquí con ///<summary>
+    // El convenio de nombres de Unity recomienda que estos métodos
+    // se nombren en formato PascalCase (palabras con primera letra
+    // mayúscula, incluida la primera letra)
+    // Ejemplo: GetPlayerController
+
+    /// <summary>
+    /// Localizaremos los objetos con el tag de barril y los guardaremos en una lista
     /// Luego dependiendo de si hay más de una cobertura o no, determianremos a que barriles aleatorios y distintos lanzaremos la dinamita
     /// Si no hay más coberturas esa dinamita ira a la posición del jugador
     /// Se marcaran con booleanos cada situación para posteriormente el tiempo entre lanzamientos y se lanzará la primera dinamita
     /// </summary>
-    void Start()
+    public void IniciarPatron()
     {
-
         player = LevelManager.Instance.PlayerTransform();
 
         Barrels = GameObject.FindGameObjectsWithTag("Barrel").ToList<GameObject>();
 
         Debug.Log("Suzie ha encontrado " + Barrels.Count + " barriles.");
-        
+
         if (Barrels.Count >= 2)
         {
             _manyBarrels = true;
@@ -123,37 +149,6 @@ public class SuziesThirdPattern : MonoBehaviour
         if (!_manyBarrels) _lessThanTwo = true;
         ThrowFirstGrenade();
     }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    
-    /// <summary>
-    /// En el update dependiendo de los booleanos que se hayan marcado como true, lanzaremos la segunda dinamita con el tiempo configurable al objetivo
-    /// </summary>
-    void Update()
-    {
-
-        if (_manyBarrels && Time.time - _firstTimer > Contador1)
-        {
-            ThrowSecondGrenade();
-        }
-        else if (_lessThanTwo && Time.time - _firstTimer > Contador2)
-        {
-            _secondTarget = player.position;
-            ThrowSecondGrenade();
-        }
-    }
-
-    #endregion
-
-    // ---- MÉTODOS PÚBLICOS ----
-    #region Métodos públicos
-    // Documentar cada método que aparece aquí con ///<summary>
-    // El convenio de nombres de Unity recomienda que estos métodos
-    // se nombren en formato PascalCase (palabras con primera letra
-    // mayúscula, incluida la primera letra)
-    // Ejemplo: GetPlayerController
 
     #endregion
 
@@ -188,7 +183,16 @@ public class SuziesThirdPattern : MonoBehaviour
     private void ThrowGrenadeTo(Vector3 targetPos)
     {
         // Lanzar dinamita (Juanjo trabaja)
-    }   
+    }
+
+    /// <summary>
+    /// Termina el ataque y lo reporta al Manager
+    /// </summary>
+    private void FinalizarPatron()
+    {
+        GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
+        this.enabled = false;
+    }
     #endregion
 }
 // class SuziesThirdPattern 
