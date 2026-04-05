@@ -110,7 +110,7 @@ public class HealthChanger : MonoBehaviour
     }
     public void CambiarVida(int cambio = -1)      
     {
-        if (!_canRecieveDamage) return;
+        if (!_canRecieveDamage && cambio < 0) return;
         if (_vida <= VidaMax)
         {
             _vida += cambio;

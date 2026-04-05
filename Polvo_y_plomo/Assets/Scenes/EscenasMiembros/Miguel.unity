@@ -421,9 +421,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448591982}
-  - component: {fileID: 1448591983}
   - component: {fileID: 1448591985}
   - component: {fileID: 1448591984}
+  - component: {fileID: 1448591986}
+  - component: {fileID: 1448591987}
   m_Layer: 0
   m_Name: Suzie
   m_TagString: Untagged
@@ -446,26 +447,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1448591983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448591981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed4b4b267362c648ad04d611a8f5094, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wistle: {fileID: 1448591985}
-  HealthManager: {fileID: 1448591984}
-  Spawns:
-  - {fileID: 1113627894}
-  Pattern2Spawner: {fileID: 1113627894}
-  Barrels: []
-  player: {fileID: 1403873387}
-  grenadePrefab: {fileID: 2373247839654434356, guid: c561e6d9defd9f44db909798807ad467, type: 3}
 --- !u!114 &1448591984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,6 +557,40 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1448591986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448591981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da64d4f6a126e1843a4be8960921c590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Whistle: {fileID: 1448591985}
+  HealthManager: {fileID: 1448591984}
+  Spawns:
+  - {fileID: 1113627894}
+  Pattern2Spawner: {fileID: 1113627894}
+--- !u!114 &1448591987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448591981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 356a62b4197847343a036807b6961e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Barrels: []
+  player: {fileID: 0}
+  grenadePrefab: {fileID: 0}
+  Contador1: 0.5
+  Contador2: 2
 --- !u!1 &1857597088 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 957493243616585373, guid: a203563ead4faec4b8eef19511e8329c, type: 3}

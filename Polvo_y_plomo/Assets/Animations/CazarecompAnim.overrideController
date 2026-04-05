@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CazarecompAnim
+  m_Controller: {fileID: 9100000, guid: 7426a6933f66d9441a033fe3d5ae4bf8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f9c478e4af8e66d41aac6fad4d4f80b7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 478e846599c310a47b2bf2ec5baf7292, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 305151594ca86a64692b3712275fe88c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3db6255c942674248949ac3829b34566, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2e5642fefa313404c94322eecea4f037, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4f9e6cd544ce8b14aa85fb27b79545e7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 65a3cf1c9ae43a444b9b4fdb4bb390b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 65a3cf1c9ae43a444b9b4fdb4bb390b6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f47d74cbfe252f5489ae33aa29d70f36, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f47d74cbfe252f5489ae33aa29d70f36, type: 2}

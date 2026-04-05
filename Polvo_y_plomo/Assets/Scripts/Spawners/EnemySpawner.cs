@@ -47,6 +47,16 @@ public class EnemySpawner : MonoBehaviour
         public EnemySpawnLogic EnemySpawnPrefab;
 
         /// <summary>
+        /// Almacena el indice de animacion de spawn de este enemigo.
+        /// </summary>
+        public int SpawnID;
+
+        /// <summary>
+        /// Offset de la posición en la que aparecerá el enemigo, desde la posición del spawner.
+        /// </summary>
+        public Vector3 SpawnOffset;
+
+        /// <summary>
         /// Almacena cuanto tiempo tarda en aparecer este enemigo desde el último que apareció.
         /// </summary>
         public float SpawnDelay;
@@ -91,7 +101,7 @@ public class EnemySpawner : MonoBehaviour
     /// <summary>
     /// Almacena una referencia al script principal de Suzie
     /// </summary>
-    private SuzieScript _boss;
+    private SuziesSecondPattern _boss;
 
     #endregion
 
@@ -140,14 +150,16 @@ public class EnemySpawner : MonoBehaviour
 
         if (_t <= 0) // spawn de nuevo enemigo
         {
-            Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);
+            EnemySpawnLogic newInstance = Instantiate(SpawnList[_indEnemigo].EnemySpawnPrefab, transform.position, transform.rotation);
+            newInstance.SetSpawnID(SpawnList[_indEnemigo].SpawnID);
+            newInstance.SetSpawnOffset(SpawnList[_indEnemigo].SpawnOffset);
             _indEnemigo++;
 
             if (_indEnemigo >= SpawnList.Length) // lista terminada
             {
                 this.enabled = false;
             }
-            else _t = SpawnList[_indEnemigo].SpawnDelay; ;
+            else _t = SpawnList[_indEnemigo].SpawnDelay;
         }
     }
 
@@ -174,7 +186,7 @@ public class EnemySpawner : MonoBehaviour
     /// <summary>
     /// Método público para asignar la referencia del jefe a este spawner.
     /// </summary>
-    public void SetBoss(SuzieScript jefe)
+    public void SetBoss(SuziesSecondPattern jefe)
     {
         _boss = jefe;
     }

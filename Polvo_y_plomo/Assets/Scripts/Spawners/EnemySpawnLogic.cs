@@ -27,7 +27,7 @@ public class EnemySpawnLogic : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-
+    
     /// <summary>
     /// Prefab del enemigo funcional que va a aparecer.
     /// </summary>
@@ -40,11 +40,6 @@ public class EnemySpawnLogic : MonoBehaviour
     [SerializeField]
     private Animator SpawnAnimator;
 
-    /// <summary>
-    /// Nombre del estado que contiene el clip de la animación de Spawn.
-    /// </summary>
-    [SerializeField]
-    private string StateName = "Spawn";
 
     /// <summary>
     /// Offset de la posición en la que aparecerá el enemigo, desde la posición del spawner.
@@ -68,6 +63,10 @@ public class EnemySpawnLogic : MonoBehaviour
     /// Inicializado en el Awake() si hay animación.
     /// </summary>
     private float _duracionAnimacion;
+    /// <summary>
+    /// Indice del estado que contiene el clip de la animación de Spawn.
+    /// </summary>
+    private int _spawnID = 0;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -84,7 +83,7 @@ public class EnemySpawnLogic : MonoBehaviour
     /// Luego, si no hay animación, instancia el objeto y destruye el GameObject. 
     /// Si la hay, busca el clip indicado, fuerza que empiece, y registra su duración.
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         if (EnemyPrefab == null)
         {
@@ -97,9 +96,9 @@ public class EnemySpawnLogic : MonoBehaviour
         {
             foreach (AnimationClip clip in SpawnAnimator.runtimeAnimatorController.animationClips)
             {
-                if (clip.name == StateName)
+                if (clip.name == ("Spawn" + _spawnID))
                 {
-                    SpawnAnimator.Play(StateName, 0, 0f);
+                    SpawnAnimator.Play(clip.name, 0, 0f);
                     SpawnAnimator.speed = 1f;
                     _duracionAnimacion = clip.length;
                 }
@@ -111,7 +110,7 @@ public class EnemySpawnLogic : MonoBehaviour
     /// Se llama cada frame mientras el componente esté activo.
     /// Espera la duración de la animación y hace el spawn del enemigo, luego autodestruyendose.
     /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
         if (GameManager.HasInstance())
         {
@@ -120,7 +119,7 @@ public class EnemySpawnLogic : MonoBehaviour
         }
         else _duracionAnimacion -= Time.deltaTime;
 
-        if (_duracionAnimacion <= 0) DoSpawn();
+        if (_duracionAnimacion < 0) DoSpawn();
     }
 
     #endregion
@@ -133,6 +132,20 @@ public class EnemySpawnLogic : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Método que modifica el ID de la animación.
+    /// </summary>
+    public void SetSpawnID(int id)
+    {
+        _spawnID = id;
+    }
+    /// <summary>
+    /// Método que modifica el offset del spawn del enemigo.
+    /// </summary>
+    public void SetSpawnOffset(Vector3 offset)
+    {
+        SpawnPositionOffset = offset;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
