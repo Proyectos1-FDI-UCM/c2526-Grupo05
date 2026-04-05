@@ -121,7 +121,6 @@ public class EngrandProgressively : MonoBehaviour
         _actualTime += Time.deltaTime;
         if (_actualTime < ChangeTime)
         {
-            Debug.Log("hgfd");
             _actualScale = _scalePerSecond * _actualTime;
             this.gameObject.transform.localScale = new Vector3(_x + _actualScale, _y + _actualScale, _z);
         }

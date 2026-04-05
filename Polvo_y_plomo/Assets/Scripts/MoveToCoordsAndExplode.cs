@@ -36,13 +36,6 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Vector3 Pos;
-
-    /// <summary>
-    /// Componente a activar.
-    /// </summary>
-    [SerializeField]
-    private Explode Comp;
-
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -58,8 +51,18 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// Es el vector dirección que se desplazará el GameObject cada unidad de tiempo.
     /// </summary>
     private Vector3 _vel;
+
+    /// <summary>
+    /// Componente de parpadear que se activa al desactivarse este.
+    /// </summary>
+    private CanFlash _flash;
+
+    /// <summary>
+    /// Componente a activar.
+    /// </summary>
+    private Explode _exp;
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
     /// <summary>
@@ -67,9 +70,12 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// </summary>
     void Start()
     {
-        Comp.enabled = false;//Desactiva el componente,en caso de que estuviese activado.
+        _flash = GetComponent<CanFlash>();
+        _exp = GetComponent<Explode>();
 
-        _vel = Pos / MovingTime; //Inicializar la velocidad de movimiento.
+        _exp.enabled = false;//Desactiva el componente,en caso de que estuviese activado.
+
+        _vel = (Pos - transform.position) / MovingTime; //Inicializar la velocidad de movimiento.
 
         if (GetComponent<Explode>() == null)
         {
@@ -90,7 +96,8 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     {
         if (Time.time > MovingTime)
         {
-            Comp.enabled = true;
+            _flash.StartFlashes();
+            _exp.enabled = true;
             this.enabled = false;
         }
     }
@@ -104,6 +111,15 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Cambia el valor de Pos (que mide el cambio de posición local de este GameObject)
+    /// por la diferencia entre la posición final global y la posición global de este objeto.
+    /// </summary>
+    /// <param name="v"></param>
+    public void SetFinalPosition(Vector3 posGlob)
+    {
+        Pos = posGlob - transform.position;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
