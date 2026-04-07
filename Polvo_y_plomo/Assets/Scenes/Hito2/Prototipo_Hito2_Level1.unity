@@ -644,6 +644,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 589321280}
+  - component: {fileID: 589321281}
   m_Layer: 0
   m_Name: Spawner8
   m_TagString: Untagged
@@ -666,6 +667,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1334586125}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &589321281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589321279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4c6020a56e8564e8d9bd3d2afff982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnList:
+  - EnemySpawnPrefab: {fileID: 219012534562007612, guid: 0132e82a8590a4e458522cf628ffeb78, type: 3}
+    SpawnID: 8
+    SpawnOffset: {x: -10, y: 12, z: 0}
+    SpawnDelay: 5
+  ActivateSpawnersWhenDone:
+  - {fileID: 0}
+  LastSpawner: 0
 --- !u!1001 &645077693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14698,8 +14719,8 @@ MonoBehaviour:
     SpawnOffset: {x: -3, y: -2, z: 0}
     SpawnDelay: 1
   - EnemySpawnPrefab: {fileID: 219012534562007612, guid: 0132e82a8590a4e458522cf628ffeb78, type: 3}
-    SpawnID: 3
-    SpawnOffset: {x: -3, y: -2, z: 0}
+    SpawnID: 9
+    SpawnOffset: {x: -10, y: 0, z: 0}
     SpawnDelay: 3
   ActivateSpawnersWhenDone:
   - {fileID: 0}
@@ -14755,6 +14776,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1391743752}
+  - component: {fileID: 1391743753}
+  - component: {fileID: 1391743754}
   m_Layer: 0
   m_Name: Spawner7
   m_TagString: Untagged
@@ -14777,6 +14800,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1334586125}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1391743753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391743751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4c6020a56e8564e8d9bd3d2afff982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnList:
+  - EnemySpawnPrefab: {fileID: 219012534562007612, guid: 0132e82a8590a4e458522cf628ffeb78, type: 3}
+    SpawnID: 7
+    SpawnOffset: {x: -10, y: 6, z: 0}
+    SpawnDelay: 7
+  ActivateSpawnersWhenDone:
+  - {fileID: 0}
+  LastSpawner: 0
+--- !u!95 &1391743754
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391743751}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bb0ade6a192579e4a8132927b26d3aaa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1435860710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
@@ -14793,7 +14858,6 @@ GameObject:
   - component: {fileID: 1445482270}
   - component: {fileID: 1445482269}
   - component: {fileID: 1445482271}
-  - component: {fileID: 1445482272}
   m_Layer: 0
   m_Name: Piano
   m_TagString: Untagged
@@ -14917,28 +14981,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!95 &1445482272
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445482268}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 04ecf3cd92d45a9448980da9d5d78611, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1466990484
 PrefabInstance:
   m_ObjectHideFlags: 0
