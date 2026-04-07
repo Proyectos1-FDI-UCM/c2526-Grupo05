@@ -5,6 +5,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using Mono.Cecil.Cil;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
@@ -23,6 +24,10 @@ public class SuziesFirstPattern : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
+    /// <summary>
+    /// Prefab de dinamita
+    /// </summary>
+    [SerializeField] GameObject DynamitePrefab = null;
     /// <summary>
     /// Número de acciones por ciclo. Cada ciclo acaba con un lanzamiento de dinamita, y el resto de acciones son "peeks" para disparar con la escopeta (2 veces
     /// por peek).
@@ -151,6 +156,11 @@ public class SuziesFirstPattern : MonoBehaviour
             Debug.Log("Se ha puesto el componente \"SuziesFirstPattern\" en un GameObject sin escopeta. No podrá disparar.");
         }
 
+        if (DynamitePrefab == null)
+        {
+            Debug.Log("Se ha puesto el componente \"SuziesFirstPattern\" en un GameObject sin prefab de dinamita asignado. No podrá lanzarla.");
+        }
+
         _initialPos = transform.position;
     }
 
@@ -261,6 +271,8 @@ public class SuziesFirstPattern : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, -45f);
         }
 
+        _health.AllowDamage();
+
         _firstRndShootingMoment = UnityEngine.Random.Range(LapseBetweenShots, MaxShootingTime - LapseBetweenShots * 2);
         _secondRndShootingMoment = UnityEngine.Random.Range(_firstRndShootingMoment + LapseBetweenShots, MaxShootingTime);
     }
@@ -273,8 +285,13 @@ public class SuziesFirstPattern : MonoBehaviour
     private void SuzieDynamite()
     {
         _playerPos = LevelManager.Instance.PlayerTransform();
-        Vector2 dir = (_playerPos.position - transform.position).normalized;
-        // lanza dinamita hacia "dir"
+        MoveToCoordsAndExplode dynamite = DynamitePrefab.GetComponent<MoveToCoordsAndExplode>();
+        if (dynamite != null)
+        {
+            Instantiate(dynamite);
+            dynamite.SetFinalPosition(_playerPos.position);
+        }
+
         _lastPeekingMoment = Time.time;
         _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
 
@@ -297,6 +314,8 @@ public class SuziesFirstPattern : MonoBehaviour
 
             _lastPeekingMoment = Time.time;
             _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
+
+            _health.BlockDamage();
         }
     }
     #endregion   
