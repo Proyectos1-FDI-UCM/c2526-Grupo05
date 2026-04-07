@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChaseRadius: 4
   AttackRadius: 2
-  ChaseSpeed: 4
+  ChaseSpeed: 5
   StunSpeed: 7
 --- !u!50 &8200727855567051127
 Rigidbody2D:

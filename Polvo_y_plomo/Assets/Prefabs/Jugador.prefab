@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785a8965b4f0b8c4e921ec946f519043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rate: 0.15
+  Rate: 0.3
   Cursor: {fileID: 3504479324421535513}
 --- !u!114 &8480573717615319094
 MonoBehaviour:
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad203d1d0710cb49bc56490640be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reload: 0.3
+  Reload: 0.5
   NumMaxBalas: 6
 --- !u!1 &6794519440049798451
 GameObject:
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6520cc7f89bc080478227369005003d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerSpeed: 5
+  PlayerSpeed: 6.5
 --- !u!50 &166880489185979541
 Rigidbody2D:
   serializedVersion: 5
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cursor: {fileID: 8633089953209525018}
-  CooldownMelee: 2.5
+  CooldownMelee: 2
 --- !u!114 &5273611612293079281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeleePrefab: {fileID: 5015214724800111349, guid: 8e3abd07c76a80745873b79eeb433e2b, type: 3}
-  DistanciaSpawnAtaque: 1
+  DistanciaSpawnAtaque: 1.3
 --- !u!114 &1474871151810355398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CooldownRoll: 1.5
   DesplazamientoRodado: 3.25
-  DuracionRodado: 0.35
+  DuracionRodado: 0.3
   HitboxJugador: {fileID: 5036081665872762522}
   SpriteArmaJugador: {fileID: 8180277153169744243}
 --- !u!114 &3385198336411724539
