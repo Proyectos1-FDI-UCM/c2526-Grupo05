@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7973503450180122931}
   - component: {fileID: 5460023490549158643}
   m_Layer: 0
-  m_Name: MesaHorizRota
+  m_Name: MesaHorizRota 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
