@@ -14242,7 +14242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2922786102867036322, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: Rate
-      value: 0.25
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14284,6 +14284,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5273611612293079281, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: DistanciaSpawnAtaque
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6794519440049798451, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: m_Name
       value: Jugador
@@ -14291,6 +14295,10 @@ PrefabInstance:
     - target: {fileID: 8480573717615319094, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: Reload
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640769707630179225, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: DuracionRodado
+      value: 0.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
