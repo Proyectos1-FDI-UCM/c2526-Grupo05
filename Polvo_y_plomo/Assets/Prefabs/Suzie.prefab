@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 4373482155475448269}
   - component: {fileID: 5550585093572592077}
   - component: {fileID: 5489619501543049800}
-  - component: {fileID: 166880489185979541}
   - component: {fileID: 1474871151810355398}
   - component: {fileID: -826618973651338904}
   - component: {fileID: 818661390719619333}
@@ -225,33 +224,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!50 &166880489185979541
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6794519440049798451}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &1474871151810355398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6d6089184a0204a82aefebb3e2ac45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DynamitePrefab: {fileID: 0}
   ActionsPerCycle: 3
   HealthLossToHide: 2
   DistanceToPeekingPos: 4
