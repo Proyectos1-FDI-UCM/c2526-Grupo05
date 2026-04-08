@@ -189,11 +189,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Highscore")]
 
+    /// <summary>
+    /// Texto en el que se escribe el número del highscore.
+    /// </summary>
     [SerializeField]
-    TextMeshProUGUI highScoreTextUI;
-
-    [SerializeField]
-    int highScore;
+    private TextMeshProUGUI highScoreTextUI;
 
     #endregion
 
@@ -257,7 +257,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private bool _playerDied = false;
 
-
+    /// <summary>
+    /// Almacena el highscore del jugador, leido de un archivo.
+    /// </summary>
+    private int highScore = 0;
 
     #endregion
 
@@ -761,7 +764,11 @@ public class GameManager : MonoBehaviour
     private void LoadScore()
     {
 
-        if (highScoreTextUI == null) return;
+        if (highScoreTextUI == null)
+        {
+            highScoreTextUI.text = "0";
+            return;
+        }
 
         string path = Application.persistentDataPath + "/Score.txt";
 
@@ -771,7 +778,7 @@ public class GameManager : MonoBehaviour
             string file = File.ReadAllText(path);
 
 
-            highScoreTextUI.text = "Highscore: " + file;
+            highScoreTextUI.text = file;
             highScore = int.Parse(file);
 
         }
