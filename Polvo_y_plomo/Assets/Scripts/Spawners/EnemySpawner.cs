@@ -119,7 +119,8 @@ public class EnemySpawner : MonoBehaviour
     private void OnEnable()
     {
         _indEnemigo = 0;
-        if (SpawnList.Length != 0) _t = SpawnList[_indEnemigo].SpawnDelay;  
+        if (SpawnList.Length != 0) _t = SpawnList[_indEnemigo].SpawnDelay;
+        else this.enabled = false;
     }
 
     /// <summary>

@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ComicPanels:
-  - {fileID: -855298285791758126, guid: a00c41d0bb5667341bab8109f105e326, type: 3}
+  - {fileID: 5088316998373936774, guid: 4ac6978eb8018b24da6dd23055bcc614, type: 3}
   - {fileID: -855298285791758126, guid: a00c41d0bb5667341bab8109f105e326, type: 3}
   - {fileID: 6937817954938267909, guid: 37274722b143f2942ba90c4f571ea6f8, type: 3}
   - {fileID: -6470460504253458178, guid: b129c8792f4523543a426cd2571a9af8, type: 3}
