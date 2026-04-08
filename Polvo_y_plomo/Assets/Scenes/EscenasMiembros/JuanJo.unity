@@ -1547,10 +1547,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 701332206798859173, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: BoomTime
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 753811012114295940, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -1591,45 +1587,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -3332666923180988721, guid: 030ed91b5eaf5aa45bcaf067ddffd3e8, type: 3}
-    - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2008846827194560464, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902324470021608073, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: FlashTime
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902324470021608073, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: FlashesUntilDisable
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8424402985830408694, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
       propertyPath: m_Name
       value: Dinamita
-      objectReference: {fileID: 0}
-    - target: {fileID: 9065238930568911990, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: Pos.x
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9065238930568911990, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: Pos.y
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9065238930568911990, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
-      propertyPath: MovingTime
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
