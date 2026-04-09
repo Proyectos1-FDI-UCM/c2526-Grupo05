@@ -5,7 +5,6 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
