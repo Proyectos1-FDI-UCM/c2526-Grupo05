@@ -27,7 +27,7 @@ public class SuziesFirstPattern : MonoBehaviour
     /// <summary>
     /// Prefab de dinamita
     /// </summary>
-    [SerializeField] GameObject DynamitePrefab = null;
+    [SerializeField] MoveToCoordsAndExplode DynamitePrefab = null;
     /// <summary>
     /// Número de acciones por ciclo. Cada ciclo acaba con un lanzamiento de dinamita, y el resto de acciones son "peeks" para disparar con la escopeta (2 veces
     /// por peek).
@@ -285,10 +285,9 @@ public class SuziesFirstPattern : MonoBehaviour
     private void SuzieDynamite()
     {
         _playerPos = LevelManager.Instance.PlayerTransform();
-        MoveToCoordsAndExplode dynamite = DynamitePrefab.GetComponent<MoveToCoordsAndExplode>();
-        if (dynamite != null)
+        if (DynamitePrefab != null)
         {
-            Instantiate(dynamite);
+            MoveToCoordsAndExplode dynamite = Instantiate(DynamitePrefab);
             dynamite.SetFinalPosition(_playerPos.position);
         }
 
