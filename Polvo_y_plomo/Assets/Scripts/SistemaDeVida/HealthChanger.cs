@@ -152,6 +152,15 @@ public class HealthChanger : MonoBehaviour
     {
         return _vida;
     }
+
+    /// <summary>
+    /// Método público que devuelve la vida maxima del GameObject. Utilizado principalmente para transicionar fases en enemigos grandes (Suzie).
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxHealth()
+    {
+        return VidaMax;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -191,6 +200,7 @@ public class HealthChanger : MonoBehaviour
             else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
             Destroy(gameObject);
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
+
         }
     }
 

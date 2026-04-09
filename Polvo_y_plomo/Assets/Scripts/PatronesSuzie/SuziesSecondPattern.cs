@@ -120,7 +120,7 @@ public class SuziesSecondPattern : MonoBehaviour
     {
         deactivatedSpawns++; // Sumamos 1 al contador de spawners apagados
 
-        Debug.Log(deactivatedSpawns);
+        Debug.Log("spawns desactivados: " + deactivatedSpawns);
 
         // Si ya se han apagado tantos spawners como hay en la lista Suzie volverá a aparecer siendo vulnerable
         if (deactivatedSpawns >= Spawns.Length)

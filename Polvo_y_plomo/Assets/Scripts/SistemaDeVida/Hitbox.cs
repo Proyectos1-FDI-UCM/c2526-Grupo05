@@ -47,6 +47,11 @@ public class Hitbox : MonoBehaviour
     private HealthChanger _healthChanger;
 
     /// <summary>
+    /// Almacena el número de golpes que recibe Suzie
+    /// </summary>
+    private SuzieHealthBar _suzieHealthBar;
+
+    /// <summary>
     /// Almacena el CanStun del padre si lo tiene.
     /// </summary>
     private CanBeStunned _canStun;
@@ -67,6 +72,7 @@ public class Hitbox : MonoBehaviour
     {
         _healthChanger = GetComponentInParent<HealthChanger>();
         _canStun = GetComponentInParent<CanBeStunned>();
+        _suzieHealthBar = GetComponentInParent<SuzieHealthBar>();
     }
 
     #endregion
@@ -86,7 +92,19 @@ public class Hitbox : MonoBehaviour
     /// <param name="DamageDone"></param>
     public void HitboxDealDamage(int DamageDone)
     {
-        if (_healthChanger != null) _healthChanger.CambiarVida(-DamageDone);
+        if (_healthChanger != null)
+        {
+            _healthChanger.CambiarVida(-DamageDone);
+
+            if (_suzieHealthBar != null)
+            {
+                _suzieHealthBar.UpdateHealthBar(_healthChanger.GetMaxHealth(), _healthChanger.GetCurrentHealth());
+                if (_healthChanger.GetCurrentHealth() == 0 && GameManager.HasInstance())
+                {
+                    GameManager.Instance.LevelEnds();
+                }
+            }   
+        }
     }
 
     /// <summary>
