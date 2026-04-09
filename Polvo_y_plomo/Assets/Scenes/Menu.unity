@@ -4563,7 +4563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 2051286069}
   DisablePanel: {fileID: 1766211609}
-  NextPanelSelectedButton: {fileID: 325322193}
+  NextPanelSelectedButton: {fileID: 2051286071}
 --- !u!1 &721910079
 GameObject:
   m_ObjectHideFlags: 0
@@ -14103,6 +14103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6671320bf02fdc4681a49e7e251b8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2051286071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 172306340767030540, guid: 22ba06ffac105ca4ab8ea7cbbf63ffdd, type: 3}
+  m_PrefabInstance: {fileID: 2051286067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2144231661
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@
 //---------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 // Añadir aquí el resto de directivas using
 
 
@@ -31,10 +32,22 @@ public class PauseMenuManager : MonoBehaviour
     private GameObject PausePanel;
 
     /// <summary>
+    /// Primer boton seleccionado en el panel de pausa. Para mando.
+    /// </summary>
+    [SerializeField]
+    private GameObject FirstButtonPausePannel;
+
+    /// <summary>
     /// Almacena el panel con toda la lógica de los settings.
     /// </summary>
     [SerializeField]
     private GameObject SettingsPanel;
+
+    /// <summary>
+    /// Primer boton seleccionado en el panel de settings. Para mando.
+    /// </summary>
+    [SerializeField]
+    private GameObject FirstButtonSettingPannel;
 
     /// <summary>
     /// Almacena el panel que se abrirá al presionar por primera vez "Volver al menu".
@@ -43,6 +56,12 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject WarningPanel;
+
+    /// <summary>
+    /// Primer boton seleccionado en el panel de warning. Para mando.
+    /// </summary>
+    [SerializeField]
+    private GameObject FirstButtonWarningPannel;
 
     /// <summary>
     /// Componente CursorBloqueado que deberá ser asignada si existe en la escena para
@@ -192,6 +211,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         OpenPauseMenuFromInput();
         _settingsOpen = false;
+        EventSystem.current.SetSelectedGameObject(FirstButtonPausePannel);
     }
 
     /// <summary>
@@ -203,6 +223,7 @@ public class PauseMenuManager : MonoBehaviour
         PausePanel.SetActive(false);
         SettingsPanel.SetActive(true);
         _settingsOpen = true;
+        EventSystem.current.SetSelectedGameObject(FirstButtonSettingPannel);
     }
 
     /// <summary>
@@ -233,6 +254,7 @@ public class PauseMenuManager : MonoBehaviour
     public void OpenWarningMenuFromButton()
     {
         WarningPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(FirstButtonWarningPannel);
     }
 
     /// <summary>
@@ -241,6 +263,7 @@ public class PauseMenuManager : MonoBehaviour
     public void CloseWarningMenuFromButton()
     {
         WarningPanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(FirstButtonPausePannel);
     }
 
     /// <summary>
@@ -270,6 +293,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         PausePanel.SetActive(true);
         SettingsPanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(FirstButtonPausePannel);
     }
     #endregion
 

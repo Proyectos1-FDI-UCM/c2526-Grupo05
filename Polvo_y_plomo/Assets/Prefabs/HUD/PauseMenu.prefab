@@ -425,7 +425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4034182600737016080
 RectTransform:
   m_ObjectHideFlags: 0
@@ -579,7 +579,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.05
+  m_fontSize: 31.45
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -713,10 +713,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 7242278485521991872}
+    m_SelectOnDown: {fileID: 2965554853637285009}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -983,10 +983,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 6789347720374072543}
+    m_SelectOnDown: {fileID: 7242278485521991872}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1144,8 +1144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 897141700652392170}
+  FirstButtonPausePannel: {fileID: 6325464582515764421}
   SettingsPanel: {fileID: 65209672152548441}
+  FirstButtonSettingPannel: {fileID: 1883406389382657617}
   WarningPanel: {fileID: 8431809129925688830}
+  FirstButtonWarningPannel: {fileID: 7635761241251472107}
   BlockCursor: {fileID: 0}
 --- !u!1 &3671846357896364954
 GameObject:
@@ -1237,12 +1240,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 5458440668791668452}
+    m_SelectOnRight: {fileID: 5458440668791668452}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1372,7 +1375,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.5
+  m_fontSize: 25.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1506,10 +1509,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 2965554853637285009}
+    m_SelectOnDown: {fileID: 6789347720374072543}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1639,12 +1642,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 5922745749069264661}
+    m_SelectOnRight: {fileID: 5922745749069264661}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1774,7 +1777,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.6
+  m_fontSize: 21.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2036,6 +2039,11 @@ PrefabInstance:
 --- !u!1 &65209672152548441 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1774620890542075652, guid: 22ba06ffac105ca4ab8ea7cbbf63ffdd, type: 3}
+  m_PrefabInstance: {fileID: 1749388514672110429}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1883406389382657617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 172306340767030540, guid: 22ba06ffac105ca4ab8ea7cbbf63ffdd, type: 3}
   m_PrefabInstance: {fileID: 1749388514672110429}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &2719006059526243058 stripped
