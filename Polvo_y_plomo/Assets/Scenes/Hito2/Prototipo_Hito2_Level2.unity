@@ -1383,6 +1383,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 141461836}
     - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
+      propertyPath: NextLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: ScoreText
       value: 
       objectReference: {fileID: 1710804002}
@@ -1805,6 +1809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
+  DisablePanel: {fileID: 0}
 --- !u!114 &426409334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2854,6 +2859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
+  DisablePanel: {fileID: 0}
 --- !u!114 &618981109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6135,6 +6141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 426409331}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1497327775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6148,6 +6155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 618981107}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1497327776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6161,6 +6169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 2006929482}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1497327777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8102,6 +8111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1067477875}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1807325191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9267,6 +9277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
+  DisablePanel: {fileID: 0}
 --- !u!114 &2006929484
 MonoBehaviour:
   m_ObjectHideFlags: 0

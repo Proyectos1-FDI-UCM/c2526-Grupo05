@@ -56,14 +56,7 @@ public class SettingsMenuController : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
-    /// <summary>
-    /// Referencia Transform al jugador
-    /// </summary>
-    private Transform _player = null;
-    /// <summary>
-    /// Cursor del jugador
-    /// </summary>
-    private playerControlledCursor _playerCursor = null;
+
     /// <summary>
     /// Tipos de resolucion  de pantalla. Se pueden añadir más
     /// </summary>
@@ -95,18 +88,17 @@ public class SettingsMenuController : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start de programación defensiva que comprueba que haya LevelManager y jugador en la escena, ambos necesarios para poder modificar la sensibilidad del cursor del juego.
+    /// Start de programación defensiva que comprueba que haya LevelManager, necesarios para poder modificar la sensibilidad del cursor del juego.
     /// </summary>
     void Start()
     {
-        if (LevelManager.HasInstance())
+        if (!LevelManager.HasInstance())
         {
-            _player = LevelManager.Instance.PlayerTransform();
-            if (_player != null) _playerCursor = _player.GetComponentInChildren<playerControlledCursor>();
-            else Debug.Log("Se ha puesto el componente \"SettingsMenuController\" en una escena sin Jugador. No se podrá tocar la sensibilidad del cursor");
+            Debug.Log("Sin LevelManager no configurado no se aplicará el ajuste de la sensibilidad del jugador en la escena");
         }
 
-        else Debug.Log("Se ha puesto el componente \"SettingsMenuController\" en una escena sin LevelManager. No se podrá tocar la sensibilidad del cursor");
+        UpdateSettingsGUI();
+        
     }
     #endregion
 
@@ -205,10 +197,9 @@ public class SettingsMenuController : MonoBehaviour
     /// </summary>
     public void LitSensIncrease()
     {
-        if (_player != null)
+        if (GameManager.HasInstance())
         {
-            float cursorSpeed = _playerCursor.GetCursorSpeed();
-            _playerCursor.SetCursorSpeed(cursorSpeed + 0.01f);
+            GameManager.Instance.LitSensIncrease();
             UpdateSettingsGUI();
         }
     }
@@ -218,10 +209,9 @@ public class SettingsMenuController : MonoBehaviour
     /// </summary>
     public void BigSensIncrease()
     {
-        if (_player != null)
+        if (GameManager.HasInstance())
         {
-            float cursorSpeed = _playerCursor.GetCursorSpeed();
-            _playerCursor.SetCursorSpeed(cursorSpeed + 0.1f);
+            GameManager.Instance.BigSensIncrease();
             UpdateSettingsGUI();
         }
     }
@@ -231,12 +221,11 @@ public class SettingsMenuController : MonoBehaviour
     /// </summary>
     public void LitSensDecrease()
     {
-        if (_player != null)
+        if (GameManager.HasInstance())
         {
-            float cursorSpeed = _playerCursor.GetCursorSpeed();
-            _playerCursor.SetCursorSpeed(cursorSpeed - 0.01f);
+            GameManager.Instance.LitSensDecrease();
             UpdateSettingsGUI();
-        } 
+        }
     }
 
     /// <summary>
@@ -244,10 +233,9 @@ public class SettingsMenuController : MonoBehaviour
     /// </summary>
     public void BigSensDecrease()
     {
-        if (_player != null)
+        if (GameManager.HasInstance())
         {
-            float cursorSpeed = _playerCursor.GetCursorSpeed();
-            _playerCursor.SetCursorSpeed(cursorSpeed - 0.1f);
+            GameManager.Instance.BigSensDecrease();
             UpdateSettingsGUI();
         }
     }
@@ -271,7 +259,7 @@ public class SettingsMenuController : MonoBehaviour
         SFXVolumeNumber.text = $"{Mathf.Round(AudioManager.Instance.GetSFXVolume() * 10)}";
         MusicVolumeNumber.text = $"{Mathf.Round(AudioManager.Instance.GetMusicVolume() * 10)}";
 
-        SensNumber.text = (_playerCursor.GetCursorSpeed() * 10f).ToString("0.0");
+        if (GameManager.HasInstance()) SensNumber.text = (GameManager.Instance.GetSens()).ToString("0.0");
     }
     #endregion
 

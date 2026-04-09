@@ -111,29 +111,27 @@ public class HealthChanger : MonoBehaviour
     public void CambiarVida(int cambio = -1)      
     {
         if (!_canRecieveDamage && cambio < 0) return;
-        if (_vida <= VidaMax)
+
+        _vida += cambio;
+        if (_vida > VidaMax) // si se da curación y se excede el máximo de vida
+            _vida = VidaMax;
+
+        // Actualizar HUD del jugador
+        if (_jugador && GameManager.HasInstance())
         {
-            _vida += cambio;
-            if (_vida > VidaMax) // si se da curación y se excede el máximo de vida
-                _vida = VidaMax;
+            GameManager.Instance.UpdateHealthHUD(_vida);
+        }
 
-            // Actualizar HUD del jugador
-            if (_jugador && GameManager.HasInstance())
-            {
-                GameManager.Instance.UpdateHealthHUD(_vida);
-            }
+        // Realizar flash de daño si existe el componente
+        if (cambio < 0 && _canFlash != null)
+        {
+            _canFlash.StartFlashes();
+        }
 
-            // Realizar flash de daño si existe el componente
-            if (cambio < 0 && _canFlash != null)
-            {
-                _canFlash.StartFlashes();
-            }
-
-            // Muerte del objeto
-            if (_vida <= 0)
-            {
-                MetodoMuerte();
-            }
+        // Muerte del objeto
+        if (_vida <= 0)
+        {
+            MetodoMuerte();
         }
     }
     /// <summary>

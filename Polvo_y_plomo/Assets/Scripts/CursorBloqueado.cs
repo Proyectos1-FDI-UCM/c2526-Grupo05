@@ -47,6 +47,14 @@ public class CursorBloqueado : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
+    /// Libera el cursor en caso de destruirse / descargarse de una escena.
+    /// </summary>
+    private void OnDestroy()
+    {
+        UnlockCursor();
+    }
+
+    /// <summary>
     /// Comienzo la partida bloqueando el cursor.
     /// Comprobamos que el InputManager existe antes de empezar.
     /// </summary>
