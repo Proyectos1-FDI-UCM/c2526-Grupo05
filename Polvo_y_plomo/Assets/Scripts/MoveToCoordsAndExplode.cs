@@ -61,6 +61,10 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// Componente a activar.
     /// </summary>
     private Explode _exp;
+
+
+
+    private float _timer = 0f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -94,7 +98,13 @@ public class MoveToCoordsAndExplode : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time > MovingTime)
+
+
+        _timer += Time.deltaTime;
+
+
+
+        if (_timer > MovingTime)
         {
             _flash.StartFlashes();
             _exp.enabled = true;
@@ -118,7 +128,7 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// <param name="v"></param>
     public void SetFinalPosition(Vector3 posGlob)
     {
-        Pos = posGlob - transform.position;
+        Pos = posGlob;
     }
     #endregion
 

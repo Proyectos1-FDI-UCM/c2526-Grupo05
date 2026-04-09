@@ -116,6 +116,7 @@ public class HealthChanger : MonoBehaviour
             _vida += cambio;
             if (_vida > VidaMax) // si se da curación y se excede el máximo de vida
                 _vida = VidaMax;
+            Debug.Log("¡Suzie ha recibido daño! Vida restante: " + _vida);
 
             // Actualizar HUD del jugador
             if (_jugador && GameManager.HasInstance())

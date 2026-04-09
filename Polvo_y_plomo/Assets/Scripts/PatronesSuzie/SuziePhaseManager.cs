@@ -183,6 +183,7 @@ public class SuziePhaseManager : MonoBehaviour
     /// </summary>
     private void EjecutarPatron2()
     {
+        Debug.Log("Patron2");
         _patron1.enabled = false;
         _patron3.enabled = false;
         _patron2.enabled = true;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2292199746581496351}
   - component: {fileID: 5036081665872762522}
   - component: {fileID: 3571823559236605224}
-  m_Layer: 3
+  m_Layer: 14
   m_Name: PlayerHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 6168801973893669910}
   - component: {fileID: 2496806042617715599}
   - component: {fileID: 891348008343334330}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Suzie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6d6089184a0204a82aefebb3e2ac45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DynamitePrefab: {fileID: 0}
   ActionsPerCycle: 3
   HealthLossToHide: 2
   DistanceToPeekingPos: 4
@@ -428,6 +429,7 @@ MonoBehaviour:
   player: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
   Contador1: 0.5
   Contador2: 2
+  DynamitePrefab: {fileID: 8424402985830408694, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
 --- !u!1001 &7980009603341665458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -476,9 +478,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1893368117694355804, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3270429832751051296, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: m_Name
       value: EscopetaFather
+      objectReference: {fileID: 0}
+    - target: {fileID: 3270429832751051296, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4422352495493863888, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: Object

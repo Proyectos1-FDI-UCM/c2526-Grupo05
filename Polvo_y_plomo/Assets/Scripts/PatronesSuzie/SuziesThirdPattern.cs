@@ -27,10 +27,10 @@ public class SuziesThirdPattern : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
-    /// Una lista que almacenará el número de barriles que habrá en escena
+    /// Un array que almacenará el número de barriles que habrá en escena
     /// </summary>
-    [SerializeField] 
-    List<GameObject> Barrels;
+    [SerializeField]
+    GameObject[] Barrels;
 
     /// <summary>
     /// Variable para determinar a donde se lanzarán las dinamitas
@@ -49,6 +49,12 @@ public class SuziesThirdPattern : MonoBehaviour
     /// </summary>
     [SerializeField]
     float Contador2 = 2f;
+
+    /// <summary>
+    /// Prefab de la dinamita que lanzará Suzie
+    /// </summary>
+    [SerializeField]
+    private GameObject DynamitePrefab;
 
     #endregion
 
@@ -111,34 +117,37 @@ public class SuziesThirdPattern : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     /// <summary>
-    /// Localizaremos los objetos con el tag de barril y los guardaremos en una lista
+    /// Localizaremos los objetos con el tag de barril y los guardaremos en un array
     /// Luego dependiendo de si hay más de una cobertura o no, determianremos a que barriles aleatorios y distintos lanzaremos la dinamita
     /// Si no hay más coberturas esa dinamita ira a la posición del jugador
     /// Se marcaran con booleanos cada situación para posteriormente el tiempo entre lanzamientos y se lanzará la primera dinamita
     /// </summary>
     public void IniciarPatron()
     {
+        _manyBarrels = false;
+        _lessThanTwo = false;
+
         player = LevelManager.Instance.PlayerTransform();
 
-        Barrels = GameObject.FindGameObjectsWithTag("Barrel").ToList<GameObject>();
+        Barrels = GameObject.FindGameObjectsWithTag("Barrel");
 
-        Debug.Log("Suzie ha encontrado " + Barrels.Count + " barriles.");
+        Debug.Log("Suzie ha encontrado " + Barrels.Length + " barriles.");
 
-        if (Barrels.Count >= 2)
+        if (Barrels.Length >= 2)
         {
             _manyBarrels = true;
 
-            int r1 = UnityEngine.Random.Range(0, Barrels.Count);
+            int r1 = UnityEngine.Random.Range(0, Barrels.Length);
             int r2 = r1;
             while (r2 == r1)
             {
-                r2 = UnityEngine.Random.Range(0, Barrels.Count);
+                r2 = UnityEngine.Random.Range(0, Barrels.Length);
             }
 
             _firstTarget = Barrels[r1].transform.position;
             _secondTarget = Barrels[r2].transform.position;
         }
-        else if (Barrels.Count == 1)
+        else if (Barrels.Length == 1)
         {
             _firstTarget = Barrels[0].transform.position;
         }
@@ -182,7 +191,17 @@ public class SuziesThirdPattern : MonoBehaviour
     /// </summary>
     private void ThrowGrenadeTo(Vector3 targetPos)
     {
-        // Lanzar dinamita (Juanjo trabaja)
+        if (DynamitePrefab != null)
+        {
+            GameObject dynamite = Instantiate(DynamitePrefab, transform.position, Quaternion.identity);
+
+            MoveToCoordsAndExplode moveScript = dynamite.GetComponent<MoveToCoordsAndExplode>();
+
+            if (moveScript != null)
+            {
+                moveScript.SetFinalPosition(targetPos);
+            }
+        }
     }
 
     /// <summary>

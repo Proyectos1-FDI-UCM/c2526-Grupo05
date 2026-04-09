@@ -285,18 +285,21 @@ public class SuziesFirstPattern : MonoBehaviour
     private void SuzieDynamite()
     {
         _playerPos = LevelManager.Instance.PlayerTransform();
-        MoveToCoordsAndExplode dynamite = DynamitePrefab.GetComponent<MoveToCoordsAndExplode>();
-        if (dynamite != null)
+
+        if (DynamitePrefab != null)
         {
-            Instantiate(dynamite);
-            dynamite.SetFinalPosition(_playerPos.position);
+            MoveToCoordsAndExplode dynamite = Instantiate(DynamitePrefab, transform.position, Quaternion.identity).GetComponent<MoveToCoordsAndExplode>();
+
+            if (dynamite != null)
+            {
+                dynamite.SetFinalPosition(_playerPos.position);
+            }
         }
 
         _lastPeekingMoment = Time.time;
         _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
 
         GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
-        this.enabled = false;
     }
 
     /// <summary>

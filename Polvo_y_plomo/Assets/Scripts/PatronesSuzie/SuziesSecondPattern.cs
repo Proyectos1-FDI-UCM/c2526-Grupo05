@@ -30,15 +30,16 @@ public class SuziesSecondPattern : MonoBehaviour
     /// <summary>
     /// Variable que sirve para poder bloquear y desbloquear el daño cuando el jefe este escondido
     /// </summary>
-    [SerializeField] 
+    [SerializeField]
     private HealthChanger HealthManager;
 
     /// <summary>
-    /// Variable que sirve llevar tener una lista de los enemigos que se llamarán
+    /// Array de los enemigos que conforman este patrón.
+    /// Cambiado de List a Array por eficiencia de memoria.
     /// </summary>
-    [SerializeField] 
-    private List<EnemySpawner> Spawns;
-    
+    [SerializeField]
+    private EnemySpawner[] Spawns;
+
 
     [SerializeField]
     [Tooltip("El spawn inicial que activa el resto")]
@@ -80,9 +81,9 @@ public class SuziesSecondPattern : MonoBehaviour
     /// </summary>
     void Start()
     {
-        foreach (var spawn in Spawns)
+        for (int i = 0; i < Spawns.Length; i++)
         {
-            spawn.SetBoss(this);
+            if (Spawns[i] != null) Spawns[i].SetBoss(this);
         }
     }
     #endregion
@@ -100,12 +101,13 @@ public class SuziesSecondPattern : MonoBehaviour
     /// </summary>
     public void IniciarPatron()
     {
-        Whistle.Play();
+        Debug.Log("Patron2");
+        if (Whistle != null) Whistle.Play();
         Hide();
 
         if (Pattern2Spawner != null)
         {
-            Pattern2Spawner.gameObject.SetActive(true);
+            Pattern2Spawner.enabled = true;
         }
     }
 
@@ -115,14 +117,17 @@ public class SuziesSecondPattern : MonoBehaviour
     public void DeactivateSpawnWarning()
     {
         deactivatedSpawns++; // Sumamos 1 al contador de spawners apagados
-
         // Si ya se han apagado tantos spawners como hay en la lista Suzie volverá a aparecer siendo vulnerable
-        if (deactivatedSpawns >= Spawns.Count)
+        if (deactivatedSpawns >= Spawns.Length)
         {
-            UnHide(); 
+            UnHide();
             deactivatedSpawns = 0; // Reseteamos el contador para la próxima vez
 
-            GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
+            SuziePhaseManager phaseManager = GetComponent<SuziePhaseManager>();
+            if (phaseManager != null)
+            {
+                phaseManager.ReportarAtaqueTerminado();
+            }
         }
     }
 
@@ -155,4 +160,4 @@ public class SuziesSecondPattern : MonoBehaviour
     #endregion
 
 } // class SuziesSecondPattern 
-// namespace
+  // namespace
