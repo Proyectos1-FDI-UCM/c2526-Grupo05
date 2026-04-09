@@ -854,7 +854,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: LitSensDecrease
         m_Mode: 1
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: PrevFixedResolution
         m_Mode: 1
@@ -1382,6 +1382,10 @@ PrefabInstance:
       propertyPath: LevelBar
       value: 
       objectReference: {fileID: 141461836}
+    - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
+      propertyPath: NextLevel
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: ScoreText
       value: 
@@ -1789,7 +1793,7 @@ RectTransform:
   - {fileID: 1843814000}
   - {fileID: 1671884499}
   - {fileID: 1367139677}
-  m_Father: {fileID: 482470870}
+  m_Father: {fileID: 1765635803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1809,6 +1813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
+  DisablePanel: {fileID: 0}
 --- !u!114 &426409334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2017,34 +2022,23 @@ PrefabInstance:
     - {fileID: 7435126336521459647, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
     - {fileID: 6731795106301839185, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5306088597474573547, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 824656110648360731, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1497327779}
-    - targetCorrespondingSourceObject: {fileID: 5306088597474573547, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 824656110648360731, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2006929486}
-    - targetCorrespondingSourceObject: {fileID: 5306088597474573547, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 824656110648360731, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
       insertIndex: -1
       addedObject: {fileID: 618981111}
-    - targetCorrespondingSourceObject: {fileID: 5306088597474573547, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 824656110648360731, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
       insertIndex: -1
       addedObject: {fileID: 426409332}
-    - targetCorrespondingSourceObject: {fileID: 5306088597474573547, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 824656110648360731, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
       insertIndex: -1
       addedObject: {fileID: 777888070}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8629894525174097063, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1807325190}
-    - targetCorrespondingSourceObject: {fileID: 8629894525174097063, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1807325191}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
---- !u!224 &482470870 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5306088597474573547, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
-  m_PrefabInstance: {fileID: 482470869}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &486326539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2156,7 +2150,7 @@ PrefabInstance:
     - target: {fileID: 6168801973893669910, guid: 1d42dab28abf8054a8e4aa8e4ff618aa, type: 3}
       propertyPath: DynamitePrefab
       value: 
-      objectReference: {fileID: 8424402985830408694, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
+      objectReference: {fileID: 9065238930568911990, guid: 6a75dbcb9919ecb40b708d15b22d3168, type: 3}
     - target: {fileID: 6794519440049798451, guid: 1d42dab28abf8054a8e4aa8e4ff618aa, type: 3}
       propertyPath: m_Name
       value: Suzie
@@ -2286,7 +2280,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: NextPixelByPixelResolution
         m_Mode: 1
@@ -2774,6 +2768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
+  DisablePanel: {fileID: 0}
 --- !u!114 &618981109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2833,7 +2828,7 @@ RectTransform:
   - {fileID: 277734082}
   - {fileID: 1109357123}
   - {fileID: 869904493}
-  m_Father: {fileID: 482470870}
+  m_Father: {fileID: 1765635803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2980,7 +2975,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: IncreaseSFXVolume
         m_Mode: 1
@@ -3048,7 +3043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &777888070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3062,7 +3057,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1995034153}
-  m_Father: {fileID: 482470870}
+  m_Father: {fileID: 1765635803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3113,7 +3108,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325190}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ChangePanel, Assembly-CSharp
         m_MethodName: ChangePanels
         m_Mode: 1
@@ -3796,11 +3791,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011238554}
   m_CullTransparentMesh: 1
---- !u!1 &1067477875 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 897141700652392170, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
-  m_PrefabInstance: {fileID: 482470869}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1095962987
 GameObject:
   m_ObjectHideFlags: 0
@@ -4256,7 +4246,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: IncreaseMusicVolume
         m_Mode: 1
@@ -5893,7 +5883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1497327774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5907,6 +5897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 426409331}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1497327775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5920,6 +5911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 618981107}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1497327776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5933,6 +5925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 2006929482}
+  DisablePanel: {fileID: 0}
 --- !u!114 &1497327777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5986,7 +5979,7 @@ RectTransform:
   - {fileID: 1313427411}
   - {fileID: 2043076201}
   - {fileID: 1972323153}
-  m_Father: {fileID: 482470870}
+  m_Father: {fileID: 1765635803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6751,7 +6744,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: DecreaseSFXVolume
         m_Mode: 1
@@ -6884,7 +6877,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: BigSensIncrease
         m_Mode: 1
@@ -7450,7 +7443,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: NextFixedResolution
         m_Mode: 1
@@ -7500,6 +7493,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761901263}
   m_CullTransparentMesh: 1
+--- !u!224 &1765635803 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 824656110648360731, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+  m_PrefabInstance: {fileID: 482470869}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1782103846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7772,41 +7770,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804946675}
   m_CullTransparentMesh: 1
---- !u!1 &1807325187 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8629894525174097063, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
-  m_PrefabInstance: {fileID: 482470869}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1807325190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807325187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6671320bf02fdc4681a49e7e251b8c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActivatePanel: {fileID: 1067477875}
---- !u!114 &1807325191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807325187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e76a80814bcfce545af14f866b7a94f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ResolutionsText: {fileID: 1181366600}
-  PixelsText: {fileID: 272821970}
-  SFXVolumeNumber: {fileID: 1011238556}
-  MusicVolumeNumber: {fileID: 277734083}
-  SensNumber: {fileID: 1422876224}
 --- !u!1 &1843813999
 GameObject:
   m_ObjectHideFlags: 0
@@ -7890,7 +7853,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: LitSensIncrease
         m_Mode: 1
@@ -8221,7 +8184,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1917781190}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Barricada
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8719,7 +8682,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -8732,7 +8695,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -8955,6 +8918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
+  DisablePanel: {fileID: 0}
 --- !u!114 &2006929484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9014,7 +8978,7 @@ RectTransform:
   - {fileID: 272821969}
   - {fileID: 560352402}
   - {fileID: 1559093106}
-  m_Father: {fileID: 482470870}
+  m_Father: {fileID: 1765635803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9374,7 +9338,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: PrevPixelByPixelResolution
         m_Mode: 1
@@ -9640,7 +9604,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: BigSensDecrease
         m_Mode: 1
@@ -9970,7 +9934,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1807325191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SettingsMenuController, Assembly-CSharp
         m_MethodName: DecreaseMusicVolume
         m_Mode: 1

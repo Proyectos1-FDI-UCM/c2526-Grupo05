@@ -30,6 +30,7 @@ public class playerControlledCursor : MonoBehaviour
     /// <summary>
     /// Multiplica la velocidad de movimiento del cursor al moverse el mouse.
     /// No especifica su velocidad concreta puesto que esta puede variar según el input del usuario (sensibilidad, por ejemplo).
+    /// Se usa del rango [0, 2].
     /// </summary>
     [SerializeField]
     private float CursorSpeedMultiplier = 1f;
@@ -119,7 +120,8 @@ public class playerControlledCursor : MonoBehaviour
     /// <param name="newSpeed"></param>
     public void SetCursorSpeed(float newSpeed)
     {
-        if (newSpeed > 0 && newSpeed <= 1f) CursorSpeedMultiplier = newSpeed;
+        newSpeed = newSpeed/5; // el parámetro se recibe con la codificación [0, 10] -> lo pasamos a [0, 2]
+        if (newSpeed > 0 && newSpeed <= 2f) CursorSpeedMultiplier = newSpeed;
     }
     #endregion
     

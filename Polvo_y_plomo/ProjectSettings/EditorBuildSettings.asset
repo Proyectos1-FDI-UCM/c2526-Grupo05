@@ -9,14 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: b13e49dfc910045ba80034544cb5011b
   - enabled: 1
-    path: Assets/Scenes/Prototipo_Hito_1.unity
-    guid: 30199974954fb294889bff995dca1880
+    path: Assets/Scenes/Hito2/Prototipo_Hito2_Cinem1.unity
+    guid: 52845140afb064c4a9e4aaa8251911f4
   - enabled: 1
-    path: Assets/Scenes/Configuracion.unity
-    guid: 90de195676da2654da9808ea7b4ec883
-  - enabled: 0
-    path: Assets/Scenes/Creditos.unity
-    guid: 1bc335f9d8e4049459f38a1afd45e22a
+    path: Assets/Scenes/Hito2/Prototipo_Hito2_Level1.unity
+    guid: 6d2267974703d50449d028282606f471
+  - enabled: 1
+    path: Assets/Scenes/Hito2/Prototipo_Hito2_Cinem2.unity
+    guid: 1db1a5f1a0b372547b56128e9add63f6
+  - enabled: 1
+    path: Assets/Scenes/Hito2/Prototipo_Hito2_Level2.unity
+    guid: 0f5177fd836c1514a95e3b0c89c36387
   - enabled: 1
     path: Assets/Scenes/CreditsScene.unity
     guid: 6041e9d914880a34fb2003350d646491
@@ -62,6 +65,54 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Pruebas/Sprint2/Test_EnemyMeleeAttack.unity
     guid: d5466de5546cef442b44d4724ed77c2c
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint3/Test_EnemyShooting.unity
+    guid: 73178b9b1cfa63645921ba7bc0c4ccdd
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint3/Test_ImageFill.unity
+    guid: 460729491d116a148b655cf77abf7122
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint3/Test_PuntajeRacha.unity
+    guid: 2771d171d784f1d4181da30cc843acb8
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint3/Test_DeathCounter.unity
+    guid: 16e64cb39a2cce24b9dde7b456af148a
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint3/Test_SlowShot.unity
+    guid: a570007252ce934488e48ebef047da82
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint4/Test_AudioManager.unity
+    guid: 7358f2dfb72457b46a8ffdc3be163fb2
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint4/Test_CanFlash.unity
+    guid: 7e4d251736ed92b4dbc9cebb50497719
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint4/Test_Cinematica.unity
+    guid: e1b592ccc8c889245af330a4a59abce2
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint4/Test_Stun.unity
+    guid: 0047ee0401322ed46a0f807c35abfc21
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint4/Test_PickupVida.unity
+    guid: f2eda247982634047a52d9f30f11d357
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint4/Test_Victoria.unity
+    guid: 00a390cbe42c65844a645880265b3a98
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint5/Test_PauseMenu.unity
+    guid: 8535d5720cbc0184e8a0c0b6409b2b79
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint5/Test_SpawnAnim.unity
+    guid: a4d5e9e49ce08d447971503988ed7442
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint5/Test_Configuracion.unity
+    guid: 90de195676da2654da9808ea7b4ec883
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint6/TestEscopeta.unity
+    guid: 0efb259162b83c84e8f88f58d76d90c8
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint7/TestSuzie.unity
+    guid: 59f847777bc7ac14e86e624495414011
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

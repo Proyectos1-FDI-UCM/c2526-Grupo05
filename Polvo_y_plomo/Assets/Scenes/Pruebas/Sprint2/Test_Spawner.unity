@@ -227,12 +227,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnList:
   - EnemySpawnPrefab: {fileID: 2587315499324175970, guid: 99489ca00f2cfe442bf041d2a6cd5caf, type: 3}
+    SpawnID: 0
+    SpawnOffset: {x: 0, y: 0, z: 0}
     SpawnDelay: 2
   - EnemySpawnPrefab: {fileID: 2587315499324175970, guid: 99489ca00f2cfe442bf041d2a6cd5caf, type: 3}
+    SpawnID: 0
+    SpawnOffset: {x: 0, y: 0, z: 0}
     SpawnDelay: 1
   - EnemySpawnPrefab: {fileID: 2587315499324175970, guid: 99489ca00f2cfe442bf041d2a6cd5caf, type: 3}
+    SpawnID: 0
+    SpawnOffset: {x: 0, y: 0, z: 0}
     SpawnDelay: 1
   ActivateSpawnersWhenDone: []
+  LastSpawner: 0
 --- !u!212 &351137023
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1316,6 +1323,10 @@ PrefabInstance:
     - target: {fileID: 4012303769868029963, guid: 390bec2c501cc1e49a55dd70a1933c40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4805159277911452465, guid: 390bec2c501cc1e49a55dd70a1933c40, type: 3}
+      propertyPath: SpawnList.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4805159277911452465, guid: 390bec2c501cc1e49a55dd70a1933c40, type: 3}
       propertyPath: 'ActivateSpawnersWhenDone.Array.data[0]'

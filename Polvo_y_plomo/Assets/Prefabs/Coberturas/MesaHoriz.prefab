@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8503387954466488600}
   - component: {fileID: 7557959934622696327}
   - component: {fileID: 2828047609703886284}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,8 @@ GameObject:
   - component: {fileID: 3737082922885351637}
   - component: {fileID: 1868790855747279185}
   - component: {fileID: 6018414895681912387}
-  m_Layer: 0
+  - component: {fileID: 7501476737882707086}
+  m_Layer: 10
   m_Name: MesaHoriz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,3 +209,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cadaveres:
   - {fileID: 7155229638782507219, guid: 092a210380e3f3a489af41a28ae1a0a8, type: 3}
+--- !u!70 &7501476737882707086
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777244098022361363}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2.5, y: 1.5}
+  m_Direction: 1

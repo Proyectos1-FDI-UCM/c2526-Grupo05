@@ -78,6 +78,7 @@ public class SuziePhaseManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        Debug.Log("Apagando todos los patrones");
         if (_patron1 != null) _patron1.enabled = false;
         if (_patron2 != null) _patron2.enabled = false;
         if (_patron3 != null) _patron3.enabled = false;
@@ -114,6 +115,7 @@ public class SuziePhaseManager : MonoBehaviour
         _atacando = false;
         _indiceSecuencia++;
         SiguienteAtaque();
+        Debug.Log("Se terminó el ataque, iniciando siguiente");
     }
 
     #endregion
@@ -138,16 +140,33 @@ public class SuziePhaseManager : MonoBehaviour
         {
             if (_indiceSecuencia > 2) _indiceSecuencia = 0; // Reiniciar bucle
 
-            if (_indiceSecuencia == 0 || _indiceSecuencia == 1) EjecutarPatron1();
-            else if (_indiceSecuencia == 2) EjecutarPatron2();
+            if (_indiceSecuencia == 0 || _indiceSecuencia == 1)
+            {
+                Debug.Log("Ejecutando el patrón 1");
+                EjecutarPatron1();
+            }
+            else if (_indiceSecuencia == 2)
+            { 
+                Debug.Log("Ejecutando el patrón 2");
+                EjecutarPatron2();
+            }
         }
         else if (_faseActual == 2)
         {
             if (_indiceSecuencia > 3) _indiceSecuencia = 0; // Reiniciar bucle
 
-            if (_indiceSecuencia == 0) EjecutarPatron3();
-            else if (_indiceSecuencia == 1 || _indiceSecuencia == 2) EjecutarPatron1();
-            else if (_indiceSecuencia == 3) EjecutarPatron2();
+            if (_indiceSecuencia == 0)
+            {
+                EjecutarPatron3();
+            }
+            else if (_indiceSecuencia == 1 || _indiceSecuencia == 2)
+            {
+                EjecutarPatron1();
+            }
+            else if (_indiceSecuencia == 3)
+            {
+                EjecutarPatron2();
+            }
         }
     }
 

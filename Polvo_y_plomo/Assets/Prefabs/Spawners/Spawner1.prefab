@@ -113,10 +113,5 @@ MonoBehaviour:
     SpawnID: 0
     SpawnOffset: {x: 0, y: 0, z: 0}
     SpawnDelay: 1
-  - EnemySpawnPrefab: {fileID: 3533764706800044185, guid: 2100ea0edb0b72d4aa0ccf31bb316496, type: 3}
-    SpawnID: 0
-    SpawnOffset: {x: 0, y: 0, z: 0}
-    SpawnDelay: 1
-  ActivateSpawnersWhenDone:
-  - {fileID: 0}
+  ActivateSpawnersWhenDone: []
   LastSpawner: 0

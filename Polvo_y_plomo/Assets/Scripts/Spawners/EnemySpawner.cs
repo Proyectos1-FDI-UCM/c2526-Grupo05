@@ -101,7 +101,8 @@ public class EnemySpawner : MonoBehaviour
     /// <summary>
     /// Almacena una referencia al script principal de Suzie
     /// </summary>
-    private SuziesSecondPattern _boss;
+    private SuziesSecondPattern _boss; 
+
 
     #endregion
 
@@ -119,7 +120,8 @@ public class EnemySpawner : MonoBehaviour
     private void OnEnable()
     {
         _indEnemigo = 0;
-        if (SpawnList.Length != 0) _t = SpawnList[_indEnemigo].SpawnDelay;  
+        if (SpawnList.Length != 0) _t = SpawnList[_indEnemigo].SpawnDelay;
+        else this.enabled = false;
     }
 
     /// <summary>
@@ -173,6 +175,13 @@ public class EnemySpawner : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Método público para asignar la referencia del jefe a este spawner.
+    /// </summary>
+    public void SetBoss(SuziesSecondPattern jefe)
+    {
+        _boss = jefe;
+    }
 
     #endregion
 
@@ -183,13 +192,7 @@ public class EnemySpawner : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    /// <summary>
-    /// Método público para asignar la referencia del jefe a este spawner.
-    /// </summary>
-    public void SetBoss(SuziesSecondPattern jefe)
-    {
-        _boss = jefe;
-    }
+
     #endregion
 
 } // class EnemySpawner 

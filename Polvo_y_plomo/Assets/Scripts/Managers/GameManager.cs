@@ -6,14 +6,15 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
-using System.Text.RegularExpressions;
-using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
-using System.Runtime.CompilerServices;
-using TMPro.EditorUtilities;
-using TMPro;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using TMPro;
+using TMPro.EditorUtilities;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 /// <summary>
 /// Componente responsable de la gestión global del juego. Es un singleton
 /// que orquesta el funcionamiento general de la aplicación,
@@ -65,7 +66,8 @@ using System.IO;
 /// _slowMultiplier para simular la relantización del tiempo.
 /// En caso de que no exista Instance, usan 1.
 /// 
-/// 
+/// +++
+/// Funcionalidad para almacenar la sensibilidad ajustada por el jugador.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -189,11 +191,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Highscore")]
 
+    /// <summary>
+    /// Texto en el que se escribe el número del highscore.
+    /// </summary>
     [SerializeField]
-    TextMeshProUGUI highScoreTextUI;
-
-    [SerializeField]
-    int highScore;
+    private TextMeshProUGUI highScoreTextUI;
 
     #endregion
 
@@ -257,7 +259,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private bool _playerDied = false;
 
+    /// <summary>
+    /// Almacena el highscore del jugador, leido de un archivo.
+    /// </summary>
+    private int _highScore = 0;
 
+    /// <summary>
+    /// Almacena el componente de control del jugador para cambiarle
+    /// la sensibilidad con los settings
+    /// </summary>
+    private playerControlledCursor _playerCursor;
+
+    /// <summary>
+    /// Almacena la sensibilidad del jugador, en un intervalo del [0,10].
+    /// </summary>
+    private float _cursorSensibility = 5f;
 
     #endregion
 
@@ -276,12 +292,11 @@ public class GameManager : MonoBehaviour
             // Queremos sobrevivir a cambios de escena.
             DontDestroyOnLoad(this.gameObject);
             _instance = this;
-            Init();
         }
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI);
         }
     }
 
@@ -316,6 +331,7 @@ public class GameManager : MonoBehaviour
         {
             // Se desactiva el componente para no usar el Update() hasta que sea necesario un contador.
             this.enabled = false;
+            Init();
         } // if-else somos instancia nueva o no.
         if (SceneManager.GetActiveScene().name == "Menu") LoadScore();
     }
@@ -434,7 +450,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Respawn()
     {
-        Debug.Log("respawn");
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
@@ -552,7 +567,10 @@ public class GameManager : MonoBehaviour
     /// <param name="fillAmmount"></param>
     public void UpdateLevelBar(float fillAmmount)
     {
-        if (LevelBar != null) LevelBar.UpdateImageFillAmmount(fillAmmount);
+        if (LevelBar != null)
+        {
+            LevelBar.UpdateImageFillAmmount(fillAmmount);
+        }
     }
 
     /// <summary>
@@ -593,7 +611,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
         ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier,
-        ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic)
+        ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
+        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI)
     {
         this.FadeInBlackScreen = FadeInBlackScreen;
         this.FadeOutBlackScreen = FadeOutBlackScreen;
@@ -608,6 +627,10 @@ public class GameManager : MonoBehaviour
         this.StreakBar = StreakBar;
         this.LevelBar = LevelBar;
         this.VictoryMusic = VictoryMusic;
+        this.NextLevel = NextLevel;
+        this.TiempoEsperaRespawn = TiempoEsperaRespawn;
+        this.TiempoEsperaSiguienteNivel = TiempoEsperaSiguienteNivel;
+        this.highScoreTextUI = highScoreTextUI;
     }
 
     /// <summary>
@@ -632,6 +655,12 @@ public class GameManager : MonoBehaviour
         if (FadeOutBlackScreen != null) FadeOutBlackScreen.enabled = true;
 
         if (InputManager.HasInstance()) InputManager.Instance.ActivarInput();
+
+        Init();
+        if (_playerCursor != null)
+        {
+            _playerCursor.SetCursorSpeed(_cursorSensibility);
+        }
     }
 
     /// <summary>
@@ -717,6 +746,71 @@ public class GameManager : MonoBehaviour
     }
     // NOTA: Los niveles de habilida del jugador se actualizan también en AnEnemyDied(), en la región de Transferencia de información.
     #endregion
+
+    #region Funcionalidad settings
+
+    /// <summary>
+    /// Método público para aumentar (en 0.01) la sensibilidad del cursor del jugador.
+    /// </summary>
+    public void LitSensIncrease()
+    {
+        _cursorSensibility += 0.1f;
+        if (_cursorSensibility > 10f) _cursorSensibility = 10f;
+        if (_playerCursor != null)
+        {
+            _playerCursor.SetCursorSpeed(_cursorSensibility);
+        }
+    }
+
+    /// <summary>
+    /// Método público para aumentar (en 0.1) la sensibilidad del cursor del jugador.
+    /// </summary>
+    public void BigSensIncrease()
+    {
+        _cursorSensibility += 1f;
+        if (_cursorSensibility > 10f) _cursorSensibility = 10f;
+        if (_playerCursor != null)
+        {
+            _playerCursor.SetCursorSpeed(_cursorSensibility);
+        }
+    }
+
+    /// <summary>
+    /// Método público para disminuir (en 0.01) la sensibilidad del cursor del jugador.
+    /// </summary>
+    public void LitSensDecrease()
+    {
+        _cursorSensibility -= 0.1f;
+        if (_cursorSensibility < 0) _cursorSensibility = 0;
+        if (_playerCursor != null)
+        {
+            _playerCursor.SetCursorSpeed(_cursorSensibility);
+        }
+    }
+
+    /// <summary>
+    /// Método público para disminuir (en 0.1) la sensibilidad del cursor del jugador.
+    /// </summary>
+    public void BigSensDecrease()
+    {
+        _cursorSensibility -= 1f;
+        if (_cursorSensibility < 0) _cursorSensibility = 0;
+        if (_playerCursor != null)
+        {
+            _playerCursor.SetCursorSpeed(_cursorSensibility);
+        }
+    }
+
+    /// <summary>
+    /// Método para leer la sensibilidad actual para el cursor del GameManager.
+    /// </summary>
+    /// <returns></returns>
+    public float GetSens()
+    {
+        return _cursorSensibility;
+    }
+
+    #endregion
     public void SaveScore(int score)
     {
         string data = score.ToString();
@@ -743,10 +837,18 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Dispara la inicialización.
+    /// Se llama desde el Start() y cada vez que se carga una escena nueva.
     /// </summary>
     private void Init()
     {
-
+        if (LevelManager.HasInstance())
+        {
+            Transform _player = LevelManager.Instance.PlayerTransform();
+            if (_player != null)
+            {
+                _playerCursor = _player.GetComponentInChildren<playerControlledCursor>();
+            }
+        }
     }
 
     /// <summary>
@@ -761,7 +863,11 @@ public class GameManager : MonoBehaviour
     private void LoadScore()
     {
 
-        if (highScoreTextUI == null) return;
+        if (highScoreTextUI == null)
+        {
+            highScoreTextUI.text = "0";
+            return;
+        }
 
         string path = Application.persistentDataPath + "/Score.txt";
 
@@ -771,8 +877,8 @@ public class GameManager : MonoBehaviour
             string file = File.ReadAllText(path);
 
 
-            highScoreTextUI.text = "Highscore: " + file;
-            highScore = int.Parse(file);
+            highScoreTextUI.text = file;
+            _highScore = int.Parse(file);
 
         }
         //Ponerla en la UI

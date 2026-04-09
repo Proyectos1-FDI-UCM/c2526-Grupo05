@@ -29,6 +29,14 @@ public class ChangePanel : MonoBehaviour
     [SerializeField]
     private GameObject ActivatePanel;
 
+    /// <summary>
+    /// Panel que será desactivado (para cambiarlo por el activo)
+    /// Si no se asigna (se deja null) se asume que el componente se situa sobre
+    /// el panel a desactivar y el mismo gameobject será el desactivado.
+    /// </summary>
+    [SerializeField]
+    private GameObject DisablePanel;
+
     #endregion
     
     // ---- ATRIBUTOS PRIVADOS ----
@@ -65,7 +73,8 @@ public class ChangePanel : MonoBehaviour
     public void ChangePanels()
     {
         ActivatePanel.SetActive(true);
-        gameObject.SetActive(false);
+        if (DisablePanel == null) gameObject.SetActive(false);
+        else DisablePanel.SetActive(false);
     }
 
     #endregion

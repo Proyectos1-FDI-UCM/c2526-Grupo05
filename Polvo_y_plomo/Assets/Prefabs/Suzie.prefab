@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2292199746581496351}
   - component: {fileID: 5036081665872762522}
   - component: {fileID: 3571823559236605224}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: PlayerHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,14 +102,13 @@ GameObject:
   - component: {fileID: 4373482155475448269}
   - component: {fileID: 5550585093572592077}
   - component: {fileID: 5489619501543049800}
-  - component: {fileID: 166880489185979541}
   - component: {fileID: 1474871151810355398}
   - component: {fileID: -826618973651338904}
   - component: {fileID: 818661390719619333}
   - component: {fileID: 6168801973893669910}
   - component: {fileID: 2496806042617715599}
   - component: {fileID: 891348008343334330}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Suzie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,33 +224,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!50 &166880489185979541
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6794519440049798451}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &1474871151810355398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1893368117694355804, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: m_Layer
-      value: 14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3270429832751051296, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: m_Name
@@ -488,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3270429832751051296, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: m_Layer
-      value: 14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4422352495493863888, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: Object
