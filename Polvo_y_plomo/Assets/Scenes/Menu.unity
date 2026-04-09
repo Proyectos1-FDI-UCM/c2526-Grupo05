@@ -14065,6 +14065,10 @@ PrefabInstance:
       propertyPath: ActivatePanel
       value: 
       objectReference: {fileID: 1766211609}
+    - target: {fileID: 4466667097008613807, guid: 22ba06ffac105ca4ab8ea7cbbf63ffdd, type: 3}
+      propertyPath: NextPanelSelectedButton
+      value: 
+      objectReference: {fileID: 325322193}
     - target: {fileID: 9056984840823415509, guid: 22ba06ffac105ca4ab8ea7cbbf63ffdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
