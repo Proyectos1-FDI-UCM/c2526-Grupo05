@@ -6,6 +6,7 @@
 //---------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 // Añadir aquí el resto de directivas using
 
 
@@ -36,6 +37,13 @@ public class ChangePanel : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject DisablePanel;
+
+    /// <summary>
+    /// Se le ha de asignar el boton que estará seleccionado automaticamente
+    /// al abrirse el otro panel (para mando)
+    /// </summary>
+    [SerializeField]
+    private GameObject NextPanelSelectedButton;
 
     #endregion
     
@@ -75,6 +83,8 @@ public class ChangePanel : MonoBehaviour
         ActivatePanel.SetActive(true);
         if (DisablePanel == null) gameObject.SetActive(false);
         else DisablePanel.SetActive(false);
+
+        if (NextPanelSelectedButton != null) EventSystem.current.SetSelectedGameObject(NextPanelSelectedButton);
     }
 
     #endregion

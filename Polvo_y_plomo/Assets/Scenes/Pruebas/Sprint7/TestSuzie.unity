@@ -2329,6 +2329,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5036081665872762522, guid: 1d42dab28abf8054a8e4aa8e4ff618aa, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036081665872762522, guid: 1d42dab28abf8054a8e4aa8e4ff618aa, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6168801973893669910, guid: 1d42dab28abf8054a8e4aa8e4ff618aa, type: 3}
       propertyPath: DynamitePrefab
       value: 
