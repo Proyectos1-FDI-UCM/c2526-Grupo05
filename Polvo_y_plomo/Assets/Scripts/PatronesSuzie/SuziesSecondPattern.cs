@@ -100,6 +100,7 @@ public class SuziesSecondPattern : MonoBehaviour
     /// </summary>
     public void IniciarPatron()
     {
+        Debug.Log("Patron2");
         Whistle.Play();
         Hide();
 
@@ -115,7 +116,7 @@ public class SuziesSecondPattern : MonoBehaviour
     public void DeactivateSpawnWarning()
     {
         deactivatedSpawns++; // Sumamos 1 al contador de spawners apagados
-
+        Debug.Log(deactivatedSpawns);
         // Si ya se han apagado tantos spawners como hay en la lista Suzie volverá a aparecer siendo vulnerable
         if (deactivatedSpawns >= Spawns.Count)
         {

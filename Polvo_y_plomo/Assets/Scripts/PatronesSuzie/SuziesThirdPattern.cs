@@ -191,7 +191,6 @@ public class SuziesThirdPattern : MonoBehaviour
     private void FinalizarPatron()
     {
         GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
-        this.enabled = false;
     }
     #endregion
 }

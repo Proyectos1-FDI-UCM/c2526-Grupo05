@@ -295,8 +295,8 @@ public class SuziesFirstPattern : MonoBehaviour
         _lastPeekingMoment = Time.time;
         _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
 
-        GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
-        this.enabled = false;
+        SuziePhaseManager suzie = GetComponent<SuziePhaseManager>();
+        if (suzie != null) suzie.ReportarAtaqueTerminado();
     }
 
     /// <summary>
