@@ -593,6 +593,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc964b843cd1f494ca5911f196c20381, type: 3}
+--- !u!1 &62987085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 62987086}
+  - component: {fileID: 62987087}
+  m_Layer: 0
+  m_Name: PlayMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &62987086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62987085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &62987087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62987085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c5f7397755a4e4590982d0359999a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Music: {fileID: 8300000, guid: 2a3ac36c7b716c14ebb86a586536217c, type: 3}
 --- !u!1 &63479937
 GameObject:
   m_ObjectHideFlags: 0
@@ -17681,7 +17726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1474871151810355398, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: VidaMax
-      value: 9999
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2922786102867036322, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: Rate
@@ -18133,7 +18178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnList:
   - EnemySpawnPrefab: {fileID: 8107004018138444696, guid: 750ac7dcec5eed144a516c9e0b0f7600, type: 3}
-    SpawnID: 6
+    SpawnID: 13
     SpawnOffset: {x: 5.5, y: -4.5, z: 0}
     SpawnDelay: 10
   ActivateSpawnersWhenDone:
@@ -21412,6 +21457,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 62987086}
   - {fileID: 343468097}
   - {fileID: 1930142766}
   - {fileID: 1608140609}

@@ -218,6 +218,7 @@ public class AudioManager : MonoBehaviour
 
         _mySource.clip = music;
         _mySource.volume = VolumeMusic;
+        _mySource.loop = true;
         _mySource.Play();
     }
 

@@ -112,7 +112,7 @@ EditorBuildSettings:
     guid: 0efb259162b83c84e8f88f58d76d90c8
   - enabled: 1
     path: Assets/Scenes/Pruebas/Sprint7/TestSuzie.unity
-    guid: 59f847777bc7ac14e86e624495414011
+    guid: c986718a5a25b15409a9e19d8b325ec4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

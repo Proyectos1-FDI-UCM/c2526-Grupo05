@@ -80,9 +80,9 @@ public class SuziesFirstPattern : MonoBehaviour
     /// </summary>
     private bool _isPeeking = false;
     /// <summary>
-    /// Último momento en el que Suzie estaba asomando (se guarda cada vez que Suzie se esconde). Inicializado a -99 para que pueda asomar en segundo 0.
+    /// Guarda el tiempo que ha transcurrido desde que Suzie se ha escondido.
     /// </summary>
-    private float _lastPeekingMoment = -99f;
+    private float _tWhileHidden= 0f;
     /// <summary>
     /// Variable que tomará valores aleatorios para determinar cuánto tiempo debe permanecer Suzie escondida. Utilizada tanto después de asomar para disparar,
     /// como después de lanzar dinamita.
@@ -101,17 +101,17 @@ public class SuziesFirstPattern : MonoBehaviour
     /// </summary>
     int _currentAttackStartingHealth = 20;
     /// <summary>
-    /// Momento en el que Suzie asoma
+    /// Tiempo que Suzie lleva asomada
     /// </summary>
-    private float _peekingStartingMoment = 0;
+    private float _tPeeking = 0;
     /// <summary>
     /// Bool que determina si Suzie ha disparado SOLO una vez
     /// </summary>
     private bool _hasShotOnlyOnce = false;
     /// <summary>
-    /// Momento en el que Suzie dispara por primera vez desde que asomó
+    /// Tiempo desde el primer disparo cuando Suzie asoma.
     /// </summary>
-    private float _firstShotMoment = 0;
+    private float _tSinceFirstShot = 0;
     /// <summary>
     /// Variable que tomará valores aleatorios para determinar cuánto debe esperar Suzie desde que asoma para disparar por primera vez
     /// </summary>
@@ -171,7 +171,10 @@ public class SuziesFirstPattern : MonoBehaviour
     void Update()
     {
         // Si no está asomando y ya ha estado escondida todo lo que debería, realiza una acción
-        if (!_isPeeking && Time.time - _lastPeekingMoment > _rndHidingTime)
+        if (GameManager.HasInstance()) _tWhileHidden += Time.deltaTime * GameManager.SlowMultiplier;
+        else _tWhileHidden += Time.deltaTime;
+
+        if (!_isPeeking && _tWhileHidden > _rndHidingTime)
         {
             // Si no le toca lanzar dinamita, asoma para disparar
             if (_peekingCycle != ActionsPerCycle - 1)
@@ -192,7 +195,7 @@ public class SuziesFirstPattern : MonoBehaviour
                 // Guarda la vida al empezar el ataque para después poder determinar si debe esconderse antes de tiempo
                 if (_health != null) _currentAttackStartingHealth = _health.GetCurrentHealth();
                 _isPeeking = true;
-                _peekingStartingMoment = Time.time;
+                _tPeeking = 0;
             }
             else SuzieDynamite();
 
@@ -201,11 +204,17 @@ public class SuziesFirstPattern : MonoBehaviour
 
         if (_isPeeking)
         {
+            if (GameManager.HasInstance()) _tPeeking += Time.deltaTime * GameManager.SlowMultiplier;
+            else _tPeeking += Time.deltaTime;
+
+            if (GameManager.HasInstance()) _tSinceFirstShot += Time.deltaTime * GameManager.SlowMultiplier;
+            else _tSinceFirstShot += Time.deltaTime;
+
             // Si ha perdido suficiente vida, se esconde
             if (_health != null && _health.GetCurrentHealth() <= (_currentAttackStartingHealth - HealthLossToHide)) SuzieHide();
 
             // Si no, si no ha disparado ninguna vez, y ya le toca, dispara
-            else if (!_hasShotOnlyOnce && Time.time - _peekingStartingMoment > _firstRndShootingMoment)
+            else if (!_hasShotOnlyOnce && _tPeeking > _firstRndShootingMoment)
             {
                 if (_shoot != null)
                 {
@@ -215,11 +224,11 @@ public class SuziesFirstPattern : MonoBehaviour
                 }
 
                 _hasShotOnlyOnce = true;
-                _firstShotMoment = Time.time;
+                _tSinceFirstShot = 0;
             }
 
             // Si no, si ya ha disparado pero solo una vez, y le toca otra, pues vuelve a disparar
-            else if (_hasShotOnlyOnce && Time.time - _firstShotMoment > _secondRndShootingMoment)
+            else if (_hasShotOnlyOnce && _tSinceFirstShot > _secondRndShootingMoment)
             {
                 if (_shoot != null)
                 {
@@ -295,7 +304,7 @@ public class SuziesFirstPattern : MonoBehaviour
             }
         }
 
-        _lastPeekingMoment = Time.time;
+        _tWhileHidden = 0;
         _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
 
         SuziePhaseManager suzie = GetComponent<SuziePhaseManager>();
@@ -315,7 +324,7 @@ public class SuziesFirstPattern : MonoBehaviour
             transform.position = _initialPos;
             transform.rotation = Quaternion.Euler(0, 0, 0);
 
-            _lastPeekingMoment = Time.time;
+            _tWhileHidden = 0;
             _rndHidingTime = UnityEngine.Random.Range(1f, MaxHidingTime);
 
             _health.BlockDamage();

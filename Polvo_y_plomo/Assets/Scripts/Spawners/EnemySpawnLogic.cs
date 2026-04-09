@@ -7,7 +7,6 @@
 
 using UnityEngine;
 using System.Collections;
-using TMPro.EditorUtilities;
 // Añadir aquí el resto de directivas using
 
 

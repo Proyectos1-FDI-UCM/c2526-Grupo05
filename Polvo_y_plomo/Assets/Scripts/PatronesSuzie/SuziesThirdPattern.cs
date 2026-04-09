@@ -73,7 +73,7 @@ public class SuziesThirdPattern : MonoBehaviour
     private bool _manyBarrels = false;
     private bool _lessThanTwo = false;
 
-    private float _firstTimer = 99f;
+    private float _tFirstDyna = 0f;
 
     #endregion
 
@@ -93,12 +93,15 @@ public class SuziesThirdPattern : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (_manyBarrels && Time.time - _firstTimer > Contador1)
+        if (GameManager.HasInstance()) _tFirstDyna += Time.deltaTime * GameManager.SlowMultiplier;
+        else _tFirstDyna += Time.deltaTime;
+
+        if (_manyBarrels && _tFirstDyna > Contador1)
         {
             ThrowSecondGrenade();
             FinalizarPatron();
         }
-        else if (_lessThanTwo && Time.time - _firstTimer > Contador2)
+        else if (_lessThanTwo && _tFirstDyna > Contador2)
         {
             _secondTarget = player.position;
             ThrowSecondGrenade();
@@ -175,7 +178,7 @@ public class SuziesThirdPattern : MonoBehaviour
     private void ThrowFirstGrenade()
     {
         ThrowGrenadeTo(_firstTarget);
-        _firstTimer = Time.time;
+        _tFirstDyna = 0;
     }
 
     /// <summary>

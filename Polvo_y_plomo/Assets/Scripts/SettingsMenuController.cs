@@ -9,7 +9,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 // Añadir aquí el resto de directivas using
 
 

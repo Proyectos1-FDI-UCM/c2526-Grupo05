@@ -93,15 +93,16 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        transform.Translate(_vel * Time.deltaTime);
+        if (GameManager.HasInstance()) transform.Translate(_vel * Time.fixedDeltaTime * GameManager.SlowMultiplier);
+        else transform.Translate(_vel * Time.fixedDeltaTime);
     }
 
     private void Update()
     {
 
 
-        _timer += Time.deltaTime;
-
+        if (GameManager.HasInstance()) _timer += Time.deltaTime * GameManager.SlowMultiplier;
+        else _timer += Time.deltaTime;
 
 
         if (_timer > MovingTime)

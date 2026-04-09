@@ -6559,14 +6559,46 @@ PrefabInstance:
       value: Barril_Cobertura (2)
       objectReference: {fileID: 0}
     - target: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8450082553039774674, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: Cadaveres.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450082553039774674, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: 'Cadaveres.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7155229638782507219, guid: 092a210380e3f3a489af41a28ae1a0a8, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1469148798}
   m_SourcePrefab: {fileID: 100100000, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+--- !u!1 &1469148797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+  m_PrefabInstance: {fileID: 1469148796}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1469148798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469148797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e133e046b422446a3069e4ee771a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1497327773
 GameObject:
   m_ObjectHideFlags: 0
@@ -6771,13 +6803,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512809099}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 8.5, y: 6.65, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.6427876, w: 0.7660445}
+  m_LocalPosition: {x: 9.5, y: 6.65, z: 0}
   m_LocalScale: {x: 4.75, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1917781190}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 80}
 --- !u!61 &1512809102
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7720,6 +7752,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671884498}
   m_CullTransparentMesh: 1
+--- !u!1 &1677373612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1677373614}
+  - component: {fileID: 1677373613}
+  m_Layer: 0
+  m_Name: PlayMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1677373613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677373612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c5f7397755a4e4590982d0359999a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Music: {fileID: 8300000, guid: 2a3ac36c7b716c14ebb86a586536217c, type: 3}
+--- !u!4 &1677373614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677373612}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1681877865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8140,14 +8217,50 @@ PrefabInstance:
       value: Barril_Cobertura
       objectReference: {fileID: 0}
     - target: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450082553039774674, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: Cadaveres.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450082553039774674, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: 'Cadaveres.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7155229638782507219, guid: 092a210380e3f3a489af41a28ae1a0a8, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1752281764}
   m_SourcePrefab: {fileID: 100100000, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+--- !u!1 &1752281763 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+  m_PrefabInstance: {fileID: 1752281762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1752281764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752281763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e133e046b422446a3069e4ee771a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756368205 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
@@ -9767,13 +9880,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996834080}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -8.5, y: 6.65, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.76604444, w: 0.64278764}
+  m_LocalPosition: {x: -9.5, y: 6.65, z: 0}
   m_LocalScale: {x: 4.75, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1917781190}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 100}
 --- !u!61 &1996834083
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10641,14 +10754,46 @@ PrefabInstance:
       value: Barril_Cobertura (1)
       objectReference: {fileID: 0}
     - target: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 138649192628621738, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8450082553039774674, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: Cadaveres.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450082553039774674, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      propertyPath: 'Cadaveres.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7155229638782507219, guid: 092a210380e3f3a489af41a28ae1a0a8, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2100986979}
   m_SourcePrefab: {fileID: 100100000, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+--- !u!1 &2100986978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159057533660135593, guid: 305d4ef0ceaf5764d8855f45b952e279, type: 3}
+  m_PrefabInstance: {fileID: 2100986977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2100986979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100986978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e133e046b422446a3069e4ee771a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2115645887
 GameObject:
   m_ObjectHideFlags: 0
@@ -10922,6 +11067,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1677373614}
   - {fileID: 1685065528}
   - {fileID: 245648586}
   - {fileID: 300565113}

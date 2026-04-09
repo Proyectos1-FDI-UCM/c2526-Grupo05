@@ -58,7 +58,9 @@ public class Explode : MonoBehaviour
     /// </summary>
     void Update()
     {
-        _actualTime += Time.deltaTime;
+        if (GameManager.HasInstance()) _actualTime += Time.deltaTime * GameManager.SlowMultiplier;
+        else _actualTime += Time.deltaTime;
+
         if (_actualTime > BoomTime)
         {
             Instantiate(BoomRange, transform.position, transform.rotation);
