@@ -1992,6 +1992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
   DisablePanel: {fileID: 0}
+  NextPanelSelectedButton: {fileID: 0}
 --- !u!114 &426409334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2962,6 +2963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
   DisablePanel: {fileID: 0}
+  NextPanelSelectedButton: {fileID: 0}
 --- !u!114 &618981109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6642,6 +6644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 426409331}
   DisablePanel: {fileID: 0}
+  NextPanelSelectedButton: {fileID: 0}
 --- !u!114 &1497327775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6656,6 +6659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 618981107}
   DisablePanel: {fileID: 0}
+  NextPanelSelectedButton: {fileID: 0}
 --- !u!114 &1497327776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6670,6 +6674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 2006929482}
   DisablePanel: {fileID: 0}
+  NextPanelSelectedButton: {fileID: 0}
 --- !u!114 &1497327777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7789,7 +7794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c5f7397755a4e4590982d0359999a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: {fileID: 8300000, guid: 2a3ac36c7b716c14ebb86a586536217c, type: 3}
+  Music: {fileID: 8300000, guid: 3a60c1536b9a8304d899d277c861c4e8, type: 3}
 --- !u!4 &1677373614
 Transform:
   m_ObjectHideFlags: 0
@@ -9974,6 +9979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivatePanel: {fileID: 1497327773}
   DisablePanel: {fileID: 0}
+  NextPanelSelectedButton: {fileID: 0}
 --- !u!114 &2006929484
 MonoBehaviour:
   m_ObjectHideFlags: 0
