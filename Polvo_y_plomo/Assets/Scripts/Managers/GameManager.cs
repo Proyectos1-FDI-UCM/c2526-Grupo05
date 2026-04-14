@@ -196,6 +196,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI highScoreTextUI;
 
+
+    [SerializeField]
+    int highScore;
+
+    [SerializeField]
+    GameObject[] streakText;
+
+    [SerializeField]
+    int actualtext;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -296,6 +306,11 @@ public class GameManager : MonoBehaviour
         {
             // Transferencia de configuración del HUD
             GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI);
+        }
+
+        foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
+        {
+            obj.SetActive(false);
         }
     }
 
@@ -503,6 +518,20 @@ public class GameManager : MonoBehaviour
     {
         _totalPoints += cambioDePuntos;
         if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
+
+        if (_totalPoints > highScore) SaveScore(_totalPoints);
+
+    }
+
+    public void SpawnPointIndicator(Vector3 position, int cambioDePuntos)
+    {
+        //Setear el punto
+        streakText[actualtext].SetActive(true);
+        streakText[actualtext].GetComponent<PointIndicator>().SpawnHere(position, cambioDePuntos);
+
+        //Gestionar lista
+        actualtext++;
+        if (actualtext >= streakText.Length) actualtext = 0;
     }
 
     /// <summary>
