@@ -307,7 +307,7 @@ public class LevelManager : MonoBehaviour
     /// <returns></returns>
     public int GetStreak()
     {
-        return _streak - 1;
+        return _streak;
     }
     #endregion
 

@@ -71,6 +71,8 @@ public class PointIndicator : MonoBehaviour
         position += Vector3.up * MoveSpeed * Time.deltaTime;
 
         transform.position = Camera.main.WorldToScreenPoint(position);
+
+        if (pointText.alpha <= 0) gameObject.SetActive(false);
     }
     #endregion
 
