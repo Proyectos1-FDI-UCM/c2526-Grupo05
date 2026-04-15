@@ -206,6 +206,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int actualtext;
 
+
+    /// <summary>
+    /// Variable a la que se le debe asignar el Animator del icono de la habilidad.
+    /// En concreto, la del icono (reloj y contorno).
+    /// Esto hace que se pueda cambiar al "estado activo" durante la habilidad.
+    /// </summary>
+    [SerializeField]
+    private Animator TimeAbilityAnimator;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -752,6 +761,8 @@ public class GameManager : MonoBehaviour
     {
         _slowMultiplier = 0.25f;
         StartFadeInBlueScreen();
+
+        if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", true);
     }
 
     /// <summary>
@@ -761,6 +772,7 @@ public class GameManager : MonoBehaviour
     {
         ResumeGame();
         StartFadeOutBlueScreen();
+        if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", false);
     }
 
     public void PauseGame()
