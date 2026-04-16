@@ -44,9 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f59f329bc0b4a36bc8d02c6710a226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeIn: {fileID: 0}
-  FadeOut: {fileID: 0}
-  TiempoEsperaRespawn: 3
+  FadeInBlackScreen: {fileID: 0}
+  FadeOutBlackScreen: {fileID: 0}
+  FadeInBlueScreen: {fileID: 0}
+  FadeOutBlueScreen: {fileID: 0}
+  HabilityLiquid: {fileID: 0}
+  HabilityShadow: {fileID: 0}
   Lifes:
   - {fileID: 0}
   - {fileID: 0}
@@ -65,3 +68,32 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ScoreText: {fileID: 0}
+  StreakMultiplier: {fileID: 0}
+  StreakColors:
+  - Color: {r: 1, g: 1, b: 1, a: 1}
+    StreakToChangeColor: 5
+    NewVibration: 0.25
+  - Color: {r: 0, g: 1, b: 0.013687611, a: 1}
+    StreakToChangeColor: 15
+    NewVibration: 0.66
+  - Color: {r: 1, g: 0.98224723, b: 0, a: 1}
+    StreakToChangeColor: 30
+    NewVibration: 1.25
+  - Color: {r: 1, g: 0, b: 0, a: 1}
+    StreakToChangeColor: 50
+    NewVibration: 2
+  - Color: {r: 0.8163433, g: 0, b: 1, a: 1}
+    StreakToChangeColor: 0
+    NewVibration: 2.5
+  StreakBar: {fileID: 0}
+  LevelBar: {fileID: 0}
+  VictoryMusic: {fileID: 0}
+  NextLevel: 0
+  TiempoEsperaRespawn: 3
+  TiempoEsperaSiguienteNivel: 5
+  highScoreTextUI: {fileID: 0}
+  highScore: 0
+  streakText: []
+  actualtext: 0
+  TimeAbilityAnimator: {fileID: 0}
