@@ -188,6 +188,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float TiempoEsperaSiguienteNivel = 5f;
 
+    /// <summary>
+    /// ImageFill de la "sombra" del ataque melee, para representar su cooldown con un sprite que "cambia" de color
+    /// </summary>
+    [SerializeField]
+    private ImageFill MeleeShadow = null;
+
     [Header("Highscore")]
 
     /// <summary>
@@ -600,6 +606,14 @@ public class GameManager : MonoBehaviour
         if (FadeOutBlueScreen != null) FadeOutBlueScreen.enabled = true;
     }
 
+    /// <summary>
+    /// Método público que llama al ImageFill que controla la representación del cooldown del ataque melee, para que se actualice al valor que le corresponda.
+    /// </summary>
+    /// <param name="fillAmount"></param>
+    public void UpdateMeleeCooldownShadow(float fillAmount)
+    {
+        if (MeleeShadow != null) MeleeShadow.UpdateImageFillAmmount(fillAmount);
+    }
     #endregion
 
     #region Metodos transferencia de informacion
