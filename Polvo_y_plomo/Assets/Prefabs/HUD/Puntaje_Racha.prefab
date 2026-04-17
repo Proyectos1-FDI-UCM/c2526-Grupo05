@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4426416172074313731}
   - component: {fileID: 9041249930474883713}
   - component: {fileID: 7788301395021856747}
+  - component: {fileID: 1168735513152407460}
   m_Layer: 5
   m_Name: StreakMultiplier
   m_TagString: Untagged
@@ -136,6 +137,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1168735513152407460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649376267495472234}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6004c0812058f33468f65971108d230e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Intensity: 0
 --- !u!1 &2408329938283253254
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,6 +67,10 @@ using UnityEngine.SceneManagement;
 /// 
 /// +++
 /// Funcionalidad para almacenar la sensibilidad ajustada por el jugador.
+/// 
+/// +++
+/// Funcionalidad añadida para manejar la vibración del multiplicador de la racha y sus colores. En el update
+/// del HUD se aprovecha a verificar si cambiar la vibración.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -143,9 +147,40 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Texto que muestra el multiplicador en el HUD.
+    /// También se usará para acceder al componente UIVibration del mismo GameObject.
     /// </summary>
     [SerializeField]
     private TextMeshProUGUI StreakMultiplier;
+
+
+    /// <summary>
+    /// Struct para añadir colores al multiplicador y su racha asociada a la que cambiar
+    /// </summary>
+    [System.Serializable]
+    public struct StreakColor
+    {
+        /// <summary>
+        /// Color al que cambiará el texto en este StreakColor
+        /// </summary>
+        public Color Color;
+
+        /// <summary>
+        /// Cantidad para pasar al siguiente nivel configurado de StreakColors.
+        /// El del último elemento del Array será ignorado.
+        /// </summary>
+        public int StreakToChangeColor;
+
+        /// <summary>
+        /// Nueva Vibration Intensity para el texto.
+        /// </summary>
+        public float NewVibration;
+    }
+
+    /// <summary>
+    /// Array de colores.
+    /// </summary>
+    [SerializeField]
+    private StreakColor[] StreakColors;
 
     /// <summary>
     /// Componente con el "liquido" de la barra que muestra cuanto porcentaje de tiempo
@@ -293,6 +328,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private float _cursorSensibility = 5f;
 
+    /// <summary>
+    /// Indice que indica que color se esta usando actualmente para el StreakColor.
+    /// </summary>
+    private int _currentStreakColor = 0;
+
+    /// <summary>
+    /// Almacena el componente de UIVibration del texto StreakVibration.
+    /// </summary>
+    private UIVibration _streakVibration;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -314,7 +359,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI);
         }
 
         foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
@@ -534,13 +579,16 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPointIndicator(Vector3 position, int cambioDePuntos)
     {
-        //Setear el punto
-        streakText[actualtext].SetActive(true);
-        streakText[actualtext].GetComponent<PointIndicator>().SpawnHere(position, cambioDePuntos);
+        if (streakText.Length > 0)
+        {
+            //Setear el punto
+            streakText[actualtext].SetActive(true);
+            streakText[actualtext].GetComponent<PointIndicator>().SpawnHere(position, cambioDePuntos);
 
-        //Gestionar lista
-        actualtext++;
-        if (actualtext >= streakText.Length) actualtext = 0;
+            //Gestionar lista
+            actualtext++;
+            if (actualtext >= streakText.Length) actualtext = 0;
+        }
     }
 
     /// <summary>
@@ -549,7 +597,24 @@ public class GameManager : MonoBehaviour
     /// <param name="NuevoScoreJugador"></param>
     public void UpdateStreakMultiplierHUD(int Streak)
     {
-        if (StreakMultiplier != null) StreakMultiplier.text = "x" + Streak.ToString();
+        if (StreakMultiplier != null)
+        {
+            StreakMultiplier.text = "x" + Streak.ToString();
+            if (StreakColors.Length > 0)
+            {
+                // Actualización de _currentVibration
+                if (_currentStreakColor < StreakColors.Length - 1 && Streak >= StreakColors[_currentStreakColor].StreakToChangeColor)
+                {
+                    _currentStreakColor++;
+                    UpdateStreakMultiplierEffects();
+                }
+                else if (_currentStreakColor > 1 && Streak < StreakColors[_currentStreakColor-1].StreakToChangeColor)
+                {
+                    _currentStreakColor--;
+                    UpdateStreakMultiplierEffects();
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -647,7 +712,7 @@ public class GameManager : MonoBehaviour
     /// Reconfigura el HUD para incluir el de la escena actual.
     /// </summary>
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
-        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier,
+        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
         int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI)
     {
@@ -661,6 +726,7 @@ public class GameManager : MonoBehaviour
         this.Bullets = Bullets;
         this.ScoreText = ScoreText;
         this.StreakMultiplier = StreakMultiplier;
+        this.StreakColors = StreakColors;
         this.StreakBar = StreakBar;
         this.LevelBar = LevelBar;
         this.VictoryMusic = VictoryMusic;
@@ -923,6 +989,28 @@ public class GameManager : MonoBehaviour
         }
         //Ponerla en la UI
 
+    }
+
+    /// <summary>
+    /// Actualiza el color y la intensidad de vibración del texto del multiplicador de racha.
+    /// (!) No verifica si _currentStreakColor es correcta, ha de serlo (se controla en el método
+    /// de UpdateStreakMultiplierHUD() ).
+    /// </summary>
+    private void UpdateStreakMultiplierEffects()
+    {
+        StreakMultiplier.color = StreakColors[_currentStreakColor].Color;
+
+        // intento de inicializar la vibración (puede ya estar almacenado)
+        if (_streakVibration == null)
+        {
+            _streakVibration = StreakMultiplier.gameObject.GetComponent<UIVibration>();
+        }
+
+        // si se consigue o si ya estaba guardada
+        if (_streakVibration != null)
+        {
+            _streakVibration.ChangeIntensity(StreakColors[_currentStreakColor].NewVibration);
+        }
     }
     #endregion
 } // class GameManager 
