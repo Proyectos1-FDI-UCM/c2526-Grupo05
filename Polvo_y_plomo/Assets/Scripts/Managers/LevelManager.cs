@@ -299,6 +299,16 @@ public class LevelManager : MonoBehaviour
     {
         return _killsOnStart;
     }
+
+
+    /// <summary>
+    /// Metodo que devuelve la racha actual
+    /// </summary>
+    /// <returns></returns>
+    public int GetStreak()
+    {
+        return _streak;
+    }
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
