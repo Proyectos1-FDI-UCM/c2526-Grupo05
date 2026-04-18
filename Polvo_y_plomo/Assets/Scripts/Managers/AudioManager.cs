@@ -143,6 +143,7 @@ public class AudioManager : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
+
             _poolAudioSources = new AudioSource[MaxAudioSources];
             DontDestroyOnLoad(gameObject);
             _instance = this;
@@ -168,13 +169,17 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        if(math.abs(_currentPitch - _targetPitch) > 0.01f)
+        if (_currentPitch != _targetPitch)
         {
-            _currentPitch = Mathf.Lerp(_currentPitch, _targetPitch, Time.deltaTime * _pitchTransitionSpeed);
+            // MoveTowards garantiza alcanzar el 1.0 o el 0.5 exacto. 
+            // unscaledDeltaTime ignora la ralentización del tiempo del juego.
+            _currentPitch = Mathf.MoveTowards(_currentPitch, _targetPitch, Time.unscaledDeltaTime * _pitchTransitionSpeed);
 
             // Aplicar a la música
             if (_mySource != null)
+            {
                 _mySource.pitch = _currentPitch;
+            }
 
             // Aplicar a todos los SFX
             for (int i = 0; i < _createdAudioSources; i++)
@@ -273,7 +278,6 @@ public class AudioManager : MonoBehaviour
     {
         _targetPitch = isSlow ? 0.5f : 1f;
     }
-
     #region Métodos públicos para el volumen
     /// <summary>
     /// Método para saber cuál es el volumen actual de los SFX configurado en el AudioManager.
