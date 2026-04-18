@@ -359,7 +359,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI, streakText);
         }
 
         foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
@@ -507,7 +507,6 @@ public class GameManager : MonoBehaviour
         System.GC.Collect();
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
         System.GC.Collect();
-        SaveScore(_totalPoints);
     } // ChangeScene
 
     /// <summary>
@@ -521,6 +520,7 @@ public class GameManager : MonoBehaviour
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
+        _currentStreakColor = 0;
         if (LevelManager.HasInstance())
         {
             _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
@@ -545,10 +545,13 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo gestiona el final de un nivel
+    /// Este metodo gestiona el final de un nivel.
+    /// Se llama cuando hay una victoria de nivel (se mantiene vida y puntaje)
     /// </summary>
     public void LevelEnds()
     {
+        _currentStreakColor = 0;
+
         // Feedback de victoria
         if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
         if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
@@ -558,8 +561,18 @@ public class GameManager : MonoBehaviour
         _playerDied = false;
         this.enabled = true; // inicia contador en Update().
 
+        SaveScore(_totalPoints);
     }
 
+    /// <summary>
+    /// Se llama al ganar el juego, tras derrotar a Suzie.
+    /// Igual que LevelEnds pero reinicia las estadisticas.
+    /// </summary>
+    public void GameEnds()
+    {
+        LevelEnds(); // inicia el fin de nivel y guarda puntos
+        ResetStats(); // reset de stats
+    }
 
     #endregion
 
@@ -572,8 +585,6 @@ public class GameManager : MonoBehaviour
     {
         _totalPoints += cambioDePuntos;
         if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
-
-        if (_totalPoints > highScore) SaveScore(_totalPoints);
 
     }
 
@@ -602,13 +613,13 @@ public class GameManager : MonoBehaviour
             StreakMultiplier.text = "x" + Streak.ToString();
             if (StreakColors.Length > 0)
             {
-                // Actualización de _currentVibration
+                // Actualización de color y vibración
                 if (_currentStreakColor < StreakColors.Length - 1 && Streak >= StreakColors[_currentStreakColor].StreakToChangeColor)
                 {
                     _currentStreakColor++;
                     UpdateStreakMultiplierEffects();
                 }
-                else if (_currentStreakColor > 1 && Streak < StreakColors[_currentStreakColor-1].StreakToChangeColor)
+                else if (_currentStreakColor > 0 && Streak < StreakColors[_currentStreakColor-1].StreakToChangeColor)
                 {
                     _currentStreakColor--;
                     UpdateStreakMultiplierEffects();
@@ -714,7 +725,8 @@ public class GameManager : MonoBehaviour
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
         ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
-        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI)
+        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI,
+        GameObject[] streakText)
     {
         this.FadeInBlackScreen = FadeInBlackScreen;
         this.FadeOutBlackScreen = FadeOutBlackScreen;
@@ -734,6 +746,7 @@ public class GameManager : MonoBehaviour
         this.TiempoEsperaRespawn = TiempoEsperaRespawn;
         this.TiempoEsperaSiguienteNivel = TiempoEsperaSiguienteNivel;
         this.highScoreTextUI = highScoreTextUI;
+        this.streakText = streakText;
     }
 
     /// <summary>
@@ -767,16 +780,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método que se llamará una vez acabada la partida (por salirse al menu principal o ganar el juego).
-    /// Actualmente solo reinicia las Stats del jugador.
-    /// (---) falta implementar que se guarde el highscore
+    /// Método llamado para reiniciar las estadisticas del jugador.
     /// </summary>
-    public void MatchEnded()
+    public void ResetStats()
     {
-        // Reinicio de Stats
         _vidaJugador = VIDABASEJUGADOR;
+        _municionJugador = MUNICIONBASEJUGADOR;
         _totalDeaths = 0;
         _totalPoints = 0;
+        _currentStreakColor = 0;
     }
 
     /// <summary>
