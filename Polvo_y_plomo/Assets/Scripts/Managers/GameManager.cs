@@ -878,6 +878,9 @@ public class GameManager : MonoBehaviour
         StartFadeInBlueScreen();
 
         if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", true);
+
+        if (AudioManager.HasInstance())
+            AudioManager.Instance.SetSlowMotionAudio(true);
     }
 
     /// <summary>
@@ -888,6 +891,9 @@ public class GameManager : MonoBehaviour
         ResumeGame();
         StartFadeOutBlueScreen();
         if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", false);
+
+        if (AudioManager.HasInstance())
+            AudioManager.Instance.SetSlowMotionAudio(false);
     }
 
     public void PauseGame()
@@ -984,6 +990,7 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(path, data);
         Debug.Log("Puntuación guardada en: " + path);
     }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
