@@ -71,6 +71,9 @@ using UnityEngine.SceneManagement;
 /// +++
 /// Funcionalidad añadida para manejar la vibración del multiplicador de la racha y sus colores. En el update
 /// del HUD se aprovecha a verificar si cambiar la vibración.
+/// 
+/// +++
+/// Funcionalidad añadida para manejar las animaciones de los corazones
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -628,10 +631,42 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
+        int vidaAnterior = _vidaJugador;
         _vidaJugador = NuevaVidaJugador;
+
         for (int i = 0; i < Lifes.Length; i++)
         {
-            if (Lifes[i] != null) Lifes[i].SetActive(i < _vidaJugador);
+            if (Lifes[i] != null)
+            {
+                HeartUI heartScript = Lifes[i].GetComponentInChildren<HeartUI>();
+
+                if (heartScript != null)
+                {
+                    int hpAnterior = Mathf.Clamp(vidaAnterior - (i * 2), 0, 2);
+                    int hpNuevo = Mathf.Clamp(_vidaJugador - (i * 2), 0, 2);
+
+                    if (hpAnterior == hpNuevo) continue;
+
+                    // DAÑO
+                    if (hpNuevo < hpAnterior)
+                    {
+                        if (hpNuevo == 1)
+                            heartScript.HitToHalf();
+
+                        else if (hpNuevo == 0)
+                            heartScript.HitToEmpty();
+                    }
+                    // CURACIÓN
+                    else if (hpNuevo > hpAnterior)
+                    {
+                        if (hpNuevo == 1)
+                            heartScript.HealToHalf();
+
+                        else if (hpNuevo == 2)
+                            heartScript.HealToFull();
+                    }
+                }
+            }
         }
     }
 
