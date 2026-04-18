@@ -49,6 +49,7 @@ public class playerMeleeAttack : MonoBehaviour
     // Almacena el componente CanMelee que ha de tener el objeto con este script. Inicializado en Start().
     private CanMelee _canMelee;
 
+    private bool _shadowSpawned = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -94,11 +95,21 @@ public class playerMeleeAttack : MonoBehaviour
         if (GameManager.HasInstance()) _tRemainingToMelee -= Time.deltaTime * GameManager.SlowMultiplier;
         else _tRemainingToMelee -= Time.deltaTime;
 
-        if (InputManager.Instance.MeleeWasPressedThisFrame() && _tRemainingToMelee <= 0)
+        if (InputManager.Instance.MeleeIsPressed() && _tRemainingToMelee <= 0 && !_shadowSpawned)
         {
-            DoMelee();
-            _tRemainingToMelee = CooldownMelee;
+            DoMelee(true);
+            _shadowSpawned = true;
         }
+
+        if (InputManager.Instance.MeleeWasReleasedThisFrame() && _tRemainingToMelee <= 0)
+        {
+            DoMelee(false);
+            _tRemainingToMelee = CooldownMelee;
+            GameManager.Instance.UpdateMeleeCooldownShadow(0);
+            _shadowSpawned = false;
+        }
+
+        if (_tRemainingToMelee > 0) GameManager.Instance.UpdateMeleeCooldownShadow(1 - _tRemainingToMelee / CooldownMelee);
     }
     #endregion
 
@@ -109,7 +120,6 @@ public class playerMeleeAttack : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
-
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -118,12 +128,13 @@ public class playerMeleeAttack : MonoBehaviour
     /// Método privado que calcula la dirección del cursor con respecto al jugador tomando ambas posiciones (la del jugador desde el Update), para saber dónde
     /// generar la hitbox. Después llama al script "CanMelee" para que genere dicha hitbox en función de la información que le proporcione este script.
     /// </summary>
-    private void DoMelee()
+    private void DoMelee(bool shadow)
     {
         Vector2 posCursor = Cursor.transform.position;
         Vector2 dirCursorJugador = (posCursor - (Vector2)transform.position).normalized;
 
-        _canMelee.HitboxMelee(dirCursorJugador);
+        if (!shadow) _canMelee.HitboxMelee(dirCursorJugador);
+        else _canMelee.ShadowMelee(dirCursorJugador);
     }
     #endregion   
 
