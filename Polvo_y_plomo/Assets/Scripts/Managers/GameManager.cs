@@ -6,14 +6,12 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
-using Mono.Cecil.Cil;
 using System.Collections;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -73,6 +71,9 @@ using UnityEngine.SceneManagement;
 /// +++
 /// Funcionalidad añadida para manejar la vibración del multiplicador de la racha y sus colores. En el update
 /// del HUD se aprovecha a verificar si cambiar la vibración.
+/// 
+/// +++
+/// Funcionalidad añadida para manejar las animaciones de los corazones
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -130,17 +131,17 @@ public class GameManager : MonoBehaviour
     private ImageFill HabilityShadow;
 
     /// <summary>
-    /// Lista de objetos de vida del HUD
-    /// </summary>
-    [SerializeField]
-    private GameObject[] Lifes = new GameObject[VIDABASEJUGADOR];
-
-    /// <summary>
     /// Barril de revólver del HUD
     /// </summary>
     [SerializeField]
     private GameObject Barrel;
 
+    /// <summary>
+    /// Lista de objetos de vida del HUD
+    /// </summary>
+    [SerializeField]
+    private GameObject[] Lifes = new GameObject[VIDABASEJUGADOR];
+  
     /// <summary>
     /// Lista de objetos de balas del HUD
     /// </summary>
@@ -230,6 +231,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float TiempoEsperaSiguienteNivel = 5f;
+
+    /// <summary>
+    /// ImageFill de la "sombra" del ataque melee, para representar su cooldown con un sprite que "cambia" de color
+    /// </summary>
+    [SerializeField]
+    private ImageFill MeleeShadow = null;
 
     [Header("Highscore")]
 
@@ -367,7 +374,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI, streakText);
         }
 
         foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
@@ -515,7 +522,6 @@ public class GameManager : MonoBehaviour
         System.GC.Collect();
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
         System.GC.Collect();
-        SaveScore(_totalPoints);
     } // ChangeScene
 
     /// <summary>
@@ -529,6 +535,7 @@ public class GameManager : MonoBehaviour
         // Reinicio de las stats del jugador para que empiecen completas tras reiniciarse la escena.
         _vidaJugador = VIDABASEJUGADOR;
         _municionJugador = MUNICIONBASEJUGADOR;
+        _currentStreakColor = 0;
         if (LevelManager.HasInstance())
         {
             _totalPoints = LevelManager.Instance.GetPointsAtStartOfLevel();
@@ -553,10 +560,13 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Este metodo gestiona el final de un nivel
+    /// Este metodo gestiona el final de un nivel.
+    /// Se llama cuando hay una victoria de nivel (se mantiene vida y puntaje)
     /// </summary>
     public void LevelEnds()
     {
+        _currentStreakColor = 0;
+
         // Feedback de victoria
         if (InputManager.HasInstance()) InputManager.Instance.DesactivarInput();
         if (FadeInBlackScreen != null) FadeInBlackScreen.enabled = true;
@@ -566,8 +576,18 @@ public class GameManager : MonoBehaviour
         _playerDied = false;
         this.enabled = true; // inicia contador en Update().
 
+        SaveScore(_totalPoints);
     }
 
+    /// <summary>
+    /// Se llama al ganar el juego, tras derrotar a Suzie.
+    /// Igual que LevelEnds pero reinicia las estadisticas.
+    /// </summary>
+    public void GameEnds()
+    {
+        LevelEnds(); // inicia el fin de nivel y guarda puntos
+        ResetStats(); // reset de stats
+    }
 
     #endregion
 
@@ -580,8 +600,6 @@ public class GameManager : MonoBehaviour
     {
         _totalPoints += cambioDePuntos;
         if (ScoreText != null) ScoreText.text = _totalPoints.ToString();
-
-        if (_totalPoints > highScore) SaveScore(_totalPoints);
 
     }
 
@@ -610,13 +628,13 @@ public class GameManager : MonoBehaviour
             StreakMultiplier.text = "x" + Streak.ToString();
             if (StreakColors.Length > 0)
             {
-                // Actualización de _currentVibration
+                // Actualización de color y vibración
                 if (_currentStreakColor < StreakColors.Length - 1 && Streak >= StreakColors[_currentStreakColor].StreakToChangeColor)
                 {
                     _currentStreakColor++;
                     UpdateStreakMultiplierEffects();
                 }
-                else if (_currentStreakColor > 1 && Streak < StreakColors[_currentStreakColor-1].StreakToChangeColor)
+                else if (_currentStreakColor > 0 && Streak < StreakColors[_currentStreakColor-1].StreakToChangeColor)
                 {
                     _currentStreakColor--;
                     UpdateStreakMultiplierEffects();
@@ -630,10 +648,42 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
+        int vidaAnterior = _vidaJugador;
         _vidaJugador = NuevaVidaJugador;
+
         for (int i = 0; i < Lifes.Length; i++)
         {
-            if (Lifes[i] != null) Lifes[i].SetActive(i < _vidaJugador);
+            if (Lifes[i] != null)
+            {
+                HeartUI heartScript = Lifes[i].GetComponentInChildren<HeartUI>();
+
+                if (heartScript != null)
+                {
+                    int hpAnterior = Mathf.Clamp(vidaAnterior - (i * 2), 0, 2);
+                    int hpNuevo = Mathf.Clamp(_vidaJugador - (i * 2), 0, 2);
+
+                    if (hpAnterior == hpNuevo) continue;
+
+                    // DAÑO
+                    if (hpNuevo < hpAnterior)
+                    {
+                        if (hpNuevo == 1)
+                            heartScript.HitToHalf();
+
+                        else if (hpNuevo == 0)
+                            heartScript.HitToEmpty();
+                    }
+                    // CURACIÓN
+                    else if (hpNuevo > hpAnterior)
+                    {
+                        if (hpNuevo == 1)
+                            heartScript.HealToHalf();
+
+                        else if (hpNuevo == 2)
+                            heartScript.HealToFull();
+                    }
+                }
+            }
         }
     }
 
@@ -645,10 +695,11 @@ public class GameManager : MonoBehaviour
         bool recarga = _municionJugador < NuevaMunicionJugador;
 
         Animator barrelAnimator = Barrel.GetComponent<Animator>();
+
         _municionJugador = NuevaMunicionJugador;
         for (int i = 0; i < Bullets.Length; i++)
         {
-            if (Bullets[i] != null) 
+            if (Bullets[i] != null)
             {
                 Animator bulletAnimator = Bullets[i].GetComponent<Animator>();
                 if (bulletAnimator != null)
@@ -659,7 +710,7 @@ public class GameManager : MonoBehaviour
                 else Debug.Log("Falta animator en una de las bullets del barril de recarga");
                 if (barrelAnimator != null)
                 {
-                    if (recarga) 
+                    if (recarga)
                     {
                         barrelAnimator.Play("RevolverAntiClock", 0, 0f);
                     }
@@ -731,6 +782,14 @@ public class GameManager : MonoBehaviour
         if (FadeOutBlueScreen != null) FadeOutBlueScreen.enabled = true;
     }
 
+    /// <summary>
+    /// Método público que llama al ImageFill que controla la representación del cooldown del ataque melee, para que se actualice al valor que le corresponda.
+    /// </summary>
+    /// <param name="fillAmount"></param>
+    public void UpdateMeleeCooldownShadow(float fillAmount)
+    {
+        if (MeleeShadow != null) MeleeShadow.UpdateImageFillAmmount(fillAmount);
+    }
     #endregion
 
     #region Metodos transferencia de informacion
@@ -742,7 +801,8 @@ public class GameManager : MonoBehaviour
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
         ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
-        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI)
+        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI,
+        GameObject[] streakText)
     {
         this.FadeInBlackScreen = FadeInBlackScreen;
         this.FadeOutBlackScreen = FadeOutBlackScreen;
@@ -762,6 +822,7 @@ public class GameManager : MonoBehaviour
         this.TiempoEsperaRespawn = TiempoEsperaRespawn;
         this.TiempoEsperaSiguienteNivel = TiempoEsperaSiguienteNivel;
         this.highScoreTextUI = highScoreTextUI;
+        this.streakText = streakText;
     }
 
     /// <summary>
@@ -795,16 +856,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método que se llamará una vez acabada la partida (por salirse al menu principal o ganar el juego).
-    /// Actualmente solo reinicia las Stats del jugador.
-    /// (---) falta implementar que se guarde el highscore
+    /// Método llamado para reiniciar las estadisticas del jugador.
     /// </summary>
-    public void MatchEnded()
+    public void ResetStats()
     {
-        // Reinicio de Stats
         _vidaJugador = VIDABASEJUGADOR;
+        _municionJugador = MUNICIONBASEJUGADOR;
         _totalDeaths = 0;
         _totalPoints = 0;
+        _currentStreakColor = 0;
     }
 
     /// <summary>
@@ -857,6 +917,9 @@ public class GameManager : MonoBehaviour
         StartFadeInBlueScreen();
 
         if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", true);
+
+        if (AudioManager.HasInstance())
+            AudioManager.Instance.SetSlowMotionAudio(true);
     }
 
     /// <summary>
@@ -867,6 +930,9 @@ public class GameManager : MonoBehaviour
         ResumeGame();
         StartFadeOutBlueScreen();
         if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", false);
+
+        if (AudioManager.HasInstance())
+            AudioManager.Instance.SetSlowMotionAudio(false);
     }
 
     public void PauseGame()
@@ -963,6 +1029,7 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(path, data);
         Debug.Log("Puntuación guardada en: " + path);
     }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
