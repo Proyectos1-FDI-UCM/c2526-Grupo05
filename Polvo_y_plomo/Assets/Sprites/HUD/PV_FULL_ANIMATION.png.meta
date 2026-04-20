@@ -1,0 +1,1178 @@
+fileFormatVersion: 2
+guid: ae635980e3db504469b477f5d32ffd7e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5527673504960124423
+    second: PV_FULL_ANIMATION_0
+  - first:
+      213: -6165489734416855968
+    second: PV_FULL_ANIMATION_1
+  - first:
+      213: -2725767006241232507
+    second: PV_FULL_ANIMATION_2
+  - first:
+      213: 758524031766256634
+    second: PV_FULL_ANIMATION_3
+  - first:
+      213: -8643727141489688592
+    second: PV_FULL_ANIMATION_4
+  - first:
+      213: 348797425585461128
+    second: PV_FULL_ANIMATION_5
+  - first:
+      213: -7795785062471523621
+    second: PV_FULL_ANIMATION_6
+  - first:
+      213: 3641700077751645705
+    second: PV_FULL_ANIMATION_7
+  - first:
+      213: 7012399514668919534
+    second: PV_FULL_ANIMATION_8
+  - first:
+      213: 7381514065768154715
+    second: PV_FULL_ANIMATION_9
+  - first:
+      213: 1600244876224084818
+    second: PV_FULL_ANIMATION_10
+  - first:
+      213: 9050887509790936141
+    second: PV_FULL_ANIMATION_11
+  - first:
+      213: 2804185504466413730
+    second: PV_FULL_ANIMATION_12
+  - first:
+      213: 2004873510577263455
+    second: PV_FULL_ANIMATION_13
+  - first:
+      213: 791964070631866996
+    second: PV_FULL_ANIMATION_14
+  - first:
+      213: 2358936539618395861
+    second: PV_FULL_ANIMATION_15
+  - first:
+      213: 1972326055136945422
+    second: PV_FULL_ANIMATION_16
+  - first:
+      213: 4399922808526311308
+    second: PV_FULL_ANIMATION_17
+  - first:
+      213: 4987340850709810652
+    second: PV_FULL_ANIMATION_18
+  - first:
+      213: 7957235743646025285
+    second: PV_FULL_ANIMATION_19
+  - first:
+      213: 704161737545491417
+    second: PV_FULL_ANIMATION_20
+  - first:
+      213: 4402093038441233933
+    second: PV_FULL_ANIMATION_21
+  - first:
+      213: -3300829529785189150
+    second: PV_FULL_ANIMATION_22
+  - first:
+      213: 756164470512917241
+    second: PV_FULL_ANIMATION_23
+  - first:
+      213: 8571728417707862976
+    second: PV_FULL_ANIMATION_24
+  - first:
+      213: 6662209364763403695
+    second: PV_FULL_ANIMATION_25
+  - first:
+      213: -6828552798398692769
+    second: PV_FULL_ANIMATION_26
+  - first:
+      213: 7212723858221692317
+    second: PV_FULL_ANIMATION_27
+  - first:
+      213: 4211673479256190087
+    second: PV_FULL_ANIMATION_28
+  - first:
+      213: 1509753997881257013
+    second: PV_FULL_ANIMATION_29
+  - first:
+      213: 6918033237941041266
+    second: PV_FULL_ANIMATION_30
+  - first:
+      213: -8290702491898793647
+    second: PV_FULL_ANIMATION_31
+  - first:
+      213: -4065093356090796781
+    second: PV_FULL_ANIMATION_32
+  - first:
+      213: -5270039247320325243
+    second: PV_FULL_ANIMATION_33
+  - first:
+      213: -2934823755176343554
+    second: PV_FULL_ANIMATION_34
+  - first:
+      213: 3637985546118163497
+    second: PV_FULL_ANIMATION_35
+  - first:
+      213: -3742707190840467226
+    second: PV_FULL_ANIMATION_36
+  - first:
+      213: 7088536281501019776
+    second: PV_FULL_ANIMATION_37
+  - first:
+      213: -6017317082857207754
+    second: PV_FULL_ANIMATION_38
+  - first:
+      213: -7827634623848477651
+    second: PV_FULL_ANIMATION_39
+  - first:
+      213: 1127207377447843375
+    second: PV_FULL_ANIMATION_40
+  - first:
+      213: 4954659485177442491
+    second: PV_FULL_ANIMATION_41
+  - first:
+      213: -5992269987607848795
+    second: PV_FULL_ANIMATION_42
+  - first:
+      213: -8465805268536679098
+    second: PV_FULL_ANIMATION_43
+  - first:
+      213: -3266181359057652334
+    second: PV_FULL_ANIMATION_44
+  - first:
+      213: -3782206834603156932
+    second: PV_FULL_ANIMATION_45
+  - first:
+      213: 8981954674167435730
+    second: PV_FULL_ANIMATION_46
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 174
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7069c7114cd36bc40800000000000000
+      internalID: 5527673504960124423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 174
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06c04c1b0c7cf6aa0800000000000000
+      internalID: -6165489734416855968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 174
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 589e28c79512c2ad0800000000000000
+      internalID: -2725767006241232507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 174
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afb560b8691d68a00800000000000000
+      internalID: 758524031766256634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 174
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ffba1416ff4b0880800000000000000
+      internalID: -8643727141489688592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 174
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 887979a196d27d400800000000000000
+      internalID: 348797425585461128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 145
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd2a61e1acecfc390800000000000000
+      internalID: -7795785062471523621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 145
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90636e81deae98230800000000000000
+      internalID: 3641700077751645705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 145
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eea66fe843c015160800000000000000
+      internalID: 7012399514668919534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_9
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 145
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5609a21fe7607660800000000000000
+      internalID: 7381514065768154715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 145
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25bb9f88c36353610800000000000000
+      internalID: 1600244876224084818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 145
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ccb1b8c363b9d70800000000000000
+      internalID: 9050887509790936141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 116
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a8250eebd77ae620800000000000000
+      internalID: 2804185504466413730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 116
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f535c89e5ddb2db10800000000000000
+      internalID: 2004873510577263455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 116
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47282e0502f9dfa00800000000000000
+      internalID: 791964070631866996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 116
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d6c4abd840acb020800000000000000
+      internalID: 2358936539618395861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_16
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 116
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e056fa9e81c1f5b10800000000000000
+      internalID: 1972326055136945422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_17
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 116
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8f89598b7aaf0d30800000000000000
+      internalID: 4399922808526311308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 87
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdd4a546418963540800000000000000
+      internalID: 4987340850709810652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_19
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 87
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5460016efb7cd6e60800000000000000
+      internalID: 7957235743646025285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 87
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d322d69e5fa5c900800000000000000
+      internalID: 704161737545491417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_21
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 87
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0e72809b40671d30800000000000000
+      internalID: 4402093038441233933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_22
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 87
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ecb80df7091132d0800000000000000
+      internalID: -3300829529785189150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_23
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 87
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fa91b0649f6e7a00800000000000000
+      internalID: 756164470512917241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 58
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cb2998b495e4f670800000000000000
+      internalID: 8571728417707862976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_25
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 58
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa5e00e8e1ce47c50800000000000000
+      internalID: 6662209364763403695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_26
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 58
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f524279b86b1c31a0800000000000000
+      internalID: -6828552798398692769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_27
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 58
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d95f948622eb81460800000000000000
+      internalID: 7212723858221692317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_28
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 58
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78caff807bed27a30800000000000000
+      internalID: 4211673479256190087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_29
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 58
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53c20f51349b3f410800000000000000
+      internalID: 1509753997881257013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 29
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27832db939ac10060800000000000000
+      internalID: 6918033237941041266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_31
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 29
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1513de7720281fc80800000000000000
+      internalID: -8290702491898793647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_32
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 29
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31558636123e597c0800000000000000
+      internalID: -4065093356090796781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_33
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 29
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 583ea17f93f0dd6b0800000000000000
+      internalID: -5270039247320325243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_34
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 29
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef7065218596547d0800000000000000
+      internalID: -2934823755176343554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_35
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 29
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92ce06e4498bc7230800000000000000
+      internalID: 3637985546118163497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e067afb3ab3f0cc0800000000000000
+      internalID: -3742707190840467226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_37
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e265cf03a8f5260800000000000000
+      internalID: 7088536281501019776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_38
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63808678ef13e7ca0800000000000000
+      internalID: -6017317082857207754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PV_FULL_ANIMATION_39
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2c86fd38c7ae5390800000000000000
+      internalID: -7827634623848477651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 659c87242affe4a44bbcfa42ba5cdc11
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PV_FULL_ANIMATION_0: 5527673504960124423
+      PV_FULL_ANIMATION_1: -6165489734416855968
+      PV_FULL_ANIMATION_10: 1600244876224084818
+      PV_FULL_ANIMATION_11: 9050887509790936141
+      PV_FULL_ANIMATION_12: 2804185504466413730
+      PV_FULL_ANIMATION_13: 2004873510577263455
+      PV_FULL_ANIMATION_14: 791964070631866996
+      PV_FULL_ANIMATION_15: 2358936539618395861
+      PV_FULL_ANIMATION_16: 1972326055136945422
+      PV_FULL_ANIMATION_17: 4399922808526311308
+      PV_FULL_ANIMATION_18: 4987340850709810652
+      PV_FULL_ANIMATION_19: 7957235743646025285
+      PV_FULL_ANIMATION_2: -2725767006241232507
+      PV_FULL_ANIMATION_20: 704161737545491417
+      PV_FULL_ANIMATION_21: 4402093038441233933
+      PV_FULL_ANIMATION_22: -3300829529785189150
+      PV_FULL_ANIMATION_23: 756164470512917241
+      PV_FULL_ANIMATION_24: 8571728417707862976
+      PV_FULL_ANIMATION_25: 6662209364763403695
+      PV_FULL_ANIMATION_26: -6828552798398692769
+      PV_FULL_ANIMATION_27: 7212723858221692317
+      PV_FULL_ANIMATION_28: 4211673479256190087
+      PV_FULL_ANIMATION_29: 1509753997881257013
+      PV_FULL_ANIMATION_3: 758524031766256634
+      PV_FULL_ANIMATION_30: 6918033237941041266
+      PV_FULL_ANIMATION_31: -8290702491898793647
+      PV_FULL_ANIMATION_32: -4065093356090796781
+      PV_FULL_ANIMATION_33: -5270039247320325243
+      PV_FULL_ANIMATION_34: -2934823755176343554
+      PV_FULL_ANIMATION_35: 3637985546118163497
+      PV_FULL_ANIMATION_36: -3742707190840467226
+      PV_FULL_ANIMATION_37: 7088536281501019776
+      PV_FULL_ANIMATION_38: -6017317082857207754
+      PV_FULL_ANIMATION_39: -7827634623848477651
+      PV_FULL_ANIMATION_4: -8643727141489688592
+      PV_FULL_ANIMATION_5: 348797425585461128
+      PV_FULL_ANIMATION_6: -7795785062471523621
+      PV_FULL_ANIMATION_7: 3641700077751645705
+      PV_FULL_ANIMATION_8: 7012399514668919534
+      PV_FULL_ANIMATION_9: 7381514065768154715
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

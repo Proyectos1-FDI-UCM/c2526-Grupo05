@@ -5,6 +5,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
@@ -19,6 +20,9 @@ using UnityEngine;
 /// 
 /// Al llamar a Play() o se instancia un AudioSourcePrefab o se mueve uno existente que no este funcionando
 /// para poner el clip indicado en la posición indicada.
+/// 
+/// +++
+/// Añadida función para ralentizar la música en función de la habilidad del tiempo
 /// </summary>
 public class AudioManager : MonoBehaviour
 {
@@ -94,6 +98,20 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     private AudioSource _mySource;
 
+    /// <summary>
+    /// Pitch objetivo al que se deben extender los audios 
+    /// </summary>
+    private float _targetPitch = 1f;
+
+    /// <summary>
+    /// Pitch actual que se está aplicando a los audios.
+    /// </summary>
+    private float _currentPitch = 1f;
+
+    /// <summary>
+    /// Velocidad a la que se transiciona el pitch.
+    /// </summary>
+    private float _pitchTransitionSpeed = 5f;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -125,6 +143,7 @@ public class AudioManager : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
+
             _poolAudioSources = new AudioSource[MaxAudioSources];
             DontDestroyOnLoad(gameObject);
             _instance = this;
@@ -147,6 +166,28 @@ public class AudioManager : MonoBehaviour
             if (!_poolAudioSources[i].isPlaying) // AudioSource liberado
             {
                 FreeAudioSource(i);
+            }
+        }
+
+        if (_currentPitch != _targetPitch)
+        {
+            // MoveTowards garantiza alcanzar el 1.0 o el 0.5 exacto. 
+            // unscaledDeltaTime ignora la ralentización del tiempo del juego.
+            _currentPitch = Mathf.MoveTowards(_currentPitch, _targetPitch, Time.unscaledDeltaTime * _pitchTransitionSpeed);
+
+            // Aplicar a la música
+            if (_mySource != null)
+            {
+                _mySource.pitch = _currentPitch;
+            }
+
+            // Aplicar a todos los SFX
+            for (int i = 0; i < _createdAudioSources; i++)
+            {
+                if (_poolAudioSources[i] != null)
+                {
+                    _poolAudioSources[i].pitch = _currentPitch;
+                }
             }
         }
     }
@@ -230,6 +271,13 @@ public class AudioManager : MonoBehaviour
         _mySource.Stop();
     }
 
+    /// <summary>
+    /// Establece el objetivo del pitch para simular la cámara lenta en el audio.
+    /// </summary>
+    public void SetSlowMotionAudio(bool isSlow)
+    {
+        _targetPitch = isSlow ? 0.5f : 1f;
+    }
     #region Métodos públicos para el volumen
     /// <summary>
     /// Método para saber cuál es el volumen actual de los SFX configurado en el AudioManager.
@@ -295,6 +343,7 @@ public class AudioManager : MonoBehaviour
         _poolAudioSources[_firstOccupiedAudioSource - 1].PlayOneShot(clip);
         _poolAudioSources[_firstOccupiedAudioSource - 1].transform.position = position;
         _poolAudioSources[_firstOccupiedAudioSource - 1].volume = VolumeSFX;
+        _poolAudioSources[_firstOccupiedAudioSource - 1].pitch = _currentPitch;
         OccupyAudioSource();
 
     }

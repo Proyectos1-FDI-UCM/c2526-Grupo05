@@ -272,7 +272,7 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     public void GoToMainMenuFromButton()
     {
-        GameManager.Instance.MatchEnded();
+        GameManager.Instance.ResetStats();
         GameManager.Instance.ChangeScene(0);
     }
 

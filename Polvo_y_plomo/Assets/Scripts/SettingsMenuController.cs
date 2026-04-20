@@ -96,8 +96,44 @@ public class SettingsMenuController : MonoBehaviour
             Debug.Log("Sin LevelManager no configurado no se aplicará el ajuste de la sensibilidad del jugador en la escena");
         }
 
+        // Inicialización de los indices según la configuración que tenga el usuario ya asignada.
+        switch (Screen.width)
+        {
+            case 1920: // 60 * 32
+                _proportionsIndex = 0;
+                break;
+
+            case 1280: // 40 * 32
+                _proportionsIndex = 1;
+                break;
+
+            case 960: // 30 * 32
+                _proportionsIndex = 2;
+                break;
+
+            default:
+                Debug.Log("Tamaño de pantalla inicial no coincide con las configuraciones del juego y al abrir el menú de settings saldrá una incorrecta");
+                break;
+        }
+        switch (Screen.fullScreenMode)
+        {
+            case FullScreenMode.ExclusiveFullScreen:
+                _resolutionsIndex = 0;
+                break;
+
+            case FullScreenMode.FullScreenWindow:
+                _resolutionsIndex = 1;
+                break;
+
+            case FullScreenMode.Windowed:
+                _resolutionsIndex = 2;
+                break;
+            default:
+                Debug.Log("Modo de pantalla inicial no coincide con las configuraciones del juego y al abrir el menú de settings saldrá uno incorrecto");
+                break;
+        }
+
         UpdateSettingsGUI();
-        
     }
     #endregion
 

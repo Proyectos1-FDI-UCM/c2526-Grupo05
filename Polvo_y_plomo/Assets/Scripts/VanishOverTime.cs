@@ -1,6 +1,6 @@
 //---------------------------------------------------------
 // Breve descripción del contenido del archivo
-// CaamiloSanndovalSánchez
+// CamiloSandovalSánchez
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -67,12 +67,13 @@ public class VanishOverTime : MonoBehaviour
     /// </summary>
     void Update()
     {
+
         if (GameManager.HasInstance()) _vanishingTime -= Time.deltaTime * GameManager.SlowMultiplier;
         else _vanishingTime -= Time.deltaTime;
 
         if (_vanishingTime <= 0)
         {
-            this.enabled = false;
+            gameObject.SetActive(false);
         }
     }
     #endregion

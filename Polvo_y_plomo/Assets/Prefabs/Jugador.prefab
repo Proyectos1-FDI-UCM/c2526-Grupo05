@@ -410,7 +410,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1.85}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -521,6 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MeleePrefab: {fileID: 5015214724800111349, guid: 8e3abd07c76a80745873b79eeb433e2b, type: 3}
   DistanciaSpawnAtaque: 1
+  MeleeShadowPrefab: {fileID: 8050898191946779312, guid: 7af6244c8a64f6640abdc73abf374c71, type: 3}
 --- !u!114 &1474871151810355398
 MonoBehaviour:
   m_ObjectHideFlags: 0

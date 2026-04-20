@@ -6,12 +6,14 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -132,7 +134,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject[] Lifes = new GameObject[VIDABASEJUGADOR];
-  
+
+    /// <summary>
+    /// Barril de revólver del HUD
+    /// </summary>
+    [SerializeField]
+    private GameObject Barrel;
+
     /// <summary>
     /// Lista de objetos de balas del HUD
     /// </summary>
@@ -634,10 +642,30 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
+        bool recarga = _municionJugador < NuevaMunicionJugador;
+
+        Animator barrelAnimator = Barrel.GetComponent<Animator>();
         _municionJugador = NuevaMunicionJugador;
         for (int i = 0; i < Bullets.Length; i++)
         {
-            if (Bullets[i] != null) Bullets[i].SetActive(i<_municionJugador);
+            if (Bullets[i] != null) 
+            {
+                Animator bulletAnimator = Bullets[i].GetComponent<Animator>();
+                if (bulletAnimator != null)
+                {
+                    if ((i < _municionJugador)) bulletAnimator.Play("BulletIdle", 0, 0f);
+                    else if ((i == _municionJugador) && !recarga) bulletAnimator.Play("Bullet", 0, 0f);
+                }
+                else Debug.Log("Falta animator en una de las bullets del barril de recarga");
+                if (barrelAnimator != null)
+                {
+                    if (recarga) 
+                    {
+                        barrelAnimator.Play("RevolverAntiClock", 0, 0f);
+                    }
+                    else barrelAnimator.Play("RevolverClock", 0, 0f);
+                }
+            }
         }
         //Debug.Log(_municionJugador);
     }
