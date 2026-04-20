@@ -17161,7 +17161,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 318241813652885617, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: PlayerSpeed
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1474871151810355398, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: VidaMax

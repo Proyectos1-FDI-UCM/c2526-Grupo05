@@ -35,6 +35,25 @@ public class ChasePlayer : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
+    /// Parámetro que indica la distancia a la que el enemigo empezara a esquivar obstaculos
+    /// </summary>
+    [SerializeField]
+    float raycastDistance = 2f;
+
+    /// <summary>
+    /// Parámetro que indica la que layers esquivara el enemigo
+    /// </summary>
+    [SerializeField]
+    private LayerMask mascarachoque;
+
+    /// <summary>
+    /// Parámetro que el giro que usa el enemigo para esquivar
+    /// </summary>
+    [SerializeField]
+    float finalAngle = 15;
+
+
+    /// <summary>
     /// Parámetro que indica a partir de que distancia el objeto empieza a perseguir al jugador, haciendolo si es igual o mayor.
     /// </summary>
     [SerializeField]
@@ -173,6 +192,74 @@ public class ChasePlayer : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
+        Vector3 directionToPlayer = _playerTransform.position - transform.position;
+
+        //Revisar si chocamos con algo
+        //Si chocamos nos movemos en otra direccion
+
+        //ahora mismo, el raycast puede chocar con el propio jugador
+
+        Debug.DrawRay(transform.position, directionToPlayer.normalized * raycastDistance, Color.red, Time.fixedDeltaTime);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer.normalized, raycastDistance, mascarachoque);
+        if (hit)
+        {
+
+            //Cuando deja de chocar a la derecha
+            bool hittingright = true;
+            Vector3 directionRight = directionToPlayer; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
+            int rightangles = 0;
+            while (hittingright)
+            {
+                rightangles += 5;
+                Debug.Log(rightangles);
+                directionRight = Quaternion.Euler(0, 0, rightangles) * directionRight; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
+                RaycastHit2D _hit = Physics2D.Raycast(transform.position, directionRight.normalized, raycastDistance, mascarachoque);
+
+
+                if (_hit) Debug.Log("Chocamos con " + _hit.collider.name);
+                if (!_hit)
+                {
+                    hittingright = false;
+                }
+            }
+
+            //Cuando deja de chocar a la izquierda
+            bool hittingLeft = true;
+            Vector3 directionLeft = directionToPlayer; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
+            int lefttangles = 0;
+            while (hittingLeft)
+            {
+                lefttangles += 5;
+                Debug.Log(rightangles);
+                directionLeft = Quaternion.Euler(0, 0, -lefttangles) * directionLeft; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
+                RaycastHit2D _hit = Physics2D.Raycast(transform.position, directionLeft.normalized, raycastDistance, mascarachoque);
+
+
+                if (_hit) Debug.Log("Chocamos con " + _hit.collider.name);
+                if (!_hit)
+                {
+                    hittingLeft = false;
+                }
+            }
+
+            directionRight = Quaternion.Euler(0, 0, (rightangles + finalAngle)) * directionRight; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
+            directionLeft = Quaternion.Euler(0, 0, -(lefttangles + finalAngle)) * directionLeft; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
+
+
+            Debug.DrawRay(transform.position, directionRight.normalized * raycastDistance, Color.yellow, Time.fixedDeltaTime);
+            Debug.DrawRay(transform.position, directionLeft.normalized * raycastDistance, Color.green, Time.fixedDeltaTime);
+
+
+
+            directionToPlayer = Vector3.Angle(directionRight, directionToPlayer) < Vector3.Angle(directionLeft, directionToPlayer) ? directionRight : directionLeft;
+
+
+
+            //Debug.Log("Chocamos con " + hit.collider.name);
+        }
+
+
         if (_isStunned) // lógica de stunneo
         {
             _isChasing = true; // durante el stun se indica que se persigue para evitar ataques de enemigo
@@ -185,11 +272,11 @@ public class ChasePlayer : MonoBehaviour
         }
         else
         {
-            if (!_isChasing && (_playerTransform.position - transform.position).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
+            if (!_isChasing && (directionToPlayer).magnitude >= ChaseRadius)  // mientras no persigo compruebo si el jugador se aleja lo suficiente como para volver a perseguir
             {
                 _isChasing = true;
             }
-            else if (_isChasing && (_playerTransform.position - transform.position).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
+            else if (_isChasing && (directionToPlayer).magnitude <= AttackRadius) // mientras persigo compruebo si he llegado al radio de ataque
             {
                 _isChasing = false;
                 if (!_isStunned) _rb.linearVelocity = Vector2.zero;
@@ -198,7 +285,7 @@ public class ChasePlayer : MonoBehaviour
             // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
             if (_isChasing)
             {
-                _rb.linearVelocity = ChaseSpeed * (_playerTransform.position - transform.position).normalized;
+                _rb.linearVelocity = ChaseSpeed * (directionToPlayer).normalized;
                 if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
             }
             else
@@ -206,7 +293,6 @@ public class ChasePlayer : MonoBehaviour
                 if (!_isStunned) _rb.linearVelocity = Vector2.zero;
             }
         }
-        if (_animator != null) _animator.SetFloat("LinearSpeed", _rb.linearVelocity.magnitude);
     }
 
     /// <summary>

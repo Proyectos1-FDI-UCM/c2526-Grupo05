@@ -216,9 +216,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab46bea649c90f542882682334d2fa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChaseRadius: 4
+  raycastDistance: 2
+  mascarachoque:
+    serializedVersion: 2
+    m_Bits: 256
+  finalAngle: 15
+  ChaseRadius: 6
   AttackRadius: 2
-  ChaseSpeed: 4
+  ChaseSpeed: 6.3
   StunSpeed: 3
 --- !u!50 &5192932032252607610
 Rigidbody2D:
@@ -274,6 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MeleePrefab: {fileID: 5015214724800111349, guid: febc8594a582bd54488df1c76a5fa589, type: 3}
   DistanciaSpawnAtaque: 1
+  MeleeShadowPrefab: {fileID: 0}
 --- !u!114 &6757376158397900182
 MonoBehaviour:
   m_ObjectHideFlags: 0

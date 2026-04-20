@@ -381,9 +381,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab46bea649c90f542882682334d2fa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastDistance: 2
+  mascarachoque:
+    serializedVersion: 2
+    m_Bits: 256
+  finalAngle: 15
   ChaseRadius: 10
-  AttackRadius: 6
-  ChaseSpeed: 4
+  AttackRadius: 6.5
+  ChaseSpeed: 5
   StunSpeed: 10
 --- !u!114 &3974216744498714624
 MonoBehaviour:
