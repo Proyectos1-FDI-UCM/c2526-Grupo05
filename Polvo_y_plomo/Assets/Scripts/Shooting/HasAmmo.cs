@@ -172,8 +172,8 @@ public class HasAmmo : MonoBehaviour
             else if (_shootEscopeta != null) _shootEscopeta.ShootBullet(fireDir);
 
             _numBalas--;
-            if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             if (_numBalas == 0) IntentaRecarga();
+            if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             return true;  // dispara
         }
         else
