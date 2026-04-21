@@ -374,7 +374,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI, streakText);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Barrel, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI, streakText);
         }
 
         foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
@@ -799,7 +799,7 @@ public class GameManager : MonoBehaviour
     /// Reconfigura el HUD para incluir el de la escena actual.
     /// </summary>
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
-        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
+        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject Barrel , GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
         int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI,
         GameObject[] streakText)
@@ -810,6 +810,7 @@ public class GameManager : MonoBehaviour
         this.FadeOutBlueScreen = FadeOutBlueScreen;
         this.HabilityLiquid = HabilityLiquid;
         this.HabilityShadow = HabilityShadow;
+        this.Barrel = Barrel;
         this.Lifes = Lifes;
         this.Bullets = Bullets;
         this.ScoreText = ScoreText;
@@ -834,7 +835,6 @@ public class GameManager : MonoBehaviour
     public void NewSceneUpdate()
     {
         // Actualizar HUD del jugador
-        UpdateAmmoHUD(MUNICIONBASEJUGADOR);
         UpdateHealthHUD(_vidaJugador);
         UpdateScoreHUD(0);
 
