@@ -121,6 +121,11 @@ public class HasAmmo : MonoBehaviour
         if (GameManager.HasInstance()) _tParaSiguienteRecarga -= Time.deltaTime * GameManager.SlowMultiplier;
         else _tParaSiguienteRecarga -= Time.deltaTime;
 
+        if (_isPlayer && IsReloadCanceledThisFrame())
+        {
+            this.enabled = false; // deja de recargar al cancelarse la acción.
+        }
+
         if (_tParaSiguienteRecarga <= 0)
         {
             _numBalas++;
@@ -128,11 +133,6 @@ public class HasAmmo : MonoBehaviour
             if (_numBalas >= NumMaxBalas) this.enabled = false;
             _tParaSiguienteRecarga = Reload;
         }
-        
-        if (_isPlayer && IsReloadCanceledThisFrame() && _numBalas > 0)
-        {
-            this.enabled = false; // deja de recargar al cancelarse la acción.
-        } // necesario comprobar _numBalas ya que es posible que se cancele mientras que el jugador tiene 0 balas, evitando la recarga automática.
     }
 
     /// <summary>
@@ -172,7 +172,6 @@ public class HasAmmo : MonoBehaviour
             else if (_shootEscopeta != null) _shootEscopeta.ShootBullet(fireDir);
 
             _numBalas--;
-            if (_numBalas == 0) IntentaRecarga();
             if (_isPlayer && GameManager.HasInstance()) GameManager.Instance.UpdateAmmoHUD(_numBalas);
             return true;  // dispara
         }
@@ -194,6 +193,7 @@ public class HasAmmo : MonoBehaviour
         if (!this.enabled && _numBalas < NumMaxBalas)
         {
             _tParaSiguienteRecarga = Reload;
+            Debug.Log("!!!+" + _tParaSiguienteRecarga);
             this.enabled = true; // inicia la recarga en el update.
         }
     }
@@ -214,7 +214,8 @@ public class HasAmmo : MonoBehaviour
     /// <returns></returns>
     private bool IsReloadCanceledThisFrame()
     {
-        return (InputManager.Instance.FireWasPressedThisFrame() || InputManager.Instance.RollWasPressedThisFrame() || InputManager.Instance.MeleeWasPressedThisFrame());
+        return (InputManager.Instance.FireWasPressedThisFrame() || InputManager.Instance.RollWasPressedThisFrame() || InputManager.Instance.MeleeWasPressedThisFrame() ||
+            InputManager.Instance.FireWasReleasedThisFrame() || InputManager.Instance.RollWasReleasedThisFrame() || InputManager.Instance.MeleeWasReleasedThisFrame());
     }
     #endregion
 

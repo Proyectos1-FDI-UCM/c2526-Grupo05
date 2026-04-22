@@ -655,6 +655,39 @@ public class GameManager : MonoBehaviour
         {
             if (Lifes[i] != null)
             {
+                // i recorre corazones enteros
+                // cada corazon son 2 PV
+
+                // en cada corazón hay que ver si:
+                // 1) hay que rellenarlo completo o dejarlo vacio
+                // 2) hay que hacer una animación, de daño o de cura
+                // para decidir entre si he recibido daño o me he curado seguramente sea
+                // más intuitivo calcular  diff = NuevaVidaJugador - vidaAnterior, si es (+) se ha curado, si es (-) ha perdido vida
+
+
+                // lo primordal al analizar cada corazón es ver si se tiene que hacer la animacion en este o no
+                // verlo es más sencillo si primero verificamos el signo de diff
+
+                // Para diff < 0:
+                // si 2i <= NuevaVidaJugador < 2(i+1) el corazon necesita animacion
+
+                // if NuevaVidaJugador >= 2(ì+1) entonces se pinta el corazon lleno y listo
+                // else if NuevaVidaJugador < 2i entonces se pinta el corazon vacio y listo
+                // else, (hace falta animacion) hago un switch con (NuevaVidaJugador - 2i)
+                // case 0: animacion corazon medio a corazon vacio
+                // case 1: animacion corazon completo a corazon medio
+                // --> Aqui se asume que los cambios son de 1 PV, habría que ver con Suzie como queda la perdida de vida
+
+                // Para diff > 0:
+                // si 2i < NuevaVidaJugador <= 2(i+1) el corazon necesita animacion
+                
+                // if NuevaVidaJugador > 2(i+1) se pinta el corazon lleno y listo
+                // else if NuevaVidaJugador <= 2i se pinta el corazon vacio y listo
+                // else, (hace falta animacion) hago un switch con (NuevaVidaJugador - 2i)
+                // case 1: animacion de corazon vacio a corazon medio
+                // case 2: animacion de corazon medio a corazon lleno
+                // --> De nuevo asumimos que los cambios son de 1 PV y podría quedar raro con curas mayores
+
                 HeartUI heartScript = Lifes[i].GetComponentInChildren<HeartUI>();
 
                 if (heartScript != null)
