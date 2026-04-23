@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
     /// ImageFill de la "sombra" del ataque melee, para representar su cooldown con un sprite que "cambia" de color
     /// </summary>
     [SerializeField]
-    private ImageFill MeleeShadow = null;
+    private ImageFill MeleeCooldown = null;
 
     [Header("Highscore")]
 
@@ -821,7 +821,7 @@ public class GameManager : MonoBehaviour
     /// <param name="fillAmount"></param>
     public void UpdateMeleeCooldownShadow(float fillAmount)
     {
-        if (MeleeShadow != null) MeleeShadow.UpdateImageFillAmmount(fillAmount);
+        if (MeleeCooldown != null) MeleeCooldown.UpdateImageFillAmmount(fillAmount);
     }
     #endregion
 

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2292199746581496351}
   - component: {fileID: 5036081665872762522}
   - component: {fileID: 3571823559236605224}
-  m_Layer: 0
-  m_Name: PlayerHitbox
+  m_Layer: 3
+  m_Name: SuzieHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
