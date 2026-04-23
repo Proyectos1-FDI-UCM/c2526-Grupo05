@@ -143,6 +143,30 @@ public class HeartUI : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Pinta el corazon vacio sin animación
+    /// </summary>
+    public void EmptyHeart()
+    {
+        HeartImage.sprite = TransitionEmptyToHalf[0];
+    }
+
+    /// <summary>
+    /// Pinta el corazon lleno sin animación
+    /// </summary>
+    public void FullHeart()
+    {
+        HeartImage.sprite = TransitionFullToHalf[0];
+    }
+
+    /// <summary>
+    /// Pinta el medio corazón sin animación
+    /// </summary>
+    public void HalfHeart()
+    {
+        HeartImage.sprite = TransitionHalfToEmpty[0];
+    }
+
     public void HitToHalf()
     {
         ReproducirAnimacion(TransitionFullToHalf, TimeBetweenFrames);

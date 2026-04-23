@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
     /// Lista de objetos de vida del HUD
     /// </summary>
     [SerializeField]
-    private GameObject[] Lifes = new GameObject[VIDABASEJUGADOR];
+    private HeartUI[] Lifes;
   
     /// <summary>
     /// Lista de objetos de balas del HUD
@@ -648,7 +648,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateHealthHUD(int NuevaVidaJugador)
     {
-        int vidaAnterior = _vidaJugador;
+        int diff = NuevaVidaJugador - _vidaJugador;
         _vidaJugador = NuevaVidaJugador;
 
         for (int i = 0; i < Lifes.Length; i++)
@@ -688,33 +688,49 @@ public class GameManager : MonoBehaviour
                 // case 2: animacion de corazon medio a corazon lleno
                 // --> De nuevo asumimos que los cambios son de 1 PV y podría quedar raro con curas mayores
 
-                HeartUI heartScript = Lifes[i].GetComponentInChildren<HeartUI>();
-
-                if (heartScript != null)
+                // Para diff = 0: (posible en la transición de escenas)
+                // if NuevaVidaJugador >= 2(i+1) se pinta el corazón lleno y listo
+                // else if NuevaVidaJugador <= 2i se pinta el corazon vacio y listo
+                // else -> mitad de corazon
+                if (diff < 0)
                 {
-                    int hpAnterior = Mathf.Clamp(vidaAnterior - (i * 2), 0, 2);
-                    int hpNuevo = Mathf.Clamp(_vidaJugador - (i * 2), 0, 2);
-
-                    if (hpAnterior == hpNuevo) continue;
-
-                    // DAÑO
-                    if (hpNuevo < hpAnterior)
+                    if (NuevaVidaJugador >= 2 * (i + 1)) Lifes[i].FullHeart();
+                    else if (NuevaVidaJugador < 2 * i) Lifes[i].EmptyHeart();
+                    else
                     {
-                        if (hpNuevo == 1)
-                            heartScript.HitToHalf();
-
-                        else if (hpNuevo == 0)
-                            heartScript.HitToEmpty();
+                        switch(NuevaVidaJugador - 2 * i)
+                        {
+                            case 0:
+                                Lifes[i].HitToEmpty();
+                                break;
+                            case 1:
+                                Lifes[i].HitToHalf();
+                                break;
+                        }
                     }
-                    // CURACIÓN
-                    else if (hpNuevo > hpAnterior)
+                }
+                else if (diff > 0)
+                {
+                    if (NuevaVidaJugador >= 2 * (i + 1)) Lifes[i].FullHeart();
+                    else if (NuevaVidaJugador <= 2 * i) Lifes[i].EmptyHeart();
+                    else
                     {
-                        if (hpNuevo == 1)
-                            heartScript.HealToHalf();
-
-                        else if (hpNuevo == 2)
-                            heartScript.HealToFull();
+                        switch(NuevaVidaJugador - 2 * i)
+                        {
+                            case 1:
+                                Lifes[i].HealToHalf();
+                                break;
+                            case 2:
+                                Lifes[i].HealToFull();
+                                break;
+                        }
                     }
+                }
+                else
+                {
+                    if (NuevaVidaJugador >= 2 * (i + 1)) Lifes[i].FullHeart();
+                    else if (NuevaVidaJugador <= 2*i) Lifes[i].EmptyHeart();
+                    else Lifes[i].HalfHeart();
                 }
             }
         }
@@ -832,7 +848,7 @@ public class GameManager : MonoBehaviour
     /// Reconfigura el HUD para incluir el de la escena actual.
     /// </summary>
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
-        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject Barrel , GameObject[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
+        ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject Barrel , HeartUI[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
         int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI,
         GameObject[] streakText)
