@@ -67,17 +67,24 @@ public class LevelManager : MonoBehaviour
     /// Este es el tiempo base de duración de la máxima racha alcanzada.
     /// </summary>
     [SerializeField]
-    private float MaxStreakDuration = 5f;
+    private float MaxStreakDuration = 3.75f;
+
+    /// <summary>
+    /// Tiempo mínimoo de duración de un nivel de racha.
+    /// </summary>
+    [SerializeField]
+    private float MinStreakDuration = 0.3f;
+
+    /// <summary>
+    /// Número por el que se va dividiendo la duración de descenso de racha en cada pérdida.
+    /// </summary>
+    [SerializeField]
+    private float DIV_STREAK_DUR = 1.75f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
 
     #region Atributos Privados (private fields)
-
-    /// <summary>
-    /// Número por el que se va dividiendo la duración de descenso de racha en cada pérdida.
-    /// </summary>
-    private const float DIV_STREAK_DUR = 2;
 
     /// <summary>
     /// Instancia única de la clase (singleton).
@@ -334,6 +341,7 @@ public class LevelManager : MonoBehaviour
     {
         _streak--;
         _streakDuration /= DIV_STREAK_DUR;
+        if (_streakDuration <= MinStreakDuration) _streakDuration = MinStreakDuration;
         _tLastStreak = _streakDuration;
         if (GameManager.HasInstance())
         {

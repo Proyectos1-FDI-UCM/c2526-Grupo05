@@ -34,12 +34,18 @@ public class SuziesSecondPattern : MonoBehaviour
     private HealthChanger HealthManager;
 
     /// <summary>
-    /// Array de los enemigos que conforman este patrón.
-    /// Cambiado de List a Array por eficiencia de memoria.
+    /// Struct que guarda un array de spawners a modo de “nivel” de spawn de enemigos
     /// </summary>
-    [SerializeField]
-    private EnemySpawner[] Spawns;
+    [System.Serializable]
+    private struct SpawnLevel
+    {
+        public EnemySpawner[] LevelSpawners;
+    }
 
+    /// <summary>
+    /// Array de structs que guarda distintos "niveles" de spawn de enemigos
+    /// </summary>
+    [SerializeField] private SpawnLevel[] SpawnLevels;
 
     [SerializeField]
     [Tooltip("El spawn inicial que activa el resto")]
@@ -61,6 +67,10 @@ public class SuziesSecondPattern : MonoBehaviour
     /// </summary>
     int deactivatedSpawns = 0;
 
+    /// <summary>
+    /// Contador que indica el nivel de spawn de enemigos actual
+    /// </summary>
+    private int _currentSpawnLevel = 0;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -81,9 +91,12 @@ public class SuziesSecondPattern : MonoBehaviour
     /// </summary>
     void Start()
     {
-        for (int i = 0; i < Spawns.Length; i++)
+        for (int i = 0; i < SpawnLevels.Length; i++)
         {
-            if (Spawns[i] != null) Spawns[i].SetBoss(this);
+            for (int j = 0; j < SpawnLevels[i].LevelSpawners.Length; j++)
+            {
+                if (SpawnLevels[i].LevelSpawners[j] != null) SpawnLevels[i].LevelSpawners[j].SetBoss(this);
+            }
         }
     }
     #endregion
@@ -123,10 +136,16 @@ public class SuziesSecondPattern : MonoBehaviour
         Debug.Log("spawns desactivados: " + deactivatedSpawns);
 
         // Si ya se han apagado tantos spawners como hay en la lista Suzie volverá a aparecer siendo vulnerable
-        if (deactivatedSpawns >= Spawns.Length)
+        if (deactivatedSpawns >= SpawnLevels[_currentSpawnLevel].LevelSpawners.Length)
         {
             UnHide();
             deactivatedSpawns = 0; // Reseteamos el contador para la próxima vez
+
+            if (_currentSpawnLevel < SpawnLevels.Length - 1)
+            {
+                _currentSpawnLevel++;
+                Pattern2Spawner = SpawnLevels[_currentSpawnLevel].LevelSpawners[0];
+            }
 
             SuziePhaseManager phaseManager = GetComponent<SuziePhaseManager>();
             if (phaseManager != null)
