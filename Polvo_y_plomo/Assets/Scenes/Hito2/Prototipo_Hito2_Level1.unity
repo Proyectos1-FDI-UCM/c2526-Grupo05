@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c5f7397755a4e4590982d0359999a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: {fileID: 8300000, guid: ed346bf8b90490e49a609c7aa86db5ab, type: 3}
+  Music: {fileID: 8300000, guid: b36ad3c081a7848499b0feecf638b081, type: 3}
 --- !u!1 &63479937
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,7 +2130,7 @@ PrefabInstance:
     - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: VictoryMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 0c48c7cb110403b439bf401fd74d30a8, type: 3}
+      objectReference: {fileID: 8300000, guid: a0ea45756dad0de4d97bfdbf519fdbb6, type: 3}
     - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: MeleeCooldown
       value: 
