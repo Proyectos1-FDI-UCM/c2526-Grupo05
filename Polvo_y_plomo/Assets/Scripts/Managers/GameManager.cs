@@ -823,7 +823,7 @@ public class GameManager : MonoBehaviour
     {
         if (ActLevelMessage != null)
         {
-            ActLevelMessage.text = " " + a + " ";
+            ActLevelMessage.text = a.ToString();
         }
     }
 

@@ -148,6 +148,7 @@ public class playerSlowShot : MonoBehaviour
             if (AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold <= kills)
             {
                 _abilityCurrentLevel++;
+                GameManager.Instance.UpdateActLevelText(_abilityCurrentLevel + 1);
             }
             else
             {
