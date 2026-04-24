@@ -438,8 +438,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   finalAngle: 15
-  ChaseRadius: 10
-  AttackRadius: 5.5
+  ChaseRadius: 12
+  AttackRadius: 9
   ChaseSpeed: 4
   StunSpeed: 3
 --- !u!114 &6118735902132501129

@@ -180,6 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Vanishes: 1
-  ChangeTime: 0.5
+  ChangeTime: 0.3
   VanishTime: 0.5
-  FinalScale: 5
+  FinalScale: 6
