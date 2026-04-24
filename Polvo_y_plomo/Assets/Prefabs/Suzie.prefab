@@ -110,6 +110,8 @@ GameObject:
   - component: {fileID: 786613330448179768}
   - component: {fileID: 3100835469812802007}
   - component: {fileID: 1427213371865770467}
+  - component: {fileID: 4963184217477882435}
+  - component: {fileID: -4203491633760675795}
   m_Layer: 0
   m_Name: Suzie
   m_TagString: Untagged
@@ -469,6 +471,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlashTime: 0.2
   FlashesUntilDisable: 1
+--- !u!114 &4963184217477882435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374259116769511410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d9164fa8cf71d4280da9a0d40bd2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4203491633760675795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374259116769511410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eed44f171a52b3247a900162322bea54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points: 1000
 --- !u!1001 &7251475672145545783
 PrefabInstance:
   m_ObjectHideFlags: 0
