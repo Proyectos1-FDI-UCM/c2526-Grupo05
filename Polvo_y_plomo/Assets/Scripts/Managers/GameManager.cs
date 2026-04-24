@@ -88,6 +88,24 @@ public class GameManager : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
+    /// Es la bola del HUD que tiene el nivel actual de la habilidad.
+    /// </summary>
+    [SerializeField]
+    private GameObject LevelBall;
+
+    /// <summary>
+    /// Texto que guarda el nivel actual de la habilidad.
+    /// </summary>
+    [SerializeField]
+    TextMeshProUGUI ActLevelMessage;
+
+    /// <summary>
+    /// Texto que saldrá al subir de nivel la habilidad.
+    /// </summary>
+    [SerializeField]
+    ChangeColorAndHide LevelUpMessage;
+
+    /// <summary>
     /// Componente con el FadeIn configurado
     /// Realizará un FadeIn de pantalla negra al morir el jugador.
     /// Se debería configurar para que acabe en 1 de transparencia.
@@ -160,7 +178,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private TextMeshProUGUI StreakMultiplier;
-
 
     /// <summary>
     /// Struct para añadir colores al multiplicador y su racha asociada a la que cambiar
@@ -784,6 +801,26 @@ public class GameManager : MonoBehaviour
         if (LevelBar != null)
         {
             LevelBar.UpdateImageFillAmmount(fillAmmount);
+        }
+    }
+
+    /// <summary>
+    /// Actualiza en el HUD el texto que dice el nivel actual de la habilidad.
+    /// </summary>
+    /// <param name="a">Este sería el nuevo valor del nivel</param>
+    public void UpdateActLevelText(int a)
+    {
+        if (ActLevelMessage != null)
+        {
+            ActLevelMessage.text = "L V L\n" + a;
+        }
+    }
+
+    public void ActivateLevelUpText()
+    {
+        if (LevelUpMessage != null)
+        {
+            LevelUpMessage.ColorChanging();
         }
     }
 

@@ -5,6 +5,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using TMPro;
 using UnityEngine;
 using UnityEngineInternal;
 // Añadir aquí el resto de directivas using
@@ -228,7 +229,9 @@ public class playerSlowShot : MonoBehaviour
             if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
             {
                 _abilityCurrentLevel++;
+                GameManager.Instance.ActivateLevelUpText();
                 GameManager.Instance.UpdateLevelBar(0);
+                GameManager.Instance.UpdateActLevelText(_abilityCurrentLevel + 1);
             }
             else
             {
