@@ -812,10 +812,13 @@ public class GameManager : MonoBehaviour
     {
         if (ActLevelMessage != null)
         {
-            ActLevelMessage.text = "L V L\n" + a;
+            ActLevelMessage.text = " " + a + " ";
         }
     }
 
+    /// <summary>
+    /// Llama al método ColorChanging de LevelUpMessage (solo hace que se active dicho componente)
+    /// </summary>
     public void ActivateLevelUpText()
     {
         if (LevelUpMessage != null)

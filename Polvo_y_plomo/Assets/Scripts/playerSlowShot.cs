@@ -219,8 +219,9 @@ public class playerSlowShot : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     /// <summary>
-    /// Método público que aumenta el nivel de la habilidad del jugador en caso de que se haya alcanzado el umbral de kills que corresponda.
-    /// Actualiza la barra de nivel del HUD.
+    /// Método público que aumenta el nivel de la habilidad del jugador en caso de que se haya alcanzado el
+    /// umbral de kills que corresponda.
+    /// Actualiza la barra de nivel del HUD, el texto con el nivel actual y activa el mensaje de subida de nivel.
     /// </summary>
     public void PlayerKill(int kills)
     {

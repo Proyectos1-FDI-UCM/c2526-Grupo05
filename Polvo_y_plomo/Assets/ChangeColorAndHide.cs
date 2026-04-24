@@ -11,8 +11,8 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Este componente, cuando está activado, cambia el color de la cadena de texto que contiene el TextMeshPro del
+/// GameObject. Pasado un tiempo configurable desde el editor, se desactiva. Tiene un método público que lo activa.
 /// </summary>
 public class ChangeColorAndHide : MonoBehaviour
 {
@@ -24,11 +24,14 @@ public class ChangeColorAndHide : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// Duración de la activación del componente.
+    /// </summary>
     [SerializeField]
     private float DurationTime = 0;
 
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -38,10 +41,27 @@ public class ChangeColorAndHide : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    const int ZERO = 0;
+
+    const float G_DIFF = 2.25f;
+
+    const float B_DIFF = 10.5f;
+
+    const float MUL = 20;
+
+    /// <summary>
+    /// Es el componente TextMeshPro de este GameObject
+    /// </summary>
     private TextMeshProUGUI _thistext;
 
+    /// <summary>
+    /// Son los valores del color RGBA que tomará el texto.
+    /// </summary>
     private float r = 0, g = 0, b = 0, a = 1;
 
+    /// <summary>
+    /// Es el momento en el que se ha activado el componente
+    /// </summary>
     private float _enabledTime = 0;
 
     #endregion
@@ -54,15 +74,23 @@ public class ChangeColorAndHide : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// 
+    /// Se llama al iniciar la escena, o al instanciar el GameObject. 
+    /// Dará valor a _thisText
     /// </summary>
     void Awake()
     {
         _thistext = GetComponent<TextMeshProUGUI>();
+        if (_thistext == null)
+        {
+            Debug.Log("Se hapuesto el componente ChangeColorAndHide en un objeto sin TtextMeshPro," +
+                "no funionará y es destruirá");
+            Destroy(this);
+        }
     }
 
     /// <summary>
-    /// 
+    /// Se llama cuando se active este componente.
+    /// Inicializará los parámetros del color del texto, el propio color, y guarda el momento en el que se ha activado.
     /// </summary>
     void OnEnable()
     {
@@ -77,19 +105,19 @@ public class ChangeColorAndHide : MonoBehaviour
 
     /// <summary>
     /// Se llama una vez por frame.
-    /// 
+    /// Llevará todo el proceso de cambio de color. Cada parámetro de color cambia en función de una variación de la 
+    /// función seno. Cuando Haya pasado el tiempo de duració, se desactiva el componente
     /// </summary>
     void Update()
     {
-        Debug.Log("rwrw");
-        r = Mathf.Sin(Time.time * 20);
-        g = Mathf.Sin(20 * Time.time + 2.25f);
-        b = Mathf.Sin(20 * Time.time + 10.5f);
+        r = Mathf.Sin(MUL * Time.time);
+        g = Mathf.Sin(MUL * Time.time + G_DIFF);
+        b = Mathf.Sin(MUL * Time.time + B_DIFF);
         _thistext.color = new Color(r, g, b, a);
         if (Time.time - _enabledTime > DurationTime)
         {
             this.enabled = false;
-            _thistext.color = new Color(r, g, b, 0);
+            _thistext.color = new Color(r, g, b, ZERO);
         }
     }
     #endregion
@@ -102,6 +130,9 @@ public class ChangeColorAndHide : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Solo activaeste componente.
+    /// </summary>
     public void ColorChanging()
     {
         this.enabled = true;
