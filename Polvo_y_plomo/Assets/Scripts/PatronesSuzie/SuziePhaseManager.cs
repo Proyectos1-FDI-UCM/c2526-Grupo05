@@ -77,7 +77,6 @@ public class SuziePhaseManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        Debug.Log("Apagando todos los patrones");
         if (_patron1 != null) _patron1.enabled = false;
         if (_patron2 != null) _patron2.enabled = false;
         if (_patron3 != null) _patron3.enabled = false;
@@ -114,7 +113,6 @@ public class SuziePhaseManager : MonoBehaviour
         _atacando = false;
         _indiceSecuencia++;
         SiguienteAtaque();
-        Debug.Log("Se terminó el ataque, iniciando siguiente");
     }
 
     #endregion
@@ -141,12 +139,10 @@ public class SuziePhaseManager : MonoBehaviour
 
             if (_indiceSecuencia == 0 || _indiceSecuencia == 1)
             {
-                Debug.Log("Ejecutando el patrón 1");
                 EjecutarPatron1();
             }
             else if (_indiceSecuencia == 2)
             { 
-                Debug.Log("Ejecutando el patrón 2");
                 EjecutarPatron2();
             }
         }
@@ -174,7 +170,6 @@ public class SuziePhaseManager : MonoBehaviour
     /// </summary>
     private void CambiarAFase2()
     {
-        Debug.Log("Suzie entra en Fase 2");
         _faseActual = 2;
         _indiceSecuencia = 0; // Reseteamos la secuencia para empezar con el Patrón 3
         _atacando = false; // Forzamos el estado por si estaba a mitad de un ataque
@@ -201,7 +196,6 @@ public class SuziePhaseManager : MonoBehaviour
     /// </summary>
     private void EjecutarPatron2()
     {
-        Debug.Log("Patron2");
         _patron1.enabled = false;
         _patron3.enabled = false;
         _patron2.enabled = true;

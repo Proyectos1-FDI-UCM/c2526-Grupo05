@@ -217,7 +217,7 @@ public class ChasePlayer : MonoBehaviour
                 RaycastHit2D _hit = Physics2D.Raycast(transform.position, directionRight.normalized, raycastDistance, mascarachoque);
 
 
-                if (_hit) Debug.Log("Chocamos con " + _hit.collider.name);
+
                 if (!_hit)
                 {
                     hittingright = false;
@@ -231,12 +231,10 @@ public class ChasePlayer : MonoBehaviour
             while (hittingLeft)
             {
                 lefttangles += 5;
-                Debug.Log(rightangles);
                 directionLeft = Quaternion.Euler(0, 0, -lefttangles) * directionLeft; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
                 RaycastHit2D _hit = Physics2D.Raycast(transform.position, directionLeft.normalized, raycastDistance, mascarachoque);
 
 
-                if (_hit) Debug.Log("Chocamos con " + _hit.collider.name);
                 if (!_hit)
                 {
                     hittingLeft = false;

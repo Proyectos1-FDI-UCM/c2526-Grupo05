@@ -193,7 +193,6 @@ public class HasAmmo : MonoBehaviour
         if (!this.enabled && _numBalas < NumMaxBalas)
         {
             _tParaSiguienteRecarga = Reload;
-            Debug.Log("!!!+" + _tParaSiguienteRecarga);
             this.enabled = true; // inicia la recarga en el update.
         }
     }

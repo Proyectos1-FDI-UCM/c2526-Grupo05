@@ -374,7 +374,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Barrel, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, highScoreTextUI, streakText);
+            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Barrel, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, MeleeCooldown, highScoreTextUI, streakText);
         }
 
         foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
@@ -850,7 +850,7 @@ public class GameManager : MonoBehaviour
     public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
         ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject Barrel , HeartUI[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
-        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, TextMeshProUGUI highScoreTextUI,
+        int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, ImageFill MeleeCooldown, TextMeshProUGUI highScoreTextUI,
         GameObject[] streakText)
     {
         this.FadeInBlackScreen = FadeInBlackScreen;
@@ -871,6 +871,7 @@ public class GameManager : MonoBehaviour
         this.NextLevel = NextLevel;
         this.TiempoEsperaRespawn = TiempoEsperaRespawn;
         this.TiempoEsperaSiguienteNivel = TiempoEsperaSiguienteNivel;
+        this.MeleeCooldown = MeleeCooldown;
         this.highScoreTextUI = highScoreTextUI;
         this.streakText = streakText;
     }
