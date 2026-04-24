@@ -96,10 +96,13 @@ public class CanMelee : MonoBehaviour
 
     public void ShadowMelee(Vector2 dirAtaque)
     {
-        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
-        Instantiate(MeleeShadowPrefab, (Vector2)transform.position + DistanciaSpawnAtaque * dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
-        MoveWithPlayerAndCursor shadowMovement = MeleeShadowPrefab.GetComponent<MoveWithPlayerAndCursor>();
-        if (shadowMovement != null) shadowMovement.InitialDistanceValue(DistanciaSpawnAtaque);
+        if (MeleeShadowPrefab != null)
+        {
+            float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
+            Instantiate(MeleeShadowPrefab, (Vector2)transform.position + DistanciaSpawnAtaque * dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
+            MoveWithPlayerAndCursor shadowMovement = MeleeShadowPrefab.GetComponent<MoveWithPlayerAndCursor>();
+            if (shadowMovement != null) shadowMovement.InitialDistanceValue(DistanciaSpawnAtaque);
+        }
     }
 
     // ---- MÉTODOS PRIVADOS ----

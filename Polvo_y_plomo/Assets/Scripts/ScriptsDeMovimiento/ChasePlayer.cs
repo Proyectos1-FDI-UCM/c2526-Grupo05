@@ -212,7 +212,6 @@ public class ChasePlayer : MonoBehaviour
             while (hittingright)
             {
                 rightangles += 5;
-                Debug.Log(rightangles);
                 directionRight = Quaternion.Euler(0, 0, rightangles) * directionRight; //si chocamos con algo, nos movemos en otra dirección (perpendicular a la dirección al jugador)
                 RaycastHit2D _hit = Physics2D.Raycast(transform.position, directionRight.normalized, raycastDistance, mascarachoque);
 

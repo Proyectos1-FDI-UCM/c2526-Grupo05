@@ -711,7 +711,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (diff > 0)
                 {
-                    if (NuevaVidaJugador >= 2 * (i + 1)) Lifes[i].FullHeart();
+                    if (NuevaVidaJugador > 2 * (i + 1)) Lifes[i].FullHeart();
                     else if (NuevaVidaJugador <= 2 * i) Lifes[i].EmptyHeart();
                     else
                     {

@@ -1343,6 +1343,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4805159277911452465, guid: 390bec2c501cc1e49a55dd70a1933c40, type: 3}
+      propertyPath: ActivateSpawnersWhenDone.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4805159277911452465, guid: 390bec2c501cc1e49a55dd70a1933c40, type: 3}
       propertyPath: 'ActivateSpawnersWhenDone.Array.data[0]'
       value: 
       objectReference: {fileID: 351137022}

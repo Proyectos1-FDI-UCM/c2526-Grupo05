@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 689528950}
   - component: {fileID: 689528949}
   m_Layer: 0
-  m_Name: PlayWauwauaaa
+  m_Name: PlaySong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c5f7397755a4e4590982d0359999a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: {fileID: 8300000, guid: 0c48c7cb110403b439bf401fd74d30a8, type: 3}
+  Music: {fileID: 8300000, guid: ed346bf8b90490e49a609c7aa86db5ab, type: 3}
 --- !u!4 &689528950
 Transform:
   m_ObjectHideFlags: 0
