@@ -66,7 +66,7 @@ public class PointsOnDeath : MonoBehaviour
     {
         if (LevelManager.HasInstance())
         {
-            GameManager.Instance.SpawnPointIndicator(transform.position, Points * LevelManager.Instance.GetStreak());
+            if (GameManager.HasInstance()) GameManager.Instance.SpawnPointIndicator(transform.position, Points * LevelManager.Instance.GetStreak());
             LevelManager.Instance.UpdateScoreSystem(Points);
         }
         Destroy(this);

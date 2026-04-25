@@ -35,9 +35,6 @@ public class HealthChanger : MonoBehaviour
 
     [SerializeField]
     private AudioClip CoberturaRota;
-
-    [SerializeField]
-    private AudioClip MuerteJugador;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----

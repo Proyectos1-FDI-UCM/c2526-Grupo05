@@ -22,10 +22,7 @@ public class MoveWithPlayerAndCursor : MonoBehaviour
     // públicos y de inspector se nombren en formato PascalCase
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
-    /// <summary>
-    /// Bool que determina si el objeto que lleva esta clase es la sombra del ataque melee
-    /// </summary>
-    [SerializeField] private bool MeleeShadow = false;
+
     #endregion
     
     // ---- ATRIBUTOS PRIVADOS ----
@@ -99,7 +96,7 @@ public class MoveWithPlayerAndCursor : MonoBehaviour
         transform.position = (Vector2)_player.position + (_dir.normalized * _distanceToPlayer);
         transform.rotation = Quaternion.Euler(0, 0, _angle);
 
-        if (MeleeShadow && InputManager.Instance.MeleeWasReleasedThisFrame()) Destroy(gameObject);
+        if (InputManager.Instance.MeleeWasReleasedThisFrame() || InputManager.Instance.RollWasPressedThisFrame()) Destroy(gameObject);
     }
     #endregion
 

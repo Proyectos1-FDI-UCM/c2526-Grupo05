@@ -5,6 +5,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using TMPro;
 using UnityEngine;
 using UnityEngineInternal;
 // Añadir aquí el resto de directivas using
@@ -149,6 +150,7 @@ public class playerSlowShot : MonoBehaviour
             if (AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold <= kills)
             {
                 _abilityCurrentLevel++;
+                GameManager.Instance.UpdateActLevelText(_abilityCurrentLevel + 1);
             }
             else
             {
@@ -181,7 +183,8 @@ public class playerSlowShot : MonoBehaviour
         // Lógica de la habilidad
         if (_abilityOn)
         {
-            _tRemainingOfAbility -= Time.deltaTime;
+            if (GameManager.SlowMultiplier == 0) _tRemainingOfAbility -= Time.deltaTime * GameManager.SlowMultiplier;
+            else _tRemainingOfAbility -= Time.deltaTime;
 
             if (_tRemainingOfAbility <= 0)
             {
@@ -220,8 +223,9 @@ public class playerSlowShot : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     /// <summary>
-    /// Método público que aumenta el nivel de la habilidad del jugador en caso de que se haya alcanzado el umbral de kills que corresponda.
-    /// Actualiza la barra de nivel del HUD.
+    /// Método público que aumenta el nivel de la habilidad del jugador en caso de que se haya alcanzado el
+    /// umbral de kills que corresponda.
+    /// Actualiza la barra de nivel del HUD, el texto con el nivel actual y activa el mensaje de subida de nivel.
     /// </summary>
     public void PlayerKill(int kills)
     {
@@ -230,7 +234,9 @@ public class playerSlowShot : MonoBehaviour
             if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
             {
                 _abilityCurrentLevel++;
+                GameManager.Instance.ActivateLevelUpText();
                 GameManager.Instance.UpdateLevelBar(0);
+                GameManager.Instance.UpdateActLevelText(_abilityCurrentLevel + 1);
                 if (LevelUP) AudioManager.Instance.Play(LevelUP, transform.position);
             }
             else

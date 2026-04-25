@@ -99,16 +99,18 @@ public class CanMelee : MonoBehaviour
         float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
         Instantiate(MeleePrefab, (Vector2)transform.position + DistanciaSpawnAtaque*dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
         if (Attack) AudioManager.Instance.Play(Attack, transform.position);
-
     }
+
     public void ShadowMelee(Vector2 dirAtaque)
     {
-        float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
-        Instantiate(MeleeShadowPrefab, (Vector2)transform.position + DistanciaSpawnAtaque * dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
-
-        if (AttackShadow) AudioManager.Instance.Play(AttackShadow, transform.position);
-        MoveWithPlayerAndCursor shadowMovement = MeleeShadowPrefab.GetComponent<MoveWithPlayerAndCursor>();
-        if (shadowMovement != null) shadowMovement.InitialDistanceValue(DistanciaSpawnAtaque);
+        if (MeleeShadowPrefab != null)
+        {
+            float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
+            Instantiate(MeleeShadowPrefab, (Vector2)transform.position + DistanciaSpawnAtaque * dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
+            if (AttackShadow) AudioManager.Instance.Play(AttackShadow, transform.position);
+            MoveWithPlayerAndCursor shadowMovement = MeleeShadowPrefab.GetComponent<MoveWithPlayerAndCursor>();
+            if (shadowMovement != null) shadowMovement.InitialDistanceValue(DistanciaSpawnAtaque);
+        }
     }
 
     // ---- MÉTODOS PRIVADOS ----
@@ -116,8 +118,9 @@ public class CanMelee : MonoBehaviour
     // Documentar cada método que aparece aquí
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
-    // mayúscula, incluida la primera letra
+    // mayúscula, incluida la primera letra)
+
     #endregion   
-}
-// class CanMelee 
+
+} // class CanMelee 
 // namespace

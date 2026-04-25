@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioSourcePrefab: {fileID: 63141245171496090, guid: 7ad0c45cdd092de4baefcc278c901b00, type: 3}
   MaxAudioSources: 30
-  VolumeSFX: 1
-  VolumeMusic: 1
+  VolumeSFX: 0.5
+  VolumeMusic: 0.5
 --- !u!82 &1633645738794046340
 AudioSource:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

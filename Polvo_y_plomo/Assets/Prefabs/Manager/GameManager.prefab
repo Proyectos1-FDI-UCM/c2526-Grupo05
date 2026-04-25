@@ -44,12 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f59f329bc0b4a36bc8d02c6710a226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActLevelMessage: {fileID: 0}
+  LevelUpMessage: {fileID: 0}
   FadeInBlackScreen: {fileID: 0}
   FadeOutBlackScreen: {fileID: 0}
   FadeInBlueScreen: {fileID: 0}
   FadeOutBlueScreen: {fileID: 0}
   HabilityLiquid: {fileID: 0}
   HabilityShadow: {fileID: 0}
+  Barrel: {fileID: 0}
   Lifes:
   - {fileID: 0}
   - {fileID: 0}
@@ -92,8 +95,10 @@ MonoBehaviour:
   NextLevel: 0
   TiempoEsperaRespawn: 3
   TiempoEsperaSiguienteNivel: 5
+  MeleeCooldown: {fileID: 0}
   highScoreTextUI: {fileID: 0}
   highScore: 0
   streakText: []
   actualtext: 0
   TimeAbilityAnimator: {fileID: 0}
+  ReloadClip: {fileID: 8300000, guid: b61ed8c783d3b3f4b9d907b56bab5663, type: 3}

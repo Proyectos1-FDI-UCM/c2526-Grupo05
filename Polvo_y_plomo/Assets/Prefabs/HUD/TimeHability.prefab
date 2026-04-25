@@ -116,6 +116,8 @@ GameObject:
   - component: {fileID: 7372636155120978114}
   - component: {fileID: 4643379848388643272}
   - component: {fileID: 2729333757283200151}
+  - component: {fileID: 695762269891776502}
+  - component: {fileID: 445364367760900818}
   m_Layer: 5
   m_Name: HabilityShadow
   m_TagString: Untagged
@@ -193,6 +195,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ImageFilled: {fileID: 4643379848388643272}
+--- !u!114 &695762269891776502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8166582737348023214}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95002d083431e454ba30e8ff3b5da0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8166582737348023214}
+  StartAlpha: 0.15
+  FinalAlpha: 0.7
+  FadeTime: 0.5
+--- !u!114 &445364367760900818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8166582737348023214}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95002d083431e454ba30e8ff3b5da0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8166582737348023214}
+  StartAlpha: 0.7
+  FinalAlpha: 0.15
+  FadeTime: 0.5
 --- !u!1 &8256383668195943183
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +239,8 @@ GameObject:
   - component: {fileID: 1965311753780631388}
   - component: {fileID: 8876123019902082288}
   - component: {fileID: 8432907416314288406}
+  - component: {fileID: 71531507192434453}
+  - component: {fileID: 694414423293054285}
   m_Layer: 5
   m_Name: HabilityLiquid
   m_TagString: Untagged
@@ -282,6 +318,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ImageFilled: {fileID: 8876123019902082288}
+--- !u!114 &71531507192434453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256383668195943183}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95002d083431e454ba30e8ff3b5da0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8256383668195943183}
+  StartAlpha: 0.15
+  FinalAlpha: 1
+  FadeTime: 0.5
+--- !u!114 &694414423293054285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256383668195943183}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95002d083431e454ba30e8ff3b5da0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8256383668195943183}
+  StartAlpha: 1
+  FinalAlpha: 0.15
+  FadeTime: 0.5
 --- !u!1 &8926266550634342696
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +362,8 @@ GameObject:
   - component: {fileID: 6929482083192506809}
   - component: {fileID: 5281041758456865610}
   - component: {fileID: 8931613268192225908}
+  - component: {fileID: 7852895788364737872}
+  - component: {fileID: 7732078146933590065}
   m_Layer: 5
   m_Name: SlowShotIcon
   m_TagString: Untagged
@@ -380,3 +450,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7852895788364737872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926266550634342696}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95002d083431e454ba30e8ff3b5da0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8926266550634342696}
+  StartAlpha: 0.15
+  FinalAlpha: 1
+  FadeTime: 0.5
+--- !u!114 &7732078146933590065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926266550634342696}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95002d083431e454ba30e8ff3b5da0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8926266550634342696}
+  StartAlpha: 1
+  FinalAlpha: 0.15
+  FadeTime: 0.5

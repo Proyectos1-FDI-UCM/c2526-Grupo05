@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785a8965b4f0b8c4e921ec946f519043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rate: 0.45
+  Rate: 0.15
   Cursor: {fileID: 3504479324421535513}
 --- !u!114 &8480573717615319094
 MonoBehaviour:
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad203d1d0710cb49bc56490640be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reload: 0.5
+  Reload: 0.6
   NumMaxBalas: 6
   ShootFailed: {fileID: 8300000, guid: 53154a6907a208043be356da1eb6c9b6, type: 3}
 --- !u!1 &6794519440049798451
@@ -468,6 +468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpeed: 6.5
+  PlayerAntiSlowBuff: 1.5
 --- !u!50 &166880489185979541
 Rigidbody2D:
   serializedVersion: 5
@@ -557,8 +558,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CooldownRoll: 1.5
-  DesplazamientoRodado: 4
-  DuracionRodado: 0.35
+  DesplazamientoRodado: 4.25
+  DuracionRodado: 0.225
   HitboxJugador: {fileID: 5036081665872762522}
   SpriteArmaJugador: {fileID: 8180277153169744243}
   RollSound: {fileID: 8300000, guid: 221236e18eb3a7944abffe6f6f9e0401, type: 3}
@@ -576,13 +577,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAbilityCooldown: 20
   AbilityLevels:
-  - PlayerAbilityDuration: 1.5
+  - PlayerAbilityDuration: 2.75
     AbilityUpgradeKillThreshold: 0
-  - PlayerAbilityDuration: 2
+  - PlayerAbilityDuration: 3.75
     AbilityUpgradeKillThreshold: 25
-  - PlayerAbilityDuration: 2.5
+  - PlayerAbilityDuration: 4.5
     AbilityUpgradeKillThreshold: 50
-  - PlayerAbilityDuration: 3
+  - PlayerAbilityDuration: 5
     AbilityUpgradeKillThreshold: 75
   LevelUP: {fileID: 8300000, guid: e2e71451ece1a1543896e0495e7ce6db, type: 3}
 --- !u!1 &8633089953209525018

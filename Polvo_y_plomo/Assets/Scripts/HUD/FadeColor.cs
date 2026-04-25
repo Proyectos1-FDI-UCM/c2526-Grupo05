@@ -64,31 +64,37 @@ public class FadeColor : MonoBehaviour
 
     /// <summary>
     /// Si lo tiene, almacena el SpriteRenderer del target.
-    /// Inicializado en el Start()
+    /// Inicializado en el Awake()
     /// </summary>
     private SpriteRenderer _sprite;
 
     /// <summary>
     /// Si lo tiene, almacena la Image del target.
-    /// Inicializado en el Start()
+    /// Inicializado en el Awake()
     /// </summary>
     private Image _uiImage;
 
     /// <summary>
+    /// Si lo tiene, almacena el RawImage del target
+    /// Inicializado en el Awake()
+    /// </summary>
+    private RawImage _rawImage;
+
+    /// <summary>
     /// Si lo tiene, almacena el Renderer con color del target.
-    /// Inicializado en el Start()
+    /// Inicializado en el Awake()
     /// </summary>
     private Renderer _rend;
 
     /// <summary>
     /// Almacena el color inicial del target.
-    /// Inicializado en el Start()
+    /// Inicializado en el Awake()
     /// </summary>
     private Color _startColor;
 
     /// <summary>
     /// Almacena el color final del target.
-    /// Inicializado en el  Start().
+    /// Inicializado en el Awake()
     /// </summary>
     private Color _endColor;
 
@@ -129,8 +135,9 @@ public class FadeColor : MonoBehaviour
         {
             _sprite = target.GetComponent<SpriteRenderer>();
             _uiImage = target.GetComponent<Image>();
+            _rawImage = target.GetComponent<RawImage>();
             _rend = target.GetComponent<Renderer>();
-            if (_sprite == null && _uiImage == null && _rend == null)
+            if (_sprite == null && _uiImage == null && _rend == null && _rawImage == null)
             {
                 Debug.Log("Script \"FadeColor\" colocado en un objeto sin color. Me destruyo");
                 Destroy(this);
@@ -149,8 +156,9 @@ public class FadeColor : MonoBehaviour
     /// <summary>
     /// Realiza el FadeColor cambiando entre _startColor y _endColor (mismo color, distinta transparencia) a lo largo del tiempo.
     /// Desactiva el componente trás acabar.
+    /// LateUpdate para sobreescribir otros cambios como el de los Animator.
     /// </summary>
-    private void Update()
+    private void LateUpdate()
     {
         if (_t < FadeTime)
         {
@@ -160,7 +168,21 @@ public class FadeColor : MonoBehaviour
         else
         {
             SetColor(_endColor); // asegurarse de que acabe en el final
-            this.enabled = false;
+
+            if (StartAlpha - FinalAlpha > 0) // si somos fade out
+            {
+                // Mantener el alpha si se tiene (sirve para el HUD de las balas y mantener su transparencia...)
+                OverrideAlpha MantainAlpha = GetComponent<OverrideAlpha>();
+                if (MantainAlpha != null) MantainAlpha.enabled = true;
+            }
+            else // si somos fade in
+            {
+                // Dejar de mantener el alpha
+                OverrideAlpha MantainAlpha = GetComponent<OverrideAlpha>();
+                if (MantainAlpha != null) MantainAlpha.enabled = false;
+            }
+
+                this.enabled = false;
         }
     }
     #endregion
@@ -172,6 +194,21 @@ public class FadeColor : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
+
+    /// <summary>
+    /// Método para modificar el StartAlpha en caso de ser necesario.
+    /// </summary>
+    /// <param name="newStartAlpha"></param>
+    public void SetStartAlpha(float newStartAlpha)
+    {
+        StartAlpha = newStartAlpha;
+    }
+
+    public float GetCurrentAlpha()
+    {
+        Color color = GetColor();
+        return color.a;
+    }
 
     #endregion
 
@@ -191,6 +228,7 @@ public class FadeColor : MonoBehaviour
         if (_sprite != null) return _sprite.color;
         if (_uiImage != null) return _uiImage.color;
         if (_rend != null && _rend.material.HasProperty("_Color")) return _rend.material.color;
+        if (_rawImage != null) return _rawImage.color;
 
         return Color.white;
     }
@@ -204,6 +242,7 @@ public class FadeColor : MonoBehaviour
         if (_sprite != null) _sprite.color = c;
         else if (_uiImage != null) _uiImage.color = c;
         else if (_rend != null && _rend.material.HasProperty("_Color")) _rend.material.color = c;
+        else if (_rawImage != null) _rawImage.color = c;
     }
         #endregion
 

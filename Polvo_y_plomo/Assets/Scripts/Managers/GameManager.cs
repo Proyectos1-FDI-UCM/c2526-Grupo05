@@ -88,6 +88,18 @@ public class GameManager : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     /// <summary>
+    /// Texto que guarda el nivel actual de la habilidad.
+    /// </summary>
+    [SerializeField]
+    TextMeshProUGUI ActLevelMessage;
+
+    /// <summary>
+    /// Texto que saldrá al subir de nivel la habilidad.
+    /// </summary>
+    [SerializeField]
+    ChangeColorAndHide LevelUpMessage;
+
+    /// <summary>
     /// Componente con el FadeIn configurado
     /// Realizará un FadeIn de pantalla negra al morir el jugador.
     /// Se debería configurar para que acabe en 1 de transparencia.
@@ -378,7 +390,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Transferencia de configuración del HUD
-            GameManager.Instance.TransferManagerSetup(FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Barrel, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, MeleeCooldown, highScoreTextUI, streakText);
+            GameManager.Instance.TransferManagerSetup(ActLevelMessage, LevelUpMessage, FadeInBlackScreen, FadeOutBlackScreen, FadeInBlueScreen, FadeOutBlueScreen, HabilityLiquid, HabilityShadow, Barrel, Lifes, Bullets, ScoreText, StreakMultiplier, StreakColors, StreakBar, LevelBar, VictoryMusic, NextLevel, TiempoEsperaRespawn, TiempoEsperaSiguienteNivel, MeleeCooldown, highScoreTextUI, streakText);
         }
 
         foreach (GameObject obj in streakText) // Desactiva los indicadores de puntos 
@@ -715,7 +727,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (diff > 0)
                 {
-                    if (NuevaVidaJugador >= 2 * (i + 1)) Lifes[i].FullHeart();
+                    if (NuevaVidaJugador > 2 * (i + 1)) Lifes[i].FullHeart();
                     else if (NuevaVidaJugador <= 2 * i) Lifes[i].EmptyHeart();
                     else
                     {
@@ -809,6 +821,29 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Actualiza en el HUD el texto que dice el nivel actual de la habilidad.
+    /// </summary>
+    /// <param name="a">Este sería el nuevo valor del nivel</param>
+    public void UpdateActLevelText(int a)
+    {
+        if (ActLevelMessage != null)
+        {
+            ActLevelMessage.text = a.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Llama al método ColorChanging de LevelUpMessage (solo hace que se active dicho componente)
+    /// </summary>
+    public void ActivateLevelUpText()
+    {
+        if (LevelUpMessage != null)
+        {
+            LevelUpMessage.ColorChanging();
+        }
+    }
+
+    /// <summary>
     /// Actualiza el fill ammount de la imagen de la sombra de la habilidad.
     /// Se irá llamando durante el cooldown de la habilidad para indicar cuánto tiempo queda.
     /// </summary>
@@ -852,12 +887,14 @@ public class GameManager : MonoBehaviour
     /// Transfiere datos importantes de un GameManager que ha de destruirse al activo.
     /// Reconfigura el HUD para incluir el de la escena actual.
     /// </summary>
-    public void TransferManagerSetup(FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
+    public void TransferManagerSetup(TextMeshProUGUI ActLevelMessage, ChangeColorAndHide LevelUpMessage, FadeColor FadeInBlackScreen, FadeColor FadeOutBlackScreen, FadeColor FadeInBlueScreen, FadeColor FadeOutBlueScreen,
         ImageFill HabilityLiquid, ImageFill HabilityShadow, GameObject Barrel , HeartUI[] Lifes, GameObject[] Bullets, TextMeshProUGUI ScoreText, TextMeshProUGUI StreakMultiplier, StreakColor[] StreakColors,
         ImageFill StreakBar, ImageFill LevelBar, AudioClip VictoryMusic,
         int NextLevel, float TiempoEsperaRespawn, float TiempoEsperaSiguienteNivel, ImageFill MeleeCooldown, TextMeshProUGUI highScoreTextUI,
         GameObject[] streakText)
     {
+        this.ActLevelMessage = ActLevelMessage;
+        this.LevelUpMessage = LevelUpMessage;
         this.FadeInBlackScreen = FadeInBlackScreen;
         this.FadeOutBlackScreen = FadeOutBlackScreen;
         this.FadeInBlueScreen = FadeInBlueScreen;
