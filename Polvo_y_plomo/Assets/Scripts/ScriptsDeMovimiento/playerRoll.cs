@@ -195,7 +195,7 @@ public class playerRoll : MonoBehaviour
     private void EmpiezaRoll()
     {
         _dirRoll = InputManager.Instance.MovementVector;
-        InputManager.Instance.DesactivarInput();
+        InputManager.Instance.DesactivarInputRoll();
         LogicaRoll(false);
         _tDuracionRodado = DuracionRodado;
         _isRolling = true;
