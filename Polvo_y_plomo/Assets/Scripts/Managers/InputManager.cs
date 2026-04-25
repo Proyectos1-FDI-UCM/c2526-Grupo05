@@ -455,6 +455,15 @@ public class InputManager : MonoBehaviour
         _hability.Disable();
         _roll.Disable();
     }
+
+    public void DesactivarInputRoll()
+    {
+        _movement.Disable();
+        _look.Disable();
+        _fire.Disable();
+        _reload.Disable();
+        _roll.Disable();
+    }
     /// <summary>
     /// Método que activa los Inputs
     /// </summary>

@@ -30,6 +30,9 @@ public class playerControlledMovement : MonoBehaviour
     [SerializeField]
     private float PlayerSpeed = 5f;
 
+    // Variable que compensa la habilidad "Disparo lento" del jugador con respecto a su movimiento, lo que le supone una ventaja frente a los enemigos.
+    [SerializeField]
+    private float PlayerAntiSlowBuff = 1.5f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -89,7 +92,7 @@ public class playerControlledMovement : MonoBehaviour
     {
         // Movimiento del jugador
         _rb.linearVelocity = InputManager.Instance.MovementVector * PlayerSpeed;
-        if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
+        if (_gameManager && GameManager.SlowMultiplier != 1) _rb.linearVelocity *= GameManager.SlowMultiplier * PlayerAntiSlowBuff;
     }
 
     #endregion
