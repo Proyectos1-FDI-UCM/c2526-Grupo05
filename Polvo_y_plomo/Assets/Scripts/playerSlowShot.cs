@@ -181,7 +181,8 @@ public class playerSlowShot : MonoBehaviour
         // Lógica de la habilidad
         if (_abilityOn)
         {
-            _tRemainingOfAbility -= Time.deltaTime * GameManager.SlowMultiplier;
+            if (GameManager.SlowMultiplier == 0) _tRemainingOfAbility -= Time.deltaTime * GameManager.SlowMultiplier;
+            else _tRemainingOfAbility -= Time.deltaTime;
 
             if (_tRemainingOfAbility <= 0)
             {
