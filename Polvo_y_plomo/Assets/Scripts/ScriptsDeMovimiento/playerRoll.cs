@@ -45,6 +45,9 @@ public class playerRoll : MonoBehaviour
     /// Sprite del arma del jugador, que debe desaparecer durante el roll.
     /// </summary>
     [SerializeField] private SpriteRenderer SpriteArmaJugador;
+
+    [SerializeField]
+    private AudioClip RollSound;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -199,6 +202,7 @@ public class playerRoll : MonoBehaviour
         LogicaRoll(false);
         _tDuracionRodado = DuracionRodado;
         _isRolling = true;
+        if (RollSound) AudioManager.Instance.Play(RollSound, transform.position);
     }
 
     /// <summary>

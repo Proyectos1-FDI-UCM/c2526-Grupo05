@@ -265,6 +265,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Animator TimeAbilityAnimator;
 
+    [SerializeField]
+    private AudioClip ReloadClip;
+
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -762,6 +766,7 @@ public class GameManager : MonoBehaviour
                     if (recarga)
                     {
                         barrelAnimator.Play("RevolverAntiClock", 0, 0f);
+                        if (ReloadClip && LevelManager.HasInstance()) AudioManager.Instance.Play(ReloadClip, LevelManager.Instance.PlayerTransform().position);
                     }
                     else barrelAnimator.Play("RevolverClock", 0, 0f);
                 }

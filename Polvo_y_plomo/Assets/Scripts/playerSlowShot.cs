@@ -55,6 +55,8 @@ public class playerSlowShot : MonoBehaviour
     /// </summary>
     [SerializeField] 
     private Level[] AbilityLevels;
+
+    [SerializeField] private AudioClip LevelUP;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -229,6 +231,7 @@ public class playerSlowShot : MonoBehaviour
             {
                 _abilityCurrentLevel++;
                 GameManager.Instance.UpdateLevelBar(0);
+                if (LevelUP) AudioManager.Instance.Play(LevelUP, transform.position);
             }
             else
             {

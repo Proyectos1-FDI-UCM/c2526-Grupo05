@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VidaMax: 1
+  DanyoJugador: {fileID: 0}
 --- !u!114 &6002467434332016076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +188,7 @@ MonoBehaviour:
   MeleePrefab: {fileID: 5015214724800111349, guid: febc8594a582bd54488df1c76a5fa589, type: 3}
   DistanciaSpawnAtaque: 1
   MeleeShadowPrefab: {fileID: 0}
+  Attack: {fileID: 8300000, guid: dd204d5d02c26384c84a4a5ef767cef5, type: 3}
 --- !u!114 &4036483193981919123
 MonoBehaviour:
   m_ObjectHideFlags: 0

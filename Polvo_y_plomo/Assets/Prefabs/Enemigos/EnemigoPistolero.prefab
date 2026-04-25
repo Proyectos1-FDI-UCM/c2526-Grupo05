@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 481267826506717086, guid: df93b0c7cc4bd3548b036c0347818ba6, type: 3}
+  ShootClip: {fileID: 8300000, guid: 2975f864f1102644fa0dff7ff2987372, type: 3}
 --- !u!114 &7928600389005969541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +343,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VidaMax: 1
+  DanyoJugador: {fileID: 0}
+  CuracionJugador: {fileID: 0}
+  CoberturaCubre: {fileID: 0}
+  CoberturaRota: {fileID: 0}
+  MuerteJugador: {fileID: 0}
 --- !u!114 &5641564381990597020
 MonoBehaviour:
   m_ObjectHideFlags: 0

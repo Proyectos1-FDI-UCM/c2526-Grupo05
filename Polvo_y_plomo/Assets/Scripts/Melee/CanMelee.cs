@@ -41,8 +41,14 @@ public class CanMelee : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject MeleeShadowPrefab;
+
+    [SerializeField]
+    private AudioClip Attack;
+
+    [SerializeField]
+    private AudioClip AttackShadow;
     #endregion
-    
+
     // ---- ATRIBUTOS PRIVADOS ----
     #region Atributos Privados (private fields)
     // Documentar cada atributo que aparece aquí.
@@ -53,14 +59,14 @@ public class CanMelee : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     #endregion
-    
+
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
     #region Métodos de MonoBehaviour
-    
+
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
-    
+
     /// <summary>
     /// Awake de programación defensiva en caso de que no se haya asignado ningún prefab a generar.
     /// </summary>
@@ -92,12 +98,15 @@ public class CanMelee : MonoBehaviour
     {
         float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
         Instantiate(MeleePrefab, (Vector2)transform.position + DistanciaSpawnAtaque*dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
-    }
+        if (Attack) AudioManager.Instance.Play(Attack, transform.position);
 
+    }
     public void ShadowMelee(Vector2 dirAtaque)
     {
         float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
         Instantiate(MeleeShadowPrefab, (Vector2)transform.position + DistanciaSpawnAtaque * dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
+
+        if (AttackShadow) AudioManager.Instance.Play(AttackShadow, transform.position);
         MoveWithPlayerAndCursor shadowMovement = MeleeShadowPrefab.GetComponent<MoveWithPlayerAndCursor>();
         if (shadowMovement != null) shadowMovement.InitialDistanceValue(DistanciaSpawnAtaque);
     }
@@ -107,9 +116,8 @@ public class CanMelee : MonoBehaviour
     // Documentar cada método que aparece aquí
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
-    // mayúscula, incluida la primera letra)
-
+    // mayúscula, incluida la primera letra
     #endregion   
-
-} // class CanMelee 
+}
+// class CanMelee 
 // namespace

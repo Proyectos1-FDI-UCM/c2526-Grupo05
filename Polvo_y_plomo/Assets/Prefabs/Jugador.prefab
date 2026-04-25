@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 481267826506717086, guid: 4dbd16fc43d46874e86933e6adaa0ebb, type: 3}
+  ShootClip: {fileID: 8300000, guid: 2975f864f1102644fa0dff7ff2987372, type: 3}
 --- !u!114 &2922786102867036322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Reload: 0.5
   NumMaxBalas: 6
+  ShootFailed: {fileID: 8300000, guid: 53154a6907a208043be356da1eb6c9b6, type: 3}
 --- !u!1 &6794519440049798451
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cursor: {fileID: 8633089953209525018}
-  CooldownMelee: 1.5
+  CooldownMelee: 1
 --- !u!114 &5273611612293079281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +524,8 @@ MonoBehaviour:
   MeleePrefab: {fileID: 5015214724800111349, guid: 8e3abd07c76a80745873b79eeb433e2b, type: 3}
   DistanciaSpawnAtaque: 1
   MeleeShadowPrefab: {fileID: 8050898191946779312, guid: 7af6244c8a64f6640abdc73abf374c71, type: 3}
+  Attack: {fileID: 8300000, guid: dd204d5d02c26384c84a4a5ef767cef5, type: 3}
+  AttackShadow: {fileID: 8300000, guid: 399363073f652c3408a1b8345655990c, type: 3}
 --- !u!114 &1474871151810355398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,6 +539,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VidaMax: 10
+  DanyoJugador: {fileID: 8300000, guid: 6c4119d518c9178498c8600d8f7bdca8, type: 3}
+  CuracionJugador: {fileID: 8300000, guid: 7f4c840a24e850a4ea4f7a3acecda082, type: 3}
+  CoberturaCubre: {fileID: 0}
+  CoberturaRota: {fileID: 0}
+  MuerteJugador: {fileID: 8300000, guid: b81dca1da6e440c4c9ba40a490864376, type: 3}
 --- !u!114 &8640769707630179225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +561,7 @@ MonoBehaviour:
   DuracionRodado: 0.35
   HitboxJugador: {fileID: 5036081665872762522}
   SpriteArmaJugador: {fileID: 8180277153169744243}
+  RollSound: {fileID: 8300000, guid: 221236e18eb3a7944abffe6f6f9e0401, type: 3}
 --- !u!114 &3385198336411724539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +584,7 @@ MonoBehaviour:
     AbilityUpgradeKillThreshold: 50
   - PlayerAbilityDuration: 3
     AbilityUpgradeKillThreshold: 75
+  LevelUP: {fileID: 8300000, guid: e2e71451ece1a1543896e0495e7ce6db, type: 3}
 --- !u!1 &8633089953209525018
 GameObject:
   m_ObjectHideFlags: 0

@@ -241,6 +241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VidaMax: 20
+  DanyoJugador: {fileID: 0}
+  CuracionJugador: {fileID: 0}
+  CoberturaCubre: {fileID: 0}
+  CoberturaRota: {fileID: 0}
+  MuerteJugador: {fileID: 0}
 --- !u!82 &6617239759872121760
 AudioSource:
   m_ObjectHideFlags: 0
@@ -252,7 +257,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 884114372d185d14ebbad2eedf951359, type: 3}
+  m_Resource: {fileID: 8300000, guid: 301015a462869ac4e9c70d093cf300df, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -560,6 +565,10 @@ PrefabInstance:
       propertyPath: Object
       value: 
       objectReference: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+    - target: {fileID: 6906647698243497770, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
+      propertyPath: DisparoEscopeta
+      value: 
+      objectReference: {fileID: 8300000, guid: c7043eb20cf1ead44a09063a425a1c83, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

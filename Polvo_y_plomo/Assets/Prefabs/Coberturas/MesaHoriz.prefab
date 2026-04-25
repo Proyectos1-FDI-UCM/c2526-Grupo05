@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 7501476737882707086}
   m_Layer: 10
   m_Name: MesaHoriz
-  m_TagString: Untagged
+  m_TagString: Barrel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,6 +195,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VidaMax: 5
+  DanyoJugador: {fileID: 0}
+  CuracionJugador: {fileID: 0}
+  CoberturaCubre: {fileID: 8300000, guid: 12d14f74d5b72344baa91cea32ed0647, type: 3}
+  CoberturaRota: {fileID: 8300000, guid: 93b8800a90ab43e40a53378c4ff6e71c, type: 3}
 --- !u!114 &6018414895681912387
 MonoBehaviour:
   m_ObjectHideFlags: 0

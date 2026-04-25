@@ -47,6 +47,10 @@ public class ShootEscopeta : MonoBehaviour
     [SerializeField]
     private float DisparidadMinima = 5f;
 
+    [SerializeField]
+    private AudioClip DisparoEscopeta;
+    
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -132,6 +136,7 @@ public class ShootEscopeta : MonoBehaviour
 
             Instantiate(PerdigonPrefab, transform.position, rotacionPerdigon);
         }
+        if (DisparoEscopeta) AudioManager.Instance.Play(DisparoEscopeta, transform.position);
     }
 
     #endregion

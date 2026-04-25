@@ -30,6 +30,9 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     protected BulletMove Bullet;
 
+    [SerializeField]
+    private AudioClip ShootClip;
+
 
     #endregion
 
@@ -101,6 +104,8 @@ public class Shoot : MonoBehaviour
         Quaternion rot = Quaternion.Euler(0, 0, angulo);
 
         Instantiate(Bullet, transform.position, rot);
+
+        if (ShootClip) AudioManager.Instance.Play(ShootClip, transform.position);
     }
     #endregion
 

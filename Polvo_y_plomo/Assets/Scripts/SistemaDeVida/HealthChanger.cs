@@ -21,6 +21,23 @@ public class HealthChanger : MonoBehaviour
     /// </summary>
     [SerializeField]
     private int VidaMax = 10; //Máxima vida del GameObject
+
+    [Header("SFX")]
+
+    [SerializeField]
+    private AudioClip DanyoJugador;
+
+    [SerializeField]
+    private AudioClip CuracionJugador;
+
+    [SerializeField]
+    private AudioClip CoberturaCubre;
+
+    [SerializeField]
+    private AudioClip CoberturaRota;
+
+    [SerializeField]
+    private AudioClip MuerteJugador;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -51,6 +68,8 @@ public class HealthChanger : MonoBehaviour
     /// Un booleano que determinará si podemos recibir daño o no 
     /// </summary
     private bool _canRecieveDamage = true;
+
+    private bool _cobertura = false;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -73,7 +92,7 @@ public class HealthChanger : MonoBehaviour
             _jugador = true;
             if (GameManager.HasInstance()) _vida = GameManager.Instance.InitHealthChanger();
         }
-
+        else if (gameObject.CompareTag("Barrel")) _cobertura = true;
         _canFlash = GetComponent<CanFlash>();
     }
     #endregion
@@ -116,11 +135,14 @@ public class HealthChanger : MonoBehaviour
         if (_vida > VidaMax) // si se da curación y se excede el máximo de vida
             _vida = VidaMax;
 
-        // Actualizar HUD del jugador
+        // Actualizar HUD del jugador o sonido de bloqueo de cobertura
         if (_jugador && GameManager.HasInstance())
         {
             GameManager.Instance.UpdateHealthHUD(_vida);
+            if (DanyoJugador && cambio < 0) AudioManager.Instance.Play(DanyoJugador, transform.position);
+            else if (CuracionJugador && cambio > 0) AudioManager.Instance.Play(CuracionJugador, transform.position);
         }
+        else if (CoberturaCubre && _vida > 0) AudioManager.Instance.Play(CoberturaCubre, transform.position);
 
         // Realizar flash de daño si existe el componente
         if (cambio < 0 && _canFlash != null)
@@ -196,6 +218,7 @@ public class HealthChanger : MonoBehaviour
             {
                 GeneraCadaver genCad = GetComponent<GeneraCadaver>();
                 genCad.PonCadaver();
+                if (CoberturaRota) AudioManager.Instance.Play(CoberturaRota, transform.position);
             }
             else Debug.Log("Este Objeto no tiene un componente GeneraCadaver");
             Destroy(gameObject);

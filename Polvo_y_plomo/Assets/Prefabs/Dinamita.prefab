@@ -118,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoomRange: {fileID: 5640593100504841450, guid: c517fdbb0255f1746b2ed93c4dd845d3, type: 3}
   BoomTime: 2
+  Explosion: {fileID: 8300000, guid: a06745194c1f1944786ed400c08d45ff, type: 3}
 --- !u!114 &2902324470021608073
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,6 +34,9 @@ public class Explode : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float BoomTime;
+
+    [SerializeField]
+    private AudioClip Explosion;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -64,6 +67,7 @@ public class Explode : MonoBehaviour
         if (_actualTime > BoomTime)
         {
             Instantiate(BoomRange, transform.position, transform.rotation);
+            if (Explosion) AudioManager.Instance.Play(Explosion, transform.position);
             Destroy(this.gameObject);
         }
     }

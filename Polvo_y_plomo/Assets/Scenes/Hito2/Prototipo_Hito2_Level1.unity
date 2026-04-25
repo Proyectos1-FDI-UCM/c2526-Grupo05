@@ -2128,6 +2128,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1168443935}
     - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
+      propertyPath: ReloadClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b61ed8c783d3b3f4b9d907b56bab5663, type: 3}
+    - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: VictoryMusic
       value: 
       objectReference: {fileID: 8300000, guid: 0c48c7cb110403b439bf401fd74d30a8, type: 3}
@@ -2135,6 +2139,10 @@ PrefabInstance:
       propertyPath: MeleeCooldown
       value: 
       objectReference: {fileID: 2033987650}
+    - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
+      propertyPath: MuerteJugador
+      value: 
+      objectReference: {fileID: 8300000, guid: b81dca1da6e440c4c9ba40a490864376, type: 3}
     - target: {fileID: 685736466760669325, guid: a203563ead4faec4b8eef19511e8329c, type: 3}
       propertyPath: HabilityLiquid
       value: 
@@ -17848,6 +17856,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1633645738794046340, guid: 0707086938577934d86ae0d8b1d422ac, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180109420898197103, guid: 0707086938577934d86ae0d8b1d422ac, type: 3}
+      propertyPath: VolumeMusic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828366230030493729, guid: 0707086938577934d86ae0d8b1d422ac, type: 3}
       propertyPath: m_Name
       value: AudioManager

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioSourcePrefab: {fileID: 63141245171496090, guid: 7ad0c45cdd092de4baefcc278c901b00, type: 3}
-  MaxAudioSources: 3
+  MaxAudioSources: 30
   VolumeSFX: 1
   VolumeMusic: 1
 --- !u!82 &1633645738794046340

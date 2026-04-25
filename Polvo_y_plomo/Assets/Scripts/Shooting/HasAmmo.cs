@@ -42,6 +42,10 @@ public class HasAmmo : MonoBehaviour
     [SerializeField]
     private int NumMaxBalas = 6;
 
+
+    [SerializeField]
+    private AudioClip ShootFailed;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -177,6 +181,7 @@ public class HasAmmo : MonoBehaviour
         }
         else
         {
+            if (ShootFailed) AudioManager.Instance.Play(ShootFailed, transform.position);
             return false;
         }
 
