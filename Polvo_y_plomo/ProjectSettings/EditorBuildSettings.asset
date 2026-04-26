@@ -116,6 +116,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Pruebas/Sprint8/MejoraMelee.unity
     guid: 4730bf28ea25ba84384e1dcb42ac8a92
+  - enabled: 1
+    path: Assets/Scenes/Pruebas/Sprint10/PruebaCronoLvl1.unity
+    guid: 427128e0c082d524795a8a0852058bfe
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
