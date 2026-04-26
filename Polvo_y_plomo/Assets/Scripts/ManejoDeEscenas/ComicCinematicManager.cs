@@ -141,14 +141,23 @@ public class ComicCinematicManager : MonoBehaviour
         }
         else
         {
-            // Si ya terminó de animar, restamos tiempo al temporizador automático
-            _waitTimer -= Time.deltaTime;
-
-            // Avanza si el tiempo se agota
-            if (_waitTimer <= 0f)
+            // Si ya terminó de animar pero el jugador pulsa un botón, avanzamos inmediatamente
+            if (InputManager.HasInstance() && InputManager.Instance.AnyButtonWasPressedThisFrame())
             {
                 _currentPanelIndex++;
                 ShowNextPanel();
+            }
+            else
+            {
+                // Si no se pulsa nada, restamos tiempo al temporizador automático
+                _waitTimer -= Time.deltaTime;
+
+                // Avanza si el tiempo se agota
+                if (_waitTimer <= 0f)
+                {
+                    _currentPanelIndex++;
+                    ShowNextPanel();
+                }
             }
         }
     }
