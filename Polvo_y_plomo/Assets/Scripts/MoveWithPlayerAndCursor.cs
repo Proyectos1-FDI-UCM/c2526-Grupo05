@@ -96,7 +96,7 @@ public class MoveWithPlayerAndCursor : MonoBehaviour
         transform.position = (Vector2)_player.position + (_dir.normalized * _distanceToPlayer);
         transform.rotation = Quaternion.Euler(0, 0, _angle);
 
-        if (InputManager.Instance.MeleeWasReleasedThisFrame() || InputManager.Instance.RollWasPressedThisFrame()) Destroy(gameObject);
+        if (InputManager.Instance.MeleeWasReleasedThisFrame()) Destroy(gameObject);
     }
     #endregion
 
