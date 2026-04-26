@@ -145,26 +145,32 @@ public class HeartUI : MonoBehaviour
 
     /// <summary>
     /// Pinta el corazon vacio sin animación
+    /// Cancela la animación actual si la hay.
     /// </summary>
     public void EmptyHeart()
     {
         HeartImage.sprite = TransitionEmptyToHalf[0];
+        _isAnimating = false;
     }
 
     /// <summary>
     /// Pinta el corazon lleno sin animación
+    /// Cancela la animación actual si la hay.
     /// </summary>
     public void FullHeart()
     {
         HeartImage.sprite = TransitionFullToHalf[0];
+        _isAnimating = false;
     }
 
     /// <summary>
     /// Pinta el medio corazón sin animación
+    /// Cancela la animación actual si la hay.
     /// </summary>
     public void HalfHeart()
     {
         HeartImage.sprite = TransitionHalfToEmpty[0];
+        _isAnimating = false;
     }
 
     public void HitToHalf()

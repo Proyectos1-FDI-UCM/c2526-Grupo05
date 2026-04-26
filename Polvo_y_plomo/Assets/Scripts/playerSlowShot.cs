@@ -139,9 +139,7 @@ public class playerSlowShot : MonoBehaviour
         }
 
         // Inicialización de los niveles
-        int kills;
-        if (GameManager.HasInstance()) kills = GameManager.Instance.TransferTotalDeaths();
-        else kills = 0;
+        int kills = kills = GameManager.Instance.TransferTotalDeaths();
 
         _abilityCurrentLevel = 0;
         bool f = false;
@@ -158,8 +156,9 @@ public class playerSlowShot : MonoBehaviour
             }
         }
         // Render inicial de la barra de nivel
-        _levelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
-        if (GameManager.HasInstance()) GameManager.Instance.UpdateLevelBar(_levelBar);
+        if (_abilityCurrentLevel < AbilityLevels.Length - 1) _levelBar = (float)(kills - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold) / (float)(AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold - AbilityLevels[_abilityCurrentLevel].AbilityUpgradeKillThreshold);
+        else _levelBar = 1f;
+        GameManager.Instance.UpdateLevelBar(_levelBar);
     }
 
     /// <summary>
@@ -235,7 +234,8 @@ public class playerSlowShot : MonoBehaviour
             {
                 _abilityCurrentLevel++;
                 GameManager.Instance.ActivateLevelUpText();
-                GameManager.Instance.UpdateLevelBar(0);
+                if (_abilityCurrentLevel == AbilityLevels.Length - 1) GameManager.Instance.UpdateLevelBar(1);
+                else GameManager.Instance.UpdateLevelBar(0);
                 GameManager.Instance.UpdateActLevelText(_abilityCurrentLevel + 1);
                 if (LevelUP) AudioManager.Instance.Play(LevelUP, transform.position);
             }

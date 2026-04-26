@@ -544,7 +544,6 @@ MonoBehaviour:
   CuracionJugador: {fileID: 8300000, guid: 7f4c840a24e850a4ea4f7a3acecda082, type: 3}
   CoberturaCubre: {fileID: 0}
   CoberturaRota: {fileID: 0}
-  MuerteJugador: {fileID: 8300000, guid: b81dca1da6e440c4c9ba40a490864376, type: 3}
 --- !u!114 &8640769707630179225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,8 +557,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CooldownRoll: 1.5
-  DesplazamientoRodado: 4.25
-  DuracionRodado: 0.225
+  DesplazamientoRodado: 5
+  DuracionRodado: 0.3
   HitboxJugador: {fileID: 5036081665872762522}
   SpriteArmaJugador: {fileID: 8180277153169744243}
   RollSound: {fileID: 8300000, guid: 221236e18eb3a7944abffe6f6f9e0401, type: 3}
