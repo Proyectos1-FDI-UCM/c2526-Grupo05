@@ -101,20 +101,6 @@ public class HealthChanger : MonoBehaviour
         else if (gameObject.CompareTag("Barrel")) _cobertura = true;
         _canFlash = GetComponent<CanFlash>();
     }
-
-    /// <summary>
-    /// Si no es jugador informa al Level Manager de la muerte para llegar su cuenta.
-    /// Implementado en el OnDestroy() en vez de en el método de muerte para que se puedan considerar las "muertes"
-    /// de los EnemySpawnLogic (su desaparición natural tras la aparición).
-    /// </summary>
-    private void OnDestroy()
-    {
-        if (!_jugador)
-        {
-            IsEnemy isenemy = GetComponent<IsEnemy>();
-            if (isenemy != null) isenemy.EnemyDied();
-        }
-    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -239,7 +225,9 @@ public class HealthChanger : MonoBehaviour
         }
         else // si no es jugador
         {
-            // IsEnemy se lleva en el OnDestroy para poder implementar el EnemySpawnLogic
+            // Muerte por disparo del jugador -> llamada a EnemyDied para que actualice habilidad y cantidad de enemigos registrada
+            IsEnemy isenemy = GetComponent<IsEnemy>();
+            if (isenemy != null) isenemy.EnemyDied();
 
             PointsOnDeath points = GetComponent<PointsOnDeath>();
             if (points != null) points.GivePoints();

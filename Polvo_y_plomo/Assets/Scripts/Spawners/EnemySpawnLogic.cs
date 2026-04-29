@@ -184,6 +184,10 @@ public class EnemySpawnLogic : MonoBehaviour
             if (danyoRecibido > 0) enemyHealth.CambiarVida(-danyoRecibido);
         }
 
+        // Llamada únicamente al LevelManager para indicar que el Spawner ha acabado (puesto que tiene IsEnemy cuenta como enemigo)
+        // Al solo llamar al LevelManager su desaparición no cuenta para el nivel de habilidad.
+        if (LevelManager.HasInstance()) LevelManager.Instance.EnemyKilled();
+
         Destroy(gameObject);
     }
     #endregion   
