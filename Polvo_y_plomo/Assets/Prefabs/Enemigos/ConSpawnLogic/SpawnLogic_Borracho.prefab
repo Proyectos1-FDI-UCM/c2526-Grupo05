@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2897383855925376193}
   - component: {fileID: 219012534562007612}
+  - component: {fileID: 1930036622180947147}
+  - component: {fileID: 8684798268332417072}
+  - component: {fileID: 664694178486765240}
+  - component: {fileID: 211340130927326986}
   m_Layer: 0
   m_Name: SpawnLogic_Borracho
   m_TagString: Untagged
@@ -48,6 +52,62 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 1255211531776109209, guid: f603b35226294e54d9dc851670bc9f6d, type: 3}
   SpawnAnimator: {fileID: 2370648622509468972}
   SpawnPositionOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1930036622180947147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2330249337698350027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d492bab6509dbde449a17beac0a5072c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VidaMax: 1
+  DanyoJugador: {fileID: 0}
+  CuracionJugador: {fileID: 0}
+  CoberturaCubre: {fileID: 0}
+  CoberturaRota: {fileID: 0}
+--- !u!114 &8684798268332417072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2330249337698350027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a3bc37fd63acc4da9754829f22e2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cadaveres:
+  - {fileID: 3431735393579477392, guid: ce7a0d454f12f554cbf3b6db48204416, type: 3}
+--- !u!114 &664694178486765240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2330249337698350027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eed44f171a52b3247a900162322bea54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points: 100
+--- !u!114 &211340130927326986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2330249337698350027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d9164fa8cf71d4280da9a0d40bd2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3740666035433366395
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +119,9 @@ GameObject:
   - component: {fileID: 8042001135439238890}
   - component: {fileID: 6786140949055488952}
   - component: {fileID: 2370648622509468972}
-  m_Layer: 0
+  - component: {fileID: 7266154025181557340}
+  - component: {fileID: 6619087257723252272}
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,3 +220,61 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7266154025181557340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740666035433366395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e133e046b422446a3069e4ee771a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &6619087257723252272
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740666035433366395}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.85}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.1, y: 1.85}
+  m_EdgeRadius: 0

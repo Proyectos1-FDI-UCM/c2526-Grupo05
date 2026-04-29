@@ -205,6 +205,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VidaMax: 2
   DanyoJugador: {fileID: 0}
+  CuracionJugador: {fileID: 0}
+  CoberturaCubre: {fileID: 0}
+  CoberturaRota: {fileID: 0}
 --- !u!114 &3457531478176394882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +227,7 @@ MonoBehaviour:
   finalAngle: 15
   ChaseRadius: 3
   AttackRadius: 2
-  ChaseSpeed: 6.3
+  ChaseSpeed: 7.2
   StunSpeed: 3
 --- !u!50 &5192932032252607610
 Rigidbody2D:
@@ -282,6 +285,7 @@ MonoBehaviour:
   DistanciaSpawnAtaque: 1
   MeleeShadowPrefab: {fileID: 0}
   Attack: {fileID: 8300000, guid: dd204d5d02c26384c84a4a5ef767cef5, type: 3}
+  AttackShadow: {fileID: 0}
 --- !u!114 &6757376158397900182
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -49,6 +49,7 @@ public class HealthChanger : MonoBehaviour
     /// Esta será la variable de la vida que tendrán los game objects (irá variando)
     /// </summary>
     private int _vida;
+
     /// <summary>
     /// Un booleano que determinará si somos el jugador
     /// </summary>
@@ -77,13 +78,21 @@ public class HealthChanger : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
+    /// Se llama al cargarse en la escena de inmediato.
+    /// Establece la vida.
+    /// </summary>
+    private void Awake()
+    {
+        _vida = VidaMax;
+    }
+
+    /// <summary>
     /// Se llama al cargarse en la escena si esta activo, o al activarse por primera vez.
     /// Al iniciar el juego, la vida del gameObject tomará el valor de la vida con la que empieza.
     /// Si existe un GameManager y eres el jugador, establece la variable como true
     /// </summary>
     private void Start()
     {
-        _vida = VidaMax;
         if (GetComponent<playerControlledMovement>() != null)
         {
             _jugador = true;
@@ -91,6 +100,20 @@ public class HealthChanger : MonoBehaviour
         }
         else if (gameObject.CompareTag("Barrel")) _cobertura = true;
         _canFlash = GetComponent<CanFlash>();
+    }
+
+    /// <summary>
+    /// Si no es jugador informa al Level Manager de la muerte para llegar su cuenta.
+    /// Implementado en el OnDestroy() en vez de en el método de muerte para que se puedan considerar las "muertes"
+    /// de los EnemySpawnLogic (su desaparición natural tras la aparición).
+    /// </summary>
+    private void OnDestroy()
+    {
+        if (!_jugador)
+        {
+            IsEnemy isenemy = GetComponent<IsEnemy>();
+            if (isenemy != null) isenemy.EnemyDied();
+        }
     }
     #endregion
 
@@ -107,8 +130,8 @@ public class HealthChanger : MonoBehaviour
     /// Si te quedas sin vida llamara al metodo para matar
     /// Si eres el jugador, actualiza tu vida en el HUD
     /// </summary>
-    
-    
+
+
     /// <summary>
     /// Metodo que permitirá que no nos hagan daño mientras estamos escondidos
     /// </summary
@@ -142,9 +165,19 @@ public class HealthChanger : MonoBehaviour
         else if (CoberturaCubre && _vida > 0) AudioManager.Instance.Play(CoberturaCubre, transform.position);
 
         // Realizar flash de daño si existe el componente
-        if (cambio < 0 && _canFlash != null)
+        if (cambio < 0)
         {
-            _canFlash.StartFlashes();
+            // Para que los enemigos puedan flashear durante la animacion de spawn
+            if (_canFlash != null) _canFlash.StartFlashes();
+            else
+            {
+                EnemySpawnLogic enemySpawn = GetComponent<EnemySpawnLogic>();
+                if (enemySpawn != null)
+                {
+                    _canFlash = GetComponentInChildren<CanFlash>();
+                    if (_canFlash != null) _canFlash.StartFlashes();
+                }
+            }
         }
 
         // Muerte del objeto
@@ -153,6 +186,7 @@ public class HealthChanger : MonoBehaviour
             MetodoMuerte();
         }
     }
+
     /// <summary>
     /// Con este metodo podremos saber si la vida del jugador es igual o mayor a la vida máxima
     /// Con eso podremos determinar si puede ser curado por objetos o no
@@ -180,6 +214,7 @@ public class HealthChanger : MonoBehaviour
     {
         return VidaMax;
     }
+
     #endregion
 
     // ---- MÉTODOS PRIVADOS ----
@@ -204,8 +239,7 @@ public class HealthChanger : MonoBehaviour
         }
         else // si no es jugador
         {
-            IsEnemy isenemy = GetComponent<IsEnemy>();
-            if (isenemy != null) isenemy.EnemyDied();
+            // IsEnemy se lleva en el OnDestroy para poder implementar el EnemySpawnLogic
 
             PointsOnDeath points = GetComponent<PointsOnDeath>();
             if (points != null) points.GivePoints();

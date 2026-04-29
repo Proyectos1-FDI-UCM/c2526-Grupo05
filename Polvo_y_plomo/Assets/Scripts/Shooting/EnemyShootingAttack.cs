@@ -20,6 +20,9 @@ using UnityEngine;
 /// el PlayerTransform para que funcione.
 /// 
 /// Se debe colocar en un GameObject con padre (junto a Shoot), y este deberá ser el enemigo para que funcione bien.
+/// 
+/// +++
+/// Implementado que los pistoleros esperen 
 /// </summary>
 public class EnemyShootingAttack : MonoBehaviour
 {
@@ -49,6 +52,12 @@ public class EnemyShootingAttack : MonoBehaviour
     // Ejemplo: _maxHealthPoints
 
     /// <summary>
+    /// Variable por la que se divide el tiempo de espera para disparar en la transición Chasing -> Attacking
+    /// Por ejemplo si esta configurado CooldownDisparos 3f, y ESPERA_DISPARO 2f, una vez intenta empezar a atacar esperará 1.5s
+    /// </summary>
+    private const float ESPERA_DISPARO = 5f;
+
+    /// <summary>
     /// Almacena el transform del jugador, leido del LevelManager.
     /// Inicializado en el Start().
     /// </summary>
@@ -76,6 +85,14 @@ public class EnemyShootingAttack : MonoBehaviour
     /// Inicicializado en el Start().
     /// </summary>
     private bool _gameManager = false;
+
+    /// <summary>
+    /// Variable para detectar la transición Chasing -> Attacking al leer esta información desde el ChasePlayer
+    /// Inicializada como True para incluir el caso "Acabo de spawnear y espero a disparar".
+    /// </summary>
+    private bool _wasChasing = true;
+
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -139,10 +156,23 @@ public class EnemyShootingAttack : MonoBehaviour
         if (_gameManager) _tParaDisparar -= Time.deltaTime * GameManager.SlowMultiplier;
         else _tParaDisparar -= Time.deltaTime;
         
-        if (!_chasePlayer.IsChasing() && _tParaDisparar <= 0)
+        if (_chasePlayer.IsChasing()) // Chasing
         {
-            Dispara();
-            _tParaDisparar = CooldownDisparos;
+            _wasChasing = true;
+        }
+        else // Attacking
+        {
+            if (_wasChasing) // Transición Chasing -> Attacking detectada
+            {
+                _tParaDisparar = CooldownDisparos / ESPERA_DISPARO;
+            }
+            _wasChasing = false;
+
+            if (_tParaDisparar <= 0)
+            {
+                Dispara();
+                _tParaDisparar = CooldownDisparos;
+            }
         }
     }
 

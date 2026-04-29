@@ -509,7 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cursor: {fileID: 8633089953209525018}
-  CooldownMelee: 1
+  CooldownMelee: 1.2
 --- !u!114 &5273611612293079281
 MonoBehaviour:
   m_ObjectHideFlags: 0

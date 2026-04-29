@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2790568673097240443}
   - component: {fileID: 8107004018138444696}
+  - component: {fileID: 4737385718968624493}
+  - component: {fileID: 7063979724702506497}
+  - component: {fileID: 7962177357529176308}
+  - component: {fileID: 8269362506139806150}
   m_Layer: 0
   m_Name: SpawnLogic_Cazarrecompensas
   m_TagString: Untagged
@@ -48,6 +52,62 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 5624217940321864117, guid: a3d1da7070ce5234099a344e7f15e2cd, type: 3}
   SpawnAnimator: {fileID: 2652948463516108969}
   SpawnPositionOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &4737385718968624493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907102445998842385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d492bab6509dbde449a17beac0a5072c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VidaMax: 2
+  DanyoJugador: {fileID: 0}
+  CuracionJugador: {fileID: 0}
+  CoberturaCubre: {fileID: 0}
+  CoberturaRota: {fileID: 0}
+--- !u!114 &7063979724702506497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907102445998842385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a3bc37fd63acc4da9754829f22e2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cadaveres:
+  - {fileID: 3431735393579477392, guid: ce7a0d454f12f554cbf3b6db48204416, type: 3}
+--- !u!114 &7962177357529176308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907102445998842385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eed44f171a52b3247a900162322bea54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points: 200
+--- !u!114 &8269362506139806150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907102445998842385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d9164fa8cf71d4280da9a0d40bd2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5996843321102875825
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +119,10 @@ GameObject:
   - component: {fileID: 2780017051363733310}
   - component: {fileID: 7726788035363331621}
   - component: {fileID: 2652948463516108969}
-  m_Layer: 0
+  - component: {fileID: 2757149268846705442}
+  - component: {fileID: 5557060479629402046}
+  - component: {fileID: 4950836744730713194}
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +167,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: d16e68ba524221d41b57bd9778e7291e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -158,3 +221,75 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2757149268846705442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996843321102875825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e133e046b422446a3069e4ee771a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &5557060479629402046
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996843321102875825}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.85}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.1, y: 1.85}
+  m_EdgeRadius: 0
+--- !u!114 &4950836744730713194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996843321102875825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab1b4dd6bff6d24e8f1afccbd487862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlashTime: 0.2
+  FlashesUntilDisable: 1

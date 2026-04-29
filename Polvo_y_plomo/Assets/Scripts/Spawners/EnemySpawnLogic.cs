@@ -14,6 +14,8 @@ using System.Collections;
 /// Script al que se le debe asignar un Prefab de enemigo y que se encarga de hacer que aparezca tras una animación inicial (que es opcional).
 /// Si no se le asigna un Animator simplemente se encarga de hacer aparecer al enemigo.
 /// 
+/// Se le DEBE asignar HealthChanger para poder funcionar adecuadamente.
+/// 
 /// Se le puede asignar un parámetro de offset para la posición de Spawn, desde la posición del spawner.
 /// (!) Al acabar, el objeto con este script será destruido.
 /// </summary>
@@ -66,6 +68,11 @@ public class EnemySpawnLogic : MonoBehaviour
     /// Indice del estado que contiene el clip de la animación de Spawn.
     /// </summary>
     private int _spawnID = 0;
+
+    /// <summary>
+    /// Variable que contiene una referencia al script de HealthChanger que ha de tener el EnemySpawnLogic.
+    /// </summary>
+    private HealthChanger _healthChanger;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -87,6 +94,13 @@ public class EnemySpawnLogic : MonoBehaviour
         if (EnemyPrefab == null)
         {
             Debug.Log("No se le ha asignado al componente \"EnemySpawnLogic\" un prefab de enemigo y no funcionará.");
+            Destroy(this);
+        }
+
+        _healthChanger = GetComponent<HealthChanger>();
+        if (_healthChanger == null)
+        {
+            Debug.Log("Se ha colocado el componente EnemySpawnLogic en un objeto que no tiene HealthChanger y no podrá funcionar");
             Destroy(this);
         }
 
@@ -156,10 +170,20 @@ public class EnemySpawnLogic : MonoBehaviour
 
     /// <summary>
     /// Método que realiza el spawn del enemigo y destruye el objeto (puesto que ya no se va a usar).
+    /// Añadido funcionalidad para pasarle la vida del EnemySpawnLogic.
     /// </summary>
     private void DoSpawn()
     {
-        Instantiate(EnemyPrefab, transform.position + SpawnPositionOffset, transform.rotation);
+        GameObject enemy = Instantiate(EnemyPrefab, transform.position + SpawnPositionOffset, transform.rotation);
+        HealthChanger enemyHealth = enemy.GetComponent<HealthChanger>();
+        if (enemyHealth != null)
+        {
+            // Llamada ANTES de que se de el Start() del HealthChanger del enemigo -> no se ha inicializado
+            // que sea antes es bueno ya que así al cargarse la nueva vida todavia no esta inicializado el _canFlash y por ende no hace un flash innecesario
+            int danyoRecibido = enemyHealth.GetCurrentHealth() - _healthChanger.GetCurrentHealth();
+            if (danyoRecibido > 0) enemyHealth.CambiarVida(-danyoRecibido);
+        }
+
         Destroy(gameObject);
     }
     #endregion   
