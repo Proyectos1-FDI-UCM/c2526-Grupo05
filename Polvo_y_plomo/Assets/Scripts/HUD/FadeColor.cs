@@ -15,6 +15,9 @@ using UnityEngine.UI;
 /// Componente al que se le puede asignar cualquier objeto y busca este algún elemento de color.
 /// Si lo encuentra, realiza un fade de transparencia entre 2 asignables (inical y final) durante un tiempo asignable.
 /// (!) Ha de estar desactivada (como componente, no gameobject) al inicio de la escena. Si no lo está, se activará el fade.
+/// 
+/// +++
+/// Añadida funcionalidad para que si no se asigna target, intente cambiarse el color a si mismo.
 /// </summary>
 public class FadeColor : MonoBehaviour
 {
@@ -131,26 +134,20 @@ public class FadeColor : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (target != null)
+        if (target == null) target = this.gameObject;
+
+        _sprite = target.GetComponent<SpriteRenderer>();
+        _uiImage = target.GetComponent<Image>();
+        _rawImage = target.GetComponent<RawImage>();
+        _rend = target.GetComponent<Renderer>();
+        if (_sprite == null && _uiImage == null && _rend == null && _rawImage == null)
         {
-            _sprite = target.GetComponent<SpriteRenderer>();
-            _uiImage = target.GetComponent<Image>();
-            _rawImage = target.GetComponent<RawImage>();
-            _rend = target.GetComponent<Renderer>();
-            if (_sprite == null && _uiImage == null && _rend == null && _rawImage == null)
-            {
-                Debug.Log("Script \"FadeColor\" colocado en un objeto sin color. Me destruyo");
-                Destroy(this);
-            }
-            _startColor = GetColor();
-            _startColor = new Color(_startColor.r, _startColor.g, _startColor.b, StartAlpha);
-            _endColor = new Color(_startColor.r, _startColor.g, _startColor.b, FinalAlpha);
-        }
-        else
-        {
-            Debug.Log("Componente \"Fade Color\" colocado y sin target asignado. No funcionará.");
+            Debug.Log("Script \"FadeColor\" colocado en un objeto sin color. Me destruyo");
             Destroy(this);
         }
+        _startColor = GetColor();
+        _startColor = new Color(_startColor.r, _startColor.g, _startColor.b, StartAlpha);
+        _endColor = new Color(_startColor.r, _startColor.g, _startColor.b, FinalAlpha);
     }
 
     /// <summary>
@@ -162,7 +159,9 @@ public class FadeColor : MonoBehaviour
     {
         if (_t < FadeTime)
         {
-            _t += Time.deltaTime;
+            if (GameManager.HasInstance() && GameManager.SlowMultiplier != 0) _t += Time.deltaTime * GameManager.SlowMultiplier;
+            else _t += Time.deltaTime;
+
             SetColor(Color.Lerp(_startColor, _endColor, _t / FadeTime));
         }
         else
