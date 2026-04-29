@@ -228,7 +228,7 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para aumentar (en 0.01) la sensibilidad del cursor del jugador.
+    /// Método público para aumentar (en 0.1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void LitSensIncrease()
     {
@@ -240,7 +240,7 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para aumentar (en 0.1) la sensibilidad del cursor del jugador.
+    /// Método público para aumentar (en 1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void BigSensIncrease()
     {
@@ -252,7 +252,7 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para disminuir (en 0.01) la sensibilidad del cursor del jugador.
+    /// Método público para disminuir (en 0.1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void LitSensDecrease()
     {
@@ -264,7 +264,7 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para disminuir (en 0.1) la sensibilidad del cursor del jugador.
+    /// Método público para disminuir (en 1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void BigSensDecrease()
     {
