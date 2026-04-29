@@ -1,6 +1,6 @@
 //---------------------------------------------------------
-// Breve descripción del contenido del archivo
-// CamiloSandovalSánchez
+// Componente para iniciar un Fade Out despues de un tiempo configurable
+// Ángel Seijas de Ema
 // Polvo y plomo
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
@@ -10,8 +10,10 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Componente que inicia un FadeOut después de un tiempo configurable desde su aparición.
+/// Se le ha de asignar FadeOut.
+/// 
+/// Una vez activado el FadeOut este componente se desactiva a si mismo.
 /// </summary>
 public class VanishOverTime : MonoBehaviour
 {
@@ -26,7 +28,10 @@ public class VanishOverTime : MonoBehaviour
     /// Variable que almacena el tiempo de vida del objeto
     /// </summary>
     [SerializeField]
-    private float VanishTime = 0.1f;
+    private float VanishTime = 5f;
+
+    [SerializeField]
+    private FadeColor FadeOut;
 
     #endregion
 
@@ -39,10 +44,10 @@ public class VanishOverTime : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
     /// <summary>
-    /// Variable que el tiempo restante de aparicion del objeto
+    /// Almacena el tiempo desde la aparición
     /// Inicializada en el Start()
     /// </summary>
-    private float _vanishingTime;
+    private float _t = 0;
 
     #endregion
 
@@ -54,26 +59,40 @@ public class VanishOverTime : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before 
-    /// any of the Update methods are called the first time.
+    /// Se llama al cargarse en la escena.
+    /// Hace comprobaciones necesarias para el componente.
     /// </summary>
-    void OnEnable()
+    void Awake()
     {
-        _vanishingTime = VanishTime;
+        if (FadeOut == null)
+        {
+            Debug.Log("Componente VanishOverTime colocado sin configurarle un FadeOut. No funcionará");
+            Destroy(this);
+        }
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Al ser activado se reinicia el contador del tiempo.
+    /// </summary>
+    private void OnEnable()
+    {
+        _t = 0;
+    }
+
+    /// <summary>
+    /// Se llama cada frame si el componente esta activo.
+    /// Lleva el contador y si ha pasado suficiente tiempo, activa el FadeOut y desactiva este componente.
     /// </summary>
     void Update()
     {
 
-        if (GameManager.HasInstance()) _vanishingTime -= Time.deltaTime * GameManager.SlowMultiplier;
-        else _vanishingTime -= Time.deltaTime;
+        if (GameManager.HasInstance()) _t += Time.deltaTime * GameManager.SlowMultiplier;
+        else _t += Time.deltaTime;
 
-        if (_vanishingTime <= 0)
+        if (_t >= VanishTime)
         {
-            gameObject.SetActive(false);
+            FadeOut.enabled = true;
+            this.enabled = false;
         }
     }
     #endregion

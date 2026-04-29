@@ -369,6 +369,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private UIVibration _streakVibration;
 
+    /// <summary>
+    /// Variable booleana para conocer si la habilidad del jugador esta activa o no.
+    /// Evita bugs en el método ResumeGame().
+    /// </summary>
+    private bool _playerSlowShotOn = false;
+
+    /// <summary>
+    /// Variable constante que indica el multiplicador del tiempo al estar activa la habilidad de SlowShot.
+    /// </summary>
+    private const float SLOWSHOT_TIMEMULTIPLIER = 0.25f;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -932,7 +943,8 @@ public class GameManager : MonoBehaviour
 
         // Reiniciar flujo del tiempo (es posible salir de una escena con la habilidad activada, si no se reinicia,
         // se podría mantener la habilidad siempre activa.
-        SlowShotOff();
+        _playerSlowShotOn = false;
+        ResumeGame();
 
         // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
         this.enabled = false;
@@ -1005,7 +1017,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SlowShotOn()
     {
-        _slowMultiplier = 0.25f;
+        _playerSlowShotOn = true;
+        _slowMultiplier = SLOWSHOT_TIMEMULTIPLIER;
         StartFadeInBlueScreen();
 
         if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", true);
@@ -1019,6 +1032,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SlowShotOff()
     {
+        _playerSlowShotOn = false;
         ResumeGame();
         StartFadeOutBlueScreen();
         if (TimeAbilityAnimator != null) TimeAbilityAnimator.SetBool("AbilityActive", false);
@@ -1027,16 +1041,25 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.SetSlowMotionAudio(false);
     }
 
+    /// <summary>
+    /// Método para pausar el juego, haciendo que su flujo de tiempo sea 0
+    /// </summary>
     public void PauseGame()
     {
         _slowMultiplier = 0;
     }
 
+    /// <summary>
+    /// Método para resumir el juego, cambiando el flujo del tiempo a 1 o al de la habilidad según corresponda.
+    /// </summary
     public void ResumeGame()
     {
-        _slowMultiplier = 1.00f;
+        if (_playerSlowShotOn) _slowMultiplier = SLOWSHOT_TIMEMULTIPLIER;
+        else _slowMultiplier = 1.00f;
     }
-    // NOTA: Los niveles de habilida del jugador se actualizan también en AnEnemyDied(), en la región de Transferencia de información.
+
+
+    // NOTA: Los niveles de habilidad del jugador se actualizan también en AnEnemyDied(), en la región de Transferencia de información.
     #endregion
 
     #region Funcionalidad settings
