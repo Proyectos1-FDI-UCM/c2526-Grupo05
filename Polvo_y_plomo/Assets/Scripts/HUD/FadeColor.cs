@@ -128,7 +128,7 @@ public class FadeColor : MonoBehaviour
 
     /// <summary>
     /// Se llama al cargarse en escena por primera vez.
-    /// Intenta sacar un componente SpriteRenderer, Image o Renderer con color del objeto target, y registra el color inicial con GetColor().
+    /// Intenta sacar un componente SpriteRenderer, Image, RawImage o Renderer con color del objeto target, y registra el color inicial con GetColor().
     /// También calcula cuales han de ser los colores iniciales y finales según las transparencias indicadas.
     /// Si no hay target o no hay componente con color hay programación defensiva que evita que el componente falle.
     /// </summary>
@@ -203,6 +203,10 @@ public class FadeColor : MonoBehaviour
         StartAlpha = newStartAlpha;
     }
 
+    /// <summary>
+    /// Método para leer el alpha actual
+    /// </summary>
+    /// <returns></returns>
     public float GetCurrentAlpha()
     {
         Color color = GetColor();
@@ -219,7 +223,7 @@ public class FadeColor : MonoBehaviour
     // mayúscula, incluida la primera letra)
      
     /// <summary>
-    /// Método que recoge el color del objeto, de los 3 posibles componentes con color.
+    /// Método que recoge el color del objeto, de los 4 posibles componentes con color.
     /// </summary>
     /// <returns></returns>
     private Color GetColor()
@@ -233,7 +237,7 @@ public class FadeColor : MonoBehaviour
     }
 
     /// <summary>
-    /// Método que establece el color del objeto, de los 3 posibles componentes con color.
+    /// Método que establece el color del objeto, de los 4 posibles componentes con color.
     /// </summary>
     /// <param name="c"></param>
     private void SetColor(Color c)

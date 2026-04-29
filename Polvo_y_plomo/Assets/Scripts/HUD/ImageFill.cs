@@ -77,6 +77,10 @@ public class ImageFill : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Actualiza el parámetro fillAmmount de la imagen.
+    /// </summary>
+    /// <param name="fillAmount"></param>
     public void UpdateImageFillAmmount(float fillAmount)
     {
         ImageFilled.fillAmount = fillAmount;

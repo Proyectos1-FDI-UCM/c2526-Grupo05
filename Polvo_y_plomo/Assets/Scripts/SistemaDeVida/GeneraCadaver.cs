@@ -72,6 +72,7 @@ public class GeneraCadaver : MonoBehaviour
         {
             if (c != null)
             {
+                // Lógica para generar cadaver en la posicion de la animación si estamos en un EnemySpawnLogic. Si no lo hace aparecer en donde muere.
                 EnemySpawnLogic enemySpawn = GetComponent<EnemySpawnLogic>();
                 if (enemySpawn == null) Instantiate(c, transform.position + c.transform.position, transform.rotation);
                 else

@@ -65,6 +65,9 @@ public class ButtonSound : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Hace sonar el boton asignado
+    /// </summary>
     public void PlaySound()
     {
         if (AudioManager.HasInstance()) AudioManager.Instance.Play(Sonido, SpawnLocation);

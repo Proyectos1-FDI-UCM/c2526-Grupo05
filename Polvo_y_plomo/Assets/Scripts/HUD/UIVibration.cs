@@ -125,6 +125,10 @@ public class UIVibration : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
+    /// <summary>
+    /// Método público para cambiar la intensidad de vibración.
+    /// </summary>
+    /// <param name="Intensity"></param>
     public void ChangeIntensity(float Intensity)
     {
         this.Intensity = Intensity;

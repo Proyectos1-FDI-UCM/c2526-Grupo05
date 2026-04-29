@@ -26,11 +26,15 @@ public class playerControlledMovement : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
-    // Parámetro que almacena la velocidad a la que se mueve el jugador, de forma constante.
+    /// <summary>
+    /// Parámetro que almacena la velocidad a la que se mueve el jugador, de forma constante.
+    /// </summary>
     [SerializeField]
     private float PlayerSpeed = 5f;
 
-    // Variable que compensa la habilidad "Disparo lento" del jugador con respecto a su movimiento, lo que le supone una ventaja frente a los enemigos.
+    /// <summary>
+    /// Variable que compensa la habilidad "Disparo lento" del jugador con respecto a su movimiento, lo que le supone una ventaja frente a los enemigos.
+    /// </summary>
     [SerializeField]
     private float PlayerAntiSlowBuff = 1.5f;
     #endregion

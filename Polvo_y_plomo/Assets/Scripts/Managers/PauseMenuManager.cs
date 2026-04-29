@@ -11,8 +11,9 @@ using UnityEngine.EventSystems;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Manager que lleva la lógica del menu de pausa, permitiendo desplazarse entre distintos paneles
+/// con los botones o con el boton de Exit.
+/// Se encarga de manejar el BlockCursor también, liberando o bloqueandolo al abrirse o cerrarse el menú.
 /// </summary>
 public class PauseMenuManager : MonoBehaviour
 {

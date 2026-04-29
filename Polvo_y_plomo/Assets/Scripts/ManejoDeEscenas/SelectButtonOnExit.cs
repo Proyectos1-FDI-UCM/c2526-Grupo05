@@ -23,6 +23,9 @@ public class SelectButtonOnExit : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    /// <summary>
+    /// Boton que se seleccionará al presionar la accion de Exit.
+    /// </summary>
     [SerializeField]
     private GameObject Button;
 

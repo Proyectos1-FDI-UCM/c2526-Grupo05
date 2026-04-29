@@ -91,13 +91,13 @@ public class GameManager : MonoBehaviour
     /// Texto que guarda el nivel actual de la habilidad.
     /// </summary>
     [SerializeField]
-    TextMeshProUGUI ActLevelMessage;
+    private TextMeshProUGUI ActLevelMessage;
 
     /// <summary>
     /// Texto que saldrá al subir de nivel la habilidad.
     /// </summary>
     [SerializeField]
-    ChangeColorAndHide LevelUpMessage;
+    private ChangeColorAndHide LevelUpMessage;
 
     /// <summary>
     /// Componente con el FadeIn configurado
@@ -1065,7 +1065,7 @@ public class GameManager : MonoBehaviour
     #region Funcionalidad settings
 
     /// <summary>
-    /// Método público para aumentar (en 0.01) la sensibilidad del cursor del jugador.
+    /// Método público para aumentar (en 0.1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void LitSensIncrease()
     {
@@ -1078,7 +1078,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para aumentar (en 0.1) la sensibilidad del cursor del jugador.
+    /// Método público para aumentar (en 1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void BigSensIncrease()
     {
@@ -1091,7 +1091,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para disminuir (en 0.01) la sensibilidad del cursor del jugador.
+    /// Método público para disminuir (en 0.1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void LitSensDecrease()
     {
@@ -1104,7 +1104,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método público para disminuir (en 0.1) la sensibilidad del cursor del jugador.
+    /// Método público para disminuir (en 1) la sensibilidad del cursor del jugador.
     /// </summary>
     public void BigSensDecrease()
     {

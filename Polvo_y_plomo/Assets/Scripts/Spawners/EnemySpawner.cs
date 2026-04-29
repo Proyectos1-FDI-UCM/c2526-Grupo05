@@ -74,6 +74,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private EnemySpawner[] ActivateSpawnersWhenDone;
 
+    /// <summary>
+    /// Variable boolena que dice si este Spawner es el último del nivel. Si es así, una vez acabado sus spawns,
+    /// le envia una señal al LevelManager diciendole que ya ha acabado (para terminar el nivel)
+    /// </summary>
     [SerializeField]
     private bool LastSpawner = false;
     #endregion

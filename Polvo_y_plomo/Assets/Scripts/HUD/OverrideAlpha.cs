@@ -82,7 +82,9 @@ public class OverrideAlpha : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
-
+    /// <summary>
+    /// Hace comprobaciones necesarias e inicializa el componente
+    /// </summary>
     private void Awake()
     {
         _sprite = GetComponent<SpriteRenderer>();
@@ -98,6 +100,10 @@ public class OverrideAlpha : MonoBehaviour
         _color = GetColor();
         this.enabled = false;
     }
+
+    /// <summary>
+    /// Actualiza en el LateUpdate (para sobreescribir cambios hechos por el Animator) el alpha del objeto.
+    /// </summary>
     private void LateUpdate()
     {
         _color.a = MantainAlpha;
@@ -123,7 +129,7 @@ public class OverrideAlpha : MonoBehaviour
     // mayúscula, incluida la primera letra)
 
     /// <summary>
-    /// Método que recoge el color del objeto, de los 3 posibles componentes con color.
+    /// Método que recoge el color del objeto, de los 4 posibles componentes con color.
     /// </summary>
     /// <returns></returns>
     private Color GetColor()
@@ -137,7 +143,7 @@ public class OverrideAlpha : MonoBehaviour
     }
 
     /// <summary>
-    /// Método que establece el color del objeto, de los 3 posibles componentes con color.
+    /// Método que establece el color del objeto, de los 4 posibles componentes con color.
     /// </summary>
     /// <param name="c"></param>
     private void SetColor(Color c)

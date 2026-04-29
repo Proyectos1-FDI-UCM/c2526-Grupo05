@@ -30,6 +30,9 @@ public class VanishOverTime : MonoBehaviour
     [SerializeField]
     private float VanishTime = 5f;
 
+    /// <summary>
+    /// Variable que se debe asignar y que debe tener un FadeOut configurado para el vanish.
+    /// </summary>
     [SerializeField]
     private FadeColor FadeOut;
 

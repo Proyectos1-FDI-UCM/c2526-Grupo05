@@ -76,6 +76,10 @@ public class CanFlash : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
+    /// <summary>
+    /// Se llama al cargarse en escena.
+    /// Hace comprobaciones necesarias para el componente.
+    /// </summary>
     private void Awake()
     {
         if (GetComponent<SpriteRenderer>() == null)

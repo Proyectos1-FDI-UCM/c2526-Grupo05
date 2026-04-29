@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
 
     /// <summary>
     /// Contador que indica cuántas AudioSources han sido creadas.
-    /// Este -1 indica el máximo indice que no tiene AudioSource null.
+    /// Este 0 indica el máximo indice que no tiene AudioSource null.
     /// </summary>
     private int _createdAudioSources = 0;
 

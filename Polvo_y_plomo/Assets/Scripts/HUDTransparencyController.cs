@@ -10,8 +10,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Antes de cada class, descripción de qué es y para qué sirve,
-/// usando todas las líneas que sean necesarias.
+/// Componente añadido a ciertos colliders de la cámara para iniciar transparencias de elementos del HUD.
 /// </summary>
 public class HUDTransparencyController : MonoBehaviour
 {
