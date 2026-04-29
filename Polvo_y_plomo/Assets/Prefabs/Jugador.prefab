@@ -579,11 +579,11 @@ MonoBehaviour:
   - PlayerAbilityDuration: 2.75
     AbilityUpgradeKillThreshold: 0
   - PlayerAbilityDuration: 3.75
-    AbilityUpgradeKillThreshold: 25
+    AbilityUpgradeKillThreshold: 30
   - PlayerAbilityDuration: 4.5
-    AbilityUpgradeKillThreshold: 50
+    AbilityUpgradeKillThreshold: 65
   - PlayerAbilityDuration: 5
-    AbilityUpgradeKillThreshold: 75
+    AbilityUpgradeKillThreshold: 100
   LevelUP: {fileID: 8300000, guid: e2e71451ece1a1543896e0495e7ce6db, type: 3}
 --- !u!1 &8633089953209525018
 GameObject:
