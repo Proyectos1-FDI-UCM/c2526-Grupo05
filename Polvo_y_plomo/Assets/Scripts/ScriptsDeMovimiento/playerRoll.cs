@@ -183,6 +183,11 @@ public class playerRoll : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
+    public bool GetRoll()
+    {
+        return _isRolling;
+    }
+    
 
 
     #endregion

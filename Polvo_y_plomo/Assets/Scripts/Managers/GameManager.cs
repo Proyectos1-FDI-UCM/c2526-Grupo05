@@ -776,7 +776,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
-        bool recarga = _municionJugador < NuevaMunicionJugador;
+        bool recarga = NuevaMunicionJugador - _municionJugador > 0;
 
         Animator barrelAnimator = Barrel.GetComponent<Animator>();
 
@@ -1060,7 +1060,6 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Método para resumir el juego, cambiando el flujo del tiempo a 1 o al de la habilidad según corresponda.
-    /// En caso de que se haya matado al jefe final el juego ha de mantenerse pausado y este método no hace nada.
     /// </summary
     public void ResumeGame()
     {
