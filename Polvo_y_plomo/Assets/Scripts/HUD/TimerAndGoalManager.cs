@@ -62,6 +62,15 @@ public class TimerAndGoalManager : MonoBehaviour
     private UIVibration _goalVibration = null;
 
     /// <summary>
+    /// Array que guarda los umbrales de tiempo restante para que la vibración del texto del crono cambie
+    /// </summary>
+    private int[] _vibrationThresholds = { 60, 30, 10, 0 };
+    /// <summary>
+    /// Array que guarda las intensidades que toma la vibración del texto del crono, cuando queda cada vez menos tiempo
+    /// </summary>
+    private int[] _vibrations = { 1, 2, 3 };
+
+    /// <summary>
     /// Tiempo restante en el crono
     /// </summary>
     private float _lastingTime = 210;
@@ -73,11 +82,6 @@ public class TimerAndGoalManager : MonoBehaviour
     /// Segundos restantes
     /// </summary>
     private int _seconds = 30;
-
-    /// <summary>
-    /// Bool que dice si el crono ha acabado o no
-    /// </summary>
-    private bool _chronoEnded = false;
     #endregion
     
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -88,9 +92,9 @@ public class TimerAndGoalManager : MonoBehaviour
     // - Hay que borrar los que no se usen 
     
     /// <summary>
-    /// Start que busca los scripts de vibración de ambos textos, y pone el tiempo restante al máximo (es decir, al inicial del crono).
+    /// Awake que busca los scripts de vibración de ambos textos, y pone el tiempo restante al máximo (es decir, al inicial del crono).
     /// </summary>
-    void Start()
+    void Awake()
     {
         _timerVibration = TimerText.GetComponent<UIVibration>();
         _goalVibration = GoalText.GetComponent<UIVibration>();
@@ -118,24 +122,24 @@ public class TimerAndGoalManager : MonoBehaviour
 
                 if (_timerVibration != null)
                 {
-                    if (_lastingTime < 60 && _lastingTime > 30) _timerVibration.ChangeIntensity(1);
-                    else if (_lastingTime < 30 && _lastingTime > 10) _timerVibration.ChangeIntensity(2);
-                    else if (_lastingTime < 10 && _lastingTime > 0) _timerVibration.ChangeIntensity(3);
+                    if (_lastingTime < _vibrationThresholds[0] && _lastingTime > _vibrationThresholds[1]) _timerVibration.ChangeIntensity(_vibrations[0]);
+                    else if (_lastingTime < _vibrationThresholds[1] && _lastingTime > _vibrationThresholds[2]) _timerVibration.ChangeIntensity(_vibrations[1]);
+                    else if (_lastingTime < _vibrationThresholds[2] && _lastingTime > _vibrationThresholds[3]) _timerVibration.ChangeIntensity(_vibrations[2]);
                 }
             }
 
-            else if (!_chronoEnded)
+            else
             {
                 TimerText.text = "0:00";
                 _timerVibration.enabled = false;
 
                 if (GoalText != null)
                 {
-                    _goalVibration.ChangeIntensity(3);
+                    _goalVibration.ChangeIntensity(_vibrations[2]);
                     GoalText.text = GoalString;
                 }
 
-                _chronoEnded = true;
+                this.enabled = false;
             }
         }
     }

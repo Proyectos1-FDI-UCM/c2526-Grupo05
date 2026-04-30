@@ -101,6 +101,10 @@ public class playerRoll : MonoBehaviour
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
 
+    /// <summary>
+    /// Awake que inicializa las variables de los scripts RigidBody2D y playerControlledMovement que debería tener el jugador, destruyendo en caso contrario
+    /// (programación defensiva).
+    /// </summary>
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
