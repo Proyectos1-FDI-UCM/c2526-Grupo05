@@ -245,7 +245,6 @@ MonoBehaviour:
   CuracionJugador: {fileID: 0}
   CoberturaCubre: {fileID: 0}
   CoberturaRota: {fileID: 0}
-  MuerteJugador: {fileID: 0}
 --- !u!82 &6617239759872121760
 AudioSource:
   m_ObjectHideFlags: 0
@@ -565,6 +564,14 @@ PrefabInstance:
       propertyPath: Object
       value: 
       objectReference: {fileID: 4373482155475448269, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+    - target: {fileID: 6906647698243497770, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
+      propertyPath: RangoCono
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906647698243497770, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
+      propertyPath: NumPerdigones
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6906647698243497770, guid: d33f5860d59fd244b811f5db63b821e6, type: 3}
       propertyPath: DisparoEscopeta
       value: 

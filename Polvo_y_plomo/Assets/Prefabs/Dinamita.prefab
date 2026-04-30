@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d31340224bf0dd448541d77b45bf465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovingTime: 1
+  MovingTime: 0.7
   Pos: {x: -4, y: -4, z: 0}
 --- !u!114 &701332206798859173
 MonoBehaviour:
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BoomRange: {fileID: 5640593100504841450, guid: c517fdbb0255f1746b2ed93c4dd845d3, type: 3}
-  BoomTime: 2
+  BoomTime: 1.5
   Explosion: {fileID: 8300000, guid: a06745194c1f1944786ed400c08d45ff, type: 3}
 --- !u!114 &2902324470021608073
 MonoBehaviour:

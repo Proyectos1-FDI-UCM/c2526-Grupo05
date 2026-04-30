@@ -291,7 +291,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7138501363732420223, guid: e6836fc0f9114674db2035e0ea97fcc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -347,7 +347,6 @@ MonoBehaviour:
   CuracionJugador: {fileID: 0}
   CoberturaCubre: {fileID: 0}
   CoberturaRota: {fileID: 0}
-  MuerteJugador: {fileID: 0}
 --- !u!114 &5641564381990597020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab46bea649c90f542882682334d2fa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 2
+  raycastDistance: 3
   mascarachoque:
     serializedVersion: 2
     m_Bits: 256
