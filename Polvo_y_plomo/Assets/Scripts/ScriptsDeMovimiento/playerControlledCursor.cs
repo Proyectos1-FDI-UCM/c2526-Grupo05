@@ -121,7 +121,7 @@ public class playerControlledCursor : MonoBehaviour
     public void SetCursorSpeed(float newSpeed)
     {
         newSpeed = newSpeed/2.5f; // el parámetro se recibe con la codificación [0, 10] -> lo pasamos a [0, 4]
-        if (newSpeed > 0 && newSpeed <= 2f) CursorSpeedMultiplier = newSpeed;
+        if (newSpeed > 0 && newSpeed <= 4f) CursorSpeedMultiplier = newSpeed;
     }
     #endregion
     
