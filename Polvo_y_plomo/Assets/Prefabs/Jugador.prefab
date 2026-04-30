@@ -722,6 +722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3098542290943024dbb3edfa05e72ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CursorSpeedMultiplier: 1
+  CursorSpeedMultiplier: 2
   CursorMaxRadius: 4
   CursorMinRadius: 1
