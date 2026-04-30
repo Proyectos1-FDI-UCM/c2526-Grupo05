@@ -376,6 +376,12 @@ public class GameManager : MonoBehaviour
     private bool _playerSlowShotOn = false;
 
     /// <summary>
+    /// Variable booleana para conocer si el juego debe estar parado (por la muerte de Suzie, para evitar
+    /// que el juego se reaunude si se pausa la partida después de matar al jefe)
+    /// </summary>
+    private bool _gameMustBePaused = false;
+
+    /// <summary>
     /// Variable constante que indica el multiplicador del tiempo al estar activa la habilidad de SlowShot.
     /// </summary>
     private const float SLOWSHOT_TIMEMULTIPLIER = 0.25f;
@@ -612,6 +618,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameEnds()
     {
+        _gameMustBePaused = true;
+        PauseGame();
         LevelEnds(); // inicia el fin de nivel y guarda puntos
         ResetStats(); // reset de stats
     }
@@ -768,7 +776,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
-        bool recarga = _municionJugador == 0;
+        bool recarga = NuevaMunicionJugador - _municionJugador > 0;
 
         Animator barrelAnimator = Barrel.GetComponent<Animator>();
 
@@ -786,7 +794,7 @@ public class GameManager : MonoBehaviour
                 else Debug.Log("Falta animator en una de las bullets del barril de recarga");
                 if (barrelAnimator != null)
                 {
-                    if (recarga && _municionJugador==1)
+                    if (recarga)
                     {
                         barrelAnimator.Play("RevolverAntiClock", 0, 0f);
                         if (ReloadClip && LevelManager.HasInstance()) AudioManager.Instance.Play(ReloadClip, LevelManager.Instance.PlayerTransform().position);
@@ -944,6 +952,7 @@ public class GameManager : MonoBehaviour
         // Reiniciar flujo del tiempo (es posible salir de una escena con la habilidad activada, si no se reinicia,
         // se podría mantener la habilidad siempre activa.
         _playerSlowShotOn = false;
+        _gameMustBePaused = false;
         ResumeGame();
 
         // Realizar el FadeOut de la pantalla negra al inicio de la escena solo si estaba activo (valor 1).
@@ -1054,7 +1063,8 @@ public class GameManager : MonoBehaviour
     /// </summary
     public void ResumeGame()
     {
-        if (_playerSlowShotOn) _slowMultiplier = SLOWSHOT_TIMEMULTIPLIER;
+        if (_gameMustBePaused) _slowMultiplier = 0;
+        else if (_playerSlowShotOn) _slowMultiplier = SLOWSHOT_TIMEMULTIPLIER;
         else _slowMultiplier = 1.00f;
     }
 

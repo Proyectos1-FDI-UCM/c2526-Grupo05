@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785a8965b4f0b8c4e921ec946f519043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rate: 0.45
+  Rate: 0.15
   Cursor: {fileID: 3504479324421535513}
 --- !u!114 &8480573717615319094
 MonoBehaviour:

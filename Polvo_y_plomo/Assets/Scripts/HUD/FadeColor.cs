@@ -158,8 +158,7 @@ public class FadeColor : MonoBehaviour
     {
         if (_t < FadeTime)
         {
-            if (GameManager.HasInstance() && GameManager.SlowMultiplier != 0) _t += Time.deltaTime * GameManager.SlowMultiplier;
-            else _t += Time.deltaTime;
+            _t += Time.deltaTime;
 
             SetColor(Color.Lerp(_startColor, _endColor, _t / FadeTime));
         }
