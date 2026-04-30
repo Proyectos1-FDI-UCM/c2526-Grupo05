@@ -101,6 +101,9 @@ public class playerMeleeAttack : MonoBehaviour
             _shadowSpawned = true;
         }
 
+        // Para que si el jugador abre el menu de pausa mientras mantiene el click derecho se pueda borrar la sombra y luego volver a generarse.
+        if (InputManager.Instance.ExitWasPressedThisFrame()) _shadowSpawned = false;
+
         if (InputManager.Instance.MeleeWasReleasedThisFrame() && _tRemainingToMelee <= 0)
         {
             DoMelee(false);
