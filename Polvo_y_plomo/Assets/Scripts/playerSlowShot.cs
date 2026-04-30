@@ -232,6 +232,10 @@ public class playerSlowShot : MonoBehaviour
             if (kills >= AbilityLevels[_abilityCurrentLevel + 1].AbilityUpgradeKillThreshold)
             {
                 _abilityCurrentLevel++;
+
+                // Para que la habilidad se amplie si se sube de nivel durante la duración de esta:
+                _tRemainingOfAbility += AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration - AbilityLevels[_abilityCurrentLevel - 1].PlayerAbilityDuration;
+
                 GameManager.Instance.ActivateLevelUpText();
                 if (_abilityCurrentLevel == AbilityLevels.Length - 1) GameManager.Instance.UpdateLevelBar(1);
                 else GameManager.Instance.UpdateLevelBar(0);
