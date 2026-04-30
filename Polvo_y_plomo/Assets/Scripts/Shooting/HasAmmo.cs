@@ -117,6 +117,8 @@ public class HasAmmo : MonoBehaviour
     }
 
     /// <summary>
+    /// 
+    /// 
     /// Se llama cada frame.
     /// Lleva la lógica de recarga bala a bala.
     /// Si se dispara, hace roll o ataque melee, la recarga se para.
