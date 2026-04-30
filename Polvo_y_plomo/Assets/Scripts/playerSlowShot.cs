@@ -234,7 +234,7 @@ public class playerSlowShot : MonoBehaviour
                 _abilityCurrentLevel++;
 
                 // Para que la habilidad se amplie si se sube de nivel durante la duración de esta:
-                _tRemainingOfAbility += AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration - AbilityLevels[_abilityCurrentLevel - 1].PlayerAbilityDuration;
+                if (_abilityOn) _tRemainingOfAbility += AbilityLevels[_abilityCurrentLevel].PlayerAbilityDuration - AbilityLevels[_abilityCurrentLevel - 1].PlayerAbilityDuration;
 
                 GameManager.Instance.ActivateLevelUpText();
                 if (_abilityCurrentLevel == AbilityLevels.Length - 1) GameManager.Instance.UpdateLevelBar(1);
