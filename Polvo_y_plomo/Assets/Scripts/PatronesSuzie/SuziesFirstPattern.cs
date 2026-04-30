@@ -94,11 +94,11 @@ public class SuziesFirstPattern : MonoBehaviour
     /// <summary>
     /// Transform que guarda la posición del jugador. Se buscará continuamente para determinar las acciones de Suzie.
     /// </summary>
-    Transform _playerPos = null;
+    private Transform _playerPos = null;
     /// <summary>
     /// Vida de Suzie cada vez que empieza a asomar
     /// </summary>
-    int _currentAttackStartingHealth = 20;
+    private int _currentAttackStartingHealth = 20;
     /// <summary>
     /// Tiempo que Suzie lleva asomada
     /// </summary>

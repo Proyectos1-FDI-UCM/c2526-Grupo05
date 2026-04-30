@@ -768,7 +768,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UpdateAmmoHUD(int NuevaMunicionJugador)
     {
-        bool recarga = _municionJugador < NuevaMunicionJugador;
+        bool recarga = _municionJugador == 0;
 
         Animator barrelAnimator = Barrel.GetComponent<Animator>();
 
@@ -786,7 +786,7 @@ public class GameManager : MonoBehaviour
                 else Debug.Log("Falta animator en una de las bullets del barril de recarga");
                 if (barrelAnimator != null)
                 {
-                    if (recarga)
+                    if (recarga && _municionJugador==1)
                     {
                         barrelAnimator.Play("RevolverAntiClock", 0, 0f);
                         if (ReloadClip && LevelManager.HasInstance()) AudioManager.Instance.Play(ReloadClip, LevelManager.Instance.PlayerTransform().position);

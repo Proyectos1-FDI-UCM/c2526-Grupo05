@@ -46,9 +46,14 @@ public class playerMeleeAttack : MonoBehaviour
     /// </summary>
     private float _tRemainingToMelee = 0;
 
-    // Almacena el componente CanMelee que ha de tener el objeto con este script. Inicializado en Start().
+    /// <summary>
+    /// Almacena el componente CanMelee que ha de tener el objeto con este script. Inicializado en Start()
+    /// </summary>
     private CanMelee _canMelee;
 
+    /// <summary>
+    /// Bool que dice si hay una sombra de ataque melee en ese momento ya generada, o no
+    /// </summary>
     private bool _shadowSpawned = false;
     #endregion
 

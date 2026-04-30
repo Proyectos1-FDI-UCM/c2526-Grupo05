@@ -88,8 +88,6 @@ public class CanMelee : MonoBehaviour
     // mayúscula, incluida la primera letra)
     // Ejemplo: GetPlayerController
 
-    #endregion
-    
     /// <summary>
     /// Método público que genera un prefab de hitbox de un ataque melee, en una posición y rotación dadas, y lo destruye tras cierto tiempo.
     /// </summary>
@@ -97,10 +95,14 @@ public class CanMelee : MonoBehaviour
     public void HitboxMelee(Vector2 dirAtaque)
     {
         float angulo = 180f / Mathf.PI * Mathf.Atan2(dirAtaque.y, dirAtaque.x);
-        Instantiate(MeleePrefab, (Vector2)transform.position + DistanciaSpawnAtaque*dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
+        Instantiate(MeleePrefab, (Vector2)transform.position + DistanciaSpawnAtaque * dirAtaque.normalized, Quaternion.Euler(0, 0, angulo));
         if (Attack) AudioManager.Instance.Play(Attack, transform.position);
     }
-
+    /// <summary>
+    /// Método público que genera un prefab de sombra de un ataque melee, en una posición y rotación dadas, y se comunica con el script de dicho prefab para
+    /// que este gestione su movimiento con el jugador.
+    /// </summary>
+    /// <param name="dirAtaque"></param>
     public void ShadowMelee(Vector2 dirAtaque)
     {
         if (MeleeShadowPrefab != null)
@@ -112,6 +114,7 @@ public class CanMelee : MonoBehaviour
             if (shadowMovement != null) shadowMovement.InitialDistanceValue(DistanciaSpawnAtaque);
         }
     }
+    #endregion
 
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados

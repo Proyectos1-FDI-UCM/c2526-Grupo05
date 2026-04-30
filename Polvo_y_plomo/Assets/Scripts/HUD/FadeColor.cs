@@ -153,7 +153,6 @@ public class FadeColor : MonoBehaviour
     /// <summary>
     /// Realiza el FadeColor cambiando entre _startColor y _endColor (mismo color, distinta transparencia) a lo largo del tiempo.
     /// Desactiva el componente trás acabar.
-    /// LateUpdate para sobreescribir otros cambios como el de los Animator.
     /// </summary>
     private void LateUpdate()
     {
@@ -167,21 +166,7 @@ public class FadeColor : MonoBehaviour
         else
         {
             SetColor(_endColor); // asegurarse de que acabe en el final
-
-            if (StartAlpha - FinalAlpha > 0) // si somos fade out
-            {
-                // Mantener el alpha si se tiene (sirve para el HUD de las balas y mantener su transparencia...)
-                OverrideAlpha MantainAlpha = GetComponent<OverrideAlpha>();
-                if (MantainAlpha != null) MantainAlpha.enabled = true;
-            }
-            else // si somos fade in
-            {
-                // Dejar de mantener el alpha
-                OverrideAlpha MantainAlpha = GetComponent<OverrideAlpha>();
-                if (MantainAlpha != null) MantainAlpha.enabled = false;
-            }
-
-                this.enabled = false;
+            this.enabled = false;
         }
     }
     #endregion
