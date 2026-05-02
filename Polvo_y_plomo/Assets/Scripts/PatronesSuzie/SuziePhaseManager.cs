@@ -85,14 +85,23 @@ public class SuziePhaseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Comprobamos el cambio de fase (Si llega a 10 de vida o menos, pasa a fase 2)
+    /// Comprobamos el cambio de fase 
     /// </summary>
     void Update()
     {
-        if (_faseActual == 1 && _healthManager != null && _healthManager.GetCurrentHealth() <= 10)
+        if (_faseActual == 1 && _healthManager != null)
         {
-            CambiarAFase2();
-            AudioManager.Instance.TransitionToMetalPhase();
+            float mitadDeVida = _healthManager.GetMaxHealth() / 2f;
+
+            if (_healthManager.GetCurrentHealth() <= mitadDeVida)
+            {
+                CambiarAFase2();
+
+                if (AudioManager.HasInstance())
+                {
+                    AudioManager.Instance.TransitionToPhase2Music();
+                }
+            }
         }
     }
     #endregion

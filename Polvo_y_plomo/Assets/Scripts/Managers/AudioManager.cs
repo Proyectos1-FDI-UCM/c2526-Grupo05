@@ -339,7 +339,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Cambia el objetivo de volumen para que la pista normal baje y la metalizada suba.
     /// </summary>
-    public void TransitionToMetalPhase()
+    public void TransitionToPhase2Music()
     {
         _targetFase1Vol = 0f;
         _targetFase2Vol = 1f;
