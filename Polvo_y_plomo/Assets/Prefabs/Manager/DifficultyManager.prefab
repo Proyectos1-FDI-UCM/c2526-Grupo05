@@ -49,7 +49,7 @@ MonoBehaviour:
     MeleeChaseSpeedMultiplier: 0.65
     RangedChaseSpeedMultiplier: 0.75
     RangedFireRateMultiplier: 0.65
-    BulletSpeedMultiplier: 0.65
+    BulletSpeedMultiplier: 0.75
     ExplosionRadiusMultiplier: 0.8
     DynaTravelSpeedMultiplier: 0.8
     PointsGivenMultiplier: 0.8
@@ -69,7 +69,7 @@ MonoBehaviour:
     MeleeChaseSpeedMultiplier: 1.35
     RangedChaseSpeedMultiplier: 1.3
     RangedFireRateMultiplier: 1.5
-    BulletSpeedMultiplier: 1.5
+    BulletSpeedMultiplier: 1.35
     ExplosionRadiusMultiplier: 1.6
     DynaTravelSpeedMultiplier: 2
     PointsGivenMultiplier: 1.2

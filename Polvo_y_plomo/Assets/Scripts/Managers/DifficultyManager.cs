@@ -24,6 +24,9 @@ public class DifficultyManager : MonoBehaviour
     // (palabras con primera letra mayúscula, incluida la primera letra)
     // Ejemplo: MaxHealthPoints
 
+    [SerializeField]
+    private int OnLoadInitialDifficultyIndex = 1;
+
     [System.Serializable]
     public struct Difficulty
     {
@@ -126,7 +129,16 @@ public class DifficultyManager : MonoBehaviour
                 difficulties[0] = new Difficulty();
             }
 
-            _instance = this;
+            if (OnLoadInitialDifficultyIndex < 0 || OnLoadInitialDifficultyIndex >= difficulties.Length)
+            {
+                Debug.Log("Indice de dificultad inicial configurado incorrecto para la cantidad de dificultades configuradas. Se pondrá 0");
+                _currentDifficulty = 0;
+            }
+            else
+            {
+                _currentDifficulty = OnLoadInitialDifficultyIndex;
+            }
+                _instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else

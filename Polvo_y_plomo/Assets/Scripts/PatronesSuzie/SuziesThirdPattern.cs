@@ -75,6 +75,11 @@ public class SuziesThirdPattern : MonoBehaviour
 
     private float _tFirstDyna = 0f;
 
+    /// <summary>
+    /// Almacena el HeatlhChanger de Suzie para evitar que reciba daño durante este patrón
+    /// </summary>
+    private HealthChanger _suzieHealthChanger;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -85,9 +90,14 @@ public class SuziesThirdPattern : MonoBehaviour
     // - Hay que borrar los que no se usen 
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Se llama al cargarse en escena.
+    /// Inicializa el componente.
     /// </summary>
-    
+    private void Awake()
+    {
+        _suzieHealthChanger = this.GetComponent<HealthChanger>();
+    }
+
     /// <summary>
     /// En el update dependiendo de los booleanos que se hayan marcado como true, lanzaremos la segunda dinamita con el tiempo configurable al objetivo
     /// </summary>
@@ -127,6 +137,7 @@ public class SuziesThirdPattern : MonoBehaviour
     /// </summary>
     public void IniciarPatron()
     {
+        _suzieHealthChanger.BlockDamage();
         _manyBarrels = false;
         _lessThanTwo = false;
 
@@ -212,6 +223,7 @@ public class SuziesThirdPattern : MonoBehaviour
     /// </summary>
     private void FinalizarPatron()
     {
+        _suzieHealthChanger.AllowDamage();
         GetComponent<SuziePhaseManager>().ReportarAtaqueTerminado();
     }
     #endregion

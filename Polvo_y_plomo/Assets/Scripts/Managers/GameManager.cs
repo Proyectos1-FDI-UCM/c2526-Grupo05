@@ -449,7 +449,7 @@ public class GameManager : MonoBehaviour
             this.enabled = false;
             Init();
         } // if-else somos instancia nueva o no.
-        if (SceneManager.GetActiveScene().name == "Menu") LoadScore();
+        if (SceneManager.GetActiveScene().buildIndex == 0) LoadScore();
     }
 
     /// <summary>
