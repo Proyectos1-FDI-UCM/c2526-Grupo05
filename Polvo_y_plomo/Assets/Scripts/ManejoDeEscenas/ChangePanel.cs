@@ -81,8 +81,11 @@ public class ChangePanel : MonoBehaviour
     public void ChangePanels()
     {
         ActivatePanel.SetActive(true);
+
         if (DisablePanel == null) gameObject.SetActive(false);
         else DisablePanel.SetActive(false);
+
+        EventSystem.current.SetSelectedGameObject(null);
 
         if (NextPanelSelectedButton != null) EventSystem.current.SetSelectedGameObject(NextPanelSelectedButton);
     }
