@@ -99,31 +99,30 @@ public class PlayerAnimations : MonoBehaviour
     void Update()
     {
         float playerAngle = RevolverRotation.localEulerAngles.z;
-        playerAngle += 45f;
-        float posAngle = Mathf.Abs((int)(playerAngle) / 90);
-        float negAngle = Mathf.Abs((int)(360f + playerAngle) / 90);
+        int index = 4;
+        if (playerAngle> -44 && playerAngle <= 45) index = 1;//Mantener los valores en el intervalo 1-4 por cualquier excepción
+        else if (playerAngle <= 135 && playerAngle > 45) index = 2;//Mantener los valores en el intervalo 1-4 por cualquier excepción
+        else if (playerAngle > 135 && playerAngle < 180) index = 3;//Mantener los valores en el intervalo 1-4 por cualquier excepción
+        else if (playerAngle > -180 && playerAngle < -136) index = 3;//Mantener los valores en el intervalo 1-4 por cualquier excepción
+        else if (playerAngle > -135 && playerAngle < -45) index = 4;//Mantener los valores en el intervalo 1-4 por cualquier excepción
         if (!_playerRoll.GetRoll())
         {
-            _playerAnimator.SetInteger("IsRolling", 0);
+            _playerAnimator.SetLayerWeight(0, 1);
+            _playerAnimator.SetLayerWeight(1, 0);
             if (_rb.linearVelocity.magnitude != 0f)
             {
-                if (playerAngle >= 0) _playerAnimator.Play(("Walk" + (posAngle + 1)));
-                else _playerAnimator.Play(("Walk" + (negAngle + 1)));
+                _playerAnimator.Play(("Walk" + index), 0);
             }
             else
             {
-                if (playerAngle >= 0) _playerAnimator.Play(("Idle" + (posAngle + 1)));
-                else _playerAnimator.Play(("Idle" + (negAngle + 1)));
+                _playerAnimator.Play(("Idle" + index), 0);
             }
-            //_playerAnimator.enabled = false;
-            //_playerAnimator.enabled = true;
-            /*if (playerAngle >= 0) _playerAnimator.Play(("Roll" + (posAngle + 1)), 0);
-            else _playerAnimator.Play(("Roll" + (negAngle + 1)), 0);*/
         }
         else
         {
-            if (playerAngle >= 0) _playerAnimator.SetInteger("IsRolling", (int)posAngle);
-            else _playerAnimator.SetInteger("IsRolling", (int)negAngle);
+            _playerAnimator.SetLayerWeight(0, 0);
+            _playerAnimator.SetLayerWeight(1, 1);
+            _playerAnimator.Play(("Roll" + index), 1);
         }
         Debug.Log("Roll" + _playerAnimator.GetInteger("IsRolling"));
         //Debug.Log("angulo" + (int)(RevolverRotation.eulerAngles.z - 225f) / 45);

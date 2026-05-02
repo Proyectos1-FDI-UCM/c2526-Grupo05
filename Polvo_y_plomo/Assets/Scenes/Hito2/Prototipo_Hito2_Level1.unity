@@ -18219,6 +18219,18 @@ PrefabInstance:
       propertyPath: PlayerSpeed
       value: 6.5
       objectReference: {fileID: 0}
+    - target: {fileID: 963654306252283241, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 963654306252283241, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 963654306252283241, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1474871151810355398, guid: 3e54fe0dcc77c074c8ec2f28b2f446e8, type: 3}
       propertyPath: VidaMax
       value: 10
