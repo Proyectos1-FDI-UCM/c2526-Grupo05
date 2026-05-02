@@ -5,6 +5,8 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
@@ -38,6 +40,13 @@ public class PointsOnDeath : MonoBehaviour
     // primera palabra en minúsculas y el resto con la 
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
+
+    /// <summary>
+    /// Almacena el modificador por dificultad de los puntos obtenidos del DifficultyManager.
+    /// Inicializado en el Start().
+    /// </summary>
+    private float _difficultyPointsMultiplier;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -46,6 +55,15 @@ public class PointsOnDeath : MonoBehaviour
     // Por defecto están los típicos (Update y Start) pero:
     // - Hay que añadir todos los que sean necesarios
     // - Hay que borrar los que no se usen 
+
+    /// <summary>
+    /// Llamado al cargarse en escena el componente, si esta activo, o al activarse por primera vez
+    /// En este script solo inicializa el multiplicador de puntos
+    /// </summary>
+    private void Start()
+    {
+        UpdateDifficultyStats();
+    }
     #endregion
 
     // ---- MÉTODOS PÚBLICOS ----
@@ -70,15 +88,15 @@ public class PointsOnDeath : MonoBehaviour
             {
                 // Para que se pongan los puntos en la posicion correcta si se mata durante la animación de spawn
                 EnemySpawnLogic enemySpawn = GetComponent<EnemySpawnLogic>();
-                if (enemySpawn == null) GameManager.Instance.SpawnPointIndicator(transform.position, Points * LevelManager.Instance.GetStreak());
+                if (enemySpawn == null) GameManager.Instance.SpawnPointIndicator(transform.position, (int)(_difficultyPointsMultiplier * Points) * LevelManager.Instance.GetStreak());
                 else
                 {
                     Hitbox enemyHitbox = enemySpawn.GetComponentInChildren<Hitbox>();
-                    if (enemyHitbox != null) GameManager.Instance.SpawnPointIndicator(enemyHitbox.transform.position, Points * LevelManager.Instance.GetStreak());
+                    if (enemyHitbox != null) GameManager.Instance.SpawnPointIndicator(enemyHitbox.transform.position, (int)(_difficultyPointsMultiplier * Points) * LevelManager.Instance.GetStreak());
                     else Debug.Log("No se ha encontrado hitbox en el PointsOnDeath y no se pueden colocar los puntos correctamente");
                 }
             }
-            LevelManager.Instance.UpdateScoreSystem(Points);
+            LevelManager.Instance.UpdateScoreSystem((int)(_difficultyPointsMultiplier * Points));
         }
         Destroy(this);
     }
@@ -91,7 +109,21 @@ public class PointsOnDeath : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
-    #endregion
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        {
+            _difficultyPointsMultiplier = DifficultyManager.Instance.GetPointsGivenMultiplier();
+        }
+        else
+        {
+            _difficultyPointsMultiplier = 1f;
+        }
+    }
+        #endregion
 
-} // class PointsOnDesttroy 
+    } // class PointsOnDesttroy 
 // namespace

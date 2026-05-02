@@ -38,7 +38,7 @@ public class ChasePlayer : MonoBehaviour
     /// Parámetro que indica la distancia a la que el enemigo empezara a esquivar obstaculos
     /// </summary>
     [SerializeField]
-    float raycastDistance = 2f;
+    private float raycastDistance = 2f;
 
     /// <summary>
     /// Parámetro que indica la que layers esquivara el enemigo
@@ -50,7 +50,7 @@ public class ChasePlayer : MonoBehaviour
     /// Parámetro que el giro que usa el enemigo para esquivar
     /// </summary>
     [SerializeField]
-    float finalAngle = 15;
+    private float finalAngle = 15;
 
 
     /// <summary>
@@ -128,6 +128,12 @@ public class ChasePlayer : MonoBehaviour
     /// Almacena la dirección y velocidad del stun en el momento en el que se inicia.
     /// </summary>
     private Vector3 _stunVelocity;
+     
+    /// <summary>
+    /// Almacena el multiplicador de dificultad de velocidad del DificultyManager.
+    /// Inicializado en el Start();
+    /// </summary>
+    private float _difficultySpeedMultiplier;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -182,6 +188,7 @@ public class ChasePlayer : MonoBehaviour
             }
         }
 
+        UpdateDifficultyStats();
         _gameManager = GameManager.HasInstance();
     }
 
@@ -282,7 +289,7 @@ public class ChasePlayer : MonoBehaviour
             // Si estoy persiguiendo actualizo la velocidad hacia el jugador, con módulo ChaseSpeed.
             if (_isChasing)
             {
-                _rb.linearVelocity = ChaseSpeed * (directionToPlayer).normalized;
+                _rb.linearVelocity = ChaseSpeed * (directionToPlayer).normalized * _difficultySpeedMultiplier;
                 if (_gameManager) _rb.linearVelocity *= GameManager.SlowMultiplier;
             }
             else
@@ -340,6 +347,28 @@ public class ChasePlayer : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        {
+            if (GetComponent<CanMelee>() != null)
+            {
+                _difficultySpeedMultiplier = DifficultyManager.Instance.GetMeleeChaseSpeedMultiplier();
+            }
+            else
+            {
+                _difficultySpeedMultiplier = DifficultyManager.Instance.GetRangedChaseSpeedMultiplier();
+            }
+        }
+        else
+        {
+            _difficultySpeedMultiplier = 1f;
+        }
+    }
 
     #endregion
 

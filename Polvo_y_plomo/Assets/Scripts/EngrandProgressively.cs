@@ -100,6 +100,8 @@ public class EngrandProgressively : MonoBehaviour
     /// </summary>
     void Start()
     {
+        UpdateDifficultyStats();
+
         _scalePerSecond = FinalScale / ChangeTime; //Inicializa velocidad de escalado.
 
         _actualScale = 0; //Inicializa la escala aumentada actual.
@@ -144,13 +146,27 @@ public class EngrandProgressively : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        // NOTA: En caso de añadir un delegado en el DifficultyManager (o como sea que funcione)
+        // y se quiera llamar a los UpdateDifficultyStats en un "OnDifficultyChange" o algo así,
+        // este en concreto no debería ser llamado
+        if (DifficultyManager.HasInstance())
+        {
+            FinalScale *= DifficultyManager.Instance.GetPointsGivenMultiplier();
+        }
+    }
 
     #endregion   
 

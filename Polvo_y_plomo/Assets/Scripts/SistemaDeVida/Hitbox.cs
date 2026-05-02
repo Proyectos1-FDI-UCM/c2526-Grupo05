@@ -99,7 +99,7 @@ public class Hitbox : MonoBehaviour
             if (_suzieHealthBar != null)
             {
                 _suzieHealthBar.UpdateHealthBar(_healthChanger.GetMaxHealth(), _healthChanger.GetCurrentHealth());
-                if (_healthChanger.GetCurrentHealth() == 0 && GameManager.HasInstance())
+                if (_healthChanger.GetCurrentHealth() <= 0 && GameManager.HasInstance())
                 {
                     GameManager.Instance.GameEnds();
                 }

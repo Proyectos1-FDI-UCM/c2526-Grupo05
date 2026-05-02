@@ -5,6 +5,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 
 public class HealthChanger : MonoBehaviour
@@ -68,6 +69,13 @@ public class HealthChanger : MonoBehaviour
     private bool _canRecieveDamage = true;
 
     private bool _cobertura = false;
+
+    /// <summary>
+    /// Almacena la vida maxima configurada en el editor.
+    /// ACTUALMENTE sirve solo en el caso de Suzie, ya que su vida cambia dependiendo de la dificultad.
+    /// Inicializada en el Awake();
+    /// </summary>
+    private int _originalMaxHealth;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -84,6 +92,7 @@ public class HealthChanger : MonoBehaviour
     private void Awake()
     {
         _vida = VidaMax;
+        _originalMaxHealth = VidaMax;
     }
 
     /// <summary>
@@ -100,6 +109,8 @@ public class HealthChanger : MonoBehaviour
         }
         else if (gameObject.CompareTag("Barrel")) _cobertura = true;
         _canFlash = GetComponent<CanFlash>();
+
+        UpdateDifficultyStats();
     }
     #endregion
 
@@ -243,6 +254,46 @@ public class HealthChanger : MonoBehaviour
             Destroy(gameObject);
             //Hay que hacer más adelante las animaciónes de muerte de los enemigos
 
+        }
+    }
+
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// Actualmente solo incluye los cambios para Suzie.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        { // if distinto para facilitar añadir otros casos que no sean Suzie
+            if (GetComponent<SuziePhaseManager>() != null)
+            {
+                // la vida actual se cambia a la que se tendria sin modificadores de dificultad
+                int difference = VidaMax - _originalMaxHealth;
+                _vida -= difference;
+
+                // cambiamos VidaMax y vida para incluir la vida de esta dificultad
+                VidaMax = _originalMaxHealth + DifficultyManager.Instance.GetSuzieHealthAdded();
+                _vida += DifficultyManager.Instance.GetSuzieHealthAdded();
+
+                // actualizar el hud de la vida
+                SuzieHealthBar healthBar = GetComponent<SuzieHealthBar>();
+                if (healthBar != null)
+                {
+                    healthBar.UpdateHealthBar(VidaMax, _vida);
+                }
+
+                // en el cambio la vida puede disminuir y volverse menor que 0, será necesario actualizar 
+                if (_vida <= 0)
+                {
+                    MetodoMuerte();
+                    if (GameManager.HasInstance())
+                    {
+                        GameManager.Instance.GameEnds();
+                    }
+                }
+
+
+            }
         }
     }
 

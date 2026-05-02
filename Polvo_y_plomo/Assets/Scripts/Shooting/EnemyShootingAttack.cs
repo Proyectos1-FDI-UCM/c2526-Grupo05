@@ -92,6 +92,11 @@ public class EnemyShootingAttack : MonoBehaviour
     /// </summary>
     private bool _wasChasing = true;
 
+    /// <summary>
+    /// Almacena el multiplicador de dificultad de velocidad de disparo del DificultyManager.
+    /// Inicializado en el Start().
+    /// </summary>
+    private float _fireRateMultiplier;
 
     #endregion
 
@@ -144,6 +149,7 @@ public class EnemyShootingAttack : MonoBehaviour
             }
         }
 
+        UpdateDifficultyStats();
         _gameManager = GameManager.HasInstance();
     }
 
@@ -153,8 +159,8 @@ public class EnemyShootingAttack : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (_gameManager) _tParaDisparar -= Time.deltaTime * GameManager.SlowMultiplier;
-        else _tParaDisparar -= Time.deltaTime;
+        if (_gameManager) _tParaDisparar -= Time.deltaTime * GameManager.SlowMultiplier * _fireRateMultiplier;
+        else _tParaDisparar -= Time.deltaTime * _fireRateMultiplier;
         
         if (_chasePlayer.IsChasing()) // Chasing
         {
@@ -211,6 +217,21 @@ public class EnemyShootingAttack : MonoBehaviour
     {
         Vector2 fireDir = (Vector2)_playerTransform.position - (Vector2)transform.parent.position; // z = 0 automáticamente
         _shoot.ShootBullet(fireDir);
+    }
+
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        {
+            _fireRateMultiplier = DifficultyManager.Instance.GetRangedFireRateMultiplier();
+        }
+        else
+        {
+            _fireRateMultiplier = 1f;
+        }
     }
     #endregion   
 

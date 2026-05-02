@@ -5,6 +5,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using TMPro;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
@@ -24,7 +25,7 @@ public class BulletMove : MonoBehaviour
     // Ejemplo: MaxHealthPoints
 
     [SerializeField]
-    private float speed = 15f; // Velocidad de la bala
+    private float Speed = 15f; // Velocidad de la bala
 
     #endregion
 
@@ -40,6 +41,12 @@ public class BulletMove : MonoBehaviour
     /// Bool que dice si hay o no GameManager en la escena
     /// </summary>
     private bool _gameManager = false;
+
+    /// <summary>
+    /// Almacena el modificador por dificultad de la velocidad de las balas del DifficultyManager.
+    /// Inicializado en el Start().
+    /// </summary>
+    private float _difficultySpeedMultiplier;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -52,6 +59,7 @@ public class BulletMove : MonoBehaviour
     void Start()
     {
         _gameManager = GameManager.HasInstance();
+        UpdateDifficultyStats();
     }
     /// <summary>
     /// Se ejecuta cada frame. Mueve la bala hacia su derecha local (0 grados) 
@@ -59,8 +67,8 @@ public class BulletMove : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (_gameManager) transform.Translate(Vector2.right * speed * Time.deltaTime * GameManager.SlowMultiplier);
-        else transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (_gameManager) transform.Translate(Vector2.right * Speed * Time.deltaTime * GameManager.SlowMultiplier * _difficultySpeedMultiplier);
+        else transform.Translate(Vector2.right * Speed * Time.deltaTime * _difficultySpeedMultiplier);
     }
     #endregion
 
@@ -73,13 +81,28 @@ public class BulletMove : MonoBehaviour
     // Ejemplo: GetPlayerController
 
     #endregion
-    
+
     // ---- MÉTODOS PRIVADOS ----
     #region Métodos Privados
     // Documentar cada método que aparece aquí
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        {
+            _difficultySpeedMultiplier = DifficultyManager.Instance.GetBulletSpeedMultiplier();
+        }
+        else
+        {
+            _difficultySpeedMultiplier = 1f;
+        }
+    }
 
     #endregion   
 

@@ -6,6 +6,7 @@
 // Proyectos 1 - Curso 2025-26
 //---------------------------------------------------------
 
+using TMPro;
 using UnityEngine;
 // Añadir aquí el resto de directivas using
 
@@ -65,6 +66,12 @@ public class MoveToCoordsAndExplode : MonoBehaviour
 
 
     private float _timer = 0f;
+
+    /// <summary>
+    /// Almacena el modificador por dificultad de la velocidad de la difnamita del DifficultyManager.
+    /// Inicializado en el Start().
+    /// </summary>
+    private float _difficultySpeedMultiplier;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -74,18 +81,18 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _flash = GetComponent<CanFlash>();
-        _exp = GetComponent<Explode>();
-
-        _exp.enabled = false;//Desactiva el componente,en caso de que estuviese activado.
-
-        _vel = (Pos - transform.position) / MovingTime; //Inicializar la velocidad de movimiento.
-
         if (GetComponent<Explode>() == null)
         {
             Debug.Log("Se ha puesto un componente MoveToCoordsAndExplode sin un componente de tipo Explode. Se eliminará  este componente.");
             Destroy(this);
         }
+
+        _flash = GetComponent<CanFlash>();
+        _exp = GetComponent<Explode>();
+
+        _exp.enabled = false;//Desactiva el componente,en caso de que estuviese activado.
+
+        UpdateDifficultyStats(); // tambien inicializa la velocidad de movimiento
     }
 
     /// <summary>
@@ -105,7 +112,7 @@ public class MoveToCoordsAndExplode : MonoBehaviour
         else _timer += Time.deltaTime;
 
 
-        if (_timer > MovingTime)
+        if (_timer > MovingTime / _difficultySpeedMultiplier)
         {
             _flash.StartFlashes();
             _exp.enabled = true;
@@ -139,6 +146,22 @@ public class MoveToCoordsAndExplode : MonoBehaviour
     // El convenio de nombres de Unity recomienda que estos métodos
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
+
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        {
+            _difficultySpeedMultiplier = DifficultyManager.Instance.GetDynaTravelSpeedMultiplier();
+        }
+        else
+        {
+            _difficultySpeedMultiplier = 1f;
+        }
+        _vel =  (Pos - transform.position) / (MovingTime / _difficultySpeedMultiplier);
+    }
 
     #endregion
 

@@ -49,7 +49,7 @@ public class ShootEscopeta : MonoBehaviour
 
     [SerializeField]
     private AudioClip DisparoEscopeta;
-    
+
 
     #endregion
 
@@ -62,6 +62,11 @@ public class ShootEscopeta : MonoBehaviour
     // primera letra en mayúsculas)
     // Ejemplo: _maxHealthPoints
 
+    /// <summary>
+    /// Cantidad de perdigones añadidos o restados por la dificultad.
+    /// Inicializado en el Start().
+    /// </summary>
+    private int _difficultyExtraPellets;
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -81,22 +86,18 @@ public class ShootEscopeta : MonoBehaviour
             Debug.Log("No se ha asignado el prefab del perdigón en ShootEscopeta. El arma no funcionará.");
             Destroy(this);
         }
-
-        // Validación matemática para evitar superposiciones si se configura mal en el inspector
-        if (DisparidadMinima * NumPerdigones >= RangoCono)
-        {
-            Debug.Log("La disparidad mínima es demasiado alta para el rango del cono.");
-            DisparidadMinima = (RangoCono / NumPerdigones) - 1f;
-        }
     }
 
-    /// <summary>
-    /// Si el componente es destruido por no poder funcionar, se asegura que el resto de componentes dejen de funcionar también.
-    /// No puede destruir el controlador del disparo puesto que aquí no sabemos que script será.
-    /// </summary>
-    private void OnDestroy()
+    private void Start()
     {
-        Destroy(GetComponent<HasAmmo>());
+        UpdateDifficultyStats();
+
+        // Validación matemática para evitar superposiciones
+        if (DisparidadMinima * (NumPerdigones + _difficultyExtraPellets) >= RangoCono)
+        {
+            DisparidadMinima = (RangoCono / (NumPerdigones+_difficultyExtraPellets)) - 1f;
+        }
+
     }
     #endregion
 
@@ -117,11 +118,11 @@ public class ShootEscopeta : MonoBehaviour
     {
         float anguloBase = 180f / Mathf.PI * Mathf.Atan2(fireDir.y, fireDir.x);
 
-        float tamañoSector = RangoCono / NumPerdigones;
+        float tamañoSector = RangoCono / (NumPerdigones + _difficultyExtraPellets);
         float mitadCono = RangoCono / 2f;
         float padding = DisparidadMinima / 2f;
 
-        for (int i = 0; i < NumPerdigones; i++)
+        for (int i = 0; i < NumPerdigones + _difficultyExtraPellets; i++)
         {
             float limiteMin = -mitadCono + (i * tamañoSector);
             float limiteMax = limiteMin + tamañoSector;
@@ -148,6 +149,20 @@ public class ShootEscopeta : MonoBehaviour
     // se nombren en formato PascalCase (palabras con primera letra
     // mayúscula, incluida la primera letra)
 
+    /// <summary>
+    /// Método para actualizar las stats de este componente que dependan de la dificultad.
+    /// </summary>
+    private void UpdateDifficultyStats()
+    {
+        if (DifficultyManager.HasInstance())
+        {
+            _difficultyExtraPellets = DifficultyManager.Instance.GetSuziePelletsAdded();
+        }
+        else
+        {
+            _difficultyExtraPellets = 0;
+        }
+    }
     #endregion
 
 } // class ShootEscopeta 
