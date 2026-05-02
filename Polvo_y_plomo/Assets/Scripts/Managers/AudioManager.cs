@@ -59,6 +59,13 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     [SerializeField, Range(0f, 1f)]
     private float VolumeMusic = 1f;
+
+    /// <summary>
+    /// Velocidad a la que se realiza la transición de volumen entre fases.
+    /// Un valor menor hace que el fundido sea más lento.
+    /// </summary>
+    [SerializeField, Range(0.1f, 5f)]
+    private float FadeSpeed = 0.5f;
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -99,6 +106,11 @@ public class AudioManager : MonoBehaviour
     private AudioSource _mySource;
 
     /// <summary>
+    /// Fuente secundaria para la fase 2 de Suzie
+    /// </summary>
+    private AudioSource _fase2Source;
+
+    /// <summary>
     /// Pitch objetivo al que se deben extender los audios 
     /// </summary>
     private float _targetPitch = 1f;
@@ -112,6 +124,17 @@ public class AudioManager : MonoBehaviour
     /// Velocidad a la que se transiciona el pitch.
     /// </summary>
     private float _pitchTransitionSpeed = 5f;
+
+    /// <summary>
+    /// Volumen objetivo de la pista suave (Fase 1).
+    /// </summary>
+    private float _targetFase1Vol = 1f;
+
+    /// <summary>
+    /// Volumen objetivo de la pista metalizada (Fase 2).
+    /// </summary>
+    private float _targetFase2Vol = 0f;
+
     #endregion
 
     // ---- MÉTODOS DE MONOBEHAVIOUR ----
@@ -144,6 +167,12 @@ public class AudioManager : MonoBehaviour
                 return;
             }
 
+            // Inicialización de la fuente para la música metalizada (Fase 2)
+            _fase2Source = gameObject.AddComponent<AudioSource>();
+            _fase2Source.loop = true;
+            _fase2Source.playOnAwake = false;
+            _fase2Source.spatialBlend = 0; // Sonido 2D para música
+
             _poolAudioSources = new AudioSource[MaxAudioSources];
             DontDestroyOnLoad(gameObject);
             _instance = this;
@@ -168,6 +197,10 @@ public class AudioManager : MonoBehaviour
                 FreeAudioSource(i);
             }
         }
+
+        // Lógica de Crossfade: Transiciona los volúmenes suavemente hacia sus objetivos
+        _mySource.volume = Mathf.MoveTowards(_mySource.volume, _targetFase1Vol * VolumeMusic, Time.unscaledDeltaTime * FadeSpeed);
+        _fase2Source.volume = Mathf.MoveTowards(_fase2Source.volume, _targetFase2Vol * VolumeMusic, Time.unscaledDeltaTime * FadeSpeed);
 
         if (_currentPitch != _targetPitch)
         {
@@ -256,11 +289,16 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(AudioClip music)
     {
         if (_mySource.isPlaying) _mySource.Stop();
+        if (_fase2Source != null && _fase2Source.isPlaying) _fase2Source.Stop();
 
         _mySource.clip = music;
         _mySource.volume = VolumeMusic;
         _mySource.loop = true;
         _mySource.Play();
+
+        // Reseteamos los objetivos de volumen para evitar bugs en futuros combates
+        _targetFase1Vol = 1f;
+        _targetFase2Vol = 0f;
     }
 
     /// <summary>
@@ -269,6 +307,7 @@ public class AudioManager : MonoBehaviour
     public void StopMusic()
     {
         _mySource.Stop();
+        _fase2Source.Stop();
     }
 
     /// <summary>
@@ -277,6 +316,33 @@ public class AudioManager : MonoBehaviour
     public void SetSlowMotionAudio(bool isSlow)
     {
         _targetPitch = isSlow ? 0.5f : 1f;
+    }
+
+    /// <summary>
+    /// Inicia ambas versiones de la canción (normal y metal) simultáneamente y en silencio la segunda.
+    /// </summary>
+    public void StartDoublePhaseMusic(AudioClip suave, AudioClip metal)
+    {
+        _mySource.clip = suave;
+        _fase2Source.clip = metal;
+
+        _mySource.volume = VolumeMusic;
+        _fase2Source.volume = 0f;
+
+        _mySource.Play();
+        _fase2Source.Play();
+
+        _targetFase1Vol = 1f;
+        _targetFase2Vol = 0f;
+    }
+
+    /// <summary>
+    /// Cambia el objetivo de volumen para que la pista normal baje y la metalizada suba.
+    /// </summary>
+    public void TransitionToMetalPhase()
+    {
+        _targetFase1Vol = 0f;
+        _targetFase2Vol = 1f;
     }
     #region Métodos públicos para el volumen
     /// <summary>

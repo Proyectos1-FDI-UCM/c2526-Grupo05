@@ -92,6 +92,7 @@ public class SuziePhaseManager : MonoBehaviour
         if (_faseActual == 1 && _healthManager != null && _healthManager.GetCurrentHealth() <= 10)
         {
             CambiarAFase2();
+            AudioManager.Instance.TransitionToMetalPhase();
         }
     }
     #endregion

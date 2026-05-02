@@ -30,6 +30,12 @@ public class PlaySongOnEnable : MonoBehaviour
     [SerializeField]
     private AudioClip Music;
 
+    /// <summary>
+    /// AudioClip OPCIONAL para la Fase 2. Si se asigna, iniciará el sistema de combate con crossfade.
+    /// </summary>
+    [SerializeField]
+    private AudioClip MusicFase2;
+
     #endregion
 
     // ---- ATRIBUTOS PRIVADOS ----
@@ -80,7 +86,11 @@ public class PlaySongOnEnable : MonoBehaviour
     {
         if (AudioManager.HasInstance())
         {
-            AudioManager.Instance.PlayMusic(Music);
+            // Si tiene fase 2, inicia el sistema doble. Si no, arranca la música normal.
+            if (MusicFase2 != null)
+                AudioManager.Instance.StartDoublePhaseMusic(Music, MusicFase2);
+            else
+                AudioManager.Instance.PlayMusic(Music);
         }
         this.enabled = false;
         _startHasBeenDone = true;
@@ -95,7 +105,10 @@ public class PlaySongOnEnable : MonoBehaviour
         {
             if (AudioManager.HasInstance())
             {
-                AudioManager.Instance.PlayMusic(Music);
+                if (MusicFase2 != null)
+                    AudioManager.Instance.StartDoublePhaseMusic(Music, MusicFase2);
+                else
+                    AudioManager.Instance.PlayMusic(Music);
             }
             this.enabled = false;
         }

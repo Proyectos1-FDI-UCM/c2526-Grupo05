@@ -4660,7 +4660,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c5f7397755a4e4590982d0359999a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: {fileID: 8300000, guid: 3a60c1536b9a8304d899d277c861c4e8, type: 3}
+  Music: {fileID: 8300000, guid: 9ddc4e155f8ee6f43867ab4b14517832, type: 3}
+  MusicFase2: {fileID: 8300000, guid: 031d690e5f06b124eb04a46262eafab0, type: 3}
 --- !u!4 &823820651
 Transform:
   m_ObjectHideFlags: 0
@@ -8567,7 +8568,7 @@ PrefabInstance:
     - target: {fileID: 1633645738794046340, guid: 0707086938577934d86ae0d8b1d422ac, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 8300000, guid: 884114372d185d14ebbad2eedf951359, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8828366230030493729, guid: 0707086938577934d86ae0d8b1d422ac, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -11620,6 +11621,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 823820651}
   - {fileID: 1104337562}
   - {fileID: 1992432990}
   - {fileID: 1060329577}
@@ -11640,7 +11642,6 @@ SceneRoots:
   - {fileID: 55125025}
   - {fileID: 619797693}
   - {fileID: 1767621207}
-  - {fileID: 823820651}
   - {fileID: 754370017}
   - {fileID: 120422812}
   - {fileID: 1746615583}
